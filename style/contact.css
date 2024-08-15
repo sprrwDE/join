@@ -1,0 +1,210 @@
+/* Fonts */
+
+/* Document & Container */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+}
+
+html {
+    height: 100%;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+    width: 100%;
+}
+
+.container {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1440px;
+}
+
+/* Link Styling */
+
+a {
+    text-decoration: none;
+}
+
+/* Headlines */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
+/* Contact Card */
+
+.contact-card {
+    display: flex;
+    flex-direction: column;
+    width: 90%; 
+    height: 760px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 30px;
+    box-shadow: 0px 0px 4px 0px #0000001A;
+}
+
+.exit-wrapper {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    transition: transform .7s ease-in-out;
+    cursor: pointer;
+}
+
+.exit-wrapper:hover {
+    transform: rotate(90deg) scale(1.2); 
+  }
+
+.card-header {
+    background-color: #2A3647;
+    border-radius: 30px 30px 0 0;
+    width: 100%;
+    height: 352px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 16px;
+    padding: 66px 24px 66px 24px;
+}
+
+.card-header h2 {
+    color: white;
+    font-size: 47px;
+    font-weight: 700;
+    line-height: 56px;
+    text-align: left;
+}
+
+.card-header h3 {
+    color: white;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
+}
+
+.seperator-card {
+    width: 90px;
+    height: 3px;
+    background-color: #29ABE2;
+}
+
+.card-image-outter {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    transform: translate(0, -50%);
+}
+
+.card-image {
+    height: 120px;
+    width: 120px;
+    border-radius: 70px;
+    border: 3px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 0px 4px 0px #0000001A;
+    background-color: #d1d1d1;
+}
+
+.card-body {
+    padding: 0 24px 0 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%
+}
+
+.input-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+input {
+    padding-right: 30px;
+    padding-left: 10px;
+    width: 100%;
+    height: 30px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border: 1px solid #D1D1D1;
+    height: 40px;
+}
+
+input::placeholder {
+    color: #D1D1D1;
+}
+
+.icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 16px;
+}
+
+.btn {
+    border: none;
+    height: 50px;
+    border-radius: 10px;
+    margin-top: 32px;
+    color: white;
+    width: inline;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 25.2px;
+    text-align: left;
+    padding: 18px 16px 18px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+}
+
+.create {
+    background-color: #2A3647;
+    transition: transform .2s ease-in-out;
+}
+
+.create:hover {
+    background-color: #0f0f0f;
+    transform: scale(1.05); 
+}
+
+@media screen and (min-width: 440px) {
+    .contact-card {
+        width: 396px; 
+    }
+}
