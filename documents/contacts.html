@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style/contact.css">
+    <title>Contacts</title>
+    <!-- Google Fonts Embed -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Orbitron:wght@400..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Contact Card (Overlay)-->
+    <section class="contact-card-wrapper container d-none">
+        <div class="contact-card add">
+            <div class="exit-wrapper">
+                <img class="exit" src="../img/close.svg" onclick="">
+            </div>
+            <div class="card-header">
+                <h2>Add contact</h2>
+                <h3>Tasks are better with a team!</h3>
+                <div class="seperator-card"></div>
+            </div>
+            <div class="card-image-outter">
+                <div class="card-image"><img src="../img/avatar.svg"></div>
+            </div>
+            <div class="card-body">
+                <div class="input-wrapper">
+                    <div class="input-container">
+                        <input type="text" placeholder="Name" id="name">
+                        <img class="icon" src="../img/person.svg">
+                    </div>
+                    <div class="input-container">
+                        <input type="text" placeholder="Email" id="email">
+                        <img class="icon" src="../img/mail.svg">
+                    </div>
+                    <div class="input-container">
+                        <input type="text" placeholder="Phone" id="phone">
+                        <img class="icon" src="../img/call.svg">
+                    </div>
+                </div>
+                <div class="btn-wrapper">
+                    <button class='btn create'>
+                        Create contact
+                        <img src="../img/check.svg">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="contact-card-wrapper d-none"></section>
+</body>
+
+</html>
