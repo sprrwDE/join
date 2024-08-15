@@ -1,0 +1,32 @@
+.mobile-navbar{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #2a3647;
+  height: 80px;
+  width: 100vw;
+}
+.navbar-icon-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #cdcdcd;
+  height: 76px;
+  font-size: 16px;
+  gap: 4px;
+  border-radius: 16px;
+  width: 80px;
+}
+.navbar-icon-container:hover{
+  background-color: #091931;
+  color: white;
+  
+}
+.navbar-icon-container:hover .navbar-icon {
+  filter: brightness(0) invert(1); /* change icon color to white */
+}
+.navbar-icon{
+  width: 24px;
+  height: 24px;
+}
