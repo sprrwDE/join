@@ -5,8 +5,12 @@ body {
   overflow-x: hidden;
 }
 
+footer {
+  height: 500px;
+}
+
 p {
-    margin: 0;
+  margin: 0;
 }
 
 .top-section {
@@ -25,11 +29,11 @@ p {
 }
 
 .add-task-btn {
-    position: absolute;
-    left: 372px;
-    top: 136px;
-    width: 40px;
-    height: 40px;
+  position: absolute;
+  left: 372px;
+  top: 136px;
+  width: 40px;
+  height: 40px;
 }
 
 .search-section {
@@ -44,7 +48,7 @@ p {
   position: absolute;
   top: 224px;
   left: 16px;
-  border: 1px solid rgba(0,0,0,0.1);
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .input-field {
@@ -66,150 +70,152 @@ p {
   height: 31px;
 }
 
-
 .content-container {
-    width: 396px;
-    height: 1039px;
-    position: absolute;
-    top: 296px;
-    left: 16px;
-    right: 16px;
-    overflow-y: scroll;
-    overflow-x: hidden;
+  width: 396px;
+  height: 58%;
+  position: absolute;
+  top: 296px;
+  left: 16px;
+  right: 16px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .to-do-section-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 32px;
 }
 
 h3 {
-    font-size: 27px;
-    font-weight: 700;
+  font-size: 27px;
+  font-weight: 700;
 }
 
 .add-btn {
-    width: 30px;
-    height: 30px;
+  width: 30px;
+  height: 30px;
 }
 
 .to-do-empty {
-    background-color: rgb(231, 231, 231);
-    height: 48px;
-    border-radius: 10px;
-    margin-top: 16px;
-    display: flex;
-    justify-content: center;
-    color: rgb(168, 168, 168);
-    font-size: 16px;
-    font-weight: 400;
-    border: 1px dashed;
-    align-items: center;
+  background-color: rgb(231, 231, 231);
+  height: 48px;
+  border-radius: 10px;
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+  color: rgb(168, 168, 168);
+  font-size: 16px;
+  font-weight: 400;
+  border: 1px dashed;
+  align-items: center;
 }
 
-
 .in-progress-section-title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 32px;
-    margin-top: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 32px;
+  margin-top: 16px;
 }
 
 .in-progress-container {
-    height: 331px;
-    gap: 16px;
-    display: flex;
-    flex-direction: column;
+  height: 331px;
+  gap: 16px;
+  display: flex;
+  flex-direction: column;
 }
 
 .ticket-card {
-    width: 252px;
-    height: 264px;
-    border-radius: 24px;
-    background-color: white;
-    padding: 16px;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    gap: 24px;
-    display: flex;
-    flex-direction: column;
+  width: 252px;
+  height: 264px;
+  border-radius: 24px;
+  background-color: white;
+  padding: 16px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  gap: 24px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
 }
 
 .pill-blue {
-    background-color: rgb(0, 56, 255);
-    border-radius: 8px;
-    width: 113px;
-    height: 27px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    font-size: 16px;
-    font-weight: 400;
+  background-color: rgb(0, 56, 255);
+  border-radius: 8px;
+  width: 113px;
+  height: 27px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 16px;
+  font-weight: 400;
 }
 
 .title-notice {
-    height: 84px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin: 0;
-    padding: 0;
+  height: 84px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
 }
 
 #ticket-title {
-    font-weight: 700;
+  font-weight: 700;
 }
 
-
 .progress-bar-section {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .progress-bar {
-    background-color: rgb(244, 244, 244);
-    width: 128px;
-    height: 8px;
-    border-radius: 8px;
+  background-color: rgb(244, 244, 244);
+  width: 128px;
+  height: 8px;
+  border-radius: 8px;
 }
 
 .progress-bar-filler {
-    background-color: rgb(69, 137, 255);
-    width: 64px;
-    height: 8px;
-    border-radius: 16px;
+  background-color: rgb(69, 137, 255);
+  width: 64px;
+  height: 8px;
+  border-radius: 16px;
 }
 
 .contacts-section {
-    display: flex;
-    justify-content: space-between;
-    height: 32px;
+  display: flex;
+  justify-content: space-between;
+  height: 32px;
 }
 
 .contacts {
-    gap: -1px;
-    display: flex;
-
+  gap: -1px;
+  display: flex;
 }
 
-.contacts img:not(:first-child){
-    width: 32px;
-    height: 32px;
-    margin-left: -8px;
+.contacts img:not(:first-child) {
+  width: 32px;
+  height: 32px;
+  margin-left: -8px;
 }
 
 .await-section-title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+  margin-bottom: 16px;
 }
 
 .tickets {
-    display: flex;
-    gap: 16px;
-    overflow-x: scroll;
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
 }
+
