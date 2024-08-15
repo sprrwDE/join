@@ -7,7 +7,7 @@
   height: 8px; /* thin horizontal Scrollbar*/
 }
 ::-webkit-scrollbar-thumb {
-  background-color: #888; 
+  background-color: #a8a8a8; 
   border-radius: 10px; 
 }
 ::-webkit-scrollbar-track {
