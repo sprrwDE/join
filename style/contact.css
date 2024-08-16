@@ -52,6 +52,15 @@ h6 {
 
 /* Contact Card */
 
+.contact-card-wrapper {
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.1);
+}
+
 .contact-card {
     display: flex;
     flex-direction: column;
@@ -63,6 +72,8 @@ h6 {
     transform: translate(-50%, -50%);
     border-radius: 30px;
     box-shadow: 0px 0px 4px 0px #0000001A;
+    background-color: white;
+    z-index: 999;
 }
 
 .exit-wrapper {
@@ -190,7 +201,7 @@ input::placeholder {
     width: inline;
     font-size: 21px;
     font-weight: 700;
-    line-height: 25.2px;
+    line-height: 24px;
     text-align: left;
     padding: 18px 16px 18px 16px;
     display: flex;
@@ -213,11 +224,15 @@ input::placeholder {
     display: none;
 }
 
+/* Mobile Big */
+
 @media screen and (min-width: 440px) {
     .contact-card {
         width: 396px;
     }
 }
+
+/* Desktop */
 
 @media screen and (min-width: 1280px) {
     .contact-card {
@@ -282,7 +297,6 @@ input::placeholder {
     }
 
     .cancel {
-        display: block;
         border: 1px solid #2A3647;
         color: #2A3647;
         background-color: white !important;
