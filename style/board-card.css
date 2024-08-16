@@ -3,12 +3,16 @@ body {
   display: flex;
   justify-content: center ;
   align-content: center;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(241, 228, 228, 0.2);
 
 }
 
 p {
   margin: 0;
+}
+
+.d-none {
+    display: none !important;
 }
 
 .conten-container {
