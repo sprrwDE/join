@@ -1,9 +1,10 @@
 body {
   margin: 0;
   display: flex;
-  justify-content: center;
+  justify-content: center ;
   align-content: center;
   background-color: rgba(0, 0, 0, 0.2);
+
 }
 
 p {
@@ -112,7 +113,7 @@ p {
 .checkbox-wrapper-19 {
   box-sizing: border-box;
   --background-color: #fff;
-  --checkbox-height: 25px;
+  --checkbox-height: 24px;
 }
 
 @-moz-keyframes dothabottomcheck-19 {
