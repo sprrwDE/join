@@ -52,10 +52,19 @@ h6 {
 
 /* Contact Card */
 
+.contact-card-wrapper {
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.1);
+}
+
 .contact-card {
     display: flex;
     flex-direction: column;
-    width: 90%; 
+    width: 90%;
     height: 760px;
     position: absolute;
     top: 50%;
@@ -63,6 +72,8 @@ h6 {
     transform: translate(-50%, -50%);
     border-radius: 30px;
     box-shadow: 0px 0px 4px 0px #0000001A;
+    background-color: white;
+    z-index: 999;
 }
 
 .exit-wrapper {
@@ -74,8 +85,8 @@ h6 {
 }
 
 .exit-wrapper:hover {
-    transform: rotate(90deg) scale(1.2); 
-  }
+    transform: rotate(90deg) scale(1.2);
+}
 
 .card-header {
     background-color: #2A3647;
@@ -87,6 +98,10 @@ h6 {
     justify-content: center;
     gap: 16px;
     padding: 66px 24px 66px 24px;
+}
+
+.card-header img {
+    display: none;
 }
 
 .card-header h2 {
@@ -155,7 +170,6 @@ input {
     padding-right: 30px;
     padding-left: 10px;
     width: 100%;
-    height: 30px;
     box-sizing: border-box;
     border-radius: 10px;
     border: 1px solid #D1D1D1;
@@ -175,16 +189,19 @@ input::placeholder {
     font-size: 16px;
 }
 
+.btn-wrapper {
+    margin-top: 32px;
+}
+
 .btn {
     border: none;
     height: 50px;
     border-radius: 10px;
-    margin-top: 32px;
     color: white;
     width: inline;
     font-size: 21px;
     font-weight: 700;
-    line-height: 25.2px;
+    line-height: 24px;
     text-align: left;
     padding: 18px 16px 18px 16px;
     display: flex;
@@ -200,11 +217,99 @@ input::placeholder {
 
 .create:hover {
     background-color: #0f0f0f;
-    transform: scale(1.05); 
+    transform: scale(1.05);
 }
+
+.cancel {
+    display: none;
+}
+
+/* Mobile Big */
 
 @media screen and (min-width: 440px) {
     .contact-card {
-        width: 396px; 
+        width: 396px;
+    }
+}
+
+/* Desktop */
+
+@media screen and (min-width: 1280px) {
+    .contact-card {
+        flex-direction: row;
+        width: 1200px;
+        height: 600px;
+    }
+
+    .card-header {
+        border-radius: 30px 0 0 30px;
+        height: 100%;
+    }
+
+    .card-image-outter {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transform: translateY(0);
+    }
+
+    .input-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+        width: 100%;
+    }
+
+    .card-body {
+        padding: 0 24px 0 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .input-container {
+        position: relative;
+        display: inline-block;
+        width: 420px;
+    }
+
+    input {
+        height: 50px;
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 24px;
+        text-align: left;
+
+    }
+
+    .btn {
+        height: 56px;
+        display: flex;
+        align-items: center;
+    }
+
+    .btn-wrapper {
+        display: flex;
+        flex-direction: row;
+        gap: 24px;
+        margin-top: 48px;
+    }
+
+    .cancel {
+        border: 1px solid #2A3647;
+        color: #2A3647;
+        background-color: white !important;
+        font-weight: 400;
+        transition: transform .2s ease-in-out;
+    }
+
+    .cancel:hover {
+        transform: scale(1.05);
+    }
+
+    .card-header img {
+        display: block;
+        width: 55px;
     }
 }

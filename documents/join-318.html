@@ -1,45 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" href="/style.css">
-  <link rel="stylesheet" href="/style/mobile-header.css">
-  <link rel="stylesheet" href="/style/join-318.css">
-  <link rel="stylesheet" href="/style/mobile-navbar-style.css" />
-</head>
-<body>
-  <header>
-    <img class="header-join-icon" src="/assets/img/join-icon.svg" alt="join-icon">
-    <div id="header-user-icon" class="header-user-icon-container">SM</div>
-  </header>
-  <section>
-    <div class="join-318-container">
-      <h1>Join 318</h1>
-      <p class="join-subtitle">Key Mertics at a Glance</p>
-      <div class="border-bottom"></div>
-    </div>
-    <div class="to-do-and-done">
-      <div class="to-do-box">
-        <img class="to-do-img" src="/assets/img/eddit-icon.svg" alt="">
-        <div class="to-do-block">
-          <p id="to-do-counter">1</p>
-          <p>To-Do</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/style/mobile-header.css" />
+    <link rel="stylesheet" href="/style/join-318.css" />
+    <link rel="stylesheet" href="/style/mobile-navbar-style.css" />
+  </head>
+  <body>
+    <header>
+      <img
+        class="header-join-icon"
+        src="/assets/img/join-icon.svg"
+        alt="join-icon"
+      />
+      <div id="header-user-icon" class="header-user-icon-container">SM</div>
+    </header>
+    <section>
+      <div class="join-318-container">
+        <h1>Join 318</h1>
+        <p class="join-subtitle">Key Mertics at a Glance</p>
+        <div class="border-bottom"></div>
+      </div>
+      
+      <div class="to-do-and-done">
+        <div class="to-do-box">
+          <img class="to-do-img" src="/assets/img/eddit-icon.svg" alt="" />
+          <div class="to-do-block">
+            <p id="to-do-counter" class="count-number">1</p>
+            <p>To-Do</p>
+          </div>
+        </div>
+        <div class="to-do-box">
+          <img class="to-do-img" src="/assets/img/check-icon.svg" alt="" />
+          <div class="to-do-block">
+            <p id="done-counter" class="count-number">1</p>
+            <p>To-Do</p>
+          </div>
         </div>
       </div>
-      <div class="to-do-box">
-        <img class="to-do-img" src="/assets/img/check-icon.svg" alt="">
-        <div class="to-do-block">
-          <p id="done-counter">1</p>
-          <p>To-Do</p>
+      <div class="deadline-container">
+        <img class="arrow-up-icon" src="/assets/img/arrow-up-icon.svg" alt="Arrow-img">
+        <div class="urgent-box">
+          <p id="urgent-counter" class="count-number">1</p>
+          <p id="urgent-counter">Urgent</p>
+        </div>
+        <div class="vertical-border"></div>
+        <div class="deadline-box">
+          <p>October 16, 2022</p>
+          <p>Upcoming Deadline</p>
+        </div>
+      </div>
+      <div class="task-boxes-container">
+        <div class="tasks-counter-box">
+          <p id="tasks-in-board-counter" class="count-number">5</p>
+          <p>Task in <br>Board</p>
+        </div>
+        <div class="tasks-counter-box">
+          <p id="tasks-in-progress-counter" class="count-number">5</p>
+          <p>Task in <br>Progress</p>
+        </div>
+        <div class="tasks-counter-box">
+          <p id="awaiting-feedback-counter" class="count-number">5</p>
+          <p>Awaiting <br>feedback</p>
         </div>
       </div>
       
-    </div>
-
-
-
-    <iframe src="/documents/mobile-navbar.html" height="80px" width="100%" style="position: absolute; bottom: 0;"  title="Iframe Example"></iframe>
-</body>
+    </section>
+    <iframe
+      src="/documents/mobile-navbar.html"
+      height="80px"
+      width="100%"
+      style="position: absolute; bottom: 0; box-sizing: border-box"
+      title="Iframe Example"
+    ></iframe>
+  </body>
 </html>
