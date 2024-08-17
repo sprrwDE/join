@@ -11,9 +11,10 @@
 </head>
 
 <body>
-    <iframe src="mobile-header.html" width="100%" height="84px" style="box-sizing: border-box; position: fixed; background-color: rgb(246, 247, 248); z-index: 996;"></iframe>
+    <iframe src="mobile-header.html" width="100%" height="84px"
+        style="box-sizing: border-box; position: fixed; background-color: rgb(246, 247, 248); z-index: 996;"></iframe>
 
-   
+
     <div class="content-container">
 
         <div class="title-section">
@@ -88,42 +89,74 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="category-section">
             <p>Category<span class="red">*</span></p>
-            <div class="contacts"> <!-- d-none is active to hide all contacts !!!-->
-                <div class="contact">
-                    <div class="flex">
-                        <img src="../assets/img/Profile badge.svg" alt="">
-                        <p>Sofia Müller</p>
-                    </div>
-                    <div class="checkbox-wrapper-19">
-                        <input type="checkbox" id="cbtest-19-1" />
-                        <label for="cbtest-19-1" class="check-box">
+            <div class="dropdown-wrap">
+                <div class="search-bar-section">
+                    <span class="prefix">Select task category</span>
+                    <img src="../assets/img/arrow_drop_down.svg" alt="">
+                </div>
+                <div class="contacts d-none"> <!-- d-none is active to hide all contacts !!!-->
+                    <p>Technical Task</p>
+                    <p>User Story</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="subtasks-section">
+            <p>Subtasks</p>
+            <div class="dropdown-wrap">
+                <div class="search-bar-section">
+                    <input type="search" id="myInput" placeholder="Add new subtask" class="searchfield">
+                    <img src="../assets/img/add.svg" alt="" class="">
+                    <div class="ok-notok-section d-none"> <!-- d-none is active !!!-->
+                        <img src="../assets/img/Close.svg" alt="">
+                        <img src="../assets/img/Vector 3.svg" alt="" class="separator">
+                        <img src="../assets/img/check.svg" alt="" style="filter: invert();">
                     </div>
                 </div>
-                <div class="contact">
-                    <div class="flex">
-                        <img src="../assets/img/Profile badge.svg" alt="">
-                        <p>Sofia Müller</p>
-                    </div>
-                    <div class="checkbox-wrapper-19">
-                        <input type="checkbox" id="cbtest-19-2" />
-                        <label for="cbtest-19-2" class="check-box">
-                    </div>
+                <div class="subtasks"> <!-- d-none is active to hide all tasks!!!-->
+                    <ul class="subtasks-list">
+                        <div class="task">
+                            <li>do this</li>
+                            <div class="edit-delete">
+                                <img src="../assets/img/edit.svg" alt="">
+                                <img src="../assets/img/Vector 3.svg" alt="">
+                                <img src="../assets/img/delete.svg" alt="">
+                            </div>
+                        </div>
+                        <div class="task">
+                            <li>do that</li>
+                            <div class="edit-delete">
+                                <img src="../assets/img/edit.svg" alt="">
+                                <img src="../assets/img/Vector 3.svg" alt="">
+                                <img src="../assets/img/delete.svg" alt="">
+                            </div>
+                        </div>
+                        <div class="task">
+                            <li>take over the world</li>
+                            <div class="edit-delete">
+                                <img src="../assets/img/edit.svg" alt="">
+                                <img src="../assets/img/Vector 3.svg" alt="">
+                                <img src="../assets/img/delete.svg" alt="">
+                            </div>
+                        </div>
+                    </ul>
                 </div>
             </div>
         </div>
 
 
+        
     </div>
     <div class="create-task-container">
-        <p><span class="red">*</span>This field required</p>
+        <p><span class="red">*</span>This field is required</p>
         <button class="create-btn">Create Task <img src="../assets/img/check.svg" alt=""></button>
     </div>
 
     <iframe src="mobile-navbar.html" width="100%" height="80px"
-        style="position: fixed; bottom: 0; box-sizing: border-box;"></iframe>
+        style="position: fixed; bottom: 0; box-sizing: border-box; z-index: 999;"></iframe>
 </body>
 
 </html>
