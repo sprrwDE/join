@@ -14,16 +14,44 @@
         href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Orbitron:wght@400..900&display=swap"
         rel="stylesheet">
 </head>
-<header> 
+<header>
     <iframe src="mobile-header.html" width="100%" height="84px" style="box-sizing: border-box;"></iframe>
 </header>
 
 <body>
+
+    <!-- Contact Overlay -->
+    <section class="contact-overlay d-none" id="detail">
+        <div class="contact-detail-header">
+            <h2>Contacts</h2>
+            <h3>Better with a team!</h3>
+            <div class="seperator-card"></div>
+        </div>
+        <div class="contact-info-wrapper">
+            <div class="avatar-wrapper">
+                <div class="card-image">
+                    <h4>123</h4>
+                </div>
+                <h4>Name</h4>
+            </div>
+            <div class="contact-content">
+                <h4>Contact information</h4>
+                <p><b>Email</b></p>
+                <a href="mailto:">platzhalter@platzhalter.de</a>
+                <p><b>Phone</b></p>
+                <p>1111111111111</p>
+            </div>
+        </div>
+        <button onclick="closeDetailDialog()">close</button>
+    </section>
+    <!-- End of Contact Overlay -->
+
+
     <!-- Add Contact Card (Overlay)-->
-    <section class="contact-card-wrapper d-none">
+    <section class="contact-card-wrapper d-none" id="add-contact">
         <div class="contact-card add">
             <div class="exit-wrapper">
-                <img class="exit" src="../assets/img/contact-card/close.svg" onclick="">
+                <img class="exit" src="../assets/img/contact-card/close.svg" onclick="closeAddContactDialog()">
             </div>
             <div class="card-header">
                 <img src="../assets/img/contact-card/join-logo-card.svg">
@@ -50,7 +78,7 @@
                     </div>
                 </div>
                 <div class="btn-wrapper">
-                    <button class='btn cancel'>
+                    <button class="btn cancel" onclick="closeAddContactDialog()">
                         Cancel
                         <img src="../assets/img/contact-card/exit.svg">
                     </button>
@@ -69,15 +97,16 @@
     <section class="contact-card-wrapper d-none"></section>
     <!-- End of Edit Contact Card (Overlay) -->
 
+    <!-- Buttons test -->
+    <section>
+        <button onclick="openAddContactDialog()">show add</button>
+        <button onclick="openDetailDialog()">show detail</button>
+    </section>
     <footer>
-        <iframe
-        src="/documents/mobile-navbar.html"
-        height="80px"
-        width="100%"
-        style="position: absolute; bottom: 0; box-sizing: border-box"
-        title="Iframe Example"
-      ></iframe>
+        <iframe src="/documents/mobile-navbar.html" height="80px" width="100%"
+            style="position: absolute; bottom: 0; box-sizing: border-box" title="Iframe Example"></iframe>
     </footer>
+    <script src="../javascript/contact.js"></script>
 </body>
 
 </html>
