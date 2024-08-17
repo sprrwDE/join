@@ -1,7 +1,7 @@
 /* Document & Container */
 
 .d-none {
-    display: none;
+    display: none !important;
 }
 
 /* Contact Overlay */
@@ -42,7 +42,15 @@
     display: flex;
     align-items: center;
     gap: 16px;
+    margin: 40px 0;
 }
+
+.contact-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
 /* Add Contact Card */
 
 .contact-card-wrapper {
