@@ -6,13 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../style/addtask.css">
     <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../style/mobile-header.css">
+    <link rel="stylesheet" href="../style/mobile-navbar-style.css">
     <script src="../javascript/addtask.js"></script>
     <title>Add Task</title>
 </head>
 
 <body onload="init()">
-    <iframe src="mobile-header.html" width="100%" height="84px"
-        style="box-sizing: border-box; position: fixed; background-color: rgb(246, 247, 248); z-index: 996;"></iframe>
+
+    <header>
+        <img class="header-join-icon" src="/assets/img/join-icon.svg" alt="join-icon">
+        <div id="header-user-icon" class="header-user-icon-container">SM</div>
+    </header>
     <div class="content-container">
         <div class="title-section">
             <span class="title">Add Task</span>
@@ -31,12 +36,13 @@
         <div class="assigned-to-section">
             <p>Assigned to</p>
             <div class="dropdown-wrap">
-                <div class="search-bar-section" onclick="search()"> 
+                <div class="search-bar-section" onclick="search()">
                     <div>
                         <p id="assigne-placeholder">Select contacts to assign</p>
                         <div class="search d-none" id="search-container"> <!-- d-none is active to switch !!!-->
                             <span class="prefix">An:</span>
-                            <input type="search" id="myInput" placeholder="" class="searchfield" onkeyup="filterFunction()">
+                            <input type="search" id="myInput" placeholder="" class="searchfield"
+                                onkeyup="filterFunction()">
                         </div>
                     </div>
                     <img src="../assets/img/arrow_drop_down.svg" alt="">
@@ -48,7 +54,8 @@
                     <img src="../assets/img/Profile badge.svg" alt="">
                 </div>
                 <div class="contacts d-none" id="all-contacts"> <!-- d-none is active to hide all contacts !!!-->
-                    <div class="contact background" id="contact">   <!-- this one has background added to show how it looks if its selected -->
+                    <div class="contact background" id="contact">
+                        <!-- this one has background added to show how it looks if its selected -->
                         <div class="flex">
                             <img src="../assets/img/Profile badge.svg" alt="">
                             <p>Sofia Müller</p>
@@ -122,9 +129,9 @@
             <div class="all-prios">
                 <div class="prio" onclick="selectedPrio('urgent')" id="urgent">
                     <p>Urgent</p>
-                    <img src="../assets/img/urgent.svg" alt="" id="urgent-img" >
+                    <img src="../assets/img/urgent.svg" alt="" id="urgent-img">
                 </div>
-                <div class="prio" onclick="selectedPrio('medium')" id="medium" >
+                <div class="prio" onclick="selectedPrio('medium')" id="medium">
                     <p>Medium</p>
                     <img src="../assets/img/Capa 2.svg" alt="" id="medium-img">
                 </div>
@@ -197,8 +204,31 @@
         <button class="create-btn">Create Task <img src="../assets/img/check.svg" alt=""></button>
     </div>
 
-    <iframe src="mobile-navbar.html" width="100%" height="80px"
-        style="position: fixed; bottom: 0; box-sizing: border-box; z-index: 999;"></iframe>
+    <footer>
+        <div class="test-container">
+            <div class="mobile-navbar">
+                <div class="navbar-icon-container">
+                    <a href="/index.html">
+                        <img class="navbar-icon" src="/assets/img/summary-mobile-icon.png" alt="" />Summary
+                    </a>
+                </div>
+                <div class="navbar-icon-container">
+                    <a href="/documents/board.html">
+                        <img class="navbar-icon" src="/assets/img/board-mobile-icon.png" alt="" />Board
+                    </a>
+                </div>
+                <div class="navbar-icon-container">
+                    <a href="/documents/addtask.html">
+                        <img class="navbar-icon" src="/assets/img/add-task-moblie-icon.png" alt="" />Add Tasks</a>
+                </div>
+                <div class="navbar-icon-container">
+                    <a href="/documents/contacts.html">
+                        <img class="navbar-icon" src="/assets/img/contacts-mobile-icon.png" alt="" />Contacts
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
 
 </html>

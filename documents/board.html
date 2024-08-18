@@ -6,11 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../style/board.css">
     <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../style/mobile-header.css">
+    <link rel="stylesheet" href="../style/mobile-navbar-style.css">
     <title>Board</title>
 </head>
 
 <body>
-    <iframe src="mobile-header.html" width="100%" height="84px" style="box-sizing: border-box;"></iframe>
+
+    <header>
+        <img class="header-join-icon" src="/assets/img/join-icon.svg" alt="join-icon">
+        <div id="header-user-icon" class="header-user-icon-container">SM</div>
+    </header>
     <div class="top-section">
         <h1 class="top-section-title">Board</h1>
         <img src="../assets/img/plus add task mobile.svg" alt="" class="add-task-btn">
@@ -133,8 +139,31 @@
     </div>
 
     
-    <iframe src="mobile-navbar.html" width="100%" height="80px"
-        style="position: absolute; bottom: 0; box-sizing: border-box;"></iframe>
+    <footer>
+        <div class="test-container">
+            <div class="mobile-navbar">
+                <div class="navbar-icon-container">
+                    <a href="/index.html">
+                        <img class="navbar-icon" src="/assets/img/summary-mobile-icon.png" alt="" />Summary
+                    </a>
+                </div>
+                <div class="navbar-icon-container">
+                    <a href="/documents/board.html">
+                        <img class="navbar-icon" src="/assets/img/board-mobile-icon.png" alt="" />Board
+                    </a>
+                </div>
+                <div class="navbar-icon-container">
+                    <a href="/documents/addtask.html">
+                        <img class="navbar-icon" src="/assets/img/add-task-moblie-icon.png" alt="" />Add Tasks</a>
+                </div>
+                <div class="navbar-icon-container">
+                    <a href="/documents/contacts.html">
+                        <img class="navbar-icon" src="/assets/img/contacts-mobile-icon.png" alt="" />Contacts
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
 
 </html>
