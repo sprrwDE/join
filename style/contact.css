@@ -4,10 +4,36 @@
     display: none !important;
 }
 
+.test {
+    margin-bottom: 200px;
+}
+
+/* Contact List */
+
+.contact-list {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-top: 40px;
+}
+
+.seperator-list {
+    width: 100%;
+    height: 1px;
+    background-color: #D1D1D1;
+    margin: 24px 0;
+}
+
+.list-content-wrapper {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+}
+
 /* Contact Overlay */
 
 .contact-overlay {
-    padding: 40px 16px;
+    padding: 40px 24px;
     display: flex;
     flex-direction: column;
     gap: 32px;
