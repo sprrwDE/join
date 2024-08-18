@@ -22,6 +22,45 @@ function closeDetailDialog() {
 }
 
 /**
+ * Fetch API POST
+ */
+
+async function fetchApi() {
+    try {
+        let response = await fetch('https://join-318-default-rtdb.europe-west1.firebasedatabase.app/.json');
+        let responseToJson = response.json();
+        console.log(responseToJson);
+    } catch (error) {
+        console.log('Error Brudi')
+    }
+}
+
+async function pushData() {
+    try {
+        let data = {
+            name: `${document.getElementById('name').value}`,
+            email: `${document.getElementById('email').value}`,
+            phone: `${document.getElementById('phone').value}`
+        };
+
+        let response = await fetch('https://join-318-default-rtdb.europe-west1.firebasedatabase.app/test.json', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        let responseToJson = await response.json();
+        console.log('Data pushed successfully:', responseToJson);
+    } catch (error) {
+        console.log('Error pushing data', error);
+    } finally {
+        closeAddContactDialog();
+    }
+}
+
+/**
  * Floating Buttons
  * Zurück Button Contacts
  * Edit Contact
