@@ -63,3 +63,7 @@ h6 {
 ::-webkit-scrollbar-track {
   background-color: transparent; /* background Track */
 }
+h2{
+  font-size: 48px;
+  font-weight: 700;
+}
