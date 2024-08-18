@@ -20,3 +20,13 @@ function closeDetailDialog() {
     detailRef.classList.add('d-none'); 
     contactListRef.classList.remove('d-none');
 }
+
+/**
+ * Floating Buttons
+ * Zurück Button Contacts
+ * Edit Contact
+ * Edit / delete / success overlay beim Mauszeiger
+ * Desktop
+ * Allgemein Styling anpassen
+ * Buttons verbergen
+ */

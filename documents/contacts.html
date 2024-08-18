@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../style/mobile-header.css">
+    <link rel="stylesheet" href="../style/mobile-navbar-style.css">
     <link rel="stylesheet" href="../style/contact.css">
     <title>Contacts</title>
     <!-- Google Fonts Embed -->
@@ -14,14 +16,16 @@
         href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Orbitron:wght@400..900&display=swap"
         rel="stylesheet">
 </head>
+
 <header>
-    <iframe src="mobile-header.html" width="100%" height="84px" style="box-sizing: border-box;"></iframe>
+    <img class="header-join-icon" src="/assets/img/join-icon.svg" alt="join-icon">
+    <div id="header-user-icon" class="header-user-icon-container">SM</div>
 </header>
 
 <body>
 
     <!-- Contact List -->
-     <section class="contact-list container" id="contact-list">
+    <section class="contact-list container" id="contact-list">
         <!-- Template -->
         <div class="contact-list-wrapper">
             <h2>A</h2>
@@ -37,7 +41,7 @@
             </div>
         </div>
 
-     </section>
+    </section>
     <!-- End of Contact List -->
 
     <!-- Contact Overlay -->
@@ -85,15 +89,15 @@
             <div class="card-body">
                 <div class="input-wrapper">
                     <div class="input-container">
-                        <input type="text" placeholder="Name" id="name">
+                        <input type="text" required placeholder="Name" id="name">
                         <img class="icon" src="../assets/img/contact-card/person.svg">
                     </div>
                     <div class="input-container">
-                        <input type="text" placeholder="Email" id="email">
+                        <input type="text" required placeholder="Email" id="email">
                         <img class="icon" src="../assets/img/contact-card/mail.svg">
                     </div>
                     <div class="input-container">
-                        <input type="text" placeholder="Phone" id="phone">
+                        <input type="text" required placeholder="Phone" id="phone">
                         <img class="icon" src="../assets/img/contact-card/call.svg">
                     </div>
                 </div>
@@ -125,8 +129,29 @@
     <!-- End of Buttons Test -->
 
     <footer>
-        <iframe src="/documents/mobile-navbar.html" height="80px" width="100%"
-            style="position: absolute; bottom: 0; box-sizing: border-box" title="Iframe Example"></iframe>
+        <div class="test-container">
+            <div class="mobile-navbar">
+                <div class="navbar-icon-container">
+                    <a href="/index.html">
+                        <img class="navbar-icon" src="/assets/img/summary-mobile-icon.png" alt="" />Summary
+                    </a>
+                </div>
+                <div class="navbar-icon-container">
+                    <a href="/documents/board.html">
+                        <img class="navbar-icon" src="/assets/img/board-mobile-icon.png" alt="" />Board
+                    </a>
+                </div>
+                <div class="navbar-icon-container">
+                    <a href="/documents/addtask.html">
+                        <img class="navbar-icon" src="/assets/img/add-task-moblie-icon.png" alt="" />Add Tasks</a>
+                </div>
+                <div class="navbar-icon-container">
+                    <a href="/documents/contacts.html">
+                        <img class="navbar-icon" src="/assets/img/contacts-mobile-icon.png" alt="" />Contacts
+                    </a>
+                </div>
+            </div>
+        </div>
     </footer>
     <script src="../javascript/contact.js"></script>
 </body>
