@@ -15,6 +15,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Orbitron:wght@400..900&display=swap"
         rel="stylesheet">
+        <script src="../javascript.js"></script>
 </head>
 
 <header>
@@ -22,7 +23,7 @@
     <div id="header-user-icon" class="header-user-icon-container">SM</div>
 </header>
 
-<body>
+<body onload="fetchApi()">
 
     <!-- Contact List -->
     <section class="contact-list container" id="contact-list">
@@ -106,7 +107,7 @@
                         Cancel
                         <img src="../assets/img/contact-card/exit.svg">
                     </button>
-                    <button class='btn create'>
+                    <button class='btn create' onclick="pushData()"> 
                         Create contact
                         <img src="../assets/img/contact-card/check.svg">
                     </button>
