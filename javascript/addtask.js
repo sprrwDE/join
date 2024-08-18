@@ -12,7 +12,6 @@ function test() {
     }
   );
 }
-/* "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/contacts.json" */
 
 function loadContacts() {
   fetch(
@@ -40,13 +39,17 @@ function search() {
   let contacts = document.getElementById("all-contacts");
   let input = document.getElementById("myInput");
 
+  
   contacts.classList.toggle("d-none");
   search.classList.toggle("d-none");
   if (palceholder.style.display == "none") {
     palceholder.style.display = "";
+    document.getElementById("arrow-down").style.animation = ""
   } else {
     input.focus();
+    document.getElementById("arrow-down").style.animation = "rotate 0.5s forwards"
     palceholder.style.display = "none";
+    contacts.style.animation = "slowdropdown 2s forwards"
   }
 }
 
