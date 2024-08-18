@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style/addtask.css">
+    <link rel="stylesheet" href="../style.css">
+    <script src="../javascript/addtask.js"></script>
+    <title>Add Task</title>
+</head>
+
+<body onload="init()">
+    <iframe src="mobile-header.html" width="100%" height="84px"
+        style="box-sizing: border-box; position: fixed; background-color: rgb(246, 247, 248); z-index: 996;"></iframe>
+    <div class="content-container">
+        <div class="title-section">
+            <span class="title">Add Task</span>
+        </div>
+
+        <div class="input-title-section">
+            <p>Title<span class="red">*</span></p>
+            <input type="text" name="" id="" class="inputfield" required placeholder="Enter a title">
+        </div>
+
+        <div class="description-section">
+            <p>Description</p>
+            <textarea name="description" id="" placeholder="Enter a Description" class="description-area"></textarea>
+        </div>
+
+        <div class="assigned-to-section">
+            <p>Assigned to</p>
+            <div class="dropdown-wrap">
+                <div class="search-bar-section" onclick="search()"> 
+                    <div>
+                        <p id="assigne-placeholder">Select contacts to assign</p>
+                        <div class="search d-none" id="search-container"> <!-- d-none is active to switch !!!-->
+                            <span class="prefix">An:</span>
+                            <input type="search" id="myInput" placeholder="" class="searchfield" onkeyup="filterFunction()">
+                        </div>
+                    </div>
+                    <img src="../assets/img/arrow_drop_down.svg" alt="">
+                </div>
+
+                <div class="contacts-imges d-none"> <!-- d-none is active to switch !!!-->
+                    <img src="../assets/img/Profile badge.svg" alt="">
+                    <img src="../assets/img/Profile badge.svg" alt="">
+                    <img src="../assets/img/Profile badge.svg" alt="">
+                </div>
+                <div class="contacts d-none" id="all-contacts"> <!-- d-none is active to hide all contacts !!!-->
+                    <div class="contact background" id="contact">   <!-- this one has background added to show how it looks if its selected -->
+                        <div class="flex">
+                            <img src="../assets/img/Profile badge.svg" alt="">
+                            <p>Sofia Müller</p>
+                        </div>
+                        <div class="checkbox-wrapper-19">
+                            <input type="checkbox" id="cbtest-19-1" />
+                            <label for="cbtest-19-1" class="check-box">
+                        </div>
+                    </div>
+                    <div class="contact">
+                        <div class="flex">
+                            <img src="../assets/img/Profile badge.svg" alt="">
+                            <p>Albert Einstein</p>
+                        </div>
+                        <div class="checkbox-wrapper-19">
+                            <input type="checkbox" id="cbtest-19-2" />
+                            <label for="cbtest-19-2" class="check-box">
+                        </div>
+                    </div>
+                    <div class="contact">
+                        <div class="flex">
+                            <img src="../assets/img/Profile badge.svg" alt="">
+                            <p>Albert Einstein</p>
+                        </div>
+                        <div class="checkbox-wrapper-19">
+                            <input type="checkbox" id="cbtest-19-3" />
+                            <label for="cbtest-19-3" class="check-box">
+                        </div>
+                    </div>
+                    <div class="contact">
+                        <div class="flex">
+                            <img src="../assets/img/Profile badge.svg" alt="">
+                            <p>Albert Einstein</p>
+                        </div>
+                        <div class="checkbox-wrapper-19">
+                            <input type="checkbox" id="cbtest-19-4" />
+                            <label for="cbtest-19-4" class="check-box">
+                        </div>
+                    </div>
+                    <div class="contact">
+                        <div class="flex">
+                            <img src="../assets/img/Profile badge.svg" alt="">
+                            <p>Albert Einstein</p>
+                        </div>
+                        <div class="checkbox-wrapper-19">
+                            <input type="checkbox" id="cbtest-19-5" />
+                            <label for="cbtest-19-5" class="check-box">
+                        </div>
+                    </div>
+                    <div class="contact">
+                        <div class="flex">
+                            <img src="../assets/img/Profile badge.svg" alt="">
+                            <p>Albert Einstein</p>
+                        </div>
+                        <div class="checkbox-wrapper-19">
+                            <input type="checkbox" id="cbtest-19-6" />
+                            <label for="cbtest-19-6" class="check-box">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="date-section">
+            <p>Due date<span class="red">*</span></p>
+            <input type="date" class="date">
+        </div>
+
+        <div class="prio-section">
+            <p>Prio</p>
+            <div class="all-prios">
+                <div class="prio" onclick="selectedPrio('urgent')" id="urgent">
+                    <p>Urgent</p>
+                    <img src="../assets/img/urgent.svg" alt="" id="urgent-img" >
+                </div>
+                <div class="prio" onclick="selectedPrio('medium')" id="medium" >
+                    <p>Medium</p>
+                    <img src="../assets/img/Capa 2.svg" alt="" id="medium-img">
+                </div>
+                <div class="prio" onclick="selectedPrio('low')" id="low">
+                    <p>low</p>
+                    <img src="../assets/img/low.svg" alt="" id="low-img">
+                </div>
+            </div>
+        </div>
+
+        <div class="category-section">
+            <p>Category<span class="red">*</span></p>
+            <div class="dropdown-wrap">
+                <div class="search-bar-section">
+                    <span class="prefix">Select task category</span>
+                    <img src="../assets/img/arrow_drop_down.svg" alt="">
+                </div>
+                <div class="contacts d-none"> <!-- d-none is active to hide all contacts !!!-->
+                    <p>Technical Task</p>
+                    <p>User Story</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="subtasks-section">
+            <p>Subtasks</p>
+            <div class="dropdown-wrap">
+                <div class="search-bar-section">
+                    <input type="search" id="myInput" placeholder="Add new subtask" class="searchfield">
+                    <img src="../assets/img/add.svg" alt="" class="">
+                    <div class="ok-notok-section d-none"> <!-- d-none is active !!!-->
+                        <img src="../assets/img/Close.svg" alt="">
+                        <img src="../assets/img/Vector 3.svg" alt="" class="separator">
+                        <img src="../assets/img/check.svg" alt="" style="filter: invert();">
+                    </div>
+                </div>
+                <div class="subtasks"> <!-- d-none is active to hide all tasks!!!-->
+                    <ul class="subtasks-list">
+                        <div class="task">
+                            <li>do this</li>
+                            <div class="edit-delete">
+                                <img src="../assets/img/edit.svg" alt="">
+                                <img src="../assets/img/Vector 3.svg" alt="">
+                                <img src="../assets/img/delete.svg" alt="">
+                            </div>
+                        </div>
+                        <div class="task">
+                            <li>do that</li>
+                            <div class="edit-delete">
+                                <img src="../assets/img/edit.svg" alt="">
+                                <img src="../assets/img/Vector 3.svg" alt="">
+                                <img src="../assets/img/delete.svg" alt="">
+                            </div>
+                        </div>
+                        <div class="onedit">
+                            <p>take over the world</p>
+                            <div class="edit-delete">
+                                <img src="../assets/img/delete.svg" alt="">
+                                <img src="../assets/img/Vector 3.svg" alt="">
+                                <img src="../assets/img/check.svg" alt="" style="filter: invert();">
+                            </div>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="create-task-container">
+        <p><span class="red">*</span>This field is required</p>
+        <button class="create-btn">Create Task <img src="../assets/img/check.svg" alt=""></button>
+    </div>
+
+    <iframe src="mobile-navbar.html" width="100%" height="80px"
+        style="position: fixed; bottom: 0; box-sizing: border-box; z-index: 999;"></iframe>
+</body>
+
+</html>

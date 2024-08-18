@@ -1,56 +1,83 @@
-/* Fonts */
-
 /* Document & Container */
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    scroll-behavior: smooth;
+.d-none {
+    display: none !important;
 }
 
-html {
-    height: 100%;
-    font-family: "Inter", sans-serif;
-    font-optical-sizing: auto;
+.test {
+    margin-bottom: 200px;
 }
 
-body {
-    min-height: 100vh;
+/* Contact List */
+
+.contact-list {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-top: 40px;
+}
+
+.seperator-list {
+    width: 100%;
+    height: 1px;
+    background-color: #D1D1D1;
+    margin: 24px 0;
+}
+
+.list-content-wrapper {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+}
+
+/* Contact Overlay */
+
+.contact-overlay {
+    padding: 40px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.contact-detail-header {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.contact-detail-header h2 {
+    font-size: 47px;
+    font-weight: 700;
+    line-height: 56.4px;
+    text-align: left;
+}
+
+.contact-detail-header h3 {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
+}
+
+.contact-info-wrapper {
     display: flex;
     flex-direction: column;
 }
 
-main {
-    flex: 1;
-    width: 100%;
+.avatar-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 40px 0;
 }
 
-.container {
-    margin: 0 auto;
-    width: 100%;
-    max-width: 1440px;
+.contact-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
-/* Link Styling */
-
-a {
-    text-decoration: none;
-}
-
-/* Headlines */
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    margin-block-start: 0;
-    margin-block-end: 0;
-}
-
-/* Contact Card */
+/* Add Contact Card */
 
 .contact-card-wrapper {
     position: absolute;
@@ -244,6 +271,22 @@ input::placeholder {
     .card-header {
         border-radius: 30px 0 0 30px;
         height: 100%;
+    }
+
+    .card-header h2 {
+        font-size: 61px;
+        font-weight: 700;
+        line-height: 73.2px;
+        text-align: left;
+
+    }
+
+    .card-header h3 {
+        font-size: 27px;
+        font-weight: 400;
+        line-height: 32.4px;
+        text-align: left;
+
     }
 
     .card-image-outter {
