@@ -64,17 +64,17 @@ form{
 .name-input{
   background-image: url(/assets/img/person.svg);
   background-repeat: no-repeat;
-  background-position: 345px 4px;  
+  background-position: 330px 2px;  
 }
 .email-input{
   background-image: url(/assets/img/mail.svg);
   background-repeat: no-repeat;
-  background-position: 345px 4px;
+  background-position: 330px 2px;
 }
 .password-input{
   background-image: url(/assets/img/lock.svg);
   background-repeat: no-repeat;
-  background-position: 345px 4px;
+  background-position: 330px 2px;
 }
 .check-box-container{
   display: flex;
