@@ -1,3 +1,11 @@
+function init(){
+    loadLogIn();
+}
+
+
+
+
+
 async function fetchApi() {
     try {
         let response = await fetch('https://join-318-default-rtdb.europe-west1.firebasedatabase.app/.json');

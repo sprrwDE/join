@@ -12,8 +12,8 @@
     <script src="javascript.js"></script>
     <script src="/javascript/login.js"></script>
   </head>
-  <body>
-    <section id="log-in" class="log-in-section">
+  <body onload="init()">
+    <section id="log-in" class="log-in-section d-none">
       <img class="log-in-join-logo" src="/assets/img/join-icon.svg" alt="" />
       <div class="log-in-container">
         <h2 class="log-in-title">Log in</h2>
@@ -73,7 +73,7 @@
           <a href="">Legal notice</a>
         </div>
       </section>
-    <section id="join-main-section" class="d-none">
+    <section id="join-main-section" >
       <header>
         <img
           class="header-join-icon"
