@@ -10,14 +10,13 @@
     <link rel="stylesheet" href="../style/mobile-navbar-style.css">
     <script src="../javascript/addtask-render-html.js"></script>
     <script src="../javascript/addtask.js"></script>
+    <script src="../javascript/includeHTML.js"></script>
     <title>Add Task</title>
 </head>
 
 <body onload="init()">
-    <header>
-        <img class="header-join-icon" src="/assets/img/join-icon.svg" alt="join-icon">
-        <div id="header-user-icon" class="header-user-icon-container">SM</div>
-    </header>
+    <div w3-include-html="mobile-header.html"></div>
+    
     <div class="content-container">
         <div class="title-section">
             <span class="title">Add Task</span>
@@ -144,42 +143,7 @@
         <button class="create-btn">Create Task <img src="../assets/img/check.svg" alt=""></button>
     </div>
 
-    <footer>
-        <div class="test-container">
-            <div class="mobile-navbar">
-                <a class="navbar-icon-container" href="/index.html">
-                    <img
-                      class="navbar-icon"
-                      src="/assets/img/summary-mobile-icon.png"
-                      alt=""
-                    />Summary
-                  </a>
-        
-                  <a class="navbar-icon-container" href="/documents/board.html">
-                    <img
-                      class="navbar-icon"
-                      src="/assets/img/board-mobile-icon.png"
-                      alt=""
-                    />Board
-                  </a>
-        
-                  <a class="navbar-icon-container" href="/documents/addtask.html">
-                    <img
-                      class="navbar-icon"
-                      src="/assets/img/add-task-moblie-icon.png"
-                      alt=""
-                    />Add Tasks</a>
-        
-                  <a class="navbar-icon-container" href="/documents/contacts.html">
-                    <img
-                      class="navbar-icon"
-                      src="/assets/img/contacts-mobile-icon.png"
-                      alt=""
-                    />Contacts
-                  </a>
-            </div>
-        </div>
-    </footer>
+    <div w3-include-html="mobile-navbar.html"></div>
 </body>
 
 </html>

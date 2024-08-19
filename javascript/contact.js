@@ -33,7 +33,11 @@ async function fetchApi() {
     } catch (error) {
         console.log('Error Brudi')
     }
+    includeHTML()
 }
+
+
+
 
 async function pushData() {
     try {

@@ -8,15 +8,14 @@
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="../style/mobile-header.css">
     <link rel="stylesheet" href="../style/mobile-navbar-style.css">
+    <script src="../javascript/includeHTML.js"></script>
+    <script src="../javascript/board.js"></script>
     <title>Board</title>
 </head>
 
-<body>
+<body onload="init()">
 
-    <header>
-        <img class="header-join-icon" src="/assets/img/join-icon.svg" alt="join-icon">
-        <div id="header-user-icon" class="header-user-icon-container">SM</div>
-    </header>
+    <div w3-include-html="mobile-header.html"></div>
     <div class="top-section">
         <h1 class="top-section-title">Board</h1>
         <img src="../assets/img/plus add task mobile.svg" alt="" class="add-task-btn">
@@ -135,46 +134,11 @@
                 </div>
             </div>
         </div>
-   <footer></footer>    
+        <footer></footer>
     </div>
 
-    
-    <footer>
-        <div class="test-container">
-            <div class="mobile-navbar">
-                <a class="navbar-icon-container" href="/index.html">
-                    <img
-                      class="navbar-icon"
-                      src="/assets/img/summary-mobile-icon.png"
-                      alt=""
-                    />Summary
-                  </a>
-        
-                  <a class="navbar-icon-container" href="/documents/board.html">
-                    <img
-                      class="navbar-icon"
-                      src="/assets/img/board-mobile-icon.png"
-                      alt=""
-                    />Board
-                  </a>
-        
-                  <a class="navbar-icon-container" href="/documents/addtask.html">
-                    <img
-                      class="navbar-icon"
-                      src="/assets/img/add-task-moblie-icon.png"
-                      alt=""
-                    />Add Tasks</a>
-        
-                  <a class="navbar-icon-container" href="/documents/contacts.html">
-                    <img
-                      class="navbar-icon"
-                      src="/assets/img/contacts-mobile-icon.png"
-                      alt=""
-                    />Contacts
-                  </a>
-            </div>
-        </div>
-    </footer>
+
+    <div w3-include-html="mobile-navbar.html"></div>
 </body>
 
 </html>

@@ -1,6 +1,9 @@
 function init() {
   loadContacts();
+  includeHTML()
 }
+
+
 
 function test() {
   fetch(
