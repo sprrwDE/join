@@ -22,12 +22,24 @@
     height: 1px;
     background-color: #D1D1D1;
     margin: 24px 0;
+    
 }
 
 .list-content-wrapper {
     display: flex;
+    flex-direction: column;
     gap: 32px;
+
+}
+
+.list-card {
+    display: flex;
     align-items: center;
+    gap: 32px;
+}
+
+.initial-letter {
+    margin-top: 64px;
 }
 
 /* Contact Overlay */
