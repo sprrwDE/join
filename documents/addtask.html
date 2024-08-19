@@ -8,12 +8,12 @@
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="../style/mobile-header.css">
     <link rel="stylesheet" href="../style/mobile-navbar-style.css">
+    <script src="../javascript/addtask-render-html.js"></script>
     <script src="../javascript/addtask.js"></script>
     <title>Add Task</title>
 </head>
 
 <body onload="init()">
-
     <header>
         <img class="header-join-icon" src="/assets/img/join-icon.svg" alt="join-icon">
         <div id="header-user-icon" class="header-user-icon-container">SM</div>
@@ -30,7 +30,7 @@
 
         <div class="description-section">
             <p>Description</p>
-            <textarea name="description" id="" placeholder="Enter a Description" class="description-area"></textarea>
+            <textarea name="description" id="text-area" placeholder="Enter a Description" class="description-area"></textarea>
         </div>
 
         <div class="assigned-to-section">
@@ -45,7 +45,7 @@
                                 onkeyup="filterFunction()">
                         </div>
                     </div>
-                    <img src="../assets/img/arrow_drop_down.svg" alt="">
+                    <img src="../assets/img/arrow_drop_down.svg" alt="" id="arrow-down">
                 </div>
 
                 <div class="contacts-imges d-none"> <!-- d-none is active to switch !!!-->
@@ -53,68 +53,8 @@
                     <img src="../assets/img/Profile badge.svg" alt="">
                     <img src="../assets/img/Profile badge.svg" alt="">
                 </div>
-                <div class="contacts d-none" id="all-contacts"> <!-- d-none is active to hide all contacts !!!-->
-                    <div class="contact background" id="contact">
-                        <!-- this one has background added to show how it looks if its selected -->
-                        <div class="flex">
-                            <img src="../assets/img/Profile badge.svg" alt="">
-                            <p>Sofia Müller</p>
-                        </div>
-                        <div class="checkbox-wrapper-19">
-                            <input type="checkbox" id="cbtest-19-1" />
-                            <label for="cbtest-19-1" class="check-box">
-                        </div>
-                    </div>
-                    <div class="contact">
-                        <div class="flex">
-                            <img src="../assets/img/Profile badge.svg" alt="">
-                            <p>Albert Einstein</p>
-                        </div>
-                        <div class="checkbox-wrapper-19">
-                            <input type="checkbox" id="cbtest-19-2" />
-                            <label for="cbtest-19-2" class="check-box">
-                        </div>
-                    </div>
-                    <div class="contact">
-                        <div class="flex">
-                            <img src="../assets/img/Profile badge.svg" alt="">
-                            <p>Albert Einstein</p>
-                        </div>
-                        <div class="checkbox-wrapper-19">
-                            <input type="checkbox" id="cbtest-19-3" />
-                            <label for="cbtest-19-3" class="check-box">
-                        </div>
-                    </div>
-                    <div class="contact">
-                        <div class="flex">
-                            <img src="../assets/img/Profile badge.svg" alt="">
-                            <p>Albert Einstein</p>
-                        </div>
-                        <div class="checkbox-wrapper-19">
-                            <input type="checkbox" id="cbtest-19-4" />
-                            <label for="cbtest-19-4" class="check-box">
-                        </div>
-                    </div>
-                    <div class="contact">
-                        <div class="flex">
-                            <img src="../assets/img/Profile badge.svg" alt="">
-                            <p>Albert Einstein</p>
-                        </div>
-                        <div class="checkbox-wrapper-19">
-                            <input type="checkbox" id="cbtest-19-5" />
-                            <label for="cbtest-19-5" class="check-box">
-                        </div>
-                    </div>
-                    <div class="contact">
-                        <div class="flex">
-                            <img src="../assets/img/Profile badge.svg" alt="">
-                            <p>Albert Einstein</p>
-                        </div>
-                        <div class="checkbox-wrapper-19">
-                            <input type="checkbox" id="cbtest-19-6" />
-                            <label for="cbtest-19-6" class="check-box">
-                        </div>
-                    </div>
+                <div class="contacts d-none" id="all-contacts">
+
                 </div>
             </div>
         </div>
@@ -232,3 +172,6 @@
 </body>
 
 </html>
+
+
+<!-- ZEILE 51 NICHT VERGESSEN !!! (<div class="contacts-imges d-none">) -->

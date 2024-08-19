@@ -167,7 +167,7 @@ textarea {
   border-bottom-right-radius: 10px;
   display: flex;
   flex-direction: column;
-  height: 300px !important;
+  height: auto;
   overflow-y: scroll;
 }
 
@@ -279,7 +279,7 @@ textarea {
   position: absolute;
   height: 0;
   width: calc(var(--checkbox-height) * 0.2);
-  background-color: #34b93d;
+  background-color: white;
   display: inline-block;
   -moz-transform-origin: left top;
   -ms-transform-origin: left top;
@@ -314,7 +314,7 @@ textarea {
 
 .checkbox-wrapper-19 input[type="checkbox"]:checked + .check-box,
 .checkbox-wrapper-19 .check-box.checked {
-  border-color: #34b93d;
+  border-color: white;
 }
 .checkbox-wrapper-19 input[type="checkbox"]:checked + .check-box::after,
 .checkbox-wrapper-19 .check-box.checked::after {
@@ -435,7 +435,23 @@ textarea {
   background-color: #D1D1D1;
 }
 
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(180deg);
+  }
+}
 
-.prio-img {
-  filter: invert(1) brightness(10000%)
+
+@keyframes slowdropdown {
+  from {
+    max-height: 0;
+    overflow: hidden;
+  }
+
+  to {
+    max-height: 300px;
+  }
 }
