@@ -1,174 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="/style.css" />
-    <link rel="stylesheet" href="/style/mobile-header.css" />
-    <link rel="stylesheet" href="/style/join-318.css" />
-    <link rel="stylesheet" href="/style/mobile-navbar-style.css" />
-    <link rel="stylesheet" href="/style/login.css" />
-    <script src="javascript.js"></script>
-    <script src="/javascript/login.js"></script>
-  </head>
-  <body onload="init()">
-    <section id="log-in" class="log-in-section d-none">
-      <img class="log-in-join-logo" src="/assets/img/join-icon.svg" alt="" />
-      <div class="log-in-container">
-        <h2 class="log-in-title">Log in</h2>
-        <div class="border-bottom-log-in"></div>
-        <form onsubmit="logIn()">
-          <input
-            required
-            class="input-field email-input"
-            type="email"
-            placeholder="Email"
-          />
-          <input
-            required
-            class="input-field password-input"
-            type="password"
-            placeholder="Password"
-          />
-          <div class="check-box-container">
-            <input type="checkbox" id="remember-me-box" />
-            <label class="label-margin-right" for="checkbox">Remember me</label>
-          </div>
-          <button class="button log-in-button">Log in</button>
-        </form>
-        <button onclick="guestLogIn()" class="button guest-log-in">Guest log in</button>
-      </div>
-      <div class="log-in-sign-up-container">
-        <p>Not a Join user?</p>
-        <button onclick="signUp()" class="log-in-sign-up-button">sign up</button>
-      </div>
-      <div class="log-in-link-container">
-        <a href="">Privacy Policy</a>
-        <a href="">Legal notice</a>
-      </div>
-    </section>
-    <section id="sign-up" class="log-in-section d-none">
-      <img class="log-in-join-logo" src="/assets/img/join-icon.svg" alt="">
-      <div class="log-in-container">
-        <div class="sign-in-title-container">
-          <img onclick="backToLogIn()" class="sign-up-arrow" src="/assets/img/arrow-left-line.svg" alt="">
-          <h2>Sign up</h2>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/style/mobile-header.css" />
+  <link rel="stylesheet" href="/style/join-318.css" />
+  <link rel="stylesheet" href="/style/mobile-navbar-style.css" />
+  <link rel="stylesheet" href="/style/login.css" />
+  <script src="javascript.js"></script>
+  <script src="/javascript/login.js"></script>
+  <script src="javascript/includeHTML.js"></script>
+</head>
+
+<body onload="init()">
+  <section id="log-in" class="log-in-section d-none">
+    <img class="log-in-join-logo" src="/assets/img/join-icon.svg" alt="" />
+    <div class="log-in-container">
+      <h2 class="log-in-title">Log in</h2>
+      <div class="border-bottom-log-in"></div>
+      <form onsubmit="logIn()">
+        <input required class="input-field email-input" type="email" placeholder="Email" />
+        <input required class="input-field password-input" type="password" placeholder="Password" />
+        <div class="check-box-container">
+          <input type="checkbox" id="remember-me-box" />
+          <label class="label-margin-right" for="checkbox">Remember me</label>
         </div>
-        <div class="border-bottom-log-in"></div>
-        <form onsubmit="register()">
-          <input class="input-field name-input" type="text" required placeholder="Name">
-          <input class="input-field email-input" type="email" required placeholder="Email">
-          <input class="input-field password-input" type="password" required placeholder="Password">
-          <input class="input-field password-input" type="password" required placeholder="Confirm Password">
+        <button class="button log-in-button">Log in</button>
+      </form>
+      <button onclick="guestLogIn()" class="button guest-log-in">Guest log in</button>
+    </div>
+    <div class="log-in-sign-up-container">
+      <p>Not a Join user?</p>
+      <button onclick="signUp()" class="log-in-sign-up-button">sign up</button>
+    </div>
+    <div class="log-in-link-container">
+      <a href="">Privacy Policy</a>
+      <a href="">Legal notice</a>
+    </div>
+  </section>
+  <section id="sign-up" class="log-in-section d-none">
+    <img class="log-in-join-logo" src="/assets/img/join-icon.svg" alt="">
+    <div class="log-in-container">
+      <div class="sign-in-title-container">
+        <img onclick="backToLogIn()" class="sign-up-arrow" src="/assets/img/arrow-left-line.svg" alt="">
+        <h2>Sign up</h2>
+      </div>
+      <div class="border-bottom-log-in"></div>
+      <form onsubmit="register()">
+        <input class="input-field name-input" type="text" required placeholder="Name">
+        <input class="input-field email-input" type="email" required placeholder="Email">
+        <input class="input-field password-input" type="password" required placeholder="Password">
+        <input class="input-field password-input" type="password" required placeholder="Confirm Password">
         <div class="check-box-container">
           <input type="checkbox" id="i-accept-box">
           <label for="checkbox">I accept the</label><a href="">Privacy policy</a>
         </div>
-          <button onclick="saveNewAccount()" class="button log-in-button">Sign up</button>
-        </div>
-        </form>
-        <div class="log-in-link-container">
-          <a href="">Privacy Policy</a>
-          <a href="">Legal notice</a>
-        </div>
-      </section>
-    <section id="join-main-section" >
-      <header>
-        <img
-          class="header-join-icon"
-          src="/assets/img/join-icon.svg"
-          alt="join-icon"
-        />
-        <div id="header-user-icon" class="header-user-icon-container">SM</div>
-      </header>
-      <section>
-        <div class="join-318-container">
-          <h1>Join 318</h1>
-          <p class="join-subtitle">Key Mertics at a Glance</p>
-          <div class="border-bottom"></div>
-        </div>
-        <div class="to-do-and-done">
-          <div class="to-do-box">
-            <img class="to-do-img" src="/assets/img/eddit-icon.svg" alt="" />
-            <div class="to-do-block">
-              <p id="to-do-counter" class="count-number">1</p>
-              <p>To-Do</p>
-            </div>
-          </div>
-          <div class="to-do-box">
-            <img class="to-do-img" src="/assets/img/check-icon.svg" alt="" />
-            <div class="to-do-block">
-              <p id="done-counter" class="count-number">1</p>
-              <p>To-Do</p>
-            </div>
+        <button onclick="saveNewAccount()" class="button log-in-button">Sign up</button>
+    </div>
+    </form>
+    <div class="log-in-link-container">
+      <a href="">Privacy Policy</a>
+      <a href="">Legal notice</a>
+    </div>
+  </section>
+  <section id="join-main-section">
+    <div w3-include-html="./documents/mobile-header.html"></div>
+
+    <section>
+      <div class="join-318-container">
+        <h1>Join 318</h1>
+        <p class="join-subtitle">Key Mertics at a Glance</p>
+        <div class="border-bottom"></div>
+      </div>
+      <div class="to-do-and-done">
+        <div class="to-do-box">
+          <img class="to-do-img" src="/assets/img/eddit-icon.svg" alt="" />
+          <div class="to-do-block">
+            <p id="to-do-counter" class="count-number">1</p>
+            <p>To-Do</p>
           </div>
         </div>
-        <div class="deadline-container">
-          <img
-            class="arrow-up-icon"
-            src="/assets/img/arrow-up-icon.svg"
-            alt="Arrow-img"
-          />
-          <div class="urgent-box">
-            <p id="urgent-counter" class="count-number">1</p>
-            <p id="urgent-counter">Urgent</p>
-          </div>
-          <div class="vertical-border"></div>
-          <div class="deadline-box">
-            <p>October 16, 2022</p>
-            <p>Upcoming Deadline</p>
+        <div class="to-do-box">
+          <img class="to-do-img" src="/assets/img/check-icon.svg" alt="" />
+          <div class="to-do-block">
+            <p id="done-counter" class="count-number">1</p>
+            <p>To-Do</p>
           </div>
         </div>
-        <div class="task-boxes-container">
-          <div class="tasks-counter-box">
-            <p id="tasks-in-board-counter" class="count-number">5</p>
-            <p>Task in <br />Board</p>
-          </div>
-          <div class="tasks-counter-box">
-            <p id="tasks-in-progress-counter" class="count-number">5</p>
-            <p>Task in <br />Progress</p>
-          </div>
-          <div class="tasks-counter-box">
-            <p id="awaiting-feedback-counter" class="count-number">5</p>
-            <p>Awaiting <br />feedback</p>
-          </div>
+      </div>
+      <div class="deadline-container">
+        <img class="arrow-up-icon" src="/assets/img/arrow-up-icon.svg" alt="Arrow-img" />
+        <div class="urgent-box">
+          <p id="urgent-counter" class="count-number">1</p>
+          <p id="urgent-counter">Urgent</p>
         </div>
-      </section>
-      <footer>
-        <div class="test-container">
-          <div class="mobile-navbar">
-            <a class="navbar-icon-container" href="/index.html">
-              <img
-                class="navbar-icon"
-                src="/assets/img/summary-mobile-icon.png"
-                alt=""
-              />Summary
-            </a>
-            <a class="navbar-icon-container" href="/documents/board.html">
-              <img
-                class="navbar-icon"
-                src="/assets/img/board-mobile-icon.png"
-                alt=""
-              />Board
-            </a>
-            <a class="navbar-icon-container" href="/documents/addtask.html">
-              <img
-                class="navbar-icon"
-                src="/assets/img/add-task-moblie-icon.png"
-                alt=""
-              />Add Tasks</a
-            >
-            <a class="navbar-icon-container" href="/documents/contacts.html">
-              <img
-                class="navbar-icon"
-                src="/assets/img/contacts-mobile-icon.png"
-                alt=""
-              />Contacts
-            </a>
-          </div>
+        <div class="vertical-border"></div>
+        <div class="deadline-box">
+          <p>October 16, 2022</p>
+          <p>Upcoming Deadline</p>
         </div>
-      </footer>
+      </div>
+      <div class="task-boxes-container">
+        <div class="tasks-counter-box">
+          <p id="tasks-in-board-counter" class="count-number">5</p>
+          <p>Task in <br />Board</p>
+        </div>
+        <div class="tasks-counter-box">
+          <p id="tasks-in-progress-counter" class="count-number">5</p>
+          <p>Task in <br />Progress</p>
+        </div>
+        <div class="tasks-counter-box">
+          <p id="awaiting-feedback-counter" class="count-number">5</p>
+          <p>Awaiting <br />feedback</p>
+        </div>
+      </div>
     </section>
-  </body>
+    <div w3-include-html="documents/mobile-navbar.html"></div>
+  </section>
+</body>
+
 </html>

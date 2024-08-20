@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,25 +8,26 @@
   <link rel="stylesheet" href="/style.css">
   <link rel="stylesheet" href="/style/login.css">
 </head>
+
 <body>
   <section id="log-in" class="log-in-section">
-  <img class="log-in-join-logo" src="/assets/img/join-icon.svg" alt="">
-  <div class="log-in-container">
-    <h2 class="log-in-title">Log in</h2>
-    <div class="border-bottom-log-in"></div>
-    <form onsubmit="logIn()">
-      <input required class="input-field email-input" type="email" placeholder="Email">
-      <input required class="input-field password-input" type="password" placeholder="Password">
-    
-    <div class="check-box-container">
-      <input type="checkbox" id="remember-me-box">
-      <label class="label-margin-right" for="checkbox">Remember me</label>
-    </div>
-      <button class="button log-in-button">Log in</button>
-    </form>
+    <img class="log-in-join-logo" src="/assets/img/join-icon.svg" alt="">
+    <div class="log-in-container">
+      <h2 class="log-in-title">Log in</h2>
+      <div class="border-bottom-log-in"></div>
+      <form onsubmit="logIn()">
+        <input required class="input-field email-input" type="email" placeholder="Email">
+        <input required class="input-field password-input" type="password" placeholder="Password">
+
+        <div class="check-box-container">
+          <input type="checkbox" id="remember-me-box">
+          <label class="label-margin-right" for="checkbox">Remember me</label>
+        </div>
+        <button class="button log-in-button">Log in</button>
+      </form>
       <button class="button guest-log-in">Guest-log-in</button>
     </div>
-    
+
     <div class="log-in-sign-up-container">
       <p>Not a Join user?</p>
       <button class="log-in-sign-up-button">sign up</button>
@@ -36,24 +38,24 @@
     </div>
   </section>
   <section id="sign-up" class="log-in-section">
-  <img class="log-in-join-logo" src="/assets/img/join-icon.svg" alt="">
-  <div class="log-in-container">
-    <div class="sign-in-title-container">
-      <img class="sign-up-arrow" src="/assets/img/arrow-left-line.svg" alt="">
-      <h2>Sign up</h2>
-    </div>
-    <div class="border-bottom-log-in"></div>
-    <form onsubmit="register()">
-      <input class="input-field name-input" type="text" required placeholder="Name">
-      <input class="input-field email-input" type="email" required placeholder="Email">
-      <input class="input-field password-input" type="password" required placeholder="Password">
-      <input class="input-field password-input" type="password" required placeholder="Confirm Password">
-    
-    <div class="check-box-container">
-      <input type="checkbox" id="remember-me-box">
-      <label for="checkbox">I accept the</label><a href="">Privacy policy</a>
-    </div>
-      <button class="button log-in-button">Sign up</button>
+    <img class="log-in-join-logo" src="/assets/img/join-icon.svg" alt="">
+    <div class="log-in-container">
+      <div class="sign-in-title-container">
+        <img class="sign-up-arrow" src="/assets/img/arrow-left-line.svg" alt="">
+        <h2>Sign up</h2>
+      </div>
+      <div class="border-bottom-log-in"></div>
+      <form onsubmit="register()">
+        <input class="input-field name-input" type="text" required placeholder="Name">
+        <input class="input-field email-input" type="email" required placeholder="Email">
+        <input class="input-field password-input" type="password" required placeholder="Password">
+        <input class="input-field password-input" type="password" required placeholder="Confirm Password">
+
+        <div class="check-box-container">
+          <input type="checkbox" id="remember-me-box">
+          <label for="checkbox">I accept the</label><a href="">Privacy policy</a>
+        </div>
+        <button class="button log-in-button">Sign up</button>
     </div>
     </form>
     <div class="log-in-link-container">
@@ -63,4 +65,5 @@
   </section>
 
 </body>
+
 </html>

@@ -8,6 +8,7 @@ async function init() {
     await fetchApi("contacts");
     renderContacts();
     console.log(db);
+    includeHTML()
 }
 
 async function fetchApi(path) {

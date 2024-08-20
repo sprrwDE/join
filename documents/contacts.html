@@ -5,8 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="../style/mobile-header.css">
-    <link rel="stylesheet" href="../style/mobile-navbar-style.css">
     <link rel="stylesheet" href="../style/contact.css">
     <title>Contacts</title>
     <!-- Google Fonts Embed -->
@@ -15,6 +13,8 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Orbitron:wght@400..900&display=swap"
         rel="stylesheet">
+        <script src="../javascript.js"></script>
+        <script src="../javascript/includeHTML.js"></script>
 </head>
 
 <header>
@@ -128,42 +128,7 @@
     </section>
     <!-- End of Buttons Test -->
 
-    <footer>
-        <div class="test-container">
-            <div class="mobile-navbar">
-                <a class="navbar-icon-container" href="/index.html">
-                    <img
-                      class="navbar-icon"
-                      src="/assets/img/summary-mobile-icon.png"
-                      alt=""
-                    />Summary
-                  </a>
-        
-                  <a class="navbar-icon-container" href="/documents/board.html">
-                    <img
-                      class="navbar-icon"
-                      src="/assets/img/board-mobile-icon.png"
-                      alt=""
-                    />Board
-                  </a>
-        
-                  <a class="navbar-icon-container" href="/documents/addtask.html">
-                    <img
-                      class="navbar-icon"
-                      src="/assets/img/add-task-moblie-icon.png"
-                      alt=""
-                    />Add Tasks</a>
-        
-                  <a class="navbar-icon-container" href="/documents/contacts.html">
-                    <img
-                      class="navbar-icon"
-                      src="/assets/img/contacts-mobile-icon.png"
-                      alt=""
-                    />Contacts
-                  </a>
-            </div>
-        </div>
-    </footer>
+    <div w3-include-html="mobile-navbar.html"></div>
     <script src="../javascript/contact.js"></script>
 </body>
 

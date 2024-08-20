@@ -2,6 +2,11 @@ body {
   background-color: rgb(246, 247, 248);
 }
 
+header {
+  z-index: 9999;
+}
+
+
 .d-none {
   display: none !important;
 }
@@ -36,8 +41,8 @@ textarea {
   overflow: scroll;
   z-index: 0;
   position: absolute;
-  top: 16px;
-  bottom: 160px;
+  top: 200px;
+  bottom: 170px;
   box-sizing: border-box;
   width: 100vw;
 }
@@ -75,7 +80,7 @@ textarea {
   height: 112px;
   display: flex;
   align-items: flex-end;
-  padding: 16px;
+  padding: 0px 16px 0px;
   font-size: 47px;
   font-weight: 700;
   position: fixed;
@@ -107,7 +112,6 @@ textarea {
   gap: 8px;
   display: flex;
   flex-direction: column;
-  margin-top: 192px;
 }
 
 .inputfield {
