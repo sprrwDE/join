@@ -1,6 +1,6 @@
 function init(){
-    loadLogIn();
-    includeHTML()
+    
+    includeHTML();
 }
 
 
