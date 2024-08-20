@@ -8,6 +8,7 @@ header{
   padding-right: 16px;
   box-shadow: 0px 8px 4px -5px rgba(0,0,0,0.30);
   position: fixed;
+  background-color: white;
 }
 .header-join-icon{
   height: 39px;
