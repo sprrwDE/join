@@ -52,7 +52,7 @@ function search() {
     input.focus();
     document.getElementById("arrow-down").style.animation = "rotate 0.5s forwards"
     palceholder.style.display = "none";
-    contacts.style.animation = "slowdropdown 2s forwards"
+    contacts.style.animation = "slowdropdown 0.7s forwards"
   }
 }
 
