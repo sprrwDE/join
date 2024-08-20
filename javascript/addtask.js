@@ -1,9 +1,7 @@
 function init() {
   loadContacts();
-  includeHTML()
+  includeHTML();
 }
-
-
 
 function test() {
   fetch(
@@ -16,24 +14,54 @@ function test() {
   );
 }
 
+let BASE_URL =
+  "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/";
+
 function loadContacts() {
-  fetch(
-    "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/contacts.json"
-  )
+  fetch(BASE_URL + "/contacts.json")
     .then((response) => response.json())
     .then((result) => renderContacts(result))
     .catch((error) => console.log(error));
 }
 
+function getRandomColor() {
+  let randomNumber = Math.floor(Math.random() * 16777215);
+  let randomColor = "#" + randomNumber.toString(16).padStart(6, "0");
+  return randomColor;
+}
+
+function getContactInitials(contacts) {
+  let newcontact = contacts.split(" ");
+  let firstinits = newcontact[0].charAt(0);
+  let secondinits = newcontact[1]?.charAt(0) || "";
+  return [firstinits, secondinits];
+}
+
 function renderContacts(contacts) {
   let contactcontainer = document.getElementById("all-contacts");
-  let contactscount = Object.keys(contacts).length;
+  let allcontacts = [];
 
-  for (i = 0; i < contactscount; i++) {
-    let contact = Object.keys(contacts)[i];
-    contactcontainer.innerHTML += renderAssignedTo(contacts, contact,i);
+  for (let letter in contacts) {
+    for (let key in contacts[letter]) {
+      allcontacts.push(contacts[letter][key].name);
+    }
   }
+  for (i = 0; i < allcontacts.length; i++) {
+    let [firstinits, secondinits] = getContactInitials(allcontacts[i]);
+    contactcontainer.innerHTML += renderAssignedTo(
+      allcontacts,
+      i,
+      firstinits,
+      secondinits
+    );
+    contactsImages(i);
+  }
+}
 
+function contactsImages(i) {
+  let imgcontainer = document.getElementById("contacts-imges");
+  let inits = document.getElementById(`inits${i}`).innerHTML;
+  imgcontainer.innerHTML += renderContactsImages(inits, i) 
 }
 
 function search() {
@@ -41,18 +69,21 @@ function search() {
   let search = document.getElementById("search-container");
   let contacts = document.getElementById("all-contacts");
   let input = document.getElementById("myInput");
+  let contactimages = document.getElementById("contacts-imges");
 
-  
   contacts.classList.toggle("d-none");
   search.classList.toggle("d-none");
   if (palceholder.style.display == "none") {
+    contactimages.classList.remove("d-none");
     palceholder.style.display = "";
-    document.getElementById("arrow-down").style.animation = ""
+    document.getElementById("arrow-down").style.animation = "";
   } else {
+    contactimages.classList.add("d-none");
     input.focus();
-    document.getElementById("arrow-down").style.animation = "rotate 0.5s forwards"
+    document.getElementById("arrow-down").style.animation =
+      "rotate 0.5s forwards";
     palceholder.style.display = "none";
-    contacts.style.animation = "slowdropdown 0.7s forwards"
+    contacts.style.animation = "slowdropdown 0.7s forwards";
   }
 }
 
@@ -114,11 +145,15 @@ function setPrioDefault(urgent, medium, low, urgentimg, mediumimg, lowimg) {
 function assignedToChecked(id) {
   let checkbox = document.getElementById(`cbtest-19-${id}`);
   let grandParent = checkbox.parentElement.parentElement;
+  let img = document.getElementById(`contact-initals1${id}`);
+  let contactimg = document.getElementById(`contact-initals${id}`);
+  let color = contactimg.style.backgroundColor;
 
   if (checkbox.checked) {
-    console.log("checked" + id);
+    img.classList.remove("d-none");
+    img.style.backgroundColor = color;
   } else {
-    console.log("not checked" + id);
+    img.classList.add("d-none");
   }
   grandParent.classList.toggle("background");
 }
