@@ -489,3 +489,8 @@ textarea {
   padding: 16px;
   border-radius: 10px;
 }
+
+.border{
+  border: none;
+  outline: none;
+}

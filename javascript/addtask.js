@@ -200,31 +200,39 @@ function cancelSubtaskInput() {
   subtasklist.classList.add("d-none");
 }
 
-let id = 0
+let id = 0;
 
 function addToSubtask() {
   let input = document.getElementById("input-subtask");
   let subtaskcontainer = document.getElementById("subtasklist");
-  id++
-  
+  id++;
 
-  subtaskcontainer.innerHTML += `<div class="task" id="id-${id}">
-                            <li>${input.value}</li>
-                            <div class="edit-delete">
-                                <img src="../assets/img/edit.svg" alt="" onclick="editSubtask(${id})">
-                                <img src="../assets/img/Vector 3.svg" alt="">
-                                <img src="../assets/img/delete.svg" alt="" onclick="deleteSubtask(${id})">
-                            </div>
-                        </div>`;
+  subtaskcontainer.innerHTML += renderAddToSubtaskList(id, input);
   input.value = "";
 }
 
 function deleteSubtask(id) {
-  let subtask = document.getElementById(`id-${id}`)
-  subtask.remove()
+  let subtask = document.getElementById(`id-${id}`);
+  subtask.remove();
 }
 
 function editSubtask(id) {
-  let subtask = document.getElementById(`id-${id}`)
-  
+  let subtask = document.getElementById(`id-${id}`);
+  let editdelete = document.getElementById(`edit-delete${id}`);
+  let task = document.getElementById(`subtask${id}`);
+
+  task.innerHTML = renderInputfieldEdit(id);
+  editdelete.innerHTML = renderEditOptions(id);
+  subtask.classList.replace("task", "onedit");
+}
+
+function edited(id) {
+  let newtask = document.getElementById(`newtask${id}`).value;
+  let subtask = document.getElementById(`id-${id}`);
+  let task = document.getElementById(`subtask${id}`);
+  let editdelete = document.getElementById(`edit-delete${id}`);
+  subtask.classList.replace("onedit", "task");
+
+  editdelete.innerHTML = renderEditDoneImages(id);
+  task.innerHTML = newtask;
 }
