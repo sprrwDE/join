@@ -41,3 +41,18 @@ function renderSignUpHTML(){
     <a href="">Legal notice</a>
   </div>`;
 }
+
+window.addEventListener('load', function() {
+  const logoOverlay = document.getElementById('logo-overlay');
+  const loginSection = document.getElementById('log-in');
+
+  setTimeout(() => {
+      logoOverlay.classList.add('hidden'); // Füge die Klasse für die Animation hinzu
+      loginSection.classList.remove('hidden');
+      loginSection.classList.add('visible');
+  }, 1000); // 1 Sekunde Verzögerung vor der Animation
+
+  setTimeout(() => {
+      logoOverlay.style.display = 'none'; // Logo nach der Animation komplett entfernen
+  }, 2000); // 2 Sekunden warten (1 Sekunde Animation + 1 Sekunde Verzögerung)
+});
