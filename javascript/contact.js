@@ -4,7 +4,7 @@ const contactListRef = document.getElementById('contact-list');
 const listContentRef = document.getElementById('list-content-outter');
 
 let baseUrl = 'https://join-318-default-rtdb.europe-west1.firebasedatabase.app/';
-let db = []
+let db = [];
 
 /**
  * Fetch API POST
@@ -57,7 +57,6 @@ function renderContacts() {
         });
     }
 
-    // Sortieren der Initialen nach Alphabet
     let sortedInitials = Object.keys(organizedContacts).sort();
 
     // Zweite Schleife zum Rendern der gruppierten und sortierten Kontakte
@@ -85,9 +84,9 @@ async function pushData() {
         let phone = document.getElementById('phone').value;
 
         // Funktion, um den Initialbuchstaben des Nachnamens zu erhalten
-        function getLastNameInitial(fullName) {
-            let nameParts = fullName.trim().split(' ');
-            let lastName = nameParts[nameParts.length - 1];
+        function getLastNameInitial(name) {
+            let namesArray = name.trim().split(' ');
+            let lastName = namesArray[namesArray.length - 1];
             return lastName.charAt(0).toUpperCase(); // Der erste Buchstabe des Nachnamens
         }
 
@@ -145,6 +144,7 @@ function closeDetailDialog() {
     detailRef.classList.add('d-none');
     contactListRef.classList.remove('d-none');
 }
+
 
 /**
  * Templates
