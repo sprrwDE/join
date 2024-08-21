@@ -51,6 +51,10 @@
     gap: 32px;
 }
 
+.list-card {
+    cursor: pointer;
+}
+
 .contact-detail-header {
     display: flex;
     flex-direction: column;

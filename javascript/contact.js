@@ -73,7 +73,7 @@ function contactTemplate(initial, index) {
     return `
         <h2 class="initial-letter">${initial}</h2>
         <div class="seperator-list"></div>
-        <div class="list-content-wrapper" id="list-content-inner-${index}">
+        <div class="list-content-wrapper" id="list-content-inner-${index}" onclick="openDetailDialog(${index})">
         </div>
     `;
 }
@@ -157,15 +157,47 @@ function closeAddContactDialog() {
     contactListRef.classList.remove('d-none');
 }
 
-function openDetailDialog() {
+function openDetailDialog(index) {
+    let currentIndex = index;
     detailRef.classList.remove('d-none');
     contactListRef.classList.add('d-none');
+    detailRef.innerHTML = getDetailTemplate(index);
 }
 
 function closeDetailDialog() {
     detailRef.classList.add('d-none');
     contactListRef.classList.remove('d-none');
 }
+
+function getDetailTemplate(index) {
+    let contact = db[index];
+    return `            <div class="contact-detail-header">
+                <h2>Contacts</h2>
+                <h3>Better with a team!</h3>
+                <div class="seperator-card"></div>
+            </div>
+            <div class="contact-info-wrapper">
+                <div class="avatar-wrapper">
+                    <div class="card-image">
+                        <h4>123</h4>
+                    </div>
+                    <h4>${contact.name}</h4>
+                </div>
+                <div class="contact-content">
+                    <h4>Contact information</h4>
+                    <p><b>Email</b></p>
+                    <a href="mailto:">platzhalter@platzhalter.de</a>
+                    <p><b>Phone</b></p>
+                    <p>1111111111111</p>
+                </div>
+            </div>
+            <button onclick="closeDetailDialog()">close</button>`
+}
+
+
+
+
+
 
 /**
  * Floating Buttons
