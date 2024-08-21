@@ -1,28 +1,38 @@
+const detailRef = document.getElementById('detail');
+const addContactRef = document.getElementById('add-contact');
+const contactListRef = document.getElementById('contact-list');
+const listContentRef = document.getElementById('list-content-outter');
+
 let baseUrl = 'https://join-318-default-rtdb.europe-west1.firebasedatabase.app/';
 let db = []
+
 /**
  * Fetch API POST
  */
 
 async function init() {
-    await fetchApi("contacts");
-    renderContacts();
-    console.log(db);
-    includeHTML()
+    try {
+        db = [];
+        await fetchApi("contacts");
+    }
+    finally {
+        listContentRef.innerHTML = '';
+        renderContacts();
+        includeHTML();
+    }
 }
 
 async function fetchApi(path) {
     try {
         let response = await fetch(baseUrl + path + '.json');
         let data = await response.json();
-        // noch nicht 100% verstanden
         let userKeysArray = Object.keys(data).map(key => {
             return {
-                id: key, 
-                ...data[key] 
+                letter: key,
+                ...data[key]
             };
         });
-        db.push(...userKeysArray); 
+        db.push(...userKeysArray);
     } catch (error) {
         console.log('Error Brudi')
     }
@@ -33,38 +43,33 @@ async function fetchApi(path) {
  */
 
 function renderContacts() {
-    let contentRef = document.getElementById('list-content-outter');
-    contentRef.innerHTML = ''; 
-
+    listContentRef.innerHTML = '';
     let organizedContacts = {};
-    
-    // Erste Schleife zum Organisieren der Kontakte nach Initialen
+
     for (let i = 0; i < db.length; i++) {
-        let contactGroup = db[i]; // Zugriff auf das aktuelle Gruppenobjekt
-        let id = contactGroup.id; // Holen der Initialbuchstaben ID
-
-        // Organisieren der Kontakte unter den entsprechenden Initialen
-        if (!organizedContacts[id]) {
-            organizedContacts[id] = [];
-        }
-
-        Object.keys(contactGroup).forEach(key => {
-            if (key !== 'id') {
-                organizedContacts[id].push(contactGroup[key]);
+        let currentContact = db[i];
+        let letter = currentContact.letter;
+        organizedContacts[letter] = [];
+        Object.keys(currentContact).forEach(key => {
+            if (key !== 'letter') {
+                organizedContacts[letter].push(currentContact[key]);
             }
         });
     }
 
-    // Zweite Schleife zum Rendern der gruppierten Kontakte
-    Object.keys(organizedContacts).forEach((initial, index) => {
-        contentRef.innerHTML += contactTemplate(initial, index);
-        let contentTestRef = document.getElementById(`list-content-inner-${index}`);
+    // Sortieren der Initialen nach Alphabet
+    let sortedInitials = Object.keys(organizedContacts).sort();
+
+    // Zweite Schleife zum Rendern der gruppierten und sortierten Kontakte
+    sortedInitials.forEach((initial, index) => {
+        listContentRef.innerHTML += contactTemplate(initial, index);
+        let currentContactRef = document.getElementById(`list-content-inner-${index}`);
 
         organizedContacts[initial].forEach(contact => {
             let name = contact.name;
             let email = contact.email;
             let phone = contact.phone;
-            contentTestRef.innerHTML += getContactsTemplate(name, email, phone);
+            currentContactRef.innerHTML += getContactsTemplate(name, email, phone);
         });
     });
 }
@@ -87,7 +92,7 @@ async function pushData() {
         }
 
         // Generiere die ID aus dem Initialbuchstaben des Nachnamens
-        let id = getLastNameInitial(name);
+        let letter = getLastNameInitial(name);
 
         // Erstelle das Datenobjekt
         let data = {
@@ -97,7 +102,7 @@ async function pushData() {
         };
 
         // Baue den Pfad zusammen
-        let path = `contacts/${id}`;
+        let path = `contacts/${letter}`;
 
         // Sende die Daten an Firebase
         let response = await fetch(baseUrl + path + '.json', {
@@ -119,10 +124,6 @@ async function pushData() {
 /**
  * Dialog functions
  */
-
-const detailRef = document.getElementById('detail');
-const addContactRef = document.getElementById('add-contact');
-const contactListRef = document.getElementById('contact-list')
 
 function openAddContactDialog() {
     addContactRef.classList.remove('d-none');
@@ -174,9 +175,9 @@ function getContactsTemplate(name, email, phone) {
 }
 
 function getDetailTemplate(index) {
-    let contactGroup = db[index];
-    let contactKey = Object.keys(contactGroup).find(key => key !== 'id'); // Finde den Schlüssel, der nicht 'id' ist
-    let contact = contactGroup[contactKey]; // Holt das tatsächliche Kontaktobjekt basierend auf dem Schlüssel
+    let currentContact = db[index];
+    let contactId = Object.keys(currentContact).find(key => key !== 'letter'); 
+    let contact = currentContact[contactId]; 
 
     return `            
         <div class="contact-detail-header">
