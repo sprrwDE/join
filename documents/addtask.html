@@ -36,7 +36,7 @@
                 <div class="search-bar-section" onclick="search()">
                     <div>
                         <p id="assigne-placeholder">Select contacts to assign</p>
-                        <div class="search d-none" id="search-container"> <!-- d-none is active to switch !!!-->
+                        <div class="search d-none" id="search-container">
                             <span class="prefix">An:</span>
                             <input type="search" id="myInput" placeholder="" class="searchfield"
                                 onkeyup="filterFunction()">
@@ -45,10 +45,9 @@
                     <img src="../assets/img/arrow_drop_down.svg" alt="" id="arrow-down">
                 </div>
 
-                <div class="contacts-imges" id="contacts-imges"> <!-- d-none is active to switch !!!-->
+                <div class="contacts-imges" id="contacts-imges"> 
                 </div>
                 <div class="contacts d-none" id="all-contacts">
-
                 </div>
             </div>
         </div>
@@ -79,13 +78,13 @@
         <div class="category-section">
             <p>Category<span class="red">*</span></p>
             <div class="dropdown-wrap">
-                <div class="search-bar-section">
-                    <span class="prefix">Select task category</span>
+                <div class="search-bar-section" onclick="categorys()">
+                    <span class="prefix" id="select-task">Select task category</span>
                     <img src="../assets/img/arrow_drop_down.svg" alt="">
                 </div>
-                <div class="contacts d-none"> <!-- d-none is active to hide all contacts !!!-->
-                    <p>Technical Task</p>
-                    <p>User Story</p>
+                <div class="categorys d-none" id="categorys" >
+                    <p id="tech" onclick="taskSelected('tech')">Technical Task</p>
+                    <p id="user" onclick="taskSelected('user')">User Story</p>
                 </div>
             </div>
         </div>
@@ -94,15 +93,15 @@
             <p>Subtasks</p>
             <div class="dropdown-wrap">
                 <div class="search-bar-section">
-                    <input type="search" id="myInput" placeholder="Add new subtask" class="searchfield">
-                    <img src="../assets/img/add.svg" alt="" class="">
-                    <div class="ok-notok-section d-none"> <!-- d-none is active !!!-->
-                        <img src="../assets/img/Close.svg" alt="">
+                    <input type="search" id="input-subtask" placeholder="Add new subtask" class="searchfield">
+                    <img src="../assets/img/add.svg" alt="" class="" id="add-img" onclick="addSubtask()">
+                    <div class="ok-notok-section d-none" id="ok-notok-section"> <!-- d-none is active !!!-->
+                        <img src="../assets/img/Close.svg" alt="" onclick="cancelSubtaskInput()">
                         <img src="../assets/img/Vector 3.svg" alt="" class="separator">
-                        <img src="../assets/img/check.svg" alt="" style="filter: invert();">
+                        <img src="../assets/img/check.svg" alt="" style="filter: invert();" onclick="addToSubtask()">
                     </div>
                 </div>
-                <div class="subtasks"> <!-- d-none is active to hide all tasks!!!-->
+                <div class="subtasks" id="subtasklist"> <!-- d-none is active to hide all tasks!!!-->
                     <ul class="subtasks-list">
                         <div class="task">
                             <li>do this</li>
