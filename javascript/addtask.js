@@ -61,7 +61,7 @@ function renderContacts(contacts) {
 function contactsImages(i) {
   let imgcontainer = document.getElementById("contacts-imges");
   let inits = document.getElementById(`inits${i}`).innerHTML;
-  imgcontainer.innerHTML += renderContactsImages(inits, i) 
+  imgcontainer.innerHTML += renderContactsImages(inits, i);
 }
 
 function search() {
@@ -156,4 +156,75 @@ function assignedToChecked(id) {
     img.classList.add("d-none");
   }
   grandParent.classList.toggle("background");
+}
+
+function categorys() {
+  let categorylist = document.getElementById("categorys");
+  categorylist.classList.toggle("d-none");
+}
+
+function taskSelected(task) {
+  let selecttask = document.getElementById("select-task");
+  let tech = document.getElementById("tech");
+  let user = document.getElementById("user");
+
+  if (task == "tech") {
+    tech.classList.add("background");
+    user.classList.remove("background");
+    selecttask.innerHTML = "Technical Task";
+  } else if (task == "user") {
+    user.classList.add("background");
+    tech.classList.remove("background");
+    selecttask.innerHTML = "User Story";
+  }
+}
+
+function addSubtask() {
+  let addimg = document.getElementById("add-img");
+  let notok = document.getElementById("ok-notok-section");
+  let subtasklist = document.getElementById("subtasklist");
+
+  addimg.classList.add("d-none");
+  notok.classList.remove("d-none");
+  subtasklist.classList.remove("d-none");
+}
+
+function cancelSubtaskInput() {
+  let input = document.getElementById("input-subtask");
+  let addimg = document.getElementById("add-img");
+  let notok = document.getElementById("ok-notok-section");
+  let subtasklist = document.getElementById("subtasklist");
+  input.value = "";
+  addimg.classList.remove("d-none");
+  notok.classList.add("d-none");
+  subtasklist.classList.add("d-none");
+}
+
+let id = 0
+
+function addToSubtask() {
+  let input = document.getElementById("input-subtask");
+  let subtaskcontainer = document.getElementById("subtasklist");
+  id++
+  
+
+  subtaskcontainer.innerHTML += `<div class="task" id="id-${id}">
+                            <li>${input.value}</li>
+                            <div class="edit-delete">
+                                <img src="../assets/img/edit.svg" alt="" onclick="editSubtask(${id})">
+                                <img src="../assets/img/Vector 3.svg" alt="">
+                                <img src="../assets/img/delete.svg" alt="" onclick="deleteSubtask(${id})">
+                            </div>
+                        </div>`;
+  input.value = "";
+}
+
+function deleteSubtask(id) {
+  let subtask = document.getElementById(`id-${id}`)
+  subtask.remove()
+}
+
+function editSubtask(id) {
+  let subtask = document.getElementById(`id-${id}`)
+  
 }
