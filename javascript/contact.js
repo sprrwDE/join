@@ -36,31 +36,31 @@ function renderContacts() {
     let contentRef = document.getElementById('list-content-outter');
     contentRef.innerHTML = ''; 
 
-    let contactGroups = {};
-
+    let organizedContacts = {};
+    
     // Erste Schleife zum Organisieren der Kontakte nach Initialen
     for (let i = 0; i < db.length; i++) {
         let contactGroup = db[i]; // Zugriff auf das aktuelle Gruppenobjekt
         let id = contactGroup.id; // Holen der Initialbuchstaben ID
 
         // Organisieren der Kontakte unter den entsprechenden Initialen
-        if (!contactGroups[id]) {
-            contactGroups[id] = [];
+        if (!organizedContacts[id]) {
+            organizedContacts[id] = [];
         }
 
         Object.keys(contactGroup).forEach(key => {
             if (key !== 'id') {
-                contactGroups[id].push(contactGroup[key]);
+                organizedContacts[id].push(contactGroup[key]);
             }
         });
     }
 
     // Zweite Schleife zum Rendern der gruppierten Kontakte
-    Object.keys(contactGroups).forEach((initial, index) => {
+    Object.keys(organizedContacts).forEach((initial, index) => {
         contentRef.innerHTML += contactTemplate(initial, index);
         let contentTestRef = document.getElementById(`list-content-inner-${index}`);
 
-        contactGroups[initial].forEach(contact => {
+        organizedContacts[initial].forEach(contact => {
             let name = contact.name;
             let email = contact.email;
             let phone = contact.phone;
@@ -68,31 +68,6 @@ function renderContacts() {
         });
     });
 }
-
-function contactTemplate(initial, index) {
-    return `
-        <h2 class="initial-letter">${initial}</h2>
-        <div class="seperator-list"></div>
-        <div class="list-content-wrapper" id="list-content-inner-${index}" onclick="openDetailDialog(${index})">
-        </div>
-    `;
-}
-
-function getContactsTemplate(name, email, phone) {
-    return `
-        <div class="list-card">
-        <div class="card-image">
-            <h4>${name}</h4>
-        </div>
-        <div class="list-content">
-            <h4>${name}</h4>
-            <a href="mailto:${email}">${email}</a>
-            <p>${phone}</p>
-        </div>
-        </div>
-    `;
-}
-
 
 /**
  * Push Data from input-fields into Firestone Database
@@ -140,6 +115,7 @@ async function pushData() {
     }
 }
 
+
 /**
  * Dialog functions
  */
@@ -161,7 +137,7 @@ function openDetailDialog(index) {
     let currentIndex = index;
     detailRef.classList.remove('d-none');
     contactListRef.classList.add('d-none');
-    detailRef.innerHTML = getDetailTemplate(index);
+    detailRef.innerHTML = getDetailTemplate(currentIndex);
 }
 
 function closeDetailDialog() {
@@ -169,35 +145,62 @@ function closeDetailDialog() {
     contactListRef.classList.remove('d-none');
 }
 
-function getDetailTemplate(index) {
-    let contact = db[index];
-    return `            <div class="contact-detail-header">
-                <h2>Contacts</h2>
-                <h3>Better with a team!</h3>
-                <div class="seperator-card"></div>
-            </div>
-            <div class="contact-info-wrapper">
-                <div class="avatar-wrapper">
-                    <div class="card-image">
-                        <h4>123</h4>
-                    </div>
-                    <h4>${contact.name}</h4>
-                </div>
-                <div class="contact-content">
-                    <h4>Contact information</h4>
-                    <p><b>Email</b></p>
-                    <a href="mailto:">platzhalter@platzhalter.de</a>
-                    <p><b>Phone</b></p>
-                    <p>1111111111111</p>
-                </div>
-            </div>
-            <button onclick="closeDetailDialog()">close</button>`
+/**
+ * Templates
+ */
+
+function contactTemplate(initial, index) {
+    return `
+        <h2 class="initial-letter">${initial}</h2>
+        <div class="seperator-list"></div>
+        <div class="list-content-wrapper" id="list-content-inner-${index}" onclick="openDetailDialog(${index})">
+        </div>
+    `;
 }
 
+function getContactsTemplate(name, email, phone) {
+    return `
+        <div class="list-card">
+        <div class="card-image">
+            <h4>${name}</h4>
+        </div>
+        <div class="list-content">
+            <h4>${name}</h4>
+            <a href="mailto:${email}">${email}</a>
+            <p>${phone}</p>
+        </div>
+        </div>
+    `;
+}
 
+function getDetailTemplate(index) {
+    let contactGroup = db[index];
+    let contactKey = Object.keys(contactGroup).find(key => key !== 'id'); // Finde den Schlüssel, der nicht 'id' ist
+    let contact = contactGroup[contactKey]; // Holt das tatsächliche Kontaktobjekt basierend auf dem Schlüssel
 
-
-
+    return `            
+        <div class="contact-detail-header">
+            <h2>Contacts</h2>
+            <h3>Better with a team!</h3>
+            <div class="seperator-card"></div>
+        </div>
+        <div class="contact-info-wrapper">
+            <div class="avatar-wrapper">
+                <div class="card-image">
+                    <h4>${contact.name ? contact.name.charAt(0) : "N/A"}</h4>
+                </div>
+                <h4>${contact.name || "Name not available"}</h4>
+            </div>
+            <div class="contact-content">
+                <h4>Contact information</h4>
+                <p><b>Email</b></p>
+                <a href="mailto:${contact.email || ""}">${contact.email || "Email not available"}</a>
+                <p><b>Phone</b></p>
+                <p>${contact.phone || "Phone not available"}</p>
+            </div>
+        </div>
+        <button onclick="closeDetailDialog()">Close</button>`;
+}
 
 /**
  * Floating Buttons
