@@ -16,7 +16,7 @@ let db = [];
 let inputData;
 
 /**
- * Fetch API POST
+ * Fetches Firebase RealtimeDB
  */
 
 async function init() {
@@ -26,7 +26,7 @@ async function init() {
     }
     finally {
         listContentRef.innerHTML = '';
-        renderGroups();
+        renderContactGroups();
         includeHTML();
     }
 }
@@ -48,10 +48,10 @@ async function fetchApi(path) {
 }
 
 /**
- * Renders Contacts into DOM
+ * Renders Contact List into DOM
  */
 
-function renderGroups() {
+function renderContactGroups() {
     listContentRef.innerHTML = '';
     let organizedContacts = {};
 
@@ -85,10 +85,23 @@ function renderContacts(organizedContacts) {
 }
 
 /**
+ * Add Contact Dialog
+ */
+
+function openAddContactDialog() {
+    addContactRef.classList.remove('d-none');
+}
+
+function closeAddContactDialog() {
+    addContactRef.classList.add('d-none');
+    contactListRef.classList.remove('d-none');
+}
+
+/**
  * Push Data from input-fields into Firestone Database
  */
 
-function getInput() {
+function getInputValues() {
     nameInput = document.getElementById('name').value;
     emailInput = document.getElementById('email').value;
     phoneInput = document.getElementById('phone').value;
@@ -122,7 +135,6 @@ async function pushData(inputData, pathPush) {
     }
 }
 
-// Funktion, um den Initialbuchstaben des Nachnamens zu erhalten
 function getInitials(name) {
     let namesArray = name.trim().split(' ');
     let lastName = namesArray[namesArray.length - 1];
@@ -132,25 +144,22 @@ function getInitials(name) {
     return [initialFirst, initialLast]; 
 }
 
-
 /**
- * Dialog functions
+ * Detail Dialog
  */
-
-function openAddContactDialog() {
-    addContactRef.classList.remove('d-none');
-}
-
-function closeAddContactDialog() {
-    addContactRef.classList.add('d-none');
-    contactListRef.classList.remove('d-none');
-}
 
 function openDetailDialog(index) {
     let currentIndex = index;
     detailRef.classList.remove('d-none');
     contactListRef.classList.add('d-none');
-    detailRef.innerHTML = getDetailTemplate(currentIndex);
+    getDetailTemplate(currentIndex);
+}
+
+function getDetailTemplate(index) {
+    let currentContact = db[index];
+    let contactId = Object.keys(currentContact).find(key => key !== 'letter');
+    let contact = currentContact[contactId];
+    detailRef.innerHTML = detailTemplate(contact);
 }
 
 function closeDetailDialog() {
@@ -186,34 +195,34 @@ function getContactsTemplate(name, email, phone) {
     `;
 }
 
-function getDetailTemplate(index) {
-    let currentContact = db[index];
-    let contactId = Object.keys(currentContact).find(key => key !== 'letter');
-    let contact = currentContact[contactId];
-
+function detailTemplate(contact) {
     return `            
-        <div class="contact-detail-header">
-            <h2>Contacts</h2>
-            <h3>Better with a team!</h3>
-            <div class="seperator-card"></div>
-        </div>
-        <div class="contact-info-wrapper">
-            <div class="avatar-wrapper">
-                <div class="card-image">
-                    <h4>${contact.name ? contact.name.charAt(0) : "N/A"}</h4>
-                </div>
-                <h4>${contact.name || "Name not available"}</h4>
+    <div class="contact-detail-header">
+        <h2>Contacts</h2>
+        <h3>Better with a team!</h3>
+        <div class="seperator-card"></div>
+    </div>
+    <div class="contact-info-wrapper">
+        <div class="avatar-wrapper">
+            <div class="card-image">
+                <h4>${contact.name ? contact.name.charAt(0) : "N/A"}</h4>
             </div>
-            <div class="contact-content">
-                <h4>Contact information</h4>
-                <p><b>Email</b></p>
-                <a href="mailto:${contact.email || ""}">${contact.email || "Email not available"}</a>
-                <p><b>Phone</b></p>
-                <p>${contact.phone || "Phone not available"}</p>
-            </div>
+            <h4>${contact.name || "Name not available"}</h4>
         </div>
-        <button onclick="closeDetailDialog()">Close</button>`;
+        <div class="contact-content">
+            <h4>Contact information</h4>
+            <p><b>Email</b></p>
+            <a href="mailto:${contact.email || ""}">${contact.email || "Email not available"}</a>
+            <p><b>Phone</b></p>
+            <p>${contact.phone || "Phone not available"}</p>
+        </div>
+    </div>
+    <button onclick="closeDetailDialog()">Close</button>`;
 }
+
+
+
+
 
 /**
  * Floating Buttons
