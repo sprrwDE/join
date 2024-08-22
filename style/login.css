@@ -1,53 +1,5 @@
-/* Neues Logo-Overlay, das das Logo in der Mitte anzeigt */
-.logo-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: grey;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  overflow: hidden; /* Verhindert das Überlaufen des Logos */
-  transition: background-color 1s ease; /* Übergang für Hintergrundfarbe */
-}
 
-/* Zustand, wenn das Logo nach oben links bewegt wird */
-.logo-overlay.hidden {
-  background-color: transparent; /* Hintergrundfarbe wird transparent */
-  display: flex;
-  justify-content: flex-start; /* Logo in der oberen linken Ecke */
-  align-items: flex-start;
-}
 
-.logo-overlay.hidden img {
-  width: 64px; /* Endgröße des Logos */
-  height: 80px;
-  position: absolute; /* Position wird relativ zum Container */
-  top: 16px; /* Gleiche Position wie das Logo in der Log-in-Sektion */
-  left: 32px;
-}
-
-.logo-overlay img {
-  width: 128px; /* Anfangsgröße */
-  height: 160px;
-  transition: all 1s ease; /* Übergänge für Größe und Position */
-}
-
-/* Log-In-Sektion wird zunächst versteckt */
-.log-in-section.hidden {
-  visibility: hidden;
-}
-
-/* Log-In-Sektion wird sichtbar, nachdem die Animation abgeschlossen ist */
-.log-in-section.visible {
-  visibility: visible;
-  transition: visibility 0s 1s; /* Sichtbarkeit nach 1 Sekunde */
-}
-
-/* Bestehender Code */
 .log-in-section {
   background-color: #f5f5f5;
   height: 100vh;
