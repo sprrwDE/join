@@ -32,10 +32,21 @@ function changeToJSON(newName, newEmail, newPassword, checkNewPassword){
 /*  }else{
     alert('Passwörter stimmen nicht überein')
   }*/
-  postNewAccount(newAccount);
+  postNewAccount(newName, newEmail, newPassword);
   console.log(newAccount);
 }
 
+function postNewAccount(newName, newEmail, newPassword) {
+  fetch(
+    "https://join-fd166-default-rtdb.europe-west1.firebasedatabase.app/accounts.json",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({name: newName, email: newEmail, password: newPassword}),
+    }
+  );
+}
+/*
 async function postNewAccount(newAccount) {
 
   try {
@@ -55,7 +66,7 @@ async function postNewAccount(newAccount) {
       console.error("Fehler beim Senden der Daten:", error);
   }
 }
-
+* */
 /*window.addEventListener('load', function() {
   const logoOverlay = document.getElementById('logo-overlay');
   const loginSection = document.getElementById('log-in');
