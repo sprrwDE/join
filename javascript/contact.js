@@ -1,23 +1,19 @@
+// Div References
 const detailRef = document.getElementById('detail');
 const addContactRef = document.getElementById('add-contact');
 const contactListRef = document.getElementById('contact-list');
 const listContentRef = document.getElementById('list-content-outter');
 
+// Input References
+let nameInput, emailInput, phoneInput
+
+// Firebase References
 let baseUrl = 'https://join-318-default-rtdb.europe-west1.firebasedatabase.app/';
+let pathPush;
+
+// Data Storage
 let db = [];
-
-let nameInput = document.getElementById('name').value;
-let emailInput = document.getElementById('email').value;
-let phoneInput = document.getElementById('phone').value;
-
-let pathPush = `contacts/${getInitials(nameInput)}`;
-
-let data = {
-    name: nameInput,
-    email: emailInput,
-    phone: phoneInput
-};
-
+let inputData;
 
 /**
  * Fetch API POST
@@ -92,14 +88,31 @@ function renderContacts(organizedContacts) {
  * Push Data from input-fields into Firestone Database
  */
 
-async function pushData() {
+function getInput() {
+    nameInput = document.getElementById('name').value;
+    emailInput = document.getElementById('email').value;
+    phoneInput = document.getElementById('phone').value;
+    
+    let initials = getInitials(nameInput);
+    pathPush = `contacts/${initials[1]}`;
+
+    inputData = {
+        name: nameInput,
+        email: emailInput,
+        phone: phoneInput
+    };
+
+    pushData(inputData, pathPush);
+}
+
+async function pushData(inputData, pathPush) {
     try {
         let response = await fetch(baseUrl + pathPush + '.json', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(inputData)
         });
     } catch (error) {
         console.log('Error pushing data', error);
@@ -113,7 +126,10 @@ async function pushData() {
 function getInitials(name) {
     let namesArray = name.trim().split(' ');
     let lastName = namesArray[namesArray.length - 1];
-    return lastName.charAt(0).toUpperCase(); // Der erste Buchstabe des Nachnamens
+    let firstName = namesArray[0];
+    let initialFirst = firstName.charAt(0).toUpperCase();
+    let initialLast = lastName.charAt(0).toUpperCase();
+    return [initialFirst, initialLast]; 
 }
 
 
