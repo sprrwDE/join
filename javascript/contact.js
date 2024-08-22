@@ -6,6 +6,19 @@ const listContentRef = document.getElementById('list-content-outter');
 let baseUrl = 'https://join-318-default-rtdb.europe-west1.firebasedatabase.app/';
 let db = [];
 
+let nameInput = document.getElementById('name').value;
+let emailInput = document.getElementById('email').value;
+let phoneInput = document.getElementById('phone').value;
+
+let pathPush = `contacts/${getInitials(nameInput)}`;
+
+let data = {
+    name: nameInput,
+    email: emailInput,
+    phone: phoneInput
+};
+
+
 /**
  * Fetch API POST
  */
@@ -17,7 +30,7 @@ async function init() {
     }
     finally {
         listContentRef.innerHTML = '';
-        renderContacts();
+        renderGroups();
         includeHTML();
     }
 }
@@ -42,7 +55,7 @@ async function fetchApi(path) {
  * Renders Contacts into DOM
  */
 
-function renderContacts() {
+function renderGroups() {
     listContentRef.innerHTML = '';
     let organizedContacts = {};
 
@@ -56,10 +69,12 @@ function renderContacts() {
             }
         });
     }
+    renderContacts(organizedContacts);
+}
 
+function renderContacts(organizedContacts) {
     let sortedInitials = Object.keys(organizedContacts).sort();
 
-    // Zweite Schleife zum Rendern der gruppierten und sortierten Kontakte
     sortedInitials.forEach((initial, index) => {
         listContentRef.innerHTML += contactTemplate(initial, index);
         let currentContactRef = document.getElementById(`list-content-inner-${index}`);
@@ -79,32 +94,7 @@ function renderContacts() {
 
 async function pushData() {
     try {
-        let name = document.getElementById('name').value;
-        let email = document.getElementById('email').value;
-        let phone = document.getElementById('phone').value;
-
-        // Funktion, um den Initialbuchstaben des Nachnamens zu erhalten
-        function getLastNameInitial(name) {
-            let namesArray = name.trim().split(' ');
-            let lastName = namesArray[namesArray.length - 1];
-            return lastName.charAt(0).toUpperCase(); // Der erste Buchstabe des Nachnamens
-        }
-
-        // Generiere die ID aus dem Initialbuchstaben des Nachnamens
-        let letter = getLastNameInitial(name);
-
-        // Erstelle das Datenobjekt
-        let data = {
-            name: name,
-            email: email,
-            phone: phone
-        };
-
-        // Baue den Pfad zusammen
-        let path = `contacts/${letter}`;
-
-        // Sende die Daten an Firebase
-        let response = await fetch(baseUrl + path + '.json', {
+        let response = await fetch(baseUrl + pathPush + '.json', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -117,6 +107,13 @@ async function pushData() {
         closeAddContactDialog();
         init();
     }
+}
+
+// Funktion, um den Initialbuchstaben des Nachnamens zu erhalten
+function getInitials(name) {
+    let namesArray = name.trim().split(' ');
+    let lastName = namesArray[namesArray.length - 1];
+    return lastName.charAt(0).toUpperCase(); // Der erste Buchstabe des Nachnamens
 }
 
 
@@ -144,7 +141,6 @@ function closeDetailDialog() {
     detailRef.classList.add('d-none');
     contactListRef.classList.remove('d-none');
 }
-
 
 /**
  * Templates
@@ -176,8 +172,8 @@ function getContactsTemplate(name, email, phone) {
 
 function getDetailTemplate(index) {
     let currentContact = db[index];
-    let contactId = Object.keys(currentContact).find(key => key !== 'letter'); 
-    let contact = currentContact[contactId]; 
+    let contactId = Object.keys(currentContact).find(key => key !== 'letter');
+    let contact = currentContact[contactId];
 
     return `            
         <div class="contact-detail-header">
