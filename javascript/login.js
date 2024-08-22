@@ -3,7 +3,7 @@ let BASE_URL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/
 
 
 function logInAsGuest(){
-  window.location.href='../documents/summary.html';
+  window.location.href='./documents/summary.html';
 }
 
 function loadSignUp(){
@@ -33,6 +33,7 @@ function changeToJSON(newName, newEmail, newPassword, checkNewPassword){
     alert('Passwörter stimmen nicht überein')
   }*/
   postNewAccount(newAccount);
+  console.log(newAccount);
 }
 
 async function postNewAccount(newAccount) {
