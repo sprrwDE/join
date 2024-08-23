@@ -85,21 +85,21 @@
 
         </section>
         <!-- End of Contact List -->
+
+        <!-- Floating Buttons Mobile -->
         <div class="add-button" id="add-button" onclick="openAddContactDialog()">
             <img src="../assets/img/person_add.svg">
         </div>
-       
+        
+        <div class="add-button d-none" id="edit-button" onclick="">
+            <img src="../assets/img/more_vert.svg">
+        </div>
+        <!-- End of Floating Buttons Mobile-->
 
         <!-- Start of Edit Contact Card (Overlay) -->
         <section class="contact-card-wrapper d-none"></section>
         <!-- End of Edit Contact Card (Overlay) -->
 
-        <!-- Buttons test -->
-        <section class="test container">
-            <button onclick="openAddContactDialog()">show add</button>
-            <button onclick="openDetailDialog()">show detail</button>
-        </section>
-        <!-- End of Buttons Test -->
     </main>
     <div w3-include-html="mobile-navbar.html"></div>
     <script src="../javascript/contact.js"></script>

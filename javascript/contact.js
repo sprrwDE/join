@@ -3,6 +3,8 @@ const detailRef = document.getElementById('detail');
 const addContactRef = document.getElementById('add-contact');
 const contactListRef = document.getElementById('contact-list');
 const listContentRef = document.getElementById('list-content-outter');
+const addButtonRef = document.getElementById('add-button');
+const editButtonRef = document.getElementById('edit-button');
 
 // Input References
 let nameInput, emailInput, phoneInput
@@ -90,11 +92,14 @@ function renderContacts(organizedContacts) {
 
 function openAddContactDialog() {
     addContactRef.classList.remove('d-none');
+    editButtonRef.classList.add('d-none');
+    addButtonRef.classList.add('d-none');
 }
 
 function closeAddContactDialog() {
     addContactRef.classList.add('d-none');
     contactListRef.classList.remove('d-none');
+    addButtonRef.classList.remove('d-none');
 }
 
 /**
@@ -152,6 +157,8 @@ function openDetailDialog(index) {
     let currentIndex = index;
     detailRef.classList.remove('d-none');
     contactListRef.classList.add('d-none');
+    editButtonRef.classList.remove('d-none');
+    addButtonRef.classList.add('d-none');
     getDetailTemplate(currentIndex);
 }
 
@@ -165,6 +172,8 @@ function getDetailTemplate(index) {
 function closeDetailDialog() {
     detailRef.classList.add('d-none');
     contactListRef.classList.remove('d-none');
+    editButtonRef.classList.add('d-none');
+    addButtonRef.classList.remove('d-none');
 }
 
 /**
