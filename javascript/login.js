@@ -2,6 +2,34 @@ let BASE_URL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/
 
 
 
+
+function logIn(event){
+  event.preventDefault();
+  accounts = [];
+  loadAccounts();
+  
+}
+
+function loadAccounts() {
+  fetch(BASE_URL)
+    .then((response) => response.json())
+    .then((result) => {
+      const accounts = Object.values(result);
+      checkUserData(accounts);})
+    .catch((error) => console.log('Fehler beim Abrufen der Daten:', error));
+    
+}
+
+function checkUserData(accounts){
+  
+  let userEmail = document.getElementById('user-email').value;
+  let userPassword = document.getElementById('user-password').value;
+  let user = accounts.find(a => a.email == userEmail && a.password == userPassword)
+  if(user){
+    window.location.href='./documents/summary.html';
+  }
+}
+
 function logInAsGuest(){
   window.location.href='./documents/summary.html';
 }
@@ -24,17 +52,17 @@ function addNewUser(event) {
   let newEmail = document.getElementById('new-email').value;
   let newPassword = document.getElementById('new-password').value;
   let checkNewPassword = document.getElementById('check-new-password').value;  
-  changeToJSON(newName, newEmail, newPassword, checkNewPassword);
+  comparePasswords(newName, newEmail, newPassword, checkNewPassword);
 }
 
-function changeToJSON(newName, newEmail, newPassword, checkNewPassword){
- /* if (newPassword == checkNewPassword) {*/
-    newAccount = { name: newName, email: newEmail, password: newPassword}    
-/*  }else{
-    alert('Passwörter stimmen nicht überein')
-  }*/
-  postNewAccount(newName, newEmail, newPassword);
-  console.log(newAccount);
+function comparePasswords(newName, newEmail, newPassword, checkNewPassword){
+  if (newPassword == checkNewPassword) {
+    postNewAccount(newName, newEmail, newPassword);
+       
+  }else{
+    alert('Passwörter stimmen nicht überein')/**ändern in text unter confirm  password */
+  }
+
 }
 
 function postNewAccount(newName, newEmail, newPassword) {
@@ -62,21 +90,6 @@ function renderSuccessfully(){
   
 }
 
-/*window.addEventListener('load', function() {
-  const logoOverlay = document.getElementById('logo-overlay');
-  const loginSection = document.getElementById('log-in');
-
-  setTimeout(() => {
-      logoOverlay.classList.add('hidden'); // Füge die Klasse für die Animation hinzu
-      loginSection.classList.remove('hidden');
-      loginSection.classList.add('visible');
-  }, 1000); // 1 Sekunde Verzögerung vor der Animation
-
-  setTimeout(() => {
-      logoOverlay.style.display = 'none'; // Logo nach der Animation komplett entfernen
-  }, 2000); // 2 Sekunden warten (1 Sekunde Animation + 1 Sekunde Verzögerung)
-});*/
-
 function renderSignUpHTML(){
   return document.getElementById('sign-up').innerHTML = `
   <img class="log-in-join-logo" src="/assets/img/join-icon.svg" alt="">
@@ -91,7 +104,6 @@ function renderSignUpHTML(){
       <input id="new-email" class="input-field email-input" type="email" required placeholder="Email">
       <input id="new-password" class="input-field password-input" type="password" required placeholder="Password">
       <input id="check-new-password" class="input-field password-input" type="password" required placeholder="Confirm Password">
-
       <div class="check-box-container">
         <input type="checkbox" required id="accept-box">
         <label for="checkbox">I accept the</label><a href="">Privacy policy</a>
