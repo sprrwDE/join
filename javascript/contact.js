@@ -12,6 +12,7 @@ let nameInput, emailInput, phoneInput
 // Firebase References
 let baseUrl = 'https://join-318-default-rtdb.europe-west1.firebasedatabase.app/';
 let pathPush;
+let currentIndex;
 
 // Data Storage
 let db = [];
@@ -154,7 +155,7 @@ function getInitials(name) {
  */
 
 function openDetailDialog(index) {
-    let currentIndex = index;
+    currentIndex = index;
     detailRef.classList.remove('d-none');
     contactListRef.classList.add('d-none');
     editButtonRef.classList.remove('d-none');
