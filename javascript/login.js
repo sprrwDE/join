@@ -1,4 +1,4 @@
-let BASE_URL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/.json" 
+let BASE_URL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/accounts.json" 
 
 
 
@@ -18,7 +18,8 @@ function BackToLogIn(){
   document.getElementById('log-in').classList.remove('d-none');
 }
 
-function addNewUser() {
+function addNewUser(event) {
+  event.preventDefault();
   let newName = document.getElementById('new-name').value;
   let newEmail = document.getElementById('new-email').value;
   let newPassword = document.getElementById('new-password').value;
@@ -38,35 +39,29 @@ function changeToJSON(newName, newEmail, newPassword, checkNewPassword){
 
 function postNewAccount(newName, newEmail, newPassword) {
   fetch(
-    "https://join-fd166-default-rtdb.europe-west1.firebasedatabase.app/accounts.json",
+    BASE_URL,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({name: newName, email: newEmail, password: newPassword}),
+      body: JSON.stringify({name: `${newName}`, email: `${newEmail}`, password: `${newPassword}`}),
     }
   );
+  renderSuccessfully();
+  setTimeout(() => {
+    window.location.href='./index.html';
+}, 2000);
 }
-/*
-async function postNewAccount(newAccount) {
 
-  try {
-      const response = await fetch(BASE_URL, {
-          method: "POST", 
-          headers: {
-              "Content-Type": "application/json"
-          },
-          body: JSON.stringify(newAccount)
-      });
-      if (!response.ok) {
-          throw new Error("Network response was not ok");
-      }
-      const responseData = await response.json();
-      console.log("Daten erfolgreich gepostet:", responseData);
-  } catch (error) {
-      console.error("Fehler beim Senden der Daten:", error);
-  }
+function renderSuccessfully(){
+  document.getElementById('successfully').classList.remove('d-none');
+  document.getElementById('successfully').classList.add('sign-up-overlay');
+  return document.getElementById('successfully').innerHTML += `
+  <div id="sign-up-overlay" class="success-overlay"></div>
+  <div class="success-box">You Signed Up successfully</div>
+  `;
+  
 }
-* */
+
 /*window.addEventListener('load', function() {
   const logoOverlay = document.getElementById('logo-overlay');
   const loginSection = document.getElementById('log-in');
@@ -91,14 +86,14 @@ function renderSignUpHTML(){
       <h2>Sign up</h2>
     </div>
     <div class="border-bottom-log-in"></div>
-    <form onsubmit="addNewUser();">
+    <form onsubmit="addNewUser(event)">
       <input id="new-name" class="input-field name-input" type="text" required placeholder="Name">
       <input id="new-email" class="input-field email-input" type="email" required placeholder="Email">
       <input id="new-password" class="input-field password-input" type="password" required placeholder="Password">
       <input id="check-new-password" class="input-field password-input" type="password" required placeholder="Confirm Password">
 
       <div class="check-box-container">
-        <input type="checkbox" id="accept-box">
+        <input type="checkbox" required id="accept-box">
         <label for="checkbox">I accept the</label><a href="">Privacy policy</a>
       </div>
       <button class="button log-in-button">Sign up</button>
@@ -107,6 +102,7 @@ function renderSignUpHTML(){
   <div class="log-in-link-container">
     <a href="">Privacy Policy</a>
     <a href="">Legal notice</a>
-  </div>`;
+  </div>
+  <div id="successfully" class="d-none"></div>`;
 }
 
