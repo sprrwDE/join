@@ -229,9 +229,6 @@ function detailTemplate(contact) {
             <p><b>Phone</b></p>
             <p>${contact.phone || "Phone not available"}</p>
         </div>
-    </div>
-    <div class="add-button d-none" id="edit-button" onclick="">
-        <img src="../assets/img/more_vert.svg">
     </div>`
 }
 
