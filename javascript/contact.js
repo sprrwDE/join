@@ -163,10 +163,11 @@ function openDetailDialog(index) {
 }
 
 function getDetailTemplate(index) {
+    let currentIndex = index;
     let currentContact = db[index];
     let contactId = Object.keys(currentContact).find(key => key !== 'letter');
     let contact = currentContact[contactId];
-    detailRef.innerHTML = detailTemplate(contact);
+    detailRef.innerHTML = detailTemplate(contact, currentIndex);
 }
 
 function closeDetailDialog() {
@@ -205,7 +206,10 @@ function getContactsTemplate(name, email, phone) {
 }
 
 function detailTemplate(contact) {
-    return `            
+    return `
+    <div class="exit-detail" id="exit-detail" onclick="closeDetailDialog()">
+        <img src="../assets/img/exit-detail.svg">
+    </div>            
     <div class="contact-detail-header">
         <h2>Contacts</h2>
         <h3>Better with a team!</h3>
@@ -226,7 +230,9 @@ function detailTemplate(contact) {
             <p>${contact.phone || "Phone not available"}</p>
         </div>
     </div>
-    <button onclick="closeDetailDialog()">Close</button>`;
+    <div class="add-button d-none" id="edit-button" onclick="">
+        <img src="../assets/img/more_vert.svg">
+    </div>`
 }
 
 /**

@@ -58,6 +58,14 @@
 
 /* Contact Overlay */
 
+.exit-detail {
+    width: 32px;
+    position: absolute;
+    top: 15%;
+    right: 10%;
+    cursor: pointer;
+}
+
 .contact-overlay {
     padding: 40px 24px;
     display: flex;
@@ -70,6 +78,7 @@
 }
 
 .contact-detail-header {
+    margin-top: 40px;
     display: flex;
     flex-direction: column;
     gap: 16px;
