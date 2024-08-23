@@ -10,6 +10,20 @@
 
 /* Contact List */
 
+.add-button {
+    width: 56px;
+    height: 56px;
+    border-radius: 56px;
+    background-color: #2A3647;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 10%;
+    right: 10%;
+    cursor: pointer;
+}
+
 .contact-list {
     display: flex;
     flex-direction: column;

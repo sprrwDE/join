@@ -220,10 +220,6 @@ function detailTemplate(contact) {
     <button onclick="closeDetailDialog()">Close</button>`;
 }
 
-
-
-
-
 /**
  * Floating Buttons
  * Zurück Button Contacts
