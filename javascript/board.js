@@ -48,9 +48,6 @@ function checkTask(task) {
   renderTask();
 }
 
-function asd() {
-  renderTask();
-}
 
 function renderTask() {
   let todo = document.getElementById("todo");
@@ -76,7 +73,6 @@ function renderTask() {
 }
 
 function renderHelper(section) {
-  console.log(section);
   let allTasks = tasks.filter((t) => t["status"] == section);
   for (let i = 0; i < allTasks.length; i++) {
     document.getElementById(section).innerHTML += renderToDos(allTasks, i);
