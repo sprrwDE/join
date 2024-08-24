@@ -23,8 +23,8 @@
 
         <!-- Detail Overlay -->
         <section class="contact-detail">
-            <div class="contact-overlay container d-none" id="detail"></div>
-            <div class="add-button d-none" id="edit-button" onclick="">
+            <div class="contact-overlay container d-none" id="detail" onclick="hideEditBox()"></div>
+            <div class="add-button d-none" id="edit-button" onclick="showEditBox()">
                 <img src="../assets/img/more_vert.svg">
             </div>
         </section>
@@ -142,7 +142,7 @@
         <!-- End of Edit Contact Card (Overlay) -->
 
         <!-- Edit / Delete mobile -->
-        <div class="edit-box d-none" id="edit-box">
+        <div class="edit-box" id="edit-box">
             <div class="edit-row">
                 <img src="../assets/img/edit-small.svg">
                 <p>Edit</p>

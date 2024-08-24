@@ -5,6 +5,7 @@ const contactListRef = document.getElementById('contact-list');
 const listContentRef = document.getElementById('list-content-outter');
 const addButtonRef = document.getElementById('add-button');
 const editButtonRef = document.getElementById('edit-button');
+const editBoxRef = document.getElementById('edit-box')
 
 // Input References
 let nameInput, emailInput, phoneInput
@@ -175,6 +176,18 @@ function closeDetailDialog() {
     contactListRef.classList.remove('d-none');
     editButtonRef.classList.add('d-none');
     addButtonRef.classList.remove('d-none');
+}
+
+/**
+ * Edit / Delete
+ */
+
+function showEditBox() {
+    editBoxRef.classList.remove('d-none');
+}
+
+function hideEditBox() {
+    editBoxRef.classList.add('d-none');
 }
 
 /**

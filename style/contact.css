@@ -10,6 +10,14 @@
 
 /* Contact List */
 
+.edit-box-wrapper {
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    position: fixed;
+    top: 0;
+}
+
 .edit-box {
     display: flex;
     flex-direction: column;
@@ -17,7 +25,7 @@
     position: fixed;
     bottom: 15%;
     right: 10%;
-    z-index: 2;
+    z-index: 999;
     background-color: white;
     padding: 10px;
     border-radius: 20px 20px 0 20px;
@@ -93,6 +101,7 @@
     display: flex;
     flex-direction: column;
     gap: 32px;
+    height: 100vh;
 }
 
 .list-card {
