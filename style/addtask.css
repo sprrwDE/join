@@ -6,6 +6,9 @@ header {
   z-index: 9999;
 }
 
+.red-text {
+  color: rgb(248, 84, 103);
+}
 
 .d-none {
   display: none !important;

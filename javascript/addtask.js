@@ -1,17 +1,32 @@
+let tasks = {
+  title: "",
+  description: "",
+  assignedto: [],
+  date: "",
+  prio: "",
+  category: "",
+  subtask: [],
+};
+
 function init() {
   loadContacts();
   includeHTML();
 }
 
-function test() {
-  fetch(
-    "https://jjoin-1146d-default-rtdb.europe-west1.firebasedatabase.app/addTask.json",
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title: "erer", description: "cvcvcvc" }),
-    }
-  );
+function postInfos() {
+  fetch(BASE_URL + "/addTask.json", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      title: `${tasks.title}`,
+      description: `${tasks.description}`,
+      assignedto: `${tasks.assignedto}`,
+      date: `${tasks.date}`,
+      prio: `${tasks.prio}`,
+      category: `${tasks.category}`,
+      subtask: `${tasks.subtask}`,
+    }),
+  });
 }
 
 let BASE_URL =
@@ -119,14 +134,17 @@ function selectedPrio(prio) {
     urgent.style.backgroundColor = "rgb(255, 61, 0)";
     urgent.style.color = "white";
     urgentimg.src = "../assets/img/urgent white.svg";
+    tasks.prio = "urgent";
   } else if (prio == "medium") {
     medium.style.backgroundColor = "rgb(255, 168, 0)";
     medium.style.color = "white";
     mediumimg.src = "../assets/img/Capa 2 white.svg";
+    tasks.prio = "medium";
   } else if (prio == "low") {
     low.style.backgroundColor = "rgb(122, 226, 41)";
     low.style.color = "white";
     lowimg.src = "../assets/img/low white.svg";
+    tasks.prio = "low";
   }
 }
 
@@ -148,12 +166,18 @@ function assignedToChecked(id) {
   let img = document.getElementById(`contact-initals1${id}`);
   let contactimg = document.getElementById(`contact-initals${id}`);
   let color = contactimg.style.backgroundColor;
+  let contactid = document.getElementById(`id=${id}`);
+  let contact = contactid.getElementsByTagName("p");
+  console.log(contact[0].textContent);
 
   if (checkbox.checked) {
     img.classList.remove("d-none");
     img.style.backgroundColor = color;
+    tasks.assignedto.push(contact[0].textContent);
   } else {
     img.classList.add("d-none");
+    let remove = tasks.assignedto.indexOf(contact[0].textContent);
+    tasks.assignedto.splice(remove, 1);
   }
   grandParent.classList.toggle("background");
 }
@@ -172,10 +196,12 @@ function taskSelected(task) {
     tech.classList.add("background");
     user.classList.remove("background");
     selecttask.innerHTML = "Technical Task";
+    tasks.category = "Technical Task";
   } else if (task == "user") {
     user.classList.add("background");
     tech.classList.remove("background");
     selecttask.innerHTML = "User Story";
+    tasks.category = "User Story";
   }
 }
 
@@ -235,4 +261,49 @@ function edited(id) {
 
   editdelete.innerHTML = renderEditDoneImages(id);
   task.innerHTML = newtask;
+}
+
+function getTitle() {
+  let input = document.getElementById("input-title");
+  let required = document.getElementById("title-required");
+
+  if (input.value == "") {
+    input.style.border = "1px solid rgb(248, 84, 103)";
+    required.classList.remove("d-none");
+  } else {
+    tasks.title = input.value;
+  }
+}
+
+function inputTyping() {
+  document.getElementById("input-title").style.border = "";
+  document.getElementById("title-required").classList.add("d-none");
+}
+
+function getDescription() {
+  let description = document.getElementById("text-area").value;
+  tasks.description = description;
+}
+
+function getDate() {
+  let dateInput = document.getElementById("input-date");
+  tasks.date = dateInput.value;
+}
+
+function getSubtasks() {
+  let subtasklist = document.getElementById("subtasklist");
+  let subtask = subtasklist.getElementsByTagName("li");
+
+  for (let i = 0; i < subtask.length; i++) {
+    tasks.subtask.push(subtask[i].innerHTML);
+  }
+}
+
+function getAllInfos() {
+  getTitle();
+  getDescription();
+  getDate();
+  getSubtasks();
+  postInfos();
+  window.location.reload();
 }

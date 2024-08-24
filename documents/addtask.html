@@ -21,8 +21,9 @@
         </div>
 
         <div class="input-title-section">
-            <p>Title<span class="red">*</span></p>
-            <input type="text" name="" id="" class="inputfield" required placeholder="Enter a title">
+            <p onclick="getAssignedto()">Title<span class="red">*</span></p>
+            <input type="text" name="" id="input-title" class="inputfield" required placeholder="Enter a title" onkeyup="inputTyping()">
+            <p class="red-text d-none" id="title-required">This field is required</p>
         </div>
 
         <div class="description-section">
@@ -54,7 +55,7 @@
 
         <div class="date-section">
             <p>Due date<span class="red">*</span></p>
-            <input type="date" class="date">
+            <input type="date" class="date" id="input-date">
         </div>
 
         <div class="prio-section">
@@ -108,7 +109,7 @@
     </div>
     <div class="create-task-container">
         <p><span class="red">*</span>This field is required</p>
-        <button class="create-btn">Create Task <img src="../assets/img/check.svg" alt=""></button>
+        <button class="create-btn" onclick="getAllInfos()">Create Task <img src="../assets/img/check.svg" alt="" ></button>
     </div>
 
     <div w3-include-html="mobile-navbar.html"></div>
