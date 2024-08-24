@@ -14,8 +14,8 @@ function allowDrop(event) {
 }
 
 function moveTo(status) {
-  tasks[currentDraggedElement]['status'] = status;
-  renderTask()
+  tasks[currentDraggedElement]["status"] = status;
+  renderTask();
 }
 
 function test() {
@@ -23,11 +23,11 @@ function test() {
 }
 
 function highlight(id) {
-  document.getElementById(`${id}`).classList.add('drag-area-highlight');
+  document.getElementById(`${id}`).classList.add("drag-area-highlight");
 }
 
 function removeHighlight(id) {
-  document.getElementById(id).classList.remove('drag-area-highlight');
+  document.getElementById(id).classList.remove("drag-area-highlight");
 }
 
 function loadTasks() {
@@ -53,9 +53,9 @@ function asd() {
 }
 
 function renderTask() {
-  let todo = document.getElementById("to-do");
-  let inProgess = document.getElementById("in-progress");
-  let awaitFeedback = document.getElementById("await-feedback");
+  let todo = document.getElementById("todo");
+  let inProgess = document.getElementById("inprogress");
+  let awaitFeedback = document.getElementById("awaitfeedback");
   let done = document.getElementById("done");
 
   let clearProgress = inProgess.getElementsByClassName("ticket-card");
@@ -64,27 +64,22 @@ function renderTask() {
   let clearDone = done.getElementsByClassName("ticket-card");
 
   for (let i = 0; i < tasks.length; i++) {
-    clearProgress[0]?.remove() || ""
-    clearToDo[0]?.remove() || ""
-    clearFeedback[0]?.remove() || ""
-    clearDone[0]?.remove() || ""
+    clearProgress[0]?.remove() || "";
+    clearToDo[0]?.remove() || "";
+    clearFeedback[0]?.remove() || "";
+    clearDone[0]?.remove() || "";
   }
+  renderHelper("todo");
+  renderHelper("inprogress");
+  renderHelper("awaitfeedback");
+  renderHelper("done");
+}
 
-  let allToDos = tasks.filter((t) => t["status"] == "to-do");
-  for (let i = 0; i < allToDos.length; i++) {
-    todo.innerHTML += renderToDos(allToDos, i);
-  }
-  let allInPorgress = tasks.filter((t) => t["status"] == "in-progress");
-  for (let i = 0; i < allInPorgress.length; i++) {
-    inProgess.innerHTML += renderToDos(allInPorgress, i);
-  }
-  let allAwaitFeedback = tasks.filter((t) => t["status"] == "await-feedback");
-  for (let i = 0; i < allAwaitFeedback.length; i++) {
-    awaitFeedback.innerHTML += renderToDos(allAwaitFeedback, i);
-  }
-  let allDone = tasks.filter((t) => t["status"] == "done");
-  for (let i = 0; i < allDone.length; i++) {
-    done.innerHTML += renderToDos(allDone, i);
+function renderHelper(section) {
+  console.log(section);
+  let allTasks = tasks.filter((t) => t["status"] == section);
+  for (let i = 0; i < allTasks.length; i++) {
+    document.getElementById(section).innerHTML += renderToDos(allTasks, i);
   }
 }
 
@@ -100,7 +95,7 @@ function renderToDos(task, i) {
 
                     <div class="title-notice">
                         <p id="ticket-title">${task[i].title}</p>
-                        <p id="ticket-notice">Build start page with recipe recommendation...</p>
+                        <p id="ticket-notice">${task[i].description}</p>
                     </div>
 
                     <div class="progress-bar-section">

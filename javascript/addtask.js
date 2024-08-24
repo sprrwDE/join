@@ -25,7 +25,7 @@ function postInfos() {
       prio: `${tasks.prio}`,
       category: `${tasks.category}`,
       subtask: `${tasks.subtask}`,
-      status: "to-do",
+      status: "todo",
       id: 0,
     }),
   });
