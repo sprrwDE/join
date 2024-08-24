@@ -21,7 +21,6 @@ function loadAccounts() {
 }
 
 function checkUserData(accounts){
-  
   let userEmail = document.getElementById('user-email').value;
   let userPassword = document.getElementById('user-password').value;
   let user = accounts.find(a => a.email == userEmail && a.password == userPassword)
