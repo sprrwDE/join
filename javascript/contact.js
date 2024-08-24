@@ -1,4 +1,5 @@
 // Div References
+const showDetail = document.getElementById('contact-detail');
 const detailRef = document.getElementById('detail');
 const addContactRef = document.getElementById('add-contact');
 const contactListRef = document.getElementById('contact-list');
@@ -156,9 +157,11 @@ function getInitials(name) {
 
 function openDetailDialog(index) {
     currentIndex = index;
+    showDetail.classList.remove('d-none');
     detailRef.classList.remove('d-none');
     contactListRef.classList.add('d-none');
     editButtonRef.classList.remove('d-none');
+    editBoxRef.classList.add('d-none');
     addButtonRef.classList.add('d-none');
     getDetailTemplate(currentIndex);
 }
@@ -172,6 +175,7 @@ function getDetailTemplate(index) {
 }
 
 function closeDetailDialog() {
+    showDetail.classList.add('d-none');
     detailRef.classList.add('d-none');
     contactListRef.classList.remove('d-none');
     editButtonRef.classList.add('d-none');

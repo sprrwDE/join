@@ -98,10 +98,8 @@
 
 .contact-detail {
     height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
     position: absolute;
+    width: 100%;
 }
 
 .contact-overlay {
@@ -109,6 +107,8 @@
     display: flex;
     flex-direction: column;
     gap: 32px;
+    height: 100%;
+    width: 100%;
 }
 
 .list-card {
