@@ -26,9 +26,9 @@
     </div>
 
     <div class="content-container">
-        <div class="progress-container">
+        <div class="progress-container" ondragover="allowDrop(event, '1')" id="to-do-drag1" ondragleave="removeHighlicht('to-do', '1')">
             <div class="section-title">
-                <h3>To do</h3>
+                <h3 onclick="test()">To do</h3>
                 <img src="../assets/img/plus button mobile.svg" alt="" class="add-btn">
             </div>
 
@@ -37,102 +37,28 @@
             </div>
         </div>
 
-        <div class="progress-container">
+        <div class="progress-container"  ondragover="allowDrop(event, '2')" id="to-do-drag2" ondragleave="removeHighlicht('in-progress', '2')">
             <div class="section-title">
                 <h3>In progress</h3>
                 <img src="../assets/img/plus button mobile.svg" alt="" class="add-btn">
             </div>
 
-            <div class="ticket-card">
-                <div class="pill-blue" id="pill">
-                    <p>User Story</p>
-                </div>
-                <div class="title-notice">
-                    <p id="ticket-title">Kochwelt Page & Recipe Recommender</p>
-                    <p id="ticket-notice">Build start page with recipe recommendation...</p>
-                </div>
-
-                <div class="progress-bar-section">
-                    <div class="progress-bar">
-                        <div class="progress-bar-filler"></div>
-                    </div>
-                    <p>1/2 Subtasks</p>
-                </div>
-
-                <div class="contacts-section">
-                    <div class="contacts">
-                        <img src="../assets/img/Profile badge.svg" alt="">
-                        <img src="../assets/img/Profile badge.svg" alt="">
-                        <img src="../assets/img/Profile badge.svg" alt="">
-                    </div>
-                    <img src="../assets/img/Capa 2.svg" alt="">
-                </div>
-            </div>
+            
         </div>
 
 
-        <div class="progress-container">
+        <div class="progress-container"  ondragover="allowDrop(event, '3')" id="to-do-drag3" ondragleave="removeHighlicht('await-feedback', '3')">
             <div class="section-title">
                 <h3>Await feedback</h3>
                 <img src="../assets/img/plus button mobile.svg" alt="" class="add-btn">
             </div>
 
             <div class="tickets">
-                <div class="ticket-card">
-                    <div class="pill-blue" id="pill">
-                        <p>User Story</p>
-                    </div>
-
-                    <div class="title-notice">
-                        <p id="ticket-title">Kochwelt Page & Recipe Recommender</p>
-                        <p id="ticket-notice">Build start page with recipe recommendation...</p>
-                    </div>
-
-                    <div class="progress-bar-section">
-                        <div class="progress-bar">
-                            <div class="progress-bar-filler"></div>
-                        </div>
-                        <p>1/2 Subtasks</p>
-                    </div>
-
-                    <div class="contacts-section">
-                        <div class="contacts">
-                            <img src="../assets/img/Profile badge.svg" alt="">
-                            <img src="../assets/img/Profile badge.svg" alt="">
-                            <img src="../assets/img/Profile badge.svg" alt="">
-                        </div>
-                        <img src="../assets/img/Capa 2.svg" alt="">
-                    </div>
-                </div>
-                <div class="ticket-card">
-                    <div class="pill-blue" id="pill">
-                        <p>User Story</p>
-                    </div>
-
-                    <div class="title-notice">
-                        <p id="ticket-title">Kochwelt Page & Recipe Recommender</p>
-                        <p id="ticket-notice">Build start page with recipe recommendation...</p>
-                    </div>
-
-                    <div class="progress-bar-section">
-                        <div class="progress-bar">
-                            <div class="progress-bar-filler"></div>
-                        </div>
-                        <p>1/2 Subtasks</p>
-                    </div>
-
-                    <div class="contacts-section">
-                        <div class="contacts">
-                            <img src="../assets/img/Profile badge.svg" alt="">
-                            <img src="../assets/img/Profile badge.svg" alt="">
-                            <img src="../assets/img/Profile badge.svg" alt="">
-                        </div>
-                        <img src="../assets/img/Capa 2.svg" alt="">
-                    </div>
-                </div>
+                
+                
             </div>
         </div>
-        <div class="progress-container">
+        <div class="progress-container" ondragover="allowDrop(event, '4')" id="to-do-drag4" ondragleave="removeHighlicht('done', '4')">
             <div class="section-title">
                 <h3>Done</h3>
                 <img src="../assets/img/plus button mobile.svg" alt="" class="add-btn">

@@ -84,6 +84,13 @@ p {
   flex-direction: column;
 }
 
+@media (min-width: 1000px) {
+  .content-container {
+    width: 100% !important;
+    flex-direction: row;
+  }
+}
+
 .section-title {
   display: flex;
   justify-content: space-between;

@@ -25,6 +25,8 @@ function postInfos() {
       prio: `${tasks.prio}`,
       category: `${tasks.category}`,
       subtask: `${tasks.subtask}`,
+      status: "to-do",
+      id: 0,
     }),
   });
 }
@@ -168,7 +170,6 @@ function assignedToChecked(id) {
   let color = contactimg.style.backgroundColor;
   let contactid = document.getElementById(`id=${id}`);
   let contact = contactid.getElementsByTagName("p");
-  console.log(contact[0].textContent);
 
   if (checkbox.checked) {
     img.classList.remove("d-none");
@@ -305,5 +306,5 @@ function getAllInfos() {
   getDate();
   getSubtasks();
   postInfos();
-  window.location.reload();
+
 }
