@@ -9,25 +9,25 @@ function init() {
   loadTasks();
 }
 
-
-
-function allowDrop(event, id) {
-  document.getElementById(`to-do-drag${id}`).style.backgroundColor = "red";
+function allowDrop(event) {
   event.preventDefault();
-  if (id == "1") {
-    tasks.status = "to-do"
-  } else if(id == "2") {
-    tasks.status = "in-progress"
-  }
-  
+}
+
+function moveTo(status) {
+  tasks[currentDraggedElement]['status'] = status;
+  renderTask()
 }
 
 function test() {
-  console.table(tasks)
+  console.table(tasks);
 }
 
-function removeHighlicht(section, id) {
-  document.getElementById(`to-do-drag${id}`).style.backgroundColor = "";
+function highlight(id) {
+  document.getElementById(`${id}`).classList.add('drag-area-highlight');
+}
+
+function removeHighlight(id) {
+  document.getElementById(id).classList.remove('drag-area-highlight');
 }
 
 function loadTasks() {
@@ -42,48 +42,55 @@ function loadTasks() {
 
 function checkTask(task) {
   tasks = task;
-  for(let i = 0; i < tasks.length; i++) {
-    tasks[i].id = i
+  for (let i = 0; i < tasks.length; i++) {
+    tasks[i].id = i;
   }
   renderTask();
 }
 
+function asd() {
+  renderTask();
+}
+
 function renderTask() {
-  let todo = document.getElementById("to-do-drag1");
-  let inProgess = document.getElementById("to-do-drag2");
-  let awaitFeedback = document.getElementById("to-do-drag3");
-  let done = document.getElementById("to-do-drag4");
+  let todo = document.getElementById("to-do");
+  let inProgess = document.getElementById("in-progress");
+  let awaitFeedback = document.getElementById("await-feedback");
+  let done = document.getElementById("done");
+
+  let clearProgress = inProgess.getElementsByClassName("ticket-card");
+  let clearToDo = todo.getElementsByClassName("ticket-card");
+  let clearFeedback = awaitFeedback.getElementsByClassName("ticket-card");
+  let clearDone = done.getElementsByClassName("ticket-card");
+
+  for (let i = 0; i < tasks.length; i++) {
+    clearProgress[0]?.remove() || ""
+    clearToDo[0]?.remove() || ""
+    clearFeedback[0]?.remove() || ""
+    clearDone[0]?.remove() || ""
+  }
 
   let allToDos = tasks.filter((t) => t["status"] == "to-do");
-
   for (let i = 0; i < allToDos.length; i++) {
     todo.innerHTML += renderToDos(allToDos, i);
   }
-
   let allInPorgress = tasks.filter((t) => t["status"] == "in-progress");
-
   for (let i = 0; i < allInPorgress.length; i++) {
     inProgess.innerHTML += renderToDos(allInPorgress, i);
   }
-
   let allAwaitFeedback = tasks.filter((t) => t["status"] == "await-feedback");
-
   for (let i = 0; i < allAwaitFeedback.length; i++) {
     awaitFeedback.innerHTML += renderToDos(allAwaitFeedback, i);
   }
-
   let allDone = tasks.filter((t) => t["status"] == "done");
-
   for (let i = 0; i < allDone.length; i++) {
     done.innerHTML += renderToDos(allDone, i);
   }
 }
 
 function startDragging(id) {
-  currentDraggedElement = id
+  currentDraggedElement = id;
 }
-
-
 
 function renderToDos(task, i) {
   return `<div class="ticket-card" id="ticket-${task[i].id}" draggable="true" ondragstart="startDragging(${task[i].id})">

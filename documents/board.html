@@ -26,7 +26,7 @@
     </div>
 
     <div class="content-container">
-        <div class="progress-container" ondragover="allowDrop(event, '1')" id="to-do-drag1" ondragleave="removeHighlicht('to-do', '1')">
+        <div class="progress-container" id="to-do" ondrop="moveTo('to-do')" ondragleave="removeHighlight('to-do')" ondragover="allowDrop(event); highlight('to-do')">
             <div class="section-title">
                 <h3 onclick="test()">To do</h3>
                 <img src="../assets/img/plus button mobile.svg" alt="" class="add-btn">
@@ -37,7 +37,7 @@
             </div>
         </div>
 
-        <div class="progress-container"  ondragover="allowDrop(event, '2')" id="to-do-drag2" ondragleave="removeHighlicht('in-progress', '2')">
+        <div class="progress-container" id="in-progress" ondrop="moveTo('in-progress')" ondragleave="removeHighlight('in-progress')" ondragover="allowDrop(event); highlight('in-progress')">
             <div class="section-title">
                 <h3>In progress</h3>
                 <img src="../assets/img/plus button mobile.svg" alt="" class="add-btn">
@@ -47,7 +47,7 @@
         </div>
 
 
-        <div class="progress-container"  ondragover="allowDrop(event, '3')" id="to-do-drag3" ondragleave="removeHighlicht('await-feedback', '3')">
+        <div class="progress-container"  id="await-feedback" ondrop="moveTo('await-feedback')" ondragleave="removeHighlight('await-feedback')" ondragover="allowDrop(event); highlight('await-feedback')">
             <div class="section-title">
                 <h3>Await feedback</h3>
                 <img src="../assets/img/plus button mobile.svg" alt="" class="add-btn">
@@ -58,7 +58,7 @@
                 
             </div>
         </div>
-        <div class="progress-container" ondragover="allowDrop(event, '4')" id="to-do-drag4" ondragleave="removeHighlicht('done', '4')">
+        <div class="progress-container" id="done" ondrop="moveTo('done')" ondragleave="removeHighlight('done')" ondragover="allowDrop(event); highlight('done')">
             <div class="section-title">
                 <h3>Done</h3>
                 <img src="../assets/img/plus button mobile.svg" alt="" class="add-btn">

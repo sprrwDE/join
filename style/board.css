@@ -86,9 +86,16 @@ p {
 
 @media (min-width: 1000px) {
   .content-container {
-    width: 100% !important;
+    width: 100%;
     flex-direction: row;
   }
+}
+
+.progress-container {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 16px;
+  height: 100vh;
 }
 
 .section-title {
@@ -228,3 +235,6 @@ h3 {
   overflow-x: auto;
 }
 
+.drag-area-highlight {
+  background-color: rgba(128, 128, 128, 0.288) !important;
+}
