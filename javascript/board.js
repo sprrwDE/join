@@ -14,7 +14,14 @@ function allowDrop(event) {
 }
 
 function moveTo(status) {
-  tasks[currentDraggedElement]["status"] = status;
+  for (let i = 0; i < tasks.length; i++) {
+    if (tasks[i].id == currentDraggedElement) {
+      tasks[i]["status"] = status;
+      updateServer(currentDraggedElement, tasks[i]);
+    }
+  }
+  
+
   renderTask();
 }
 
@@ -30,24 +37,34 @@ function removeHighlight(id) {
   document.getElementById(id).classList.remove("drag-area-highlight");
 }
 
+function updateServer(task, alltask) {
+  fetch(BASE_URL + "/addTask/" + task + ".json", {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(alltask),
+  });
+}
+
 function loadTasks() {
   fetch(BASE_URL + "/addTask.json")
     .then((response) => response.json())
     .then((result) => {
-      const accounts = Object.values(result);
-      checkTask(accounts);
+      let keys = Object.keys(result);
+      let values = Object.values(result);
+      checkTask(keys, values);
     })
     .catch((error) => console.log("Fehler beim Abrufen der Daten:", error));
 }
 
-function checkTask(task) {
-  tasks = task;
-  for (let i = 0; i < tasks.length; i++) {
-    tasks[i].id = i;
+function checkTask(keys, values) {
+  tasks = [];
+
+  for (let i = 0; i < values.length; i++) {
+    tasks.push(values[i]);
+    tasks[i].id = `${keys[i]}`;
   }
   renderTask();
 }
-
 
 function renderTask() {
   let todo = document.getElementById("todo");
@@ -84,7 +101,7 @@ function startDragging(id) {
 }
 
 function renderToDos(task, i) {
-  return `<div class="ticket-card" id="ticket-${task[i].id}" draggable="true" ondragstart="startDragging(${task[i].id})">
+  return `<div class="ticket-card" id="ticket-${task[i].id}" draggable="true" ondragstart="startDragging('${task[i].id}')">
                     <div class="pill-blue" id="pill">
                         <p>User Story</p>
                     </div>
