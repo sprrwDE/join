@@ -219,10 +219,10 @@ function hideEditBox() {
 
 
 /**
- * Zurück Button Contacts
- * Edit Contact
- * Edit Placeholder = Name
- * Edit / delete / success overlay beim Mauszeiger
- * Desktop
- * Allgemein Styling anpassen
+ * Edit / Delete
+ *  Edit Placeholder = Name
+ * Lesbarkeit (Statt so viele Parameter, contact übergeben)
+ * Desktop View
+ * Styling anpassen mobile
+ * Animationen
  */

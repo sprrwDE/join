@@ -14,13 +14,12 @@ function contactTemplateInitial(initial, index) {
 function getContactsTemplate(name, email, phone, currentI, first, last, color) {
     return `
         <div class="list-card" onclick="openDetailDialog('${name}', '${email}', '${phone}', '${currentI}', '${first}', '${last}', '${color}')">
-        <div class="card-image" style="background-color: ${color}">
+        <div class="card-image list-image" style="background-color: ${color}">
             <h4>${first}${last}</h4>
         </div>
-        <div class="list-content">
-            <h4>${name}</h4>
-            <a href="mailto:${email}">${email}</a>
-            <p>${phone}</p>
+        <div>
+            <h4 class="list-name">${name}</h4>
+            <a href="mailto:${email}" class="list-email">${email}</a>
         </div>
         </div>
     `;
