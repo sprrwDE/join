@@ -19,6 +19,7 @@ let currentIndex;
 // Data Storage
 let db = [];
 let inputData;
+let organizedContacts = {};
 
 /**
  * Fetches Firebase RealtimeDB
@@ -40,10 +41,12 @@ async function fetchApi(path) {
     try {
         let response = await fetch(baseUrl + path + '.json');
         let data = await response.json();
+        let test = Object.values(data);
+        console.log(test)
         let userKeysArray = Object.keys(data).map(key => {
             return {
                 letter: key,
-                ...data[key]
+                ...data[key],
             };
         });
         db.push(...userKeysArray);
@@ -58,7 +61,6 @@ async function fetchApi(path) {
 
 function renderContactGroups() {
     listContentRef.innerHTML = '';
-    let organizedContacts = {};
 
     for (let i = 0; i < db.length; i++) {
         let currentContact = db[i];
@@ -82,16 +84,16 @@ function renderContacts(organizedContacts) {
         let currentContactRef = document.getElementById(`list-content-inner-${index}`);
         
         let contacts = organizedContacts[initial];
-        console.log(contacts)
+        console.table(contacts)
         for (let i = 0; i < contacts.length; i++) {
             let contact = contacts[i];
             let currentName = contact.name;
             let currentEmail = contact.email;
             let currentPhone = contact.phone;
-            let currentIndex = i;
-            console.log(currentIndex)
+            let initials = getInitials(currentName);
+            let currentI = i;
 
-            currentContactRef.innerHTML += getContactsTemplate(currentName, currentEmail, currentPhone, currentIndex);
+            currentContactRef.innerHTML += getContactsTemplate(currentName, currentEmail, currentPhone, currentI, initials[0], initials[initials.length - 1]);
         }
     }
 }
@@ -127,7 +129,8 @@ function getInputValues() {
     inputData = {
         nameIn: nameInput,
         emailIn: emailInput,
-        phoneIn: phoneInput
+        phoneIn: phoneInput,
+        id: 0
     };
 
     pushData(inputData, pathPush);
@@ -163,26 +166,31 @@ function getInitials(name) {
  * Detail Dialog
  */
 
-function openDetailDialog(name, email, phone) {
-    showDetail.classList.remove('d-none');
-    detailRef.classList.remove('d-none');
-    contactListRef.classList.add('d-none');
-    editButtonRef.classList.remove('d-none');
-    editBoxRef.classList.add('d-none');
-    addButtonRef.classList.add('d-none');
-    getDetailTemplate(name, email, phone);
+function openDetailDialog(name, email, phone, index, first, last) {
+    openDetailReferences();
+    getDetailTemplate(name, email, phone, index, first, last);
 }
 
-function getDetailTemplate(n, e, p) {
+function openDetailReferences() {
+    showDetail.classList.remove('d-none');
+    detailRef.classList.remove('d-none');
+    editButtonRef.classList.remove('d-none');
+    contactListRef.classList.add('d-none');
+    editBoxRef.classList.add('d-none');
+    addButtonRef.classList.add('d-none');
+}
 
-    detailRef.innerHTML = detailTemplate(n, e, p);
+function getDetailTemplate(n, e, p, i, f, l) {
+    currentIndex = i;
+    console.log(currentIndex)
+    detailRef.innerHTML = detailTemplate(n, e, p, f, l); //index wird noch nicht übergeben
 }
 
 function closeDetailDialog() {
     showDetail.classList.add('d-none');
     detailRef.classList.add('d-none');
-    contactListRef.classList.remove('d-none');
     editButtonRef.classList.add('d-none');
+    contactListRef.classList.remove('d-none');
     addButtonRef.classList.remove('d-none');
 }
 
@@ -203,61 +211,6 @@ function hideEditBox() {
     document.getElementById('edit-box').classList.add('d-none');
 }
 
-/**
- * Templates
- */
-
-function contactTemplateInitial(initial, index) {
-    return `
-        <h2 class="initial-letter">${initial}</h2>
-        <div class="seperator-list"></div>
-        <div class="list-content-wrapper" id="list-content-inner-${index}">
-        </div>
-    `;
-}
-
-function getContactsTemplate(name, email, phone) {
-    return `
-        <div class="list-card" onclick="openDetailDialog('${name}', '${email}', '${phone}')">
-        <div class="card-image">
-            <h4>${name}</h4>
-        </div>
-        <div class="list-content">
-            <h4>${name}</h4>
-            <a href="mailto:${email}">${email}</a>
-            <p>${phone}</p>
-        </div>
-        </div>
-    `;
-}
-
-function detailTemplate(name, email, phone) {
-    console.log(name)
-    return `
-    <div class="exit-detail" id="exit-detail" onclick="closeDetailDialog()">
-        <img src="../assets/img/exit-detail.svg">
-    </div>            
-    <div class="contact-detail-header">
-        <h2>Contacts</h2>
-        <h3>Better with a team!</h3>
-        <div class="seperator-card"></div>
-    </div>
-    <div class="contact-info-wrapper">
-        <div class="avatar-wrapper">
-            <div class="card-image">
-                <h4>${name}</h4>
-            </div>
-            <h4>${name}</h4>
-        </div>
-        <div class="contact-content">
-            <h4>Contact information</h4>
-            <p><b>Email</b></p>
-            <a href="mailto:${email}</a>
-            <p><b>Phone</b></p>
-            <p>${phone}</p>
-        </div>
-    </div>`
-}
 
 /**
  * Zurück Button Contacts
