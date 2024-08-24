@@ -84,11 +84,12 @@ p {
   flex-direction: column;
 }
 
-.to-do-section-title {
+.section-title {
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 32px;
+  margin: 16px 0px;
 }
 
 h3 {
