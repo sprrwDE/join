@@ -92,8 +92,9 @@ function renderContacts(organizedContacts) {
             let currentPhone = contact.phone;
             let initials = getInitials(currentName);
             let currentI = i;
+            let color = getRandomColor();
 
-            currentContactRef.innerHTML += getContactsTemplate(currentName, currentEmail, currentPhone, currentI, initials[0], initials[initials.length - 1]);
+            currentContactRef.innerHTML += getContactsTemplate(currentName, currentEmail, currentPhone, currentI, initials[0], initials[initials.length - 1], color);
         }
     }
 }
@@ -130,7 +131,6 @@ function getInputValues() {
         nameIn: nameInput,
         emailIn: emailInput,
         phoneIn: phoneInput,
-        id: 0
     };
 
     pushData(inputData, pathPush);
@@ -166,9 +166,9 @@ function getInitials(name) {
  * Detail Dialog
  */
 
-function openDetailDialog(name, email, phone, index, first, last) {
+function openDetailDialog(name, email, phone, index, first, last, color) {
     openDetailReferences();
-    getDetailTemplate(name, email, phone, index, first, last);
+    getDetailTemplate(name, email, phone, index, first, last, color);
 }
 
 function openDetailReferences() {
@@ -180,10 +180,10 @@ function openDetailReferences() {
     addButtonRef.classList.add('d-none');
 }
 
-function getDetailTemplate(n, e, p, i, f, l) {
+function getDetailTemplate(n, e, p, i, f, l, c) {
     currentIndex = i;
     console.log(currentIndex)
-    detailRef.innerHTML = detailTemplate(n, e, p, f, l); //index wird noch nicht übergeben
+    detailRef.innerHTML = detailTemplate(n, e, p, f, l, c); //index wird noch nicht übergeben
 }
 
 function closeDetailDialog() {
@@ -193,6 +193,12 @@ function closeDetailDialog() {
     contactListRef.classList.remove('d-none');
     addButtonRef.classList.remove('d-none');
 }
+
+function getRandomColor() {
+    let randomNumber = Math.floor(Math.random() * 16777215);
+    let randomColor = "#" + randomNumber.toString(16).padStart(6, "0");
+    return randomColor;
+  }
 
 /**
  * Edit / Delete

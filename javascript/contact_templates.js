@@ -11,10 +11,10 @@ function contactTemplateInitial(initial, index) {
     `;
 }
 
-function getContactsTemplate(name, email, phone, currentI, first, last) {
+function getContactsTemplate(name, email, phone, currentI, first, last, color) {
     return `
-        <div class="list-card" onclick="openDetailDialog('${name}', '${email}', '${phone}', '${currentI}', '${first}', '${last}')">
-        <div class="card-image">
+        <div class="list-card" onclick="openDetailDialog('${name}', '${email}', '${phone}', '${currentI}', '${first}', '${last}', '${color}')">
+        <div class="card-image" style="background-color: ${color}">
             <h4>${first}${last}</h4>
         </div>
         <div class="list-content">
@@ -26,7 +26,7 @@ function getContactsTemplate(name, email, phone, currentI, first, last) {
     `;
 }
 
-function detailTemplate(name, email, phone, first, last) {
+function detailTemplate(name, email, phone, first, last, color) {
     return `
     <div class="exit-detail" id="exit-detail" onclick="closeDetailDialog()">
         <img src="../assets/img/exit-detail.svg">
@@ -38,7 +38,7 @@ function detailTemplate(name, email, phone, first, last) {
     </div>
     <div class="contact-info-wrapper">
         <div class="avatar-wrapper">
-            <div class="card-image">
+            <div class="card-image" style="background-color: ${color}">
                 <h4>${first}${last}</h4>
             </div>
             <h4>${name}</h4>
