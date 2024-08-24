@@ -76,16 +76,24 @@ function renderContactGroups() {
 function renderContacts(organizedContacts) {
     let sortedInitials = Object.keys(organizedContacts).sort();
 
-    sortedInitials.forEach((initial, index) => {
+    for (let index = 0; index < sortedInitials.length; index++) {
+        let initial = sortedInitials[index];
         listContentRef.innerHTML += contactTemplateInitial(initial, index);
         let currentContactRef = document.getElementById(`list-content-inner-${index}`);
-        organizedContacts[initial].forEach((contact, i) => {
-            let name = contact.name;
-            let email = contact.email;
-            let phone = contact.phone;
-            currentContactRef.innerHTML += getContactsTemplate(name, email, phone, i);
-        });
-    });
+        
+        let contacts = organizedContacts[initial];
+        console.log(contacts)
+        for (let i = 0; i < contacts.length; i++) {
+            let contact = contacts[i];
+            let currentName = contact.name;
+            let currentEmail = contact.email;
+            let currentPhone = contact.phone;
+            let currentIndex = i;
+            console.log(currentIndex)
+
+            currentContactRef.innerHTML += getContactsTemplate(currentName, currentEmail, currentPhone, currentIndex);
+        }
+    }
 }
 
 /**
@@ -117,9 +125,9 @@ function getInputValues() {
     pathPush = `contacts/${initials[1]}`;
 
     inputData = {
-        name: nameInput,
-        email: emailInput,
-        phone: phoneInput
+        nameIn: nameInput,
+        emailIn: emailInput,
+        phoneIn: phoneInput
     };
 
     pushData(inputData, pathPush);
@@ -155,23 +163,19 @@ function getInitials(name) {
  * Detail Dialog
  */
 
-function openDetailDialog(index) {
-    currentIndex = index;
+function openDetailDialog(name, email, phone) {
     showDetail.classList.remove('d-none');
     detailRef.classList.remove('d-none');
     contactListRef.classList.add('d-none');
     editButtonRef.classList.remove('d-none');
     editBoxRef.classList.add('d-none');
     addButtonRef.classList.add('d-none');
-    getDetailTemplate(currentIndex);
+    getDetailTemplate(name, email, phone);
 }
 
-function getDetailTemplate(index) {
-    currentIndex = index;
-    let currentContact = db[index];
-    let contactId = Object.keys(currentContact).find(key => key !== 'letter');
-    let contact = currentContact[contactId];
-    detailRef.innerHTML = detailTemplate(contact, currentIndex);
+function getDetailTemplate(n, e, p) {
+
+    detailRef.innerHTML = detailTemplate(n, e, p);
 }
 
 function closeDetailDialog() {
@@ -212,9 +216,9 @@ function contactTemplateInitial(initial, index) {
     `;
 }
 
-function getContactsTemplate(name, email, phone, index) {
+function getContactsTemplate(name, email, phone) {
     return `
-        <div class="list-card" onclick="openDetailDialog(${index})">
+        <div class="list-card" onclick="openDetailDialog('${name}', '${email}', '${phone}')">
         <div class="card-image">
             <h4>${name}</h4>
         </div>
@@ -227,7 +231,8 @@ function getContactsTemplate(name, email, phone, index) {
     `;
 }
 
-function detailTemplate(contact) {
+function detailTemplate(name, email, phone) {
+    console.log(name)
     return `
     <div class="exit-detail" id="exit-detail" onclick="closeDetailDialog()">
         <img src="../assets/img/exit-detail.svg">
@@ -240,16 +245,16 @@ function detailTemplate(contact) {
     <div class="contact-info-wrapper">
         <div class="avatar-wrapper">
             <div class="card-image">
-                <h4>${contact.name ? contact.name.charAt(0) : "N/A"}</h4>
+                <h4>${name}</h4>
             </div>
-            <h4>${contact.name || "Name not available"}</h4>
+            <h4>${name}</h4>
         </div>
         <div class="contact-content">
             <h4>Contact information</h4>
             <p><b>Email</b></p>
-            <a href="mailto:${contact.email || ""}">${contact.email || "Email not available"}</a>
+            <a href="mailto:${email}</a>
             <p><b>Phone</b></p>
-            <p>${contact.phone || "Phone not available"}</p>
+            <p>${phone}</p>
         </div>
     </div>`
 }
