@@ -182,12 +182,17 @@ function closeDetailDialog() {
  * Edit / Delete
  */
 
-function showEditBox() {
-    editBoxRef.classList.remove('d-none');
+function stopPropagation(event) {
+    event.stopPropagation();
+}
+
+function showEditBox(event) {
+    stopPropagation(event); // Stop propagation when showing the edit box
+    document.getElementById('edit-box').classList.toggle('d-none');
 }
 
 function hideEditBox() {
-    editBoxRef.classList.add('d-none');
+    document.getElementById('edit-box').classList.add('d-none');
 }
 
 /**
