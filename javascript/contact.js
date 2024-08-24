@@ -75,14 +75,13 @@ function renderContacts(organizedContacts) {
     let sortedInitials = Object.keys(organizedContacts).sort();
 
     sortedInitials.forEach((initial, index) => {
-        listContentRef.innerHTML += contactTemplate(initial, index);
+        listContentRef.innerHTML += contactTemplateInitial(initial, index);
         let currentContactRef = document.getElementById(`list-content-inner-${index}`);
-
-        organizedContacts[initial].forEach(contact => {
+        organizedContacts[initial].forEach((contact, i) => {
             let name = contact.name;
             let email = contact.email;
             let phone = contact.phone;
-            currentContactRef.innerHTML += getContactsTemplate(name, email, phone);
+            currentContactRef.innerHTML += getContactsTemplate(name, email, phone, i);
         });
     });
 }
@@ -164,7 +163,7 @@ function openDetailDialog(index) {
 }
 
 function getDetailTemplate(index) {
-    let currentIndex = index;
+    currentIndex = index;
     let currentContact = db[index];
     let contactId = Object.keys(currentContact).find(key => key !== 'letter');
     let contact = currentContact[contactId];
@@ -182,18 +181,18 @@ function closeDetailDialog() {
  * Templates
  */
 
-function contactTemplate(initial, index) {
+function contactTemplateInitial(initial, index) {
     return `
         <h2 class="initial-letter">${initial}</h2>
         <div class="seperator-list"></div>
-        <div class="list-content-wrapper" id="list-content-inner-${index}" onclick="openDetailDialog(${index})">
+        <div class="list-content-wrapper" id="list-content-inner-${index}">
         </div>
     `;
 }
 
-function getContactsTemplate(name, email, phone) {
+function getContactsTemplate(name, email, phone, index) {
     return `
-        <div class="list-card">
+        <div class="list-card" onclick="openDetailDialog(${index})">
         <div class="card-image">
             <h4>${name}</h4>
         </div>
@@ -234,11 +233,10 @@ function detailTemplate(contact) {
 }
 
 /**
- * Floating Buttons
  * Zurück Button Contacts
  * Edit Contact
+ * Edit Placeholder = Name
  * Edit / delete / success overlay beim Mauszeiger
  * Desktop
  * Allgemein Styling anpassen
- * Buttons verbergen
  */
