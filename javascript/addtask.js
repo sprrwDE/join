@@ -11,7 +11,7 @@ let tasks = {
 function init() {
   loadContacts();
   includeHTML();
-
+  dropDown();
 }
 
 function postInfos() {
@@ -82,29 +82,42 @@ function contactsImages(i) {
   imgcontainer.innerHTML += renderContactsImages(inits, i);
 }
 
-function search() {
+function dropDown() {
   let palceholder = document.getElementById("assigne-placeholder");
-  let search = document.getElementById("search-container");
-  let contacts = document.getElementById("all-contacts");
   let input = document.getElementById("myInput");
   let contactimages = document.getElementById("contacts-imges");
+  let search = document.getElementById("search-container");
+  let dropdown = document.getElementById("all-contacts");
+  let dropdownToggle = document.getElementById("contacts-searchfield");
 
-  contacts.classList.toggle("d-none");
-  search.classList.toggle("d-none");
-  if (palceholder.style.display == "none") {
-    document.getElementById("contacts-searchfield").classList.remove("focused");
-    contactimages.classList.remove("d-none");
-    palceholder.style.display = "";
-    document.getElementById("arrow-down").style.animation = "";
-  } else {
-    document.getElementById("contacts-searchfield").classList.add("focused");
-    contactimages.classList.add("d-none");
-    input.focus();
+  document.addEventListener("click", (event) => {
+    // liste schliesen
+    if (
+      !dropdown.contains(event.target) &&
+      !dropdownToggle.contains(event.target)
+    ) {
+      palceholder.style.display = "";
+      dropdown.classList.add("d-none");
+      search.classList.add("d-none");
+      dropdown.style.animation = "";
+      document.getElementById("arrow-down").style.animation = "";
+      contactimages.classList.remove("d-none");
+      dropdownToggle.classList.remove("focused");
+    }
+  });
+
+  dropdownToggle.addEventListener("click", function () {
+    //öffnet die kontakt liste
+    dropdown.classList.remove("d-none");
+    search.classList.remove("d-none");
+    dropdown.style.animation = "slowdropdown 0.7s forwards";
     document.getElementById("arrow-down").style.animation =
       "rotate 0.5s forwards";
+    contactimages.classList.add("d-none");
+    input.focus();
     palceholder.style.display = "none";
-    contacts.style.animation = "slowdropdown 0.7s forwards";
-  }
+    dropdownToggle.classList.add("focused");
+  });
 }
 
 function filterFunction() {
@@ -112,16 +125,23 @@ function filterFunction() {
   let filter = input.value.toUpperCase();
   let div = document.getElementById("all-contacts");
   let pElements = div.getElementsByTagName("p");
+  let nocontact = document.getElementById("noContact");
+  let filteredContacts = [];
 
+  nocontact.classList.add("d-none");
   for (let i = 0; i < pElements.length; i++) {
     let txtValue = pElements[i].textContent || pElements[i].innerText;
     let grandParent = pElements[i].parentElement.parentElement;
 
     if (txtValue.toUpperCase().indexOf(filter) > -1) {
       grandParent.style.display = "";
+      filteredContacts.push(txtValue);
     } else {
       grandParent.style.display = "none";
     }
+  }
+  if (filteredContacts.length == 0) {
+    nocontact.classList.remove("d-none");
   }
 }
 
@@ -330,5 +350,3 @@ function getAllInfos() {
     postInfos();
   }
 }
-
-
