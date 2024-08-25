@@ -103,20 +103,16 @@ function dropDown() {
       document.getElementById("arrow-down").style.animation = "";
       contactimages.classList.remove("d-none");
       dropdownToggle.classList.remove("focused");
+    } else {
+      dropdown.classList.remove("d-none");
+      search.classList.remove("d-none");
+      dropdown.style.animation = "slowdropdown 0.7s forwards";
+      document.getElementById("arrow-down").style.animation ="rotate 0.5s forwards";
+      contactimages.classList.add("d-none");
+      input.focus();
+      palceholder.style.display = "none";
+      dropdownToggle.classList.add("focused");
     }
-  });
-
-  dropdownToggle.addEventListener("click", function () {
-    //öffnet die kontakt liste
-    dropdown.classList.remove("d-none");
-    search.classList.remove("d-none");
-    dropdown.style.animation = "slowdropdown 0.7s forwards";
-    document.getElementById("arrow-down").style.animation =
-      "rotate 0.5s forwards";
-    contactimages.classList.add("d-none");
-    input.focus();
-    palceholder.style.display = "none";
-    dropdownToggle.classList.add("focused");
   });
 }
 
