@@ -18,10 +18,18 @@ function moveTo(status) {
     if (tasks[i].id == currentDraggedElement) {
       tasks[i]["status"] = status;
       updateServer(currentDraggedElement, tasks[i]);
+
     }
   }
-  
+  removeHighlightDragArea()
   renderTask();
+}
+
+function removeHighlightDragArea() {
+  let sections = ["todo", "inprogress", "awaitfeedback", "done"]
+  for (let i = 0; i < sections.length; i++) {
+    document.getElementById(sections[i]).classList.remove("drag-area-highlight");
+  }
 }
 
 
