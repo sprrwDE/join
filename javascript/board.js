@@ -21,13 +21,9 @@ function moveTo(status) {
     }
   }
   
-
   renderTask();
 }
 
-function test() {
-  console.table(tasks);
-}
 
 function highlight(id) {
   document.getElementById(`${id}`).classList.add("drag-area-highlight");
@@ -55,6 +51,7 @@ function loadTasks() {
     })
     .catch((error) => console.log("Fehler beim Abrufen der Daten:", error));
 }
+
 
 function checkTask(keys, values) {
   tasks = [];
