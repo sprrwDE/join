@@ -84,7 +84,7 @@ p {
   flex-direction: column;
 }
 
-@media (min-width: 1000px) {
+@media (min-width: 450px) {
   .content-container {
     width: 100%;
     flex-direction: row;
@@ -104,6 +104,7 @@ p {
   align-items: center;
   height: 32px;
   margin: 16px 0px;
+  min-width: 250px;
 }
 
 h3 {
@@ -237,5 +238,24 @@ h3 {
 
 .drag-area-highlight {
   background-color: rgba(128, 128, 128, 0.096) !important;
+  border: 1px dashed rgba(128, 128, 128, 0.425);
   border-radius: 20px;
+}
+
+@keyframes shake {
+  0% {
+    transform: rotateZ(0deg);
+  }
+
+  50% {
+    transform: rotateZ(-3deg);
+  }
+
+  100% {
+    transform: rotateZ(3deg);
+  }
+}
+
+.shake {
+  animation: shake 0.3s infinite;
 }

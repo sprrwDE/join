@@ -11,6 +11,7 @@ let tasks = {
 function init() {
   loadContacts();
   includeHTML();
+
 }
 
 function postInfos() {
@@ -91,10 +92,12 @@ function search() {
   contacts.classList.toggle("d-none");
   search.classList.toggle("d-none");
   if (palceholder.style.display == "none") {
+    document.getElementById("contacts-searchfield").classList.remove("focused");
     contactimages.classList.remove("d-none");
     palceholder.style.display = "";
     document.getElementById("arrow-down").style.animation = "";
   } else {
+    document.getElementById("contacts-searchfield").classList.add("focused");
     contactimages.classList.add("d-none");
     input.focus();
     document.getElementById("arrow-down").style.animation =
@@ -289,6 +292,8 @@ function getDescription() {
 function getDate() {
   let dateInput = document.getElementById("input-date");
   tasks.date = dateInput.value;
+  document.getElementById("date-required").classList.add("d-none");
+  dateInput.style.border = "";
 }
 
 function getSubtasks() {
@@ -300,11 +305,30 @@ function getSubtasks() {
   }
 }
 
+function requiredFieldsCheck() {
+  let date = document.getElementById("input-date");
+
+  if (!date.value) {
+    date.style.border = "1px solid rgb(255, 129, 144)";
+    document.getElementById("date-required").classList.remove("d-none");
+  } else {
+    console.log("gdas");
+  }
+
+  if (!tasks.date || !tasks.title || !tasks.category) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
 function getAllInfos() {
   getTitle();
   getDescription();
-  getDate();
   getSubtasks();
-  postInfos();
-
+  if (requiredFieldsCheck() == true) {
+    postInfos();
+  }
 }
+
+

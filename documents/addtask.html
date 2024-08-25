@@ -13,8 +13,8 @@
 </head>
 
 <body onload="init()">
-    <div  class="wrapper-header" w3-include-html="mobile-header.html"></div>
-    
+    <div class="wrapper-header" w3-include-html="mobile-header.html"></div>
+
     <div class="content-container">
         <div class="title-section">
             <span class="title">Add Task</span>
@@ -22,22 +22,24 @@
 
         <div class="input-title-section">
             <p onclick="getAssignedto()">Title<span class="red">*</span></p>
-            <input type="text" name="" id="input-title" class="inputfield" required placeholder="Enter a title" onkeyup="inputTyping()">
+            <input type="text" name="" id="input-title" class="inputfield" required placeholder="Enter a title"
+                onkeyup="inputTyping()">
             <p class="red-text d-none" id="title-required">This field is required</p>
         </div>
 
         <div class="description-section">
             <p>Description</p>
-            <textarea name="description" id="text-area" placeholder="Enter a Description" class="description-area"></textarea>
+            <textarea name="description" id="text-area" placeholder="Enter a Description"
+                class="description-area"></textarea>
         </div>
 
         <div class="assigned-to-section">
             <p>Assigned to</p>
             <div class="dropdown-wrap">
-                <div class="search-bar-section" onclick="search()">
-                    <div>
+                <div class="search-bar-section" onclick="search()" id="contacts-searchfield">
+                    <div class="search">
                         <p id="assigne-placeholder">Select contacts to assign</p>
-                        <div class="search d-none" id="search-container">
+                        <div class="d-none" id="search-container">
                             <span class="prefix">An:</span>
                             <input type="search" id="myInput" placeholder="" class="searchfield"
                                 onkeyup="filterFunction()">
@@ -46,7 +48,7 @@
                     <img src="../assets/img/arrow_drop_down.svg" alt="" id="arrow-down">
                 </div>
 
-                <div class="contacts-imges" id="contacts-imges"> 
+                <div class="contacts-imges" id="contacts-imges">
                 </div>
                 <div class="contacts d-none" id="all-contacts">
                 </div>
@@ -55,7 +57,8 @@
 
         <div class="date-section">
             <p>Due date<span class="red">*</span></p>
-            <input type="date" class="date" id="input-date">
+            <input type="date" class="date" id="input-date" onchange="getDate()" required>
+            <p class="red-text d-none" id="date-required">This field is required</p>
         </div>
 
         <div class="prio-section">
@@ -79,11 +82,11 @@
         <div class="category-section">
             <p>Category<span class="red">*</span></p>
             <div class="dropdown-wrap">
-                <div class="search-bar-section" onclick="categorys()">
+                <div class="search-bar-section" onclick="categorys()" id="input-category">
                     <span class="prefix" id="select-task">Select task category</span>
                     <img src="../assets/img/arrow_drop_down.svg" alt="">
                 </div>
-                <div class="categorys d-none" id="categorys" >
+                <div class="categorys d-none" id="categorys">
                     <p id="tech" onclick="taskSelected('tech')">Technical Task</p>
                     <p id="user" onclick="taskSelected('user')">User Story</p>
                 </div>
@@ -109,13 +112,11 @@
     </div>
     <div class="create-task-container">
         <p><span class="red">*</span>This field is required</p>
-        <button class="create-btn" onclick="getAllInfos()">Create Task <img src="../assets/img/check.svg" alt="" ></button>
+        <button class="create-btn" onclick="getAllInfos()">Create Task <img src="../assets/img/check.svg"
+                alt=""></button>
     </div>
 
     <div w3-include-html="mobile-navbar.html"></div>
 </body>
 
 </html>
-
-
-<!-- ZEILE 51 NICHT VERGESSEN !!! (<div class="contacts-imges d-none">) -->

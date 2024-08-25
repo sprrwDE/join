@@ -7,6 +7,7 @@ let currentDraggedElement;
 function init() {
   includeHTML();
   loadTasks();
+   
 }
 
 function allowDrop(event) {
@@ -103,6 +104,7 @@ function renderHelper(section) {
 
 function startDragging(id) {
   currentDraggedElement = id;
+  document.getElementById(`ticket-${id}`).classList.add("shake");
 }
 
 function renderToDos(task, i) {
@@ -149,3 +151,4 @@ function emptySection() {
     }
   }
 }
+
