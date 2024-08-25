@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../style.css">
     <script src="../javascript/includeHTML.js"></script>
     <script src="../javascript/board.js"></script>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <title>Board</title>
 </head>
 
@@ -32,7 +33,7 @@
                 <img src="../assets/img/plus button mobile.svg" alt="" class="add-btn">
             </div>
 
-            <div class="to-do-empty" id="to-do-empty">
+            <div class="to-do-empty d-none" id="todo-empty">
                 <p>No tasks To do</p>
             </div>
         </div>
@@ -42,7 +43,9 @@
                 <h3>In progress</h3>
                 <img src="../assets/img/plus button mobile.svg" alt="" class="add-btn">
             </div>
-
+            <div class="to-do-empty d-none" id="inprogress-empty">
+                <p>No tasks To do</p>
+            </div>
             
         </div>
 
@@ -51,6 +54,10 @@
             <div class="section-title">
                 <h3>Await feedback</h3>
                 <img src="../assets/img/plus button mobile.svg" alt="" class="add-btn">
+            </div>
+
+            <div class="to-do-empty d-none" id="awaitfeedback-empty">
+                <p>No tasks To do</p>
             </div>
 
             <div class="tickets">
@@ -64,7 +71,7 @@
                 <img src="../assets/img/plus button mobile.svg" alt="" class="add-btn">
             </div>
 
-            <div class="to-do-empty" id="to-do-empty">
+            <div class="to-do-empty d-none" id="done-empty">
                 <p>No tasks To do</p>
             </div>
         </div>

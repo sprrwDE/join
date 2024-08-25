@@ -18,20 +18,20 @@ function moveTo(status) {
     if (tasks[i].id == currentDraggedElement) {
       tasks[i]["status"] = status;
       updateServer(currentDraggedElement, tasks[i]);
-
     }
   }
-  removeHighlightDragArea()
+  removeHighlightDragArea();
   renderTask();
 }
 
 function removeHighlightDragArea() {
-  let sections = ["todo", "inprogress", "awaitfeedback", "done"]
+  let sections = ["todo", "inprogress", "awaitfeedback", "done"];
   for (let i = 0; i < sections.length; i++) {
-    document.getElementById(sections[i]).classList.remove("drag-area-highlight");
+    document
+      .getElementById(sections[i])
+      .classList.remove("drag-area-highlight");
   }
 }
-
 
 function highlight(id) {
   document.getElementById(`${id}`).classList.add("drag-area-highlight");
@@ -59,7 +59,6 @@ function loadTasks() {
     })
     .catch((error) => console.log("Fehler beim Abrufen der Daten:", error));
 }
-
 
 function checkTask(keys, values) {
   tasks = [];
@@ -92,6 +91,7 @@ function renderTask() {
   renderHelper("inprogress");
   renderHelper("awaitfeedback");
   renderHelper("done");
+  emptySection();
 }
 
 function renderHelper(section) {
@@ -132,4 +132,20 @@ function renderToDos(task, i) {
                         <img src="../assets/img/Capa 2.svg" alt="">
                     </div>
                 </div>`;
+}
+
+function emptySection() {
+  let sections = ["todo", "inprogress", "awaitfeedback", "done"];
+
+  for (let i = 0; i < sections.length; i++) {
+    let section = document.getElementById(sections[i]);
+    let cards = section.getElementsByClassName("ticket-card");
+    let empty = document.getElementById(`${sections[i]}-empty`);
+
+    if (cards.length <= 0) {
+      empty.classList.remove("d-none");
+    } else {
+      empty.classList.add("d-none");
+    }
+  }
 }
