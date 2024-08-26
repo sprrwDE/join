@@ -1,7 +1,7 @@
 let BASE_URL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/accounts.json" 
 
-let iconBox = document.getElementById('change-password-icons');
-
+let iconBox = ''; 
+let currentPasswordInput = '';
 
 function logIn(event){
   event.preventDefault();
@@ -29,8 +29,12 @@ function checkUserData(accounts){
   }
 }
 
-function changePasswordIcon(){
-  document.getElementById('user-password').classList.remove('password-input');
+function changePasswordIcon(inputID,spanID){
+  let currentInputID = document.getElementById(`${inputID}`);
+  currentPasswordInput = currentInputID;
+  currentInputID.classList.remove('password-input');
+  let currentSpanID = document.getElementById(`${spanID}`);
+  iconBox = currentSpanID
   iconBox.classList.remove('d-none');
   iconBox.innerHTML = `
   <img onclick="changeInputType()" src="/assets/img/visibility.svg" alt="open-eye">
@@ -39,19 +43,18 @@ function changePasswordIcon(){
 }
 
 function changeInputType(){
-  let passwordInput = document.getElementById('user-password');
-  if (passwordInput.type === 'password') {
-    passwordInput.type = 'text';
+  if (currentPasswordInput.type === 'password') {
+    currentPasswordInput.type = 'text';
     iconBox.innerHTML = `
     <img onclick="changeInputType()" src="/assets/img/visibility_off.svg" alt="open-eye">
     `; 
   } else {
-    passwordInput.type = 'password';
+    currentPasswordInput.type = 'password';
     iconBox.innerHTML = `
     <img onclick="changeInputType()" src="/assets/img/visibility.svg" alt="open-eye">
     `;
   }
-
+  
 }
 
 function logInAsGuest(){
@@ -126,8 +129,14 @@ function renderSignUpHTML(){
     <form onsubmit="addNewUser(event)">
       <input id="new-name" class="input-field name-input" type="text" required placeholder="Name">
       <input id="new-email" class="input-field email-input" type="email" required placeholder="Email">
-      <input id="new-password" class="input-field password-input" type="password" required placeholder="Password">
-      <input id="check-new-password" class="input-field password-input" type="password" required placeholder="Confirm Password">
+      <div class="input-container">
+      <input id="new-password" class="input-field password-input" type="password" required placeholder="Password" onkeyup="changePasswordIcon('new-password','span-password-icon')">
+      <span id="span-password-icon" class="password-eye-open d-none"></span>
+      </div>
+      <div class="input-container">
+      <input id="check-new-password" class="input-field password-input" type="password" required placeholder="Confirm Password" onkeyup="changePasswordIcon('check-new-password','span-check-password-icon')">
+      <span id="span-check-password-icon" class="password-eye-open d-none"></span>
+      </div>
       <div class="check-box-container">
         <input type="checkbox" required id="accept-box">
         <label for="checkbox">I accept the</label><a href="">Privacy policy</a>
