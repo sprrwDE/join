@@ -37,7 +37,7 @@ function changePasswordIcon(inputID,spanID){
   iconBox = currentSpanID
   iconBox.classList.remove('d-none');
   iconBox.innerHTML = `
-  <img onclick="changeInputType()" src="/assets/img/visibility.svg" alt="open-eye">
+  <img onclick="changeInputType()" src="./assets/img/visibility.svg" alt="open-eye">
   `;
 
 }
@@ -46,12 +46,12 @@ function changeInputType(){
   if (currentPasswordInput.type === 'password') {
     currentPasswordInput.type = 'text';
     iconBox.innerHTML = `
-    <img onclick="changeInputType()" src="/assets/img/visibility_off.svg" alt="open-eye">
+    <img onclick="changeInputType()" src="./assets/img/visibility_off.svg" alt="open-eye">
     `; 
   } else {
     currentPasswordInput.type = 'password';
     iconBox.innerHTML = `
-    <img onclick="changeInputType()" src="/assets/img/visibility.svg" alt="open-eye">
+    <img onclick="changeInputType()" src="./assets/img/visibility.svg" alt="open-eye">
     `;
   }
   
@@ -119,10 +119,10 @@ function renderSuccessfully(){
 
 function renderSignUpHTML(){
   return document.getElementById('sign-up').innerHTML = `
-  <img class="log-in-join-logo" src="/assets/img/join-icon.svg" alt="">
+  <img class="log-in-join-logo" src="./assets/img/join-icon.svg" alt="">
   <div class="log-in-container">
     <div class="sign-in-title-container">
-      <img onclick="BackToLogIn()" class="sign-up-arrow" src="/assets/img/arrow-left-line.svg" alt="">
+      <img onclick="BackToLogIn()" class="sign-up-arrow" src="./assets/img/arrow-left-line.svg" alt="">
       <h2>Sign up</h2>
     </div>
     <div class="border-bottom-log-in"></div>
