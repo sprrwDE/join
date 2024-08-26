@@ -1,6 +1,6 @@
 let BASE_URL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/accounts.json" 
 
-
+let iconBox = document.getElementById('change-password-icons');
 
 
 function logIn(event){
@@ -27,6 +27,31 @@ function checkUserData(accounts){
   if(user){
     window.location.href='./documents/summary.html';
   }
+}
+
+function changePasswordIcon(){
+  document.getElementById('user-password').classList.remove('password-input');
+  iconBox.classList.remove('d-none');
+  iconBox.innerHTML = `
+  <img onclick="changeInputType()" src="/assets/img/visibility.svg" alt="open-eye">
+  `;
+
+}
+
+function changeInputType(){
+  let passwordInput = document.getElementById('user-password');
+  if (passwordInput.type === 'password') {
+    passwordInput.type = 'text';
+    iconBox.innerHTML = `
+    <img onclick="changeInputType()" src="/assets/img/visibility_off.svg" alt="open-eye">
+    `; 
+  } else {
+    passwordInput.type = 'password';
+    iconBox.innerHTML = `
+    <img onclick="changeInputType()" src="/assets/img/visibility.svg" alt="open-eye">
+    `;
+  }
+
 }
 
 function logInAsGuest(){

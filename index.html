@@ -1,52 +1,45 @@
 <!DOCTYPE html>
 <html lang="de">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Join Log in</title>
-    <link rel="stylesheet" href="./style.css" />
-    <link rel="stylesheet" href="./style/login.css" />
-    <script src="./javascript/login.js"></script>
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Join Log in</title>
+  <link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="./style/login.css" />
+  <script src="./javascript/login.js" defer></script>
+</head>
 
-  <body>
-    <section id="log-in" class="log-in-section hidden">
-      <img class="log-in-join-logo" src="./assets/img/join-icon.svg" alt="" />
-      <div class="log-in-container">
-        <h2 class="log-in-title">Log in</h2>
-        <div class="border-bottom-log-in"></div>
-        <form onsubmit="logIn(event)">
-          <input id="user-email"
-            class="input-field email-input"
-            type="email"
-            placeholder="Email"
-          />
-          <input id="user-password"
-            class="input-field password-input"
-            type="password"
-            placeholder="Password"
-          />
-          <div class="check-box-container">
-            <input type="checkbox" id="remember-me-box" />
-            <label class="label-margin-right" for="checkbox">Remember me</label>
-          </div>
-          <button class="button log-in-button">Log in</button>
-        </form>
-        <button onclick="logInAsGuest()" class="button guest-log-in">
-          Guest-log-in
-        </button>
-      </div>
-      <div class="log-in-sign-up-container">
-        <p>Not a Join user?</p>
-        <button onclick="loadSignUp()" class="log-in-sign-up-button">
-          sign up
-        </button>
-      </div>
-      <div class="log-in-link-container">
-        <a href="">Privacy Policy</a>
-        <a href="">Legal notice</a>
-      </div>
-    </section>
-    <section id="sign-up" class="log-in-section d-none"></section>
-  </body>
+<body>
+  <section id="log-in" class="log-in-section hidden">
+    <img class="log-in-join-logo" src="./assets/img/join-icon.svg" alt="" />
+    <div class="log-in-container">
+      <h2 class="log-in-title">Log in</h2>
+      <div class="border-bottom-log-in"></div>
+      <form onsubmit="logIn(event)">
+        <div class="input-container">
+          <input id="user-email" class="input-field email-input" type="email" placeholder="Email"/>
+        </div>
+        <div class="input-container">
+          <input id="user-password" class="input-field password-input" type="password" placeholder="Password" onkeyup="changePasswordIcon()" />
+          <span id="change-password-icons" class="password-eye-open d-none"></span>
+        </div>
+        <div class="check-box-container">
+          <input type="checkbox" id="remember-me-box" />
+          <label class="label-margin-right" for="checkbox">Remember me</label>
+        </div>
+        <button class="button log-in-button">Log in</button>
+      </form>
+      <button onclick="logInAsGuest()" class="button guest-log-in">Guest-log-in</button>
+    </div>
+    <div class="log-in-sign-up-container">
+      <p>Not a Join user?</p>
+      <button onclick="loadSignUp()" class="log-in-sign-up-button">sign up</button>
+    </div>
+    <div class="log-in-link-container">
+      <a href="">Privacy Policy</a>
+      <a href="">Legal notice</a>
+    </div>
+  </section>
+  <section id="sign-up" class="log-in-section d-none"></section>
+</body>
 </html>

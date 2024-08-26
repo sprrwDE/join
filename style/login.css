@@ -64,6 +64,8 @@
   border-color: #d1d1d1;
   border-style: solid;
   padding-left: 16px;
+  background-repeat: no-repeat;
+  background-position: 330px 2px;
 }
 
 form {
@@ -75,20 +77,23 @@ form {
 
 .name-input {
   background-image: url(/assets/img/person.svg);
-  background-repeat: no-repeat;
-  background-position: 330px 2px;
 }
 
 .email-input {
   background-image: url(/assets/img/mail.svg);
-  background-repeat: no-repeat;
-  background-position: 330px 2px;
 }
 
 .password-input {
   background-image: url(/assets/img/lock.svg);
-  background-repeat: no-repeat;
-  background-position: 330px 2px;
+}
+
+.password-eye-open{
+  width: 0;
+  height: 0;
+  position: relative;
+  bottom: 43px;
+  left: 332px;
+  display: block;
 }
 
 .check-box-container {
