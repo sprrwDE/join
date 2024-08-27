@@ -37,21 +37,25 @@ function changePasswordIcon(inputID,spanID){
   iconBox = currentSpanID
   iconBox.classList.remove('d-none');
   iconBox.innerHTML = `
-  <img onclick="changeInputType()" src="./assets/img/visibility.svg" alt="open-eye">
+  <img onclick="changeInputType('${inputID}', '${spanID}')" src="./assets/img/visibility.svg" alt="open-eye">
   `;
 
 }
 
-function changeInputType(){
+function changeInputType(inputID,spanID){
+  let currentInputID = document.getElementById(`${inputID}`);
+  currentPasswordInput = currentInputID;
+  let currentSpanID = document.getElementById(`${spanID}`);
+  iconBox = currentSpanID
   if (currentPasswordInput.type === 'password') {
     currentPasswordInput.type = 'text';
     iconBox.innerHTML = `
-    <img onclick="changeInputType()" src="./assets/img/visibility_off.svg" alt="open-eye">
+    <img onclick="changeInputType('${inputID}', '${spanID}')" src="./assets/img/visibility_off.svg" alt="close-eye">
     `; 
   } else {
     currentPasswordInput.type = 'password';
     iconBox.innerHTML = `
-    <img onclick="changeInputType()" src="./assets/img/visibility.svg" alt="open-eye">
+    <img onclick="changeInputType('${inputID}', '${spanID}')" src="./assets/img/visibility.svg" alt="open-eye">
     `;
   }
   
