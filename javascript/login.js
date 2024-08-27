@@ -1,7 +1,6 @@
 let BASE_URL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/accounts.json" 
 
-let iconBox = ''; 
-let currentPasswordInput = '';
+
 
 function logIn(event){
   event.preventDefault();
@@ -31,22 +30,27 @@ function checkUserData(accounts){
 
 function changePasswordIcon(inputID,spanID){
   let currentInputID = document.getElementById(`${inputID}`);
-  currentPasswordInput = currentInputID;
-  currentInputID.classList.remove('password-input');
-  let currentSpanID = document.getElementById(`${spanID}`);
-  iconBox = currentSpanID
+  let valueLength = currentInputID.value.length
+  let iconBox = document.getElementById(`${spanID}`);
   iconBox.classList.remove('d-none');
+  if (valueLength > 0) {
+    currentInputID.classList.remove('password-input');  
+  }else{
+    currentInputID.classList.add('password-input');
+    iconBox.classList.add('d-none');
+  }
+  
+  
+   
+  
   iconBox.innerHTML = `
   <img onclick="changeInputType('${inputID}', '${spanID}')" src="./assets/img/visibility.svg" alt="open-eye">
   `;
-
 }
 
 function changeInputType(inputID,spanID){
-  let currentInputID = document.getElementById(`${inputID}`);
-  currentPasswordInput = currentInputID;
-  let currentSpanID = document.getElementById(`${spanID}`);
-  iconBox = currentSpanID
+  let currentPasswordInput = document.getElementById(`${inputID}`);
+  let iconBox = document.getElementById(`${spanID}`);
   if (currentPasswordInput.type === 'password') {
     currentPasswordInput.type = 'text';
     iconBox.innerHTML = `
@@ -56,9 +60,7 @@ function changeInputType(inputID,spanID){
     currentPasswordInput.type = 'password';
     iconBox.innerHTML = `
     <img onclick="changeInputType('${inputID}', '${spanID}')" src="./assets/img/visibility.svg" alt="open-eye">
-    `;
-  }
-  
+    `;} 
 }
 
 function logInAsGuest(){
