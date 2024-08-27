@@ -12,6 +12,7 @@ function init() {
   loadContacts();
   includeHTML();
   dropDown();
+  taskSelected()
 }
 
 function postInfos() {
@@ -50,7 +51,7 @@ function getRandomColor() {
 
 function getContactInitials(contacts) {
   let newcontact = contacts.split(" ");
-  let firstinits = newcontact[0].charAt(0);
+  let firstinits = newcontact[0]?.charAt(0) || "";
   let secondinits = newcontact[1]?.charAt(0) || "";
   return [firstinits, secondinits];
 }
@@ -65,6 +66,7 @@ function renderContacts(contacts) {
     }
   }
   for (i = 0; i < allcontacts.length; i++) {
+    allcontacts[i] ||= "Kontakt nicht gefunden"
     let [firstinits, secondinits] = getContactInitials(allcontacts[i]);
     contactcontainer.innerHTML += renderAssignedTo(
       allcontacts,
@@ -91,19 +93,19 @@ function dropDown() {
   let dropdownToggle = document.getElementById("contacts-searchfield");
 
   document.addEventListener("click", (event) => {
-    // liste schliesen
+    
     if (
       !dropdown.contains(event.target) &&
       !dropdownToggle.contains(event.target)
     ) {
-      palceholder.style.display = "";
+      palceholder.style.display = "";// liste schliesen
       dropdown.classList.add("d-none");
       search.classList.add("d-none");
       dropdown.style.animation = "";
       document.getElementById("arrow-down").style.animation = "";
       contactimages.classList.remove("d-none");
       dropdownToggle.classList.remove("focused");
-    } else {
+    } else { // liste öffnen
       dropdown.classList.remove("d-none");
       search.classList.remove("d-none");
       dropdown.style.animation = "slowdropdown 0.7s forwards";
@@ -202,15 +204,21 @@ function assignedToChecked(id) {
   grandParent.classList.toggle("background");
 }
 
-function categorys() {
-  let categorylist = document.getElementById("categorys");
-  categorylist.classList.toggle("d-none");
-}
 
 function taskSelected(task) {
+  let categorylist = document.getElementById("categorys");
+  let category = document.getElementById("input-category")
   let selecttask = document.getElementById("select-task");
   let tech = document.getElementById("tech");
   let user = document.getElementById("user");
+
+  document.addEventListener("click", (event) => {
+    if (!category.contains(event.target)) {
+      categorylist.classList.add("d-none");
+    } else {
+      categorylist.classList.remove("d-none");
+    }
+  });
 
   if (task == "tech") {
     tech.classList.add("background");
@@ -327,10 +335,7 @@ function requiredFieldsCheck() {
   if (!date.value) {
     date.style.border = "1px solid rgb(255, 129, 144)";
     document.getElementById("date-required").classList.remove("d-none");
-  } else {
-    console.log("gdas");
   }
-
   if (!tasks.date || !tasks.title || !tasks.category) {
     return false;
   } else {
