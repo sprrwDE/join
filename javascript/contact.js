@@ -87,12 +87,12 @@ function renderContacts(organizedContacts) {
         console.table(contacts)
         for (let i = 0; i < contacts.length; i++) {
             let contact = contacts[i];
-            let currentName = contact.name;
-            let currentEmail = contact.email;
-            let currentPhone = contact.phone;
+            let currentName = contact.nameIn;
+            let currentEmail = contact.emailIn;
+            let currentPhone = contact.phoneIn;
             let initials = getInitials(currentName);
             let currentI = i;
-            let color = getRandomColor();
+            let color = contact.color
 
             currentContactRef.innerHTML += getContactsTemplate(currentName, currentEmail, currentPhone, currentI, initials[0], initials[initials.length - 1], color);
         }
@@ -131,6 +131,7 @@ function getInputValues() {
         nameIn: nameInput,
         emailIn: emailInput,
         phoneIn: phoneInput,
+        color: getRandomColor()
     };
 
     pushData(inputData, pathPush);
