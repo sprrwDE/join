@@ -1,12 +1,14 @@
 // Div References
 const showDetail = document.getElementById('contact-detail');
 const detailRef = document.getElementById('detail');
+const addDialogRef = document.getElementById('add-contact');
 const addContactRef = document.getElementById('add-contact');
 const contactListRef = document.getElementById('contact-list');
 const listContentRef = document.getElementById('list-content-outter');
 const addButtonRef = document.getElementById('add-button');
 const editButtonRef = document.getElementById('edit-button');
-const editBoxRef = document.getElementById('edit-box')
+const editBoxRef = document.getElementById('edit-box');
+const editContactRef = document.getElementById('edit-contact');
 
 // Input References
 let nameInput, emailInput, phoneInput
@@ -93,7 +95,6 @@ function renderContacts(organizedContacts) {
             let initials = getInitials(currentName);
             let currentI = i;
             let color = contact.color
-
             currentContactRef.innerHTML += getContactsTemplate(currentName, currentEmail, currentPhone, currentI, initials[0], initials[initials.length - 1], color);
         }
     }
@@ -103,16 +104,19 @@ function renderContacts(organizedContacts) {
  * Add Contact Dialog
  */
 
-function openAddContactDialog() {
-    addContactRef.classList.remove('d-none');
-    editButtonRef.classList.add('d-none');
-    addButtonRef.classList.add('d-none');
-}
-
-function closeAddContactDialog() {
+function closeAddContactDialog(event) {
+    event.stopPropagation(); 
     addContactRef.classList.add('d-none');
     contactListRef.classList.remove('d-none');
     addButtonRef.classList.remove('d-none');
+}
+
+function openAddContactDialog(event) {
+    addContactRef.classList.remove('d-none');
+    stopPropagation(event); 
+    addDialogRef.innerHTML = addDialogTemplate(event); 
+    editButtonRef.classList.add('d-none');
+    addButtonRef.classList.add('d-none');
 }
 
 /**
@@ -169,6 +173,7 @@ function getInitials(name) {
 
 function openDetailDialog(name, email, phone, index, first, last, color) {
     openDetailReferences();
+    currentIndex = index;
     getDetailTemplate(name, email, phone, index, first, last, color);
 }
 
@@ -184,7 +189,7 @@ function openDetailReferences() {
 function getDetailTemplate(n, e, p, i, f, l, c) {
     currentIndex = i;
     console.log(currentIndex)
-    detailRef.innerHTML = detailTemplate(n, e, p, f, l, c); //index wird noch nicht übergeben
+    detailRef.innerHTML = detailTemplate(n, e, p, f, l, c); 
 }
 
 function closeDetailDialog() {
@@ -210,14 +215,21 @@ function stopPropagation(event) {
 }
 
 function showEditBox(event) {
-    stopPropagation(event); // Stop propagation when showing the edit box
-    document.getElementById('edit-box').classList.toggle('d-none');
+    stopPropagation(event); 
+    document.getElementById('edit-box').classList.remove('d-none');
 }
 
 function hideEditBox() {
     document.getElementById('edit-box').classList.add('d-none');
 }
 
+function closeEditContactDialog() {
+    editContactRef.classList.add('d-none')
+}
+
+function openEditContactDialog() {
+    editContactRef.classList.remove('d-none')
+}
 
 /**
  * Edit / Delete

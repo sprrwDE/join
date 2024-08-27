@@ -51,3 +51,47 @@ function detailTemplate(name, email, phone, first, last, color) {
         </div>
     </div>`
 }
+
+function addDialogTemplate(event) {
+    return `
+    <div class="contact-card add" onclick="stopPropagation(event)">
+        <div class="exit-wrapper">
+            <img class="exit" src="../assets/img/contact-card/close.svg" onclick="closeAddContactDialog(event)">
+        </div>
+        <div class="card-header">
+            <img src="../assets/img/contact-card/join-logo-card.svg">
+            <h2>Add contact</h2>
+            <h3>Tasks are better with a team!</h3>
+            <div class="seperator-card"></div>
+        </div>
+        <div class="card-image-outter">
+            <div class="card-image"><img src="../assets/img/contact-card/avatar.svg"></div>
+        </div>
+        <div class="card-body">
+            <div class="input-wrapper">
+                <div class="input-container">
+                    <input type="text" required placeholder="Name" id="name">
+                    <img class="icon" src="../assets/img/contact-card/person.svg">
+                </div>
+                <div class="input-container">
+                    <input type="text" required placeholder="Email" id="email">
+                    <img class="icon" src="../assets/img/contact-card/mail.svg">
+                </div>
+                <div class="input-container">
+                    <input type="text" required placeholder="Phone" id="phone">
+                    <img class="icon" src="../assets/img/contact-card/call.svg">
+                </div>
+            </div>
+            <div class="btn-wrapper">
+                <button class="btn cancel" onclick="closeAddContactDialog(event)">
+                    Cancel
+                    <img src="../assets/img/contact-card/exit.svg">
+                </button>
+                <button class='btn create' onclick="getInputValues()">
+                    Create contact
+                    <img src="../assets/img/contact-card/check.svg">
+                </button>
+            </div>
+        </div>
+    </div>`
+}
