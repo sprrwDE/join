@@ -35,3 +35,30 @@ header{
   position: fixed;
   z-index: 2;
 }
+
+.headline-pop-up{
+  width: 128px;
+  height: 148px;
+  background-color: #2A3647;
+  position: absolute;
+  top: 68px;
+  right: -150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  border-radius: 15px 0px 15px 15px;
+  opacity: 0; /* Anfangs nicht sichtbar */
+  transition: right 0.5s ease, opacity 0.5s ease;
+}
+
+.headline-pop-up a{
+  color: white;
+  text-decoration: none;
+}
+
+.headline-pop-up.active {
+  right: 10px; /* Endposition innerhalb des Bildschirms */
+  opacity: 1; /* Voll sichtbar */
+}

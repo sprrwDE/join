@@ -44,13 +44,11 @@ function changePasswordIcon(inputID,spanID){
   iconBox.classList.remove('d-none');
   if (valueLength > 0) {
     currentInputID.classList.remove('password-input');
-
   }else{
     currentInputID.classList.add('password-input');
     iconBox.classList.add('d-none');}
     iconBox.innerHTML = `
-    <img onclick="changeInputType('${inputID}', '${spanID}')" src="./assets/img/visibility.svg" alt="open-eye">
-    `;
+    <img onclick="changeInputType('${inputID}', '${spanID}')" src="./assets/img/visibility.svg" alt="open-eye">`;
 }
 
 function changeInputType(inputID,spanID){
