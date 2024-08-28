@@ -204,6 +204,7 @@ function closeDetailDialog() {
     editButtonRef.classList.add('d-none');
     contactListRef.classList.remove('d-none');
     addButtonRef.classList.remove('d-none');
+    listContentRef.classList.remove('d-none');
 }
 
 function getRandomColor() {
@@ -231,6 +232,7 @@ function hideEditBox() {
 function closeEditContactDialog() {
     editContactRef.classList.add('d-none');
     contactListRef.classList.remove('d-none');
+    listContentRef.classList.add('d-none');
 }
 
 function openEditContactDialog() {
@@ -289,7 +291,6 @@ async function updateContact() {
 
         closeEditContactDialog(); 
         init(); 
-        listContentRef.classList.add('d-none');
     } catch (error) {
         console.log('Fehler beim Bearbeiten des Kontakts', error);
     }
