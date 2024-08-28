@@ -25,7 +25,16 @@ function checkUserData(accounts){
   let user = accounts.find(a => a.email == userEmail && a.password == userPassword)
   if(user){
     window.location.href='./documents/summary.html';
+  }else{
+    renderWrongLogIn();
+    document.getElementById('user-mail').classList.add('border-color-red');  
+    document.getElementById('user-password').classList.add('border-color-red');  /* border wird noch nicht rot*/ 
   }
+}
+
+function renderWrongLogIn(){
+  document.getElementById('wrong-log-in').innerHTML = `
+  Check your email and password. Please try again.`;
 }
 
 function changePasswordIcon(inputID,spanID){
@@ -34,18 +43,14 @@ function changePasswordIcon(inputID,spanID){
   let iconBox = document.getElementById(`${spanID}`);
   iconBox.classList.remove('d-none');
   if (valueLength > 0) {
-    currentInputID.classList.remove('password-input');  
+    currentInputID.classList.remove('password-input');
+
   }else{
     currentInputID.classList.add('password-input');
-    iconBox.classList.add('d-none');
-  }
-  
-  
-   
-  
-  iconBox.innerHTML = `
-  <img onclick="changeInputType('${inputID}', '${spanID}')" src="./assets/img/visibility.svg" alt="open-eye">
-  `;
+    iconBox.classList.add('d-none');}
+    iconBox.innerHTML = `
+    <img onclick="changeInputType('${inputID}', '${spanID}')" src="./assets/img/visibility.svg" alt="open-eye">
+    `;
 }
 
 function changeInputType(inputID,spanID){
@@ -54,13 +59,11 @@ function changeInputType(inputID,spanID){
   if (currentPasswordInput.type === 'password') {
     currentPasswordInput.type = 'text';
     iconBox.innerHTML = `
-    <img onclick="changeInputType('${inputID}', '${spanID}')" src="./assets/img/visibility_off.svg" alt="close-eye">
-    `; 
+    <img onclick="changeInputType('${inputID}', '${spanID}')" src="./assets/img/visibility_off.svg" alt="close-eye">`; 
   } else {
     currentPasswordInput.type = 'password';
     iconBox.innerHTML = `
-    <img onclick="changeInputType('${inputID}', '${spanID}')" src="./assets/img/visibility.svg" alt="open-eye">
-    `;} 
+    <img onclick="changeInputType('${inputID}', '${spanID}')" src="./assets/img/visibility.svg" alt="open-eye">`;} 
 }
 
 function logInAsGuest(){
@@ -93,7 +96,8 @@ function comparePasswords(newName, newEmail, newPassword, checkNewPassword){
     postNewAccount(newName, newEmail, newPassword);
        
   }else{
-    alert('Passwörter stimmen nicht überein')/**ändern in text unter confirm  password */
+    document.getElementById('check-new-password').classList.add('border-color-red');
+    renderWrongPassword();
   }
 
 }
@@ -123,6 +127,10 @@ function renderSuccessfully(){
   
 }
 
+function renderWrongPassword(){
+  document.getElementById('wrong-password').innerHTML = `Your passwords don't match. Please try again.`;
+}
+
 function renderSignUpHTML(){
   return document.getElementById('sign-up').innerHTML = `
   <img class="log-in-join-logo" src="./assets/img/join-icon.svg" alt="">
@@ -143,6 +151,7 @@ function renderSignUpHTML(){
       <input id="check-new-password" class="input-field password-input" type="password" required placeholder="Confirm Password" onkeyup="changePasswordIcon('check-new-password','span-check-password-icon')">
       <span id="span-check-password-icon" class="password-eye-open d-none"></span>
       </div>
+      <div id="wrong-password" class="font-color-red"></div>
       <div class="check-box-container">
         <input type="checkbox" required id="accept-box">
         <label for="checkbox">I accept the</label><a href="">Privacy policy</a>

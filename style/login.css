@@ -66,6 +66,20 @@
   padding-left: 16px;
   background-repeat: no-repeat;
   background-position: 330px 2px;
+  outline: none;
+}
+
+.input-field:focus {
+  border-color: #00BEE8; 
+  box-shadow: none; 
+}
+
+.border-color-red{
+  border-color: #FF4646;
+}
+
+.font-color-red{
+  color: #FF4646;
 }
 
 form {
@@ -86,6 +100,10 @@ form {
 .password-input {
   background-image: url(../assets/img/lock.svg);
 }
+
+.password-eye-open:hover{
+  cursor: pointer;
+} 
 
 .password-eye-open{
   width: 0;
