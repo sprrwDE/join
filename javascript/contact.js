@@ -236,12 +236,20 @@ function closeEditContactDialog() {
 }
 
 function openEditContactDialog() {
-    const contact = db.find(c => c.id === currentIndex);
-    document.getElementById('edit-name').value = contact.nameIn;
-    document.getElementById('edit-email').value = contact.emailIn;
-    document.getElementById('edit-phone').value = contact.phoneIn;
-
     editContactRef.classList.remove('d-none');
+    editContactRef.innerHTML = showEditOverlay();
+
+    const contact = db.find(c => c.id === currentIndex);
+    const nameInput = document.getElementById('edit-name');
+    const emailInput = document.getElementById('edit-email');
+    const phoneInput = document.getElementById('edit-phone');
+
+    if (contact && nameInput && emailInput && phoneInput) {
+        nameInput.value = contact.nameIn;
+        emailInput.value = contact.emailIn;
+        phoneInput.value = contact.phoneIn;
+    }
+
     contactListRef.classList.add('d-none');
 }
 
