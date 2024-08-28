@@ -2,7 +2,6 @@
 const showDetail = document.getElementById('contact-detail');
 const detailRef = document.getElementById('detail');
 const addDialogRef = document.getElementById('add-contact');
-const addContactRef = document.getElementById('add-contact');
 const contactListRef = document.getElementById('contact-list');
 const listContentRef = document.getElementById('list-content-outter');
 const addButtonRef = document.getElementById('add-button');
@@ -11,11 +10,10 @@ const editBoxRef = document.getElementById('edit-box');
 const editContactRef = document.getElementById('edit-contact');
 
 // Input References
-let nameInput, emailInput, phoneInput
+let nameInput, emailInput, phoneInput;
 
 // Firebase References
 let baseUrl = 'https://join-318-default-rtdb.europe-west1.firebasedatabase.app/';
-let pathPush;
 let currentIndex;
 
 // Data Storage
@@ -26,13 +24,11 @@ let organizedContacts = {};
 /**
  * Fetches Firebase RealtimeDB
  */
-
 async function init() {
     try {
         db = [];
         await fetchApi("contacts");
-    }
-    finally {
+    } finally {
         listContentRef.innerHTML = '';
         renderContactGroups();
         includeHTML();
@@ -43,37 +39,49 @@ async function fetchApi(path) {
     try {
         let response = await fetch(baseUrl + path + '.json');
         let data = await response.json();
-        let test = Object.values(data);
-        console.log(test)
-        let userKeysArray = Object.keys(data).map(key => {
-            return {
-                letter: key,
-                ...data[key],
-            };
-        });
-        db.push(...userKeysArray);
+
+        if (data) {
+            let contactsArray = Object.entries(data).map(([key, value]) => {
+                return {
+                    id: key, 
+                    ...value
+                };
+            });
+            db.push(...contactsArray);
+        }
     } catch (error) {
-        console.log('Error Brudi')
+        console.log('Fehler beim Abrufen der Daten:', error);
     }
 }
 
 /**
  * Renders Contact List into DOM
  */
-
 function renderContactGroups() {
     listContentRef.innerHTML = '';
+    organizedContacts = {}; 
 
-    for (let i = 0; i < db.length; i++) {
-        let currentContact = db[i];
-        let letter = currentContact.letter;
-        organizedContacts[letter] = [];
-        Object.keys(currentContact).forEach(key => {
-            if (key !== 'letter') {
-                organizedContacts[letter].push(currentContact[key]);
-            }
+    // get initials
+    db.forEach(contact => {
+        let initials = getInitials(contact.nameIn);
+        let letter = initials[1];
+
+        if (!organizedContacts[letter]) {
+            organizedContacts[letter] = [];
+        }
+        organizedContacts[letter].push({
+            ...contact,
+            initials: initials
+        });
+    });
+
+    // sort
+    for (let letter in organizedContacts) {
+        organizedContacts[letter].sort((a, b) => {
+            return a.nameIn.localeCompare(b.nameIn);
         });
     }
+
     renderContacts(organizedContacts);
 }
 
@@ -86,15 +94,14 @@ function renderContacts(organizedContacts) {
         let currentContactRef = document.getElementById(`list-content-inner-${index}`);
         
         let contacts = organizedContacts[initial];
-        console.table(contacts)
         for (let i = 0; i < contacts.length; i++) {
             let contact = contacts[i];
             let currentName = contact.nameIn;
             let currentEmail = contact.emailIn;
             let currentPhone = contact.phoneIn;
-            let initials = getInitials(currentName);
-            let currentI = i;
-            let color = contact.color
+            let initials = contact.initials;
+            let currentI = contact.id; 
+            let color = contact.color;
             currentContactRef.innerHTML += getContactsTemplate(currentName, currentEmail, currentPhone, currentI, initials[0], initials[initials.length - 1], color);
         }
     }
@@ -103,33 +110,31 @@ function renderContacts(organizedContacts) {
 /**
  * Add Contact Dialog
  */
-
-function closeAddContactDialog(event) {
-    event.stopPropagation(); 
-    addContactRef.classList.add('d-none');
-    contactListRef.classList.remove('d-none');
-    addButtonRef.classList.remove('d-none');
-}
-
-function openAddContactDialog(event) {
-    addContactRef.classList.remove('d-none');
-    stopPropagation(event); 
-    addDialogRef.innerHTML = addDialogTemplate(event); 
+function openAddContactDialog() {
+    addDialogRef.classList.remove('d-none');
+    addDialogRef.innerHTML = addDialogTemplate();
     editButtonRef.classList.add('d-none');
     addButtonRef.classList.add('d-none');
 }
 
-/**
- * Push Data from input-fields into Firestone Database
- */
+function closeAddContactDialog() {
+    addDialogRef.classList.add('d-none');
+    contactListRef.classList.remove('d-none');
+    addButtonRef.classList.remove('d-none');
+}
 
+/**
+ * Push Data from input-fields into Firebase Database
+ */
 function getInputValues() {
-    nameInput = document.getElementById('name').value;
-    emailInput = document.getElementById('email').value;
-    phoneInput = document.getElementById('phone').value;
+    nameInput = document.getElementById('name').value.trim();
+    emailInput = document.getElementById('email').value.trim();
+    phoneInput = document.getElementById('phone').value.trim();
     
-    let initials = getInitials(nameInput);
-    pathPush = `contacts/${initials[1]}`;
+    if (!nameInput || !emailInput || !phoneInput) {
+        alert('Bitte füllen Sie alle Felder aus.');
+        return;
+    }
 
     inputData = {
         nameIn: nameInput,
@@ -138,23 +143,27 @@ function getInputValues() {
         color: getRandomColor()
     };
 
-    pushData(inputData, pathPush);
+    pushData(inputData);
 }
 
-async function pushData(inputData, pathPush) {
+async function pushData(inputData) {
     try {
-        let response = await fetch(baseUrl + pathPush + '.json', {
+        let response = await fetch(baseUrl + 'contacts.json', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(inputData)
         });
+
+        if (!response.ok) {
+            throw new Error('Fehler beim Pushen der Daten');
+        }
+
+        closeAddContactDialog(); 
+        init(); 
     } catch (error) {
-        console.log('Error pushing data', error);
-    } finally {
-        closeAddContactDialog();
-        init();
+        console.log('Fehler beim Pushen der Daten', error);
     }
 }
 
@@ -164,17 +173,16 @@ function getInitials(name) {
     let firstName = namesArray[0];
     let initialFirst = firstName.charAt(0).toUpperCase();
     let initialLast = lastName.charAt(0).toUpperCase();
-    return [initialFirst, initialLast]; 
+    return [initialFirst, initialLast];
 }
 
 /**
  * Detail Dialog
  */
-
 function openDetailDialog(name, email, phone, index, first, last, color) {
     openDetailReferences();
-    currentIndex = index;
-    getDetailTemplate(name, email, phone, index, first, last, color);
+    currentIndex = index; 
+    getDetailTemplate(name, email, phone, first, last, color); 
 }
 
 function openDetailReferences() {
@@ -186,10 +194,8 @@ function openDetailReferences() {
     addButtonRef.classList.add('d-none');
 }
 
-function getDetailTemplate(n, e, p, i, f, l, c) {
-    currentIndex = i;
-    console.log(currentIndex)
-    detailRef.innerHTML = detailTemplate(n, e, p, f, l, c); 
+function getDetailTemplate(name, email, phone, first, last, color) {
+    detailRef.innerHTML = detailTemplate(name, email, phone, first, last, color);
 }
 
 function closeDetailDialog() {
@@ -204,38 +210,103 @@ function getRandomColor() {
     let randomNumber = Math.floor(Math.random() * 16777215);
     let randomColor = "#" + randomNumber.toString(16).padStart(6, "0");
     return randomColor;
-  }
+}
 
 /**
  * Edit / Delete
  */
-
 function stopPropagation(event) {
     event.stopPropagation();
 }
 
 function showEditBox(event) {
     stopPropagation(event); 
-    document.getElementById('edit-box').classList.remove('d-none');
+    editBoxRef.classList.remove('d-none');
 }
 
 function hideEditBox() {
-    document.getElementById('edit-box').classList.add('d-none');
+    editBoxRef.classList.add('d-none');
 }
 
 function closeEditContactDialog() {
-    editContactRef.classList.add('d-none')
+    editContactRef.classList.add('d-none');
+    contactListRef.classList.remove('d-none');
 }
 
 function openEditContactDialog() {
-    editContactRef.classList.remove('d-none')
+    const contact = db.find(c => c.id === currentIndex);
+    document.getElementById('edit-name').value = contact.nameIn;
+    document.getElementById('edit-email').value = contact.emailIn;
+    document.getElementById('edit-phone').value = contact.phoneIn;
+
+    editContactRef.classList.remove('d-none');
+    contactListRef.classList.add('d-none');
 }
 
-/**
- * Edit / Delete
- *  Edit Placeholder = Name
- * Lesbarkeit (Statt so viele Parameter, contact übergeben)
- * Desktop View
- * Styling anpassen mobile
- * Animationen
- */
+async function updateContact() {
+    const updatedData = {
+        nameIn: document.getElementById('edit-name').value.trim(),
+        emailIn: document.getElementById('edit-email').value.trim(),
+        phoneIn: document.getElementById('edit-phone').value.trim(),
+        color: getRandomColor()
+    };
+
+    if (!updatedData.nameIn || !updatedData.emailIn || !updatedData.phoneIn) {
+        alert('Bitte füllen Sie alle Felder aus.');
+        return;
+    }
+
+    try {
+        let response = await fetch(baseUrl + `contacts/${currentIndex}.json`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedData)
+        });
+
+        if (!response.ok) {
+            throw new Error('Fehler beim Bearbeiten des Kontakts');
+        }
+
+        const contactIndex = db.findIndex(contact => contact.id === currentIndex);
+        if (contactIndex > -1) {
+            db[contactIndex] = { id: currentIndex, ...updatedData };
+        }
+
+        const initials = getInitials(updatedData.nameIn);
+
+        if (!showDetail.classList.contains('d-none')) {
+            getDetailTemplate(
+                updatedData.nameIn,
+                updatedData.emailIn,
+                updatedData.phoneIn,
+                initials[0],  
+                initials[1],  
+                updatedData.color
+            );
+        }
+
+        closeEditContactDialog(); 
+        init(); 
+        listContentRef.classList.add('d-none');
+    } catch (error) {
+        console.log('Fehler beim Bearbeiten des Kontakts', error);
+    }
+}
+
+async function deleteContact(contactId) {
+    try {
+        let response = await fetch(baseUrl + `contacts/${contactId}.json`, {
+            method: 'DELETE'
+        });
+
+        if (!response.ok) {
+            throw new Error('Fehler beim Löschen des Kontakts');
+        }
+        closeDetailDialog();
+        init(); 
+    } catch (error) {
+        console.log('Fehler beim Löschen des Kontakts', error);
+    }
+}

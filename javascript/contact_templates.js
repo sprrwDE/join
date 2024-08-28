@@ -1,7 +1,6 @@
 /**
  * Templates
  */
-
 function contactTemplateInitial(initial, index) {
     return `
         <h2 class="initial-letter">${initial}</h2>
@@ -38,7 +37,7 @@ function detailTemplate(name, email, phone, first, last, color) {
     <div class="contact-info-wrapper">
         <div class="avatar-wrapper">
             <div class="card-image" style="background-color: ${color}">
-                <h4>${first}${last}</h4>
+                <h4>${first}${last}</h4> <!-- Initialen anzeigen -->
             </div>
             <h4>${name}</h4>
         </div>
@@ -49,14 +48,13 @@ function detailTemplate(name, email, phone, first, last, color) {
             <p><b>Phone</b></p>
             <p>${phone}</p>
         </div>
-    </div>`
+    </div>`;
 }
 
-function addDialogTemplate(event) {
-    return `
-    <div class="contact-card add" onclick="stopPropagation(event)">
+function addDialogTemplate() {
+    return `<div class="contact-card add">
         <div class="exit-wrapper">
-            <img class="exit" src="../assets/img/contact-card/close.svg" onclick="closeAddContactDialog(event)">
+            <img class="exit" src="../assets/img/contact-card/close.svg" onclick="closeAddContactDialog()">
         </div>
         <div class="card-header">
             <img src="../assets/img/contact-card/join-logo-card.svg">
@@ -83,7 +81,7 @@ function addDialogTemplate(event) {
                 </div>
             </div>
             <div class="btn-wrapper">
-                <button class="btn cancel" onclick="closeAddContactDialog(event)">
+                <button class="btn cancel" onclick="closeAddContactDialog()">
                     Cancel
                     <img src="../assets/img/contact-card/exit.svg">
                 </button>
@@ -93,5 +91,5 @@ function addDialogTemplate(event) {
                 </button>
             </div>
         </div>
-    </div>`
+    </div>`;
 }
