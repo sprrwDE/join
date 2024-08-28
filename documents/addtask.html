@@ -83,7 +83,7 @@
         <div class="category-section">
             <p>Category<span class="red">*</span></p>
             <div class="dropdown-wrap">
-                <div class="search-bar-section" onclick="categorys()" id="input-category">
+                <div class="search-bar-section" id="input-category">
                     <span class="prefix" id="select-task">Select task category</span>
                     <img src="../assets/img/arrow_drop_down.svg" alt="">
                 </div>
@@ -98,8 +98,8 @@
             <p>Subtasks</p>
             <div class="dropdown-wrap">
                 <div class="search-bar-section">
-                    <input type="search" id="input-subtask" placeholder="Add new subtask" class="searchfield">
-                    <img src="../assets/img/add.svg" alt="" class="" id="add-img" onclick="addSubtask()">
+                    <input type="search" id="input-subtask" placeholder="Add new subtask" class="searchfield" onfocus="addSubtask()">
+                    <img src="../assets/img/add.svg" alt="" class="" id="add-img" >
                     <div class="ok-notok-section d-none" id="ok-notok-section">
                         <img src="../assets/img/Close.svg" alt="" onclick="cancelSubtaskInput()">
                         <img src="../assets/img/Vector 3.svg" alt="" class="separator">

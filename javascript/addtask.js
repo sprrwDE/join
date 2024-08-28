@@ -12,7 +12,7 @@ function init() {
   loadContacts();
   includeHTML();
   dropDown();
-  taskSelected()
+  taskSelected();
 }
 
 function postInfos() {
@@ -66,7 +66,7 @@ function renderContacts(contacts) {
     }
   }
   for (i = 0; i < allcontacts.length; i++) {
-    allcontacts[i] ||= "Kontakt nicht gefunden"
+    allcontacts[i] ||= "Kontakt nicht gefunden";
     let [firstinits, secondinits] = getContactInitials(allcontacts[i]);
     contactcontainer.innerHTML += renderAssignedTo(
       allcontacts,
@@ -93,23 +93,24 @@ function dropDown() {
   let dropdownToggle = document.getElementById("contacts-searchfield");
 
   document.addEventListener("click", (event) => {
-    
     if (
       !dropdown.contains(event.target) &&
       !dropdownToggle.contains(event.target)
     ) {
-      palceholder.style.display = "";// liste schliesen
+      palceholder.style.display = ""; // liste schliesen
       dropdown.classList.add("d-none");
       search.classList.add("d-none");
       dropdown.style.animation = "";
       document.getElementById("arrow-down").style.animation = "";
       contactimages.classList.remove("d-none");
       dropdownToggle.classList.remove("focused");
-    } else { // liste öffnen
+    } else {
+      // liste öffnen
       dropdown.classList.remove("d-none");
       search.classList.remove("d-none");
       dropdown.style.animation = "slowdropdown 0.7s forwards";
-      document.getElementById("arrow-down").style.animation ="rotate 0.5s forwards";
+      document.getElementById("arrow-down").style.animation =
+        "rotate 0.5s forwards";
       contactimages.classList.add("d-none");
       input.focus();
       palceholder.style.display = "none";
@@ -204,10 +205,9 @@ function assignedToChecked(id) {
   grandParent.classList.toggle("background");
 }
 
-
 function taskSelected(task) {
   let categorylist = document.getElementById("categorys");
-  let category = document.getElementById("input-category")
+  let category = document.getElementById("input-category");
   let selecttask = document.getElementById("select-task");
   let tech = document.getElementById("tech");
   let user = document.getElementById("user");
@@ -237,24 +237,35 @@ function addSubtask() {
   let addimg = document.getElementById("add-img");
   let notok = document.getElementById("ok-notok-section");
   let subtasklist = document.getElementById("subtasklist");
+  let input = document.getElementById("input-subtask");
+  input.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      if(input.value == "") {
+        alert("eingeben")
+      } else {
+        addToSubtask();
+      }
+      
+    }
+  });
 
   addimg.classList.add("d-none");
   notok.classList.remove("d-none");
   subtasklist.classList.remove("d-none");
 }
+let id = 0;
 
 function cancelSubtaskInput() {
   let input = document.getElementById("input-subtask");
   let addimg = document.getElementById("add-img");
   let notok = document.getElementById("ok-notok-section");
   let subtasklist = document.getElementById("subtasklist");
+
   input.value = "";
   addimg.classList.remove("d-none");
   notok.classList.add("d-none");
   subtasklist.classList.add("d-none");
 }
-
-let id = 0;
 
 function addToSubtask() {
   let input = document.getElementById("input-subtask");
