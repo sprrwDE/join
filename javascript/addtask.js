@@ -211,12 +211,17 @@ function taskSelected(task) {
   let selecttask = document.getElementById("select-task");
   let tech = document.getElementById("tech");
   let user = document.getElementById("user");
+  let categorytext = document.getElementById("category-required")
+  let categoryDiv = document.getElementById("input-category")
 
   document.addEventListener("click", (event) => {
     if (!category.contains(event.target)) {
       categorylist.classList.add("d-none");
+
     } else {
       categorylist.classList.remove("d-none");
+      categorytext.classList.add("d-none")
+      categoryDiv.classList.remove("notfound")
     }
   });
 
@@ -231,6 +236,8 @@ function taskSelected(task) {
     selecttask.innerHTML = "User Story";
     tasks.category = "User Story";
   }
+
+
 }
 
 function addSubtask() {
@@ -238,14 +245,19 @@ function addSubtask() {
   let notok = document.getElementById("ok-notok-section");
   let subtasklist = document.getElementById("subtasklist");
   let input = document.getElementById("input-subtask");
+  let searchbar = document.getElementById("subtask-search-bar")
+  let required = document.getElementById("subtask-required")
   input.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
-      if(input.value == "") {
-        alert("eingeben")
+      if (input.value === "") {
+        searchbar.classList.add("notfound")
+        required.classList.remove("d-none")
       } else {
         addToSubtask();
       }
-      
+    } else {
+      searchbar.classList.remove("notfound")
+      required.classList.add("d-none")
     }
   });
 
@@ -342,12 +354,16 @@ function getSubtasks() {
 
 function requiredFieldsCheck() {
   let date = document.getElementById("input-date");
+  let category = document.getElementById("category-required")
+  let categoryDiv = document.getElementById("input-category")
 
   if (!date.value) {
     date.style.border = "1px solid rgb(255, 129, 144)";
     document.getElementById("date-required").classList.remove("d-none");
   }
   if (!tasks.date || !tasks.title || !tasks.category) {
+    category.classList.remove("d-none")
+    categoryDiv.classList.add("notfound")
     return false;
   } else {
     return true;

@@ -90,14 +90,15 @@
                 <div class="categorys d-none" id="categorys">
                     <p id="tech" onclick="taskSelected('tech')">Technical Task</p>
                     <p id="user" onclick="taskSelected('user')">User Story</p>
-                </div>
+                </div><p class="red-text d-none" id="category-required">This field is required</p>
             </div>
         </div>
 
         <div class="subtasks-section">
             <p>Subtasks</p>
             <div class="dropdown-wrap">
-                <div class="search-bar-section">
+                <div class="search-bar-section" id="subtask-search-bar">
+                    
                     <input type="search" id="input-subtask" placeholder="Add new subtask" class="searchfield" onfocus="addSubtask()">
                     <img src="../assets/img/add.svg" alt="" class="" id="add-img" >
                     <div class="ok-notok-section d-none" id="ok-notok-section">
@@ -105,7 +106,7 @@
                         <img src="../assets/img/Vector 3.svg" alt="" class="separator">
                         <img src="../assets/img/check.svg" alt="" style="filter: invert();" onclick="addToSubtask()">
                     </div>
-                </div>
+                </div><p class="red-text d-none" id="subtask-required">You cant add a empty task</p>
                 <div class="subtasks" id="subtasklist">
                 </div>
             </div>

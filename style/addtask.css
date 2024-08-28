@@ -541,5 +541,5 @@ input[type="search"]::-webkit-search-results-decoration {
 
 
 .notfound {
-  
+  border: 1px solid rgb(248, 84, 103);
 }
