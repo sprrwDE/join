@@ -43,27 +43,22 @@ function loadContacts() {
     .catch((error) => console.log(error));
 }
 
-function getRandomColor() {
-  let randomNumber = Math.floor(Math.random() * 16777215);
-  let randomColor = "#" + randomNumber.toString(16).padStart(6, "0");
-  return randomColor;
-}
 
 function getContactInitials(contacts) {
   let newcontact = contacts.split(" ");
-  let firstinits = newcontact[0]?.charAt(0) || "";
-  let secondinits = newcontact[1]?.charAt(0) || "";
+  let firstinits = newcontact[0]?.charAt(0).toUpperCase() || "";
+  let secondinits = newcontact[1]?.charAt(0).toUpperCase() || "";
   return [firstinits, secondinits];
 }
 
 function renderContacts(contacts) {
   let contactcontainer = document.getElementById("all-contacts");
   let allcontacts = [];
+  let colors = []
 
   for (let letter in contacts) {
-    for (let key in contacts[letter]) {
-      allcontacts.push(contacts[letter][key].name);
-    }
+      allcontacts.push(contacts[letter].nameIn);
+      colors.push(contacts[letter].color)
   }
   for (i = 0; i < allcontacts.length; i++) {
     allcontacts[i] ||= "Kontakt nicht gefunden";
@@ -72,7 +67,8 @@ function renderContacts(contacts) {
       allcontacts,
       i,
       firstinits,
-      secondinits
+      secondinits,
+      colors 
     );
     contactsImages(i);
   }
@@ -85,6 +81,37 @@ function contactsImages(i) {
 }
 
 function dropDown() {
+  let dropdown = document.getElementById("all-contacts");
+  let dropdownToggle = document.getElementById("contacts-searchfield");
+
+  document.addEventListener("click", (event) => {
+    if (!dropdown.contains(event.target) && !dropdownToggle.contains(event.target)) {
+      closeAssignedList();
+    } else if (dropdownToggle.contains(event.target) && event.target.tagName === "IMG") {
+      closeAssignedList();
+    } else {
+      openAssignedList();
+    }
+  });
+}
+
+function closeAssignedList() {
+  let palceholder = document.getElementById("assigne-placeholder");
+  let contactimages = document.getElementById("contacts-imges");
+  let search = document.getElementById("search-container");
+  let dropdown = document.getElementById("all-contacts");
+  let dropdownToggle = document.getElementById("contacts-searchfield");
+
+  palceholder.style.display = "";
+  dropdown.classList.add("d-none");
+  search.classList.add("d-none");
+  dropdown.style.animation = "";
+  document.getElementById("arrow-down").style.animation = "";
+  contactimages.classList.remove("d-none");
+  dropdownToggle.classList.remove("focused");
+}
+
+function openAssignedList() {
   let palceholder = document.getElementById("assigne-placeholder");
   let input = document.getElementById("myInput");
   let contactimages = document.getElementById("contacts-imges");
@@ -92,31 +119,15 @@ function dropDown() {
   let dropdown = document.getElementById("all-contacts");
   let dropdownToggle = document.getElementById("contacts-searchfield");
 
-  document.addEventListener("click", (event) => {
-    if (
-      !dropdown.contains(event.target) &&
-      !dropdownToggle.contains(event.target)
-    ) {
-      palceholder.style.display = ""; // liste schliesen
-      dropdown.classList.add("d-none");
-      search.classList.add("d-none");
-      dropdown.style.animation = "";
-      document.getElementById("arrow-down").style.animation = "";
-      contactimages.classList.remove("d-none");
-      dropdownToggle.classList.remove("focused");
-    } else {
-      // liste öffnen
-      dropdown.classList.remove("d-none");
-      search.classList.remove("d-none");
-      dropdown.style.animation = "slowdropdown 0.7s forwards";
-      document.getElementById("arrow-down").style.animation =
-        "rotate 0.5s forwards";
-      contactimages.classList.add("d-none");
-      input.focus();
-      palceholder.style.display = "none";
-      dropdownToggle.classList.add("focused");
-    }
-  });
+  dropdown.classList.remove("d-none");
+  search.classList.remove("d-none");
+  dropdown.style.animation = "slowdropdown 0.7s forwards";
+  document.getElementById("arrow-down").style.animation =
+    "rotate 0.5s forwards";
+  contactimages.classList.add("d-none");
+  input.focus();
+  palceholder.style.display = "none";
+  dropdownToggle.classList.add("focused");
 }
 
 function filterFunction() {
@@ -211,17 +222,18 @@ function taskSelected(task) {
   let selecttask = document.getElementById("select-task");
   let tech = document.getElementById("tech");
   let user = document.getElementById("user");
-  let categorytext = document.getElementById("category-required")
-  let categoryDiv = document.getElementById("input-category")
+  let categorytext = document.getElementById("category-required");
+  let categoryDiv = document.getElementById("input-category");
 
   document.addEventListener("click", (event) => {
     if (!category.contains(event.target)) {
       categorylist.classList.add("d-none");
-
-    } else {
+    } else if(category.contains(event.target) && event.target.tagName === "IMG") {
+      categorylist.classList.add("d-none");
+    }else {
       categorylist.classList.remove("d-none");
-      categorytext.classList.add("d-none")
-      categoryDiv.classList.remove("notfound")
+      categorytext.classList.add("d-none");
+      categoryDiv.classList.remove("notfound");
     }
   });
 
@@ -236,8 +248,6 @@ function taskSelected(task) {
     selecttask.innerHTML = "User Story";
     tasks.category = "User Story";
   }
-
-
 }
 
 function addSubtask() {
@@ -245,19 +255,19 @@ function addSubtask() {
   let notok = document.getElementById("ok-notok-section");
   let subtasklist = document.getElementById("subtasklist");
   let input = document.getElementById("input-subtask");
-  let searchbar = document.getElementById("subtask-search-bar")
-  let required = document.getElementById("subtask-required")
+  let searchbar = document.getElementById("subtask-search-bar");
+  let required = document.getElementById("subtask-required");
   input.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
       if (input.value === "") {
-        searchbar.classList.add("notfound")
-        required.classList.remove("d-none")
+        searchbar.classList.add("notfound");
+        required.classList.remove("d-none");
       } else {
         addToSubtask();
       }
     } else {
-      searchbar.classList.remove("notfound")
-      required.classList.add("d-none")
+      searchbar.classList.remove("notfound");
+      required.classList.add("d-none");
     }
   });
 
@@ -354,19 +364,33 @@ function getSubtasks() {
 
 function requiredFieldsCheck() {
   let date = document.getElementById("input-date");
-  let category = document.getElementById("category-required")
-  let categoryDiv = document.getElementById("input-category")
+  isCategroySelected();
 
   if (!date.value) {
     date.style.border = "1px solid rgb(255, 129, 144)";
     document.getElementById("date-required").classList.remove("d-none");
   }
   if (!tasks.date || !tasks.title || !tasks.category) {
-    category.classList.remove("d-none")
-    categoryDiv.classList.add("notfound")
     return false;
   } else {
     return true;
+  }
+}
+
+function isCategroySelected() {
+  let categoryselected = document.getElementById("select-task").innerHTML;
+  let inputfield = document.getElementById("input-category");
+  let required = document.getElementById("category-required");
+
+  if (
+    categoryselected == "User Story" ||
+    categoryselected == "Technical Task"
+  ) {
+    inputfield.classList.remove("notfound");
+    required.classList.add("d-none");
+  } else {
+    inputfield.classList.add("notfound");
+    required.classList.remove("d-none");
   }
 }
 
