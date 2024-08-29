@@ -1,8 +1,8 @@
-function renderAssignedTo(contact, i, firstinits, secondinits) {
+function renderAssignedTo(contact, i, firstinits, secondinits, color) {
   return `
     <div class="contact" id="contact${i}">
                         <div class="flex" id="id=${i}">
-                            <div class="contact-initals" id="contact-initals${i}"style="background-color: ${getRandomColor()};">
+                            <div class="contact-initals" id="contact-initals${i}"style="background-color: ${color[i]};">
                         <span id="inits${i}">${firstinits}${secondinits}</span>
                     </div>
                             <p>${contact[i]}</p>
@@ -17,7 +17,7 @@ function renderAssignedTo(contact, i, firstinits, secondinits) {
 
 function renderContactsImages(inits, i) {
   return `
-  <div class="contact-initals d-none" id="contact-initals1${i}" style="background-color: ${getRandomColor()};">
+  <div class="contact-initals d-none" id="contact-initals1${i}">
     <span>${inits}</span>
   </div>`;
 }

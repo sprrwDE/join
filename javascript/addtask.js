@@ -43,11 +43,6 @@ function loadContacts() {
     .catch((error) => console.log(error));
 }
 
-function getRandomColor() {
-  let randomNumber = Math.floor(Math.random() * 16777215);
-  let randomColor = "#" + randomNumber.toString(16).padStart(6, "0");
-  return randomColor;
-}
 
 function getContactInitials(contacts) {
   let newcontact = contacts.split(" ");
@@ -59,9 +54,11 @@ function getContactInitials(contacts) {
 function renderContacts(contacts) {
   let contactcontainer = document.getElementById("all-contacts");
   let allcontacts = [];
+  let colors = []
 
   for (let letter in contacts) {
       allcontacts.push(contacts[letter].nameIn);
+      colors.push(contacts[letter].color)
   }
   for (i = 0; i < allcontacts.length; i++) {
     allcontacts[i] ||= "Kontakt nicht gefunden";
@@ -70,7 +67,8 @@ function renderContacts(contacts) {
       allcontacts,
       i,
       firstinits,
-      secondinits
+      secondinits,
+      colors 
     );
     contactsImages(i);
   }
