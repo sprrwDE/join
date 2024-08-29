@@ -6,6 +6,7 @@ let tasks = {
   prio: "",
   category: "",
   subtask: [],
+  color: "",
 };
 
 function init() {
@@ -29,6 +30,7 @@ function postInfos() {
       subtask: `${tasks.subtask}`,
       status: "todo",
       id: 0,
+      color: `${tasks.color}`
     }),
   });
 }
@@ -63,13 +65,7 @@ function renderContacts(contacts) {
   for (i = 0; i < allcontacts.length; i++) {
     allcontacts[i] ||= "Kontakt nicht gefunden";
     let [firstinits, secondinits] = getContactInitials(allcontacts[i]);
-    contactcontainer.innerHTML += renderAssignedTo(
-      allcontacts,
-      i,
-      firstinits,
-      secondinits,
-      colors 
-    );
+    contactcontainer.innerHTML += renderAssignedTo(allcontacts, i, firstinits, secondinits, colors);
     contactsImages(i);
   }
 }
