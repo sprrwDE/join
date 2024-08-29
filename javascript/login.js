@@ -4,13 +4,15 @@ function init(){
   startLogInAnimation();
 }
 
-function startLogInAnimation(){
-    const overlay = document.querySelector('.overlay');
-    // Entferne die "overlay" Klasse nach der Seite geladen wurde
-    setTimeout(() => {
-      overlay.classList.add('hidden');
-    }, 200); // Verzögerung kann nach Bedarf angepasst werden
-  
+function startLogInAnimation() {
+  const overlay = document.querySelector('.overlay');
+  const logo = document.querySelector('.log-in-join-logo');
+
+  // Setzt das Bild auf sichtbar und startet die Animation
+  logo.style.opacity = 1; // Bild sichtbar machen
+  setTimeout(() => {
+    overlay.classList.add('hidden'); // Overlay ausblenden
+  }, 200); // Verzögerung nach Bedarf anpassen
 }
 
 function logIn(event){
@@ -141,8 +143,9 @@ function renderWrongPassword(){
 }
 
 function renderSignUpHTML(){
+  
   return document.getElementById('sign-up').innerHTML = `
-  <img class="log-in-join-logo" src="./assets/img/join-icon.svg" alt="">
+  <img class="static-logo" src="./assets/img/join-icon.svg" alt="">
   <div class="log-in-container">
     <div class="sign-in-title-container">
       <img onclick="BackToLogIn()" class="sign-up-arrow" src="./assets/img/arrow-left-line.svg" alt="">
