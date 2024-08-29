@@ -1,3 +1,20 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white; /* Weißes Overlay */
+  opacity: 1; /* Voll sichtbar */
+  transition: opacity 1s ease-out; /* Übergang von Opazität */
+  z-index: 9999; /* Sicherstellen, dass es über allem liegt */
+}
+
+/* Die CSS-Klasse für das entfernte Overlay */
+.overlay.hidden {
+  opacity: 0; /* Unsichtbar machen */
+  pointer-events: none; /* Verhindert, dass es auf Mausklicks reagiert */
+}
 
 
 .log-in-section {

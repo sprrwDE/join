@@ -1,6 +1,17 @@
 let BASE_URL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/accounts.json" 
 
+function init(){
+  startLogInAnimation();
+}
 
+function startLogInAnimation(){
+    const overlay = document.querySelector('.overlay');
+    // Entferne die "overlay" Klasse nach der Seite geladen wurde
+    setTimeout(() => {
+      overlay.classList.add('hidden');
+    }, 200); // Verzögerung kann nach Bedarf angepasst werden
+  
+}
 
 function logIn(event){
   event.preventDefault();
