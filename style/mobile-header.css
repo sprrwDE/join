@@ -25,6 +25,10 @@ header{
   border-radius: 50%;
 }
 
+.header-user-icon-container:hover{
+  cursor: pointer;
+}
+
 .wrapper-header{
   box-shadow: 0px 8px 4px -5px rgba(0,0,0,0.30);
   width: 100vw;

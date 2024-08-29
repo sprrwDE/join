@@ -48,7 +48,7 @@ function changePasswordIcon(inputID,spanID){
     currentInputID.classList.add('password-input');
     iconBox.classList.add('d-none');}
     iconBox.innerHTML = `
-    <img onclick="changeInputType('${inputID}', '${spanID}')" src="./assets/img/visibility.svg" alt="open-eye">`;
+    <img onclick="changeInputType('${inputID}', '${spanID}')" src="./assets/img/visibility_off.svg" alt="open-eye">`;
 }
 
 function changeInputType(inputID,spanID){
@@ -57,11 +57,11 @@ function changeInputType(inputID,spanID){
   if (currentPasswordInput.type === 'password') {
     currentPasswordInput.type = 'text';
     iconBox.innerHTML = `
-    <img onclick="changeInputType('${inputID}', '${spanID}')" src="./assets/img/visibility_off.svg" alt="close-eye">`; 
+    <img onclick="changeInputType('${inputID}', '${spanID}')" src="./assets/img/visibility.svg" alt="close-eye">`; 
   } else {
     currentPasswordInput.type = 'password';
     iconBox.innerHTML = `
-    <img onclick="changeInputType('${inputID}', '${spanID}')" src="./assets/img/visibility.svg" alt="open-eye">`;} 
+    <img onclick="changeInputType('${inputID}', '${spanID}')" src="./assets/img/visibility_off.svg" alt="open-eye">`;} 
 }
 
 function logInAsGuest(){

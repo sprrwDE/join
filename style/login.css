@@ -143,11 +143,31 @@ form {
   margin-bottom: 16px;
   color: white;
   background-color: #2a3647;
+  font-size: 24px;
+  font-weight: bold;
 }
 
-.guest-log-in {
+.log-in-button:hover,
+.log-in-sign-up-button:hover{
+  cursor: pointer;
+  background-color: #29ABE2;
+  box-shadow: 1px 4px 9px -3px #000000;
+  transition: 0.2s;
+  border: none;
+}
+
+.guest-log-in{
   background-color: white;
   color: #2a3647;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.guest-log-in:hover{
+  border-color: #29ABE2;
+  color: #29ABE2;
+  box-shadow: 1px 4px 9px -3px #000000;
+  transition: 0.2s;
 }
 
 .log-in-sign-up-container {
@@ -164,6 +184,8 @@ form {
   border: 1px solid #878d97;
   background-color: #2a3647;
   color: white;
+  font-size: 18px;
+  font-weight: 500 solid;
 }
 
 .log-in-link-container {
@@ -177,6 +199,12 @@ form {
 .log-in-link-container a {
   text-decoration: none;
   color: #878d97;
+  transition: transform 0.1s;
+}
+
+.log-in-link-container a:hover{
+  color: #29ABE2;
+  transform: scale(1.05);
 }
 
 .sign-up-overlay{
