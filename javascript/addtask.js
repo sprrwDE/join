@@ -51,8 +51,8 @@ function getRandomColor() {
 
 function getContactInitials(contacts) {
   let newcontact = contacts.split(" ");
-  let firstinits = newcontact[0]?.charAt(0) || "";
-  let secondinits = newcontact[1]?.charAt(0) || "";
+  let firstinits = newcontact[0]?.charAt(0).toUpperCase() || "";
+  let secondinits = newcontact[1]?.charAt(0).toUpperCase() || "";
   return [firstinits, secondinits];
 }
 
@@ -61,9 +61,7 @@ function renderContacts(contacts) {
   let allcontacts = [];
 
   for (let letter in contacts) {
-    for (let key in contacts[letter]) {
-      allcontacts.push(contacts[letter][key].name);
-    }
+      allcontacts.push(contacts[letter].nameIn);
   }
   for (i = 0; i < allcontacts.length; i++) {
     allcontacts[i] ||= "Kontakt nicht gefunden";
