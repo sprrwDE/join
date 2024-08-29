@@ -4,17 +4,51 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: white; /* Weißes Overlay */
-  opacity: 1; /* Voll sichtbar */
-  transition: opacity 1s ease-out; /* Übergang von Opazität */
-  z-index: 9999; /* Sicherstellen, dass es über allem liegt */
+  background-color: white; 
+  opacity: 1; 
+  transition: opacity 1s ease-out; 
+  z-index: 9998; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
 }
 
-/* Die CSS-Klasse für das entfernte Overlay */
+
 .overlay.hidden {
-  opacity: 0; /* Unsichtbar machen */
-  pointer-events: none; /* Verhindert, dass es auf Mausklicks reagiert */
+  opacity: 0; 
+  pointer-events: none; 
 }
+
+.overlay img {
+  width: 128px; 
+  height: 160px; 
+  position: absolute; 
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%); 
+  animation: moveToPosition 1s ease-out forwards;  
+  z-index: 9999;
+}
+
+@keyframes moveToPosition {
+  0% {
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    width: 128px; 
+    height: 160px; 
+    opacity: 1; 
+  }
+  100% {
+    top: 16px; 
+    left: 16px; 
+    transform: translate(0, 0); 
+    width: 64px; 
+    height: 80px; 
+    opacity: 1; 
+  }
+}
+
 
 
 .log-in-section {
@@ -24,8 +58,20 @@
 }
 
 .log-in-join-logo {
+  margin: 16px 16px 40px 32px;
+  width: 128px; 
+  height: 160px; 
+  position: relative; 
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%); 
+  opacity: 0; 
+  animation: moveToPosition 1s ease-out forwards;  
+}
+
+.static-logo{
   width: 64px;
-  height: 80px;
+  height: 128px;
   margin: 16px 16px 40px 32px;
 }
 
@@ -304,5 +350,3 @@ form {
       bottom: 50%;
   }
 }
-
-

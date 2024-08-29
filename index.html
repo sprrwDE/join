@@ -10,7 +10,9 @@
 </head>
 
 <body onload="init()">
-  <div class="overlay"></div>
+  <div class="overlay">
+    <img class="log-in-join-logo" src="./assets/img/join-icon.svg" alt="" />
+  </div>
   <section id="log-in" class="log-in-section hidden">
     <img class="log-in-join-logo" src="./assets/img/join-icon.svg" alt="" />
     <div class="log-in-container">
@@ -21,7 +23,7 @@
           <input id="user-email" class="input-field email-input" type="email" placeholder="Email"/>
         </div>
         <div class="input-container">
-          <input id="user-password" class="input-field input-field:focus password-input" type="password" placeholder="Password" onkeyup="changePasswordIcon('user-password','change-password-icons')" />
+          <input id="user-password" class="input-field password-input" type="password" placeholder="Password" onkeyup="changePasswordIcon('user-password','change-password-icons')" />
           <span id="change-password-icons" class="password-eye-open d-none"></span>
         </div>
         <div id="wrong-log-in" class="font-color-red"></div>
