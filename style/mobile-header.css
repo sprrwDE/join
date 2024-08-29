@@ -50,7 +50,7 @@ header{
   gap: 16px;
   border-radius: 15px 0px 15px 15px;
   opacity: 0; /* Anfangs nicht sichtbar */
-  transition: right 0.5s ease, opacity 0.5s ease;
+  transition: right 0.5s ease-in-out, opacity 0.5s ease-in-out;
 }
 
 .headline-pop-up a{
