@@ -253,21 +253,23 @@ function openEditContactDialog() {
     contactListRef.classList.add('d-none');
 }
 
-async function updateContact() {
-    const updatedData = {
-        nameIn: document.getElementById('edit-name').value.trim(),
-        emailIn: document.getElementById('edit-email').value.trim(),
-        phoneIn: document.getElementById('edit-phone').value.trim(),
-        color: getRandomColor()
-    };
+function getUpdatedContactData() {
+    const nameIn = document.getElementById('edit-name').value.trim();
+    const emailIn = document.getElementById('edit-email').value.trim();
+    const phoneIn = document.getElementById('edit-phone').value.trim();
+    const color = getRandomColor();
 
-    if (!updatedData.nameIn || !updatedData.emailIn || !updatedData.phoneIn) {
+    if (!nameIn || !emailIn || !phoneIn) {
         alert('Bitte füllen Sie alle Felder aus.');
-        return;
+        return null;
     }
 
+    return { nameIn, emailIn, phoneIn, color };
+}
+
+async function sendUpdateRequest(contactId, updatedData) {
     try {
-        let response = await fetch(baseUrl + `contacts/${currentIndex}.json`, {
+        let response = await fetch(baseUrl + `contacts/${contactId}.json`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -279,28 +281,47 @@ async function updateContact() {
             throw new Error('Fehler beim Bearbeiten des Kontakts');
         }
 
-        const contactIndex = db.findIndex(contact => contact.id === currentIndex);
-        if (contactIndex > -1) {
-            db[contactIndex] = { id: currentIndex, ...updatedData };
-        }
-
-        const initials = getInitials(updatedData.nameIn);
-
-        if (!showDetail.classList.contains('d-none')) {
-            getDetailTemplate(
-                updatedData.nameIn,
-                updatedData.emailIn,
-                updatedData.phoneIn,
-                initials[0],  
-                initials[1],  
-                updatedData.color
-            );
-        }
-
-        closeEditContactDialog(); 
-        init(); 
+        return true;
     } catch (error) {
         console.log('Fehler beim Bearbeiten des Kontakts', error);
+        return false;
+    }
+}
+
+function updateLocalDatabase(contactId, updatedData) {
+    const contactIndex = db.findIndex(contact => contact.id === contactId);
+    if (contactIndex > -1) {
+        db[contactIndex] = { id: contactId, ...updatedData };
+    }
+}
+
+async function updateContact() {
+    const updatedData = getUpdatedContactData();
+    
+    if (!updatedData) return;
+
+    const success = await sendUpdateRequest(currentIndex, updatedData);
+    
+    if (success) {
+        updateLocalDatabase(currentIndex, updatedData);
+        updateDetailView(updatedData);
+        closeEditContactDialog();
+        init(); 
+    }
+}
+
+function updateDetailView(updatedData) {
+    const initials = getInitials(updatedData.nameIn);
+
+    if (!showDetail.classList.contains('d-none')) {
+        getDetailTemplate(
+            updatedData.nameIn,
+            updatedData.emailIn,
+            updatedData.phoneIn,
+            initials[0],
+            initials[1],
+            updatedData.color
+        );
     }
 }
 
