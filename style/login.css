@@ -163,6 +163,12 @@ form {
 .check-box-container a {
   color: #43b5e5;
   text-decoration: none;
+  transition: transform 0.1s;
+}
+
+.check-box-container a:hover{
+  text-decoration: underline;
+  transform: scale(1.05);
 }
 
 .label-margin-right {
