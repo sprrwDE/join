@@ -150,7 +150,7 @@ function renderSignUpHTML(){
       <span id="span-check-password-icon" class="password-eye-open d-none"></span>
       </div>
       <div id="wrong-password" class="font-color-red"></div>
-      <div class="check-box-container">
+      <div class="check-box-container check-box">
         <input type="checkbox" required id="accept-box">
         <label for="checkbox">I accept the</label><a href="">Privacy policy</a>
       </div>
