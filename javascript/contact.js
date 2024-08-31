@@ -11,7 +11,7 @@ const editContactRef = document.getElementById('edit-contact');
 
 // Firebase References
 let baseUrl = 'https://join-318-default-rtdb.europe-west1.firebasedatabase.app/';
-let currentIndex;
+let currentId;
 
 // Data Storage
 let db = [];
@@ -110,10 +110,10 @@ function renderContactsForInitial(containerRef, contacts) {
         let currentEmail = contact.emailIn;
         let currentPhone = contact.phoneIn;
         let initials = contact.initials;
-        let currentI = contact.id;
+        let currentId = contact.id;
         let color = contact.color;
         
-        containerRef.innerHTML += getContactsTemplate(currentName, currentEmail, currentPhone, currentI, initials[0], initials[initials.length - 1], color);
+        containerRef.innerHTML += getContactsTemplate(currentName, currentEmail, currentPhone, currentId, initials[0], initials[initials.length - 1], color);
     }
 }
 
@@ -189,9 +189,9 @@ function getInitials(name) {
 /**
  * Detail Dialog
  */
-function openDetailDialog(name, email, phone, index, first, last, color) {
+function openDetailDialog(name, email, phone, id, first, last, color) {
     openDetailReferences();
-    currentIndex = index;
+    currentId = id;
     getDetailTemplate(name, email, phone, first, last, color);
 }
 
@@ -248,8 +248,8 @@ function closeEditContactDialog() {
 function openEditContactDialog() {
     editContactRef.classList.remove('d-none');
     editContactRef.innerHTML = showEditOverlay();
-
-    const contact = db.find(c => c.id === currentIndex);
+    console.log(currentId)
+    const contact = db.find(contact => contact.id === currentId);
     const nameInput = document.getElementById('edit-name');
     const emailInput = document.getElementById('edit-email');
     const phoneInput = document.getElementById('edit-phone');
@@ -310,10 +310,10 @@ async function updateContact() {
 
     if (!updatedData) return;
 
-    const success = await sendUpdateRequest(currentIndex, updatedData);
+    const success = await sendUpdateRequest(currentId, updatedData);
 
     if (success) {
-        updateLocalDatabase(currentIndex, updatedData);
+        updateLocalDatabase(currentId, updatedData);
         updateDetailView(updatedData);
         closeEditContactDialog();
         init();
@@ -335,6 +335,10 @@ function updateDetailView(updatedData) {
     }
 }
 
+/**
+ * Delete
+ */
+
 async function deleteContact(contactId) {
     try {
         let response = await fetch(baseUrl + `contacts/${contactId}.json`, {
@@ -350,3 +354,4 @@ async function deleteContact(contactId) {
         console.log('Fehler beim Löschen des Kontakts', error);
     }
 }
+
