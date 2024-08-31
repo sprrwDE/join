@@ -173,7 +173,6 @@ textarea {
   border: 1px solid #d1d1d1;
   justify-content: space-between;
   z-index: 5;
-  margin-bottom: 8px;
 }
 
 .search-bar-section:hover {
@@ -203,6 +202,9 @@ textarea {
   flex-direction: column;
   height: auto;
   overflow-y: scroll;
+  position: relative;
+  z-index: -1;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .contact {
@@ -519,13 +521,16 @@ textarea {
 }
 
 .categorys {
-  width: 100%;
+  width: 44%;
   background-color: white;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   display: flex;
   flex-direction: column;
   height: auto;
+  z-index: 999;
+  position: absolute;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .categorys p:hover {
@@ -573,10 +578,18 @@ input[type="search"]::-webkit-search-results-decoration {
   display: none;
 }
 
+.separator-div {
+  display: none;
+}
+
 @media (min-width: 1024px) {
+  p {
+    font-size: 18px;
+  }
+
   .content-wrapper {
     position: fixed;
-    top: 80px;
+    top: 60px;
     left: 232px;
     width: calc(100% - 232px);
     height: calc(100% - 80px);
@@ -587,8 +600,10 @@ input[type="search"]::-webkit-search-results-decoration {
   .title {
     font-size: 61px;
     font-weight: 700;
-    top: 120px;
-    position: absolute;
+  }
+
+  .title-section {
+    margin-top: 40px;
   }
 
   .left-part {
@@ -614,6 +629,7 @@ input[type="search"]::-webkit-search-results-decoration {
   }
 
   .separator-div {
+    display: flex;
     width: 1px;
     height: 100%;
     background-color: #d1d1d1;
@@ -621,7 +637,7 @@ input[type="search"]::-webkit-search-results-decoration {
 
   .create-task-container {
     position: absolute;
-    bottom: 120px;
+    bottom: 20px;
     width: calc(100% - 232px);
   }
 
