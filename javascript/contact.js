@@ -9,12 +9,9 @@ const editButtonRef = document.getElementById('edit-button');
 const editBoxRef = document.getElementById('edit-box');
 const editContactRef = document.getElementById('edit-contact');
 
-// Input References
-let nameInput, emailInput, phoneInput;
-
 // Firebase References
 let baseUrl = 'https://join-318-default-rtdb.europe-west1.firebasedatabase.app/';
-let currentIndex;
+let currentId;
 
 // Data Storage
 let db = [];
@@ -43,7 +40,7 @@ async function fetchApi(path) {
         if (data) {
             let contactsArray = Object.entries(data).map(([key, value]) => {
                 return {
-                    id: key, 
+                    id: key,
                     ...value
                 };
             });
@@ -59,10 +56,15 @@ async function fetchApi(path) {
  */
 function renderContactGroups() {
     listContentRef.innerHTML = '';
-    organizedContacts = {}; 
+    organizedContacts = {};
+    groupContactsByInitials();
+    sortContactGroups();
+    renderContacts(organizedContacts);
+}
 
-    // get initials
-    db.forEach(contact => {
+function groupContactsByInitials() {
+    for (let i = 0; i < db.length; i++) {
+        let contact = db[i];
         let initials = getInitials(contact.nameIn);
         let letter = initials[1];
 
@@ -73,16 +75,17 @@ function renderContactGroups() {
             ...contact,
             initials: initials
         });
-    });
+    }
+}
 
-    // sort
-    for (let letter in organizedContacts) {
-        organizedContacts[letter].sort((a, b) => {
+function sortContactGroups() {
+    const letters = Object.keys(organizedContacts);
+    for (let i = 0; i < letters.length; i++) {
+        let currentLetter = letters[i];
+        organizedContacts[currentLetter].sort(function (a, b) {
             return a.nameIn.localeCompare(b.nameIn);
         });
     }
-
-    renderContacts(organizedContacts);
 }
 
 function renderContacts(organizedContacts) {
@@ -90,20 +93,27 @@ function renderContacts(organizedContacts) {
 
     for (let index = 0; index < sortedInitials.length; index++) {
         let initial = sortedInitials[index];
-        listContentRef.innerHTML += contactTemplateInitial(initial, index);
-        let currentContactRef = document.getElementById(`list-content-inner-${index}`);
+        renderInitialGroup(initial, index, organizedContacts[initial]);
+    }
+}
+
+function renderInitialGroup(initial, index, contacts) {
+    listContentRef.innerHTML += contactTemplateInitial(initial, index);
+    let currentContactRef = document.getElementById(`list-content-inner-${index}`);
+    renderContactsForInitial(currentContactRef, contacts);
+}
+
+function renderContactsForInitial(containerRef, contacts) {
+    for (let i = 0; i < contacts.length; i++) {
+        let contact = contacts[i];
+        let currentName = contact.nameIn;
+        let currentEmail = contact.emailIn;
+        let currentPhone = contact.phoneIn;
+        let initials = contact.initials;
+        let currentId = contact.id;
+        let color = contact.color;
         
-        let contacts = organizedContacts[initial];
-        for (let i = 0; i < contacts.length; i++) {
-            let contact = contacts[i];
-            let currentName = contact.nameIn;
-            let currentEmail = contact.emailIn;
-            let currentPhone = contact.phoneIn;
-            let initials = contact.initials;
-            let currentI = contact.id; 
-            let color = contact.color;
-            currentContactRef.innerHTML += getContactsTemplate(currentName, currentEmail, currentPhone, currentI, initials[0], initials[initials.length - 1], color);
-        }
+        containerRef.innerHTML += getContactsTemplate(currentName, currentEmail, currentPhone, currentId, initials[0], initials[initials.length - 1], color);
     }
 }
 
@@ -127,10 +137,10 @@ function closeAddContactDialog() {
  * Push Data from input-fields into Firebase Database
  */
 function getInputValues() {
-    nameInput = document.getElementById('name').value.trim();
-    emailInput = document.getElementById('email').value.trim();
-    phoneInput = document.getElementById('phone').value.trim();
-    
+    const nameInput = document.getElementById('name').value.trim();
+    const emailInput = document.getElementById('email').value.trim();
+    const phoneInput = document.getElementById('phone').value.trim();
+
     if (!nameInput || !emailInput || !phoneInput) {
         alert('Bitte füllen Sie alle Felder aus.');
         return;
@@ -160,8 +170,8 @@ async function pushData(inputData) {
             throw new Error('Fehler beim Pushen der Daten');
         }
 
-        closeAddContactDialog(); 
-        init(); 
+        closeAddContactDialog();
+        init();
     } catch (error) {
         console.log('Fehler beim Pushen der Daten', error);
     }
@@ -179,10 +189,10 @@ function getInitials(name) {
 /**
  * Detail Dialog
  */
-function openDetailDialog(name, email, phone, index, first, last, color) {
+function openDetailDialog(name, email, phone, id, first, last, color) {
     openDetailReferences();
-    currentIndex = index; 
-    getDetailTemplate(name, email, phone, first, last, color); 
+    currentId = id;
+    getDetailTemplate(name, email, phone, first, last, color);
 }
 
 function openDetailReferences() {
@@ -221,7 +231,7 @@ function stopPropagation(event) {
 }
 
 function showEditBox(event) {
-    stopPropagation(event); 
+    stopPropagation(event);
     editBoxRef.classList.remove('d-none');
 }
 
@@ -238,8 +248,8 @@ function closeEditContactDialog() {
 function openEditContactDialog() {
     editContactRef.classList.remove('d-none');
     editContactRef.innerHTML = showEditOverlay();
-
-    const contact = db.find(c => c.id === currentIndex);
+    console.log(currentId)
+    const contact = db.find(contact => contact.id === currentId);
     const nameInput = document.getElementById('edit-name');
     const emailInput = document.getElementById('edit-email');
     const phoneInput = document.getElementById('edit-phone');
@@ -297,16 +307,16 @@ function updateLocalDatabase(contactId, updatedData) {
 
 async function updateContact() {
     const updatedData = getUpdatedContactData();
-    
+
     if (!updatedData) return;
 
-    const success = await sendUpdateRequest(currentIndex, updatedData);
-    
+    const success = await sendUpdateRequest(currentId, updatedData);
+
     if (success) {
-        updateLocalDatabase(currentIndex, updatedData);
+        updateLocalDatabase(currentId, updatedData);
         updateDetailView(updatedData);
         closeEditContactDialog();
-        init(); 
+        init();
     }
 }
 
@@ -325,6 +335,10 @@ function updateDetailView(updatedData) {
     }
 }
 
+/**
+ * Delete
+ */
+
 async function deleteContact(contactId) {
     try {
         let response = await fetch(baseUrl + `contacts/${contactId}.json`, {
@@ -335,8 +349,9 @@ async function deleteContact(contactId) {
             throw new Error('Fehler beim Löschen des Kontakts');
         }
         closeDetailDialog();
-        init(); 
+        init();
     } catch (error) {
         console.log('Fehler beim Löschen des Kontakts', error);
     }
 }
+
