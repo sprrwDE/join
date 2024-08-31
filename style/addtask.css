@@ -2,10 +2,6 @@ body {
   background-color: rgb(246, 247, 248);
 }
 
-header {
-  z-index: 9999;
-}
-
 button,
 input {
   border: unset;

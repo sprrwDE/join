@@ -4,7 +4,7 @@ let BASE_URL =
 let tasks = [];
 let currentDraggedElement;
 
-function init() {
+function initBoard() {
   includeHTML();
   loadTasks();
    

@@ -9,7 +9,7 @@ let tasks = {
   color: "",
 };
 
-function init() {
+function onload() {
   loadContacts();
   includeHTML();
   dropDown();
