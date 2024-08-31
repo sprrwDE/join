@@ -259,3 +259,20 @@ h3 {
 .shake {
   animation: shake 0.3s infinite;
 }
+
+@media (min-width:1024px) {
+  .content-wrap {
+    display: flex;
+    left: 232px;
+    width: calc(100% - 232px);
+    position: absolute;
+    height: 100vh;
+  }
+
+  .top-section img{
+    display: none;
+  }
+
+
+
+}
