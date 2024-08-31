@@ -2,6 +2,7 @@ let BASE_URL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/
 
 function init(){
   startLogInAnimation();
+  includeHTML();
 }
 
 function startLogInAnimation() {
@@ -9,9 +10,9 @@ function startLogInAnimation() {
   const logo = document.querySelector('.log-in-join-logo');
 
   // Setzt das Bild auf sichtbar und startet die Animation
-  logo.style.opacity = 1; // Bild sichtbar machen
+
   setTimeout(() => {
-    overlay.classList.add('hidden'); // Overlay ausblenden
+
   }, 200); // Verzögerung nach Bedarf anpassen
 }
 
