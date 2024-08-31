@@ -21,14 +21,13 @@ let organizedContacts = {};
 /**
  * Fetches Firebase RealtimeDB
  */
-async function init() {
+async function initialize() {
     try {
         db = [];
         await fetchApi("contacts");
     } finally {
         listContentRef.innerHTML = '';
         renderContactGroups();
-        includeHTML();
     }
 }
 
@@ -171,7 +170,7 @@ async function pushData(inputData) {
         }
 
         closeAddContactDialog();
-        init();
+        initialize();
     } catch (error) {
         console.log('Fehler beim Pushen der Daten', error);
     }
@@ -349,7 +348,7 @@ async function deleteContact(contactId) {
             throw new Error('Fehler beim Löschen des Kontakts');
         }
         closeDetailDialog();
-        init();
+        initialize();
     } catch (error) {
         console.log('Fehler beim Löschen des Kontakts', error);
     }
