@@ -17,6 +17,7 @@ button {
 
 .red-text {
   color: rgb(248, 84, 103);
+  z-index: -1;
 }
 
 .d-none {
@@ -151,6 +152,7 @@ textarea {
   height: 88px;
   padding: 18px 21px 18px 21px;
   font-family: "Inter", sans-serif;
+  resize: none;
 }
 
 .assigned-to-section {
@@ -171,6 +173,11 @@ textarea {
   border: 1px solid #d1d1d1;
   justify-content: space-between;
   z-index: 5;
+  margin-bottom: 8px;
+}
+
+.search-bar-section:hover {
+  cursor: pointer;
 }
 
 .search {
@@ -205,6 +212,7 @@ textarea {
   border-radius: 10px;
   padding: 16px;
   z-index: 1;
+  margin-bottom: 1px;
 }
 
 /**/
@@ -377,6 +385,10 @@ textarea {
   padding: 10px 21px 10px 21px;
 }
 
+.date:hover {
+  cursor: pointer;
+}
+
 .prio-section {
   margin: 16px 16px 0px;
   gap: 8px;
@@ -401,6 +413,10 @@ textarea {
   align-items: center;
   padding: 18px 10px 18px 10px;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
+}
+
+.prio:hover {
+  cursor: pointer;
 }
 
 .ok-notok-section {
@@ -451,6 +467,15 @@ textarea {
   border-bottom: 1px solid rgb(41, 171, 226);
   padding-right: 16px;
   padding-left: 16px;
+  width: 100%;
+}
+
+.onedit li {
+  width: 90%;
+}
+
+.onedit li input {
+  width: 95%;
 }
 
 .contacts-imges {
@@ -537,9 +562,93 @@ input[type="search"]::-webkit-search-results-decoration {
 .create-btn:hover {
   cursor: pointer;
   background-color: rgb(41, 171, 226);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
-
 
 .notfound {
   border: 1px solid rgb(248, 84, 103);
+}
+
+.clear-btn {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .content-wrapper {
+    position: fixed;
+    top: 80px;
+    left: 232px;
+    width: calc(100% - 232px);
+    height: calc(100% - 80px);
+    box-sizing: border-box;
+    padding-left: 96px;
+  }
+
+  .title {
+    font-size: 61px;
+    font-weight: 700;
+    top: 120px;
+    position: absolute;
+  }
+
+  .left-part {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+  }
+
+  .right-part {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+  }
+
+  .content-container {
+    display: flex;
+    flex-direction: row;
+    width: calc(100% - 232px);
+  }
+
+  .separator {
+    height: 100%;
+  }
+
+  .separator-div {
+    width: 1px;
+    height: 100%;
+    background-color: #d1d1d1;
+  }
+
+  .create-task-container {
+    position: absolute;
+    bottom: 120px;
+    width: calc(100% - 232px);
+  }
+
+  .clear-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+    border-radius: 10px;
+    font-size: 21px;
+    gap: 4px;
+    border: 1px solid #2a3647;
+  }
+
+  .buttons {
+    display: flex;
+    gap: 16px;
+  }
+
+  .clear-btn:hover {
+    border: 1px solid rgb(41, 171, 226);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    color: rgb(41, 171, 226);
+  }
+
+  .clear-btn:hover img {
+    content: url("../assets/img/Close_blue.svg");
+  }
+
 }

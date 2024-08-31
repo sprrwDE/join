@@ -1,7 +1,7 @@
 function renderAssignedTo(contact, i, firstinits, secondinits, color) {
   return `
-    <div class="contact" id="contact${i}">
-                        <div class="flex" id="id=${i}">
+    <div class="contact" id="contact${i}" onclick="assignedToChecked(${i})">
+                        <div class="flex" id="id=${i}" onclick="assignedToChecked(${i})">
                             <div class="contact-initals" id="contact-initals${i}"style="background-color: ${color[i]};">
                         <span id="inits${i}">${firstinits}${secondinits}</span>
                     </div>
@@ -45,6 +45,6 @@ function renderEditDoneImages(id) {
                                 <img src="../assets/img/delete.svg" alt="" onclick="deleteSubtask(${id})">`;
 }
 
-function renderInputfieldEdit() {
-  return `<input type="text" name="" id="newtask${id}" class="border"></input>`;
+function renderInputfieldEdit(id, task) {
+  return `<input type="text" name="" id="newtask${id}" class="border" value="${task}"></input>`;
 }

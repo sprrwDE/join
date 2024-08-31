@@ -30,13 +30,12 @@ function postInfos() {
       subtask: `${tasks.subtask}`,
       status: "todo",
       id: 0,
-      color: `${tasks.color}`
+      color: `${tasks.color}`,
     }),
   });
 }
 
-let BASE_URL =
-  "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/";
+let BASE_URL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/";
 
 function loadContacts() {
   fetch(BASE_URL + "/contacts.json")
@@ -44,7 +43,6 @@ function loadContacts() {
     .then((result) => renderContacts(result))
     .catch((error) => console.log(error));
 }
-
 
 function getContactInitials(contacts) {
   let newcontact = contacts.split(" ");
@@ -56,11 +54,11 @@ function getContactInitials(contacts) {
 function renderContacts(contacts) {
   let contactcontainer = document.getElementById("all-contacts");
   let allcontacts = [];
-  let colors = []
+  let colors = [];
 
   for (let letter in contacts) {
-      allcontacts.push(contacts[letter].nameIn);
-      colors.push(contacts[letter].color)
+    allcontacts.push(contacts[letter].nameIn);
+    colors.push(contacts[letter].color);
   }
   for (i = 0; i < allcontacts.length; i++) {
     allcontacts[i] ||= "Kontakt nicht gefunden";
@@ -79,12 +77,21 @@ function contactsImages(i) {
 function dropDown() {
   let dropdown = document.getElementById("all-contacts");
   let dropdownToggle = document.getElementById("contacts-searchfield");
+  let arrow = document.getElementById("arrow-down");
+  arrowstate = false;
 
   document.addEventListener("click", (event) => {
-    if (!dropdown.contains(event.target) && !dropdownToggle.contains(event.target)) {
+    if (dropdownToggle.contains(event.target) && event.target.tagName === "IMG") {
+      if (arrowstate === false) {
+        openAssignedList();
+      } else {
+        closeAssignedList();
+      }
+      arrowstate = !arrowstate;
+    } else if (!dropdown.contains(event.target) && !dropdownToggle.contains(event.target)) {
       closeAssignedList();
-    } else if (dropdownToggle.contains(event.target) && event.target.tagName === "IMG") {
-      closeAssignedList();
+    } else if (arrow.contains(event.target)) {
+      openAssignedList();
     } else {
       openAssignedList();
     }
@@ -118,8 +125,7 @@ function openAssignedList() {
   dropdown.classList.remove("d-none");
   search.classList.remove("d-none");
   dropdown.style.animation = "slowdropdown 0.7s forwards";
-  document.getElementById("arrow-down").style.animation =
-    "rotate 0.5s forwards";
+  document.getElementById("arrow-down").style.animation = "rotate 0.5s forwards";
   contactimages.classList.add("d-none");
   input.focus();
   palceholder.style.display = "none";
@@ -199,6 +205,7 @@ function assignedToChecked(id) {
   let color = contactimg.style.backgroundColor;
   let contactid = document.getElementById(`id=${id}`);
   let contact = contactid.getElementsByTagName("p");
+  toggleCheckbox(id);
 
   if (checkbox.checked) {
     img.classList.remove("d-none");
@@ -210,6 +217,11 @@ function assignedToChecked(id) {
     tasks.assignedto.splice(remove, 1);
   }
   grandParent.classList.toggle("background");
+}
+
+function toggleCheckbox(i) {
+  let checkbox = document.getElementById(`cbtest-19-${i}`);
+  checkbox.checked = !checkbox.checked;
 }
 
 function taskSelected(task) {
@@ -224,9 +236,9 @@ function taskSelected(task) {
   document.addEventListener("click", (event) => {
     if (!category.contains(event.target)) {
       categorylist.classList.add("d-none");
-    } else if(category.contains(event.target) && event.target.tagName === "IMG") {
+    } else if (category.contains(event.target) && event.target.tagName === "IMG") {
       categorylist.classList.add("d-none");
-    }else {
+    } else {
       categorylist.classList.remove("d-none");
       categorytext.classList.add("d-none");
       categoryDiv.classList.remove("notfound");
@@ -256,8 +268,7 @@ function addSubtask() {
   input.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
       if (input.value === "") {
-        searchbar.classList.add("notfound");
-        required.classList.remove("d-none");
+        subtaskIsEmpty();
       } else {
         addToSubtask();
       }
@@ -271,27 +282,50 @@ function addSubtask() {
   notok.classList.remove("d-none");
   subtasklist.classList.remove("d-none");
 }
+
+function subtaskIsEmpty() {
+  let searchbar = document.getElementById("subtask-search-bar");
+  let required = document.getElementById("subtask-required");
+
+  searchbar.classList.add("notfound");
+  required.classList.remove("d-none");
+}
+
 let id = 0;
 
 function cancelSubtaskInput() {
   let input = document.getElementById("input-subtask");
   let addimg = document.getElementById("add-img");
   let notok = document.getElementById("ok-notok-section");
-  let subtasklist = document.getElementById("subtasklist");
 
   input.value = "";
   addimg.classList.remove("d-none");
   notok.classList.add("d-none");
-  subtasklist.classList.add("d-none");
 }
 
 function addToSubtask() {
   let input = document.getElementById("input-subtask");
   let subtaskcontainer = document.getElementById("subtasklist");
   id++;
+  if (input.value == "") {
+    subtaskIsEmpty();
+  } else {
+    subtaskcontainer.innerHTML += renderAddToSubtaskList(id, input);
+    input.value = "";
+  }
+}
 
-  subtaskcontainer.innerHTML += renderAddToSubtaskList(id, input);
-  input.value = "";
+function getTitle() {
+  let input = document.getElementById("input-title");
+  let required = document.getElementById("title-required");
+
+  if (input.value == "") {
+    console.log(input.value);
+    input.style.border = "1px solid rgb(248, 84, 103)";
+    required.classList.remove("d-none");
+  } else {
+    tasks.title = input.value;
+  }
 }
 
 function deleteSubtask(id) {
@@ -304,7 +338,7 @@ function editSubtask(id) {
   let editdelete = document.getElementById(`edit-delete${id}`);
   let task = document.getElementById(`subtask${id}`);
 
-  task.innerHTML = renderInputfieldEdit(id);
+  task.innerHTML = renderInputfieldEdit(id, task.innerHTML);
   editdelete.innerHTML = renderEditOptions(id);
   subtask.classList.replace("task", "onedit");
 }
@@ -318,18 +352,6 @@ function edited(id) {
 
   editdelete.innerHTML = renderEditDoneImages(id);
   task.innerHTML = newtask;
-}
-
-function getTitle() {
-  let input = document.getElementById("input-title");
-  let required = document.getElementById("title-required");
-
-  if (input.value == "") {
-    input.style.border = "1px solid rgb(248, 84, 103)";
-    required.classList.remove("d-none");
-  } else {
-    tasks.title = input.value;
-  }
 }
 
 function inputTyping() {
@@ -378,10 +400,7 @@ function isCategroySelected() {
   let inputfield = document.getElementById("input-category");
   let required = document.getElementById("category-required");
 
-  if (
-    categoryselected == "User Story" ||
-    categoryselected == "Technical Task"
-  ) {
+  if (categoryselected == "User Story" || categoryselected == "Technical Task") {
     inputfield.classList.remove("notfound");
     required.classList.add("d-none");
   } else {
@@ -397,4 +416,8 @@ function getAllInfos() {
   if (requiredFieldsCheck() == true) {
     postInfos();
   }
+}
+
+function clearAllFields() {
+  window.location.reload()
 }
