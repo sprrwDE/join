@@ -96,12 +96,14 @@ h1{
   border-radius: 20px;
 }
 
-
-
-
-
 .count-number{
   font-size: 40px;
   font-weight: 600px;
 
+}
+
+@media (min-width:1024px){
+  .background-container{
+    padding-left: 232px;
+  }
 }
