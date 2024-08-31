@@ -59,7 +59,7 @@
     display: flex;
     flex-direction: column;
     flex: 1;
-    margin-top: 40px;
+    padding-top: 40px;
 }
 
 .seperator-list {
@@ -67,7 +67,7 @@
     height: 1px;
     background-color: #D1D1D1;
     margin: 24px 0;
-    
+
 }
 
 .list-content-wrapper {
@@ -87,6 +87,10 @@
 }
 
 /* Contact Overlay */
+
+.contact-overlay-desk {
+    display: none;
+}
 
 .exit-detail {
     width: 32px;
@@ -121,7 +125,7 @@
     border-radius: 16px;
 }
 
-.list-card:hover a{
+.list-card:hover a {
     color: white !important;
 }
 
@@ -365,7 +369,7 @@ input::placeholder {
 
 /* Desktop */
 
-@media screen and (min-width: 1280px) {
+@media screen and (min-width: 1024px) {
     .contact-card {
         flex-direction: row;
         width: 1200px;
@@ -458,5 +462,37 @@ input::placeholder {
     .card-header img {
         display: block;
         width: 55px;
+    }
+
+    .contact-list {
+        position: absolute;
+        left: 232px;
+        padding: 0;
+        height: 100%;
+        width: 35%;
+    }
+
+    .contact-list-wrapper {
+        padding-left: 16px;
+        padding-right: 16px;
+        width: 100%;
+        height: 100%;
+        overflow-y: scroll;
+        scrollbar-color: grey;
+        scrollbar-width: thin;
+    }
+
+    .contact-detail {
+        display: flex !important;
+        background-color: grey;
+        height: 100%;
+    }
+
+    .contact-overlay-desk {
+        display: block !important;
+        background-color: grey;
+        position: absolute;
+        left: calc(232px + 35%);
+        height: 100%;
     }
 }

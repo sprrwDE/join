@@ -29,15 +29,11 @@ function detailTemplate(name, email, phone, first, last, color) {
     <div class="exit-detail" id="exit-detail" onclick="closeDetailDialog()">
         <img src="../assets/img/exit-detail.svg">
     </div>            
-    <div class="contact-detail-header">
-        <h2>Contacts</h2>
-        <h3>Better with a team!</h3>
-        <div class="seperator-card"></div>
-    </div>
+
     <div class="contact-info-wrapper">
         <div class="avatar-wrapper">
             <div class="card-image" style="background-color: ${color}">
-                <h4>${first}${last}</h4> <!-- Initialen anzeigen -->
+                <h4>${first}${last}</h4> 
             </div>
             <h4>${name}</h4>
         </div>
