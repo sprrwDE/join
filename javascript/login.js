@@ -1,7 +1,8 @@
 let BASE_URL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/accounts.json" 
 
-function init(){
+function start(){
   startLogInAnimation();
+  
 }
 
 function startLogInAnimation() {
@@ -12,7 +13,8 @@ function startLogInAnimation() {
   logo.style.opacity = 1; // Bild sichtbar machen
   setTimeout(() => {
     overlay.classList.add('hidden'); // Overlay ausblenden
-  }, 200); // Verzögerung nach Bedarf anpassen
+  }, 200); // Verzögerung nach Bedarf 
+
 }
 
 function logIn(event){
@@ -89,8 +91,13 @@ function loadSignUp(){
 }
 
 function BackToLogIn(){
+  document.getElementById('join-logo-overlay').classList.add('d-none');
+  document.getElementById('join-logo-overlay').classList.remove('overlay', 'hidden');
+  document.getElementById('join-log-in-img').classList.remove('log-in-join-logo');
+  document.getElementById('join-log-in-img').classList.add('static-logo');
+  
   document.getElementById('sign-up').classList.add('d-none');
-  document.getElementById('log-in').classList.remove('d-none');
+  document.getElementById('log-in').classList.remove('d-none'); 
 }
 
 function addNewUser(event) {
