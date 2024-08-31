@@ -477,6 +477,7 @@ input::placeholder {
         display: block !important;
         padding-left: 16px;
         padding-right: 16px;
+        top: 160px;
         width: 100%;
         height: 100%;
         overflow-y: scroll;
@@ -488,11 +489,12 @@ input::placeholder {
         display: flex !important;
         background-color: grey;
         height: 100%;
+        align-items: flex-start
     }
 
     .contact-overlay-desk {
         display: block !important;
-        position: absolute;
+        position: fixed;
         left: calc(232px + 35%);
         height: 100%;
         top: 160px;
