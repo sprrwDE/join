@@ -465,6 +465,7 @@ input::placeholder {
     }
 
     .contact-list {
+        display: flex !important;
         position: absolute;
         left: 232px;
         padding: 0;
@@ -473,12 +474,13 @@ input::placeholder {
     }
 
     .contact-list-wrapper {
+        display: block !important;
         padding-left: 16px;
         padding-right: 16px;
         width: 100%;
         height: 100%;
         overflow-y: scroll;
-        scrollbar-color: grey;
+        scrollbar-color: grey ;
         scrollbar-width: thin;
     }
 
@@ -490,9 +492,13 @@ input::placeholder {
 
     .contact-overlay-desk {
         display: block !important;
-        background-color: grey;
         position: absolute;
         left: calc(232px + 35%);
         height: 100%;
+        top: 160px;
+    }
+
+    .contact-detail {
+        display: none !important;
     }
 }

@@ -189,21 +189,30 @@ function getInitials(name) {
  * Detail Dialog
  */
 function openDetailDialog(name, email, phone, id, first, last, color) {
-    openDetailReferences();
     currentId = id;
-    getDetailTemplate(name, email, phone, first, last, color);
+    
+    if (window.innerWidth >= 1024) {
+        openDetailReferenceDesk(name, email, phone, first, last, color);
+    } else {
+        openDetailReferenceMob(name, email, phone, first, last, color);
+    }
 }
 
-function openDetailReferences() {
+function openDetailReferenceMob(name, email, phone, first, last, color) {
     showDetail.classList.remove('d-none');
     detailRef.classList.remove('d-none');
     editButtonRef.classList.remove('d-none');
     contactListRef.classList.add('d-none');
     editBoxRef.classList.add('d-none');
     addButtonRef.classList.add('d-none');
+    getDetailTemplateMob(name, email, phone, first, last, color);
 }
 
-function getDetailTemplate(name, email, phone, first, last, color) {
+function openDetailReferenceDesk(name, email, phone, first, last, color) {
+    document.getElementById('detail-desk').innerHTML = detailTemplate(name, email, phone, first, last, color);
+}
+
+function getDetailTemplateMob(name, email, phone, first, last, color) {
     detailRef.innerHTML = detailTemplate(name, email, phone, first, last, color);
 }
 
@@ -353,4 +362,3 @@ async function deleteContact(contactId) {
         console.log('Fehler beim Löschen des Kontakts', error);
     }
 }
-
