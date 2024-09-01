@@ -6,7 +6,7 @@
 .join-318-container{
   display: flex;
   flex-direction: column;
-  padding-top: 100px;
+  padding-top: 140px;
   margin-left: 16px;
   gap: 8px;
   position: relative;
@@ -16,6 +16,12 @@ h1{
   font-weight: 700;
   width: 203px;
   height: 56px;
+}
+.border-vertical{
+  border-left: 3px solid #29ABE2;
+  height: 40px;
+  margin-right: 16px;
+  display: none;
 }
 .join-subtitle{
   font-size: 20px;
@@ -105,5 +111,15 @@ h1{
 @media (min-width:1025px){
   .background-container{
     padding-left: 232px;
+  }
+  .join-318-container{
+    flex-direction: row;
+    align-items: center;
+  }
+  .border-bottom{
+    display: none;
+  }
+  .border-vertical{
+    display: block;
   }
 }

@@ -75,4 +75,6 @@ h2{
   display: none !important;
 }
 
-
+.cursor{
+  cursor: pointer;
+}
