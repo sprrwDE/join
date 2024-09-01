@@ -7,7 +7,6 @@ let currentDraggedElement;
 function initBoard() {
   includeHTML();
   loadTasks();
-   
 }
 
 function allowDrop(event) {
@@ -62,6 +61,7 @@ function loadTasks() {
 }
 
 function checkTask(keys, values) {
+  console.table(values)
   tasks = [];
 
   for (let i = 0; i < values.length; i++) {
@@ -98,6 +98,7 @@ function renderTask() {
 function renderHelper(section) {
   let allTasks = tasks.filter((t) => t["status"] == section);
   for (let i = 0; i < allTasks.length; i++) {
+    console.log(allTasks)
     document.getElementById(section).innerHTML += renderToDos(allTasks, i);
   }
 }
@@ -122,7 +123,7 @@ function renderToDos(task, i) {
                         <div class="progress-bar">
                             <div class="progress-bar-filler"></div>
                         </div>
-                        <p>1/2 Subtasks</p>
+                        <p>1/${task[i].subtask.length} Subtasks</p>
                     </div>
 
                     <div class="contacts-section">

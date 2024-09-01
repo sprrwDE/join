@@ -206,12 +206,15 @@ function assignedToChecked(id) {
   let contactid = document.getElementById(`id=${id}`);
   let contact = contactid.getElementsByTagName("p");
   toggleCheckbox(id);
+  console.log(id)
 
   if (checkbox.checked) {
     img.classList.remove("d-none");
     img.style.backgroundColor = color;
     tasks.assignedto.push(contact[0].textContent);
+    getSelectedColor(color);
   } else {
+    deleteSelectedColor(color);
     img.classList.add("d-none");
     let remove = tasks.assignedto.indexOf(contact[0].textContent);
     tasks.assignedto.splice(remove, 1);
@@ -222,6 +225,19 @@ function assignedToChecked(id) {
 function toggleCheckbox(i) {
   let checkbox = document.getElementById(`cbtest-19-${i}`);
   checkbox.checked = !checkbox.checked;
+}
+
+getcolors = [];
+function deleteSelectedColor(color) {
+  let index = getcolors.indexOf(color);
+  getcolors.splice(index, 1);
+  tasks.color = getcolors;
+}
+
+function getSelectedColor(color) {
+  if (!getcolors.includes(color)) {
+    getcolors.push(color);
+  }
 }
 
 function taskSelected(task) {
@@ -419,5 +435,5 @@ function getAllInfos() {
 }
 
 function clearAllFields() {
-  window.location.reload()
+  window.location.reload();
 }
