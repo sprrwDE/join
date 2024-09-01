@@ -328,5 +328,6 @@ h3 {
     top: 240px;
     height: 76%;
     box-sizing: border-box;
+    width: unset;
   }
 }
