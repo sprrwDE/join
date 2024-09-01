@@ -18,17 +18,21 @@
     <div class="wrapper-header" w3-include-html="./mobile-header.html"></div>
 
     <div class="content-wrap">
-        <div class="top-section">
-            <h1 class="top-section-title">Board</h1>
-            <img src="../assets/img/plus add task mobile.svg" alt="" class="add-task-btn">
-        </div>
 
-        <div class="search-section">
-            <input type="text" name="" id="" class="input-field">
-            <img src="../assets/img/Vector 3.svg" alt="" class="seperator">
-            <button class="search-btn"><img src="../assets/img/search.svg" alt=""></button>
+        <div class="top-wrapper">
+            <div class="top-section">
+                <h1 class="top-section-title">Board</h1>
+                <img src="../assets/img/plus add task mobile.svg" alt="" class="add-task-btn">
+            </div>
+            <div class="search-wrap">
+                <div class="search-section">
+                    <input type="text" name="" id="" class="input-field">
+                    <img src="../assets/img/Vector 3.svg" alt="" class="seperator">
+                    <button class="search-btn"><img src="../assets/img/search.svg" alt=""></button>
+                </div>
+                <button class="add-task">Add task <img src="../assets/img/plus_white.svg" alt="" class="plus-img"></button>
+            </div>
         </div>
-
         <div class="content-container">
             <div class="progress-container" id="todo" ondrop="moveTo('todo')" ondragleave="removeHighlight('todo')"
                 ondragover="allowDrop(event); highlight('todo')">

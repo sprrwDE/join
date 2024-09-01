@@ -664,3 +664,7 @@ input[type="search"]::-webkit-search-results-decoration {
   }
 
 }
+
+.arrow {
+  padding: 10px;
+}

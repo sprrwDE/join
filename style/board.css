@@ -273,6 +273,60 @@ h3 {
     display: none;
   }
 
+  .top-section {
+    margin-top: 80px;
+  }
 
+  .top-section-title {
+    position: unset;
+  }
 
+  .top-wrapper {
+    display: flex;
+    margin-top: 80px;
+    height: 130px;
+    width: 100%;
+    justify-content: space-between;
+    margin-left: 64px;
+    margin-right: 64px;
+  }
+
+  .search-wrap {
+    height: 200px;
+    margin-top: 80px;
+    display: flex;
+    gap: 32px;
+  }
+
+  .search-section {
+    margin: unset;
+    position: unset;
+  }
+
+  .add-task {
+    height: 48px;
+    width: 160px;
+    border-radius: 10px;
+    padding: 8px, 16px, 8px, 16px;
+    border: unset;
+    background-color: #2A3647;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 21px;
+    font-weight: 700;
+    gap: 4px;
+  }
+
+  .plus-img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .content-container {
+    top: 240px;
+    height: 76%;
+    box-sizing: border-box;
+  }
 }
