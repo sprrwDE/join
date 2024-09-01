@@ -260,7 +260,7 @@ h3 {
   animation: shake 0.3s infinite;
 }
 
-@media (min-width:1024px) {
+@media (min-width:1025px) {
   .content-wrap {
     display: flex;
     left: 232px;
