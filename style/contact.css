@@ -170,6 +170,13 @@
 
 /* Add Contact Card */
 
+.add-btn-desk {
+    display: none;
+    padding: 16px;
+    margin: 16px;
+    cursor: pointer;
+}
+
 .contact-card-wrapper {
     position: fixed;
     height: 100%;
@@ -177,6 +184,7 @@
     left: 0;
     right: 0;
     background: rgba(0, 0, 0, 0.1);
+    z-index: 10;
 }
 
 .contact-card {
@@ -359,6 +367,10 @@ input::placeholder {
     display: none;
 }
 
+.edit-button-desk-wrapper {
+    display: none;
+}
+
 /* Mobile Big */
 
 @media screen and (min-width: 440px) {
@@ -467,6 +479,7 @@ input::placeholder {
     .contact-list {
         display: flex !important;
         position: absolute;
+        top: 160px;
         left: 232px;
         padding: 0;
         height: 100%;
@@ -477,7 +490,6 @@ input::placeholder {
         display: block !important;
         padding-left: 16px;
         padding-right: 16px;
-        top: 160px;
         width: 100%;
         height: 100%;
         overflow-y: scroll;
@@ -502,5 +514,22 @@ input::placeholder {
 
     .contact-detail {
         display: none !important;
+    }
+
+    .add-button {
+        display: none;
+    }
+
+    .add-btn-desk {
+        display: block;
+    }
+
+    .name-wrapper {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .edit-button-desk-wrapper {
+        display: flex;
     }
 }

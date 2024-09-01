@@ -35,7 +35,13 @@ function detailTemplate(name, email, phone, first, last, color) {
             <div class="card-image" style="background-color: ${color}">
                 <h4>${first}${last}</h4> 
             </div>
+            <div class="name-wrapper">
             <h4>${name}</h4>
+            <div class="edit-button-desk-wrapper">
+                <div>Edit</div>
+                <div>Delete</div>
+            </div>
+            </div>
         </div>
         <div class="contact-content">
             <h4>Contact information</h4>
