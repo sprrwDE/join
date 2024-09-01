@@ -49,7 +49,7 @@ p {
   position: absolute;
   top: 224px;
   left: 16px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid #A8A8A8;
 }
 
 .input-field {
@@ -69,6 +69,7 @@ p {
 .seperator {
   width: 1px;
   height: 31px;
+  background-color: #A8A8A8;
 }
 
 .content-container {
@@ -273,6 +274,64 @@ h3 {
     display: none;
   }
 
+  .top-section {
+    display: flex;
+    align-items: center;
+  }
 
+  .top-section-title {
+    position: unset;
+    font-size: 64px;
+  }
 
+  .top-wrapper {
+    display: flex;
+    margin-top: 120px;
+    height: 130px;
+    width: 100%;
+    justify-content: space-between;
+    margin-left: 64px;
+    margin-right: 64px;
+    align-content: center;
+    text-align: center;
+  }
+
+  .search-wrap {
+    align-items: center;
+    display: flex;
+    gap: 32px;
+  }
+
+  .search-section {
+    margin: unset;
+    position: unset;
+  }
+
+  .add-task {
+    height: 48px;
+    width: 160px;
+    border-radius: 10px;
+    padding: 8px, 16px, 8px, 16px;
+    border: unset;
+    background-color: #2A3647;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 21px;
+    font-weight: 700;
+    gap: 4px;
+  }
+
+  .plus-img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .content-container {
+    top: 240px;
+    height: 76%;
+    box-sizing: border-box;
+    width: 98%;
+  }
 }
