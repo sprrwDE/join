@@ -1,5 +1,4 @@
-let BASE_URL =
-  "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/";
+let BASE_URL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/";
 
 let tasks = [];
 let currentDraggedElement;
@@ -27,9 +26,7 @@ function moveTo(status) {
 function removeHighlightDragArea() {
   let sections = ["todo", "inprogress", "awaitfeedback", "done"];
   for (let i = 0; i < sections.length; i++) {
-    document
-      .getElementById(sections[i])
-      .classList.remove("drag-area-highlight");
+    document.getElementById(sections[i]).classList.remove("drag-area-highlight");
   }
 }
 
@@ -61,7 +58,6 @@ function loadTasks() {
 }
 
 function checkTask(keys, values) {
-  console.table(values)
   tasks = [];
 
   for (let i = 0; i < values.length; i++) {
@@ -97,10 +93,31 @@ function renderTask() {
 
 function renderHelper(section) {
   let allTasks = tasks.filter((t) => t["status"] == section);
+
   for (let i = 0; i < allTasks.length; i++) {
-    console.log(allTasks)
-    document.getElementById(section).innerHTML += renderToDos(allTasks, i);
+    let subtasks = getSubtasks(i, allTasks);
+    let category = getCategory(allTasks[i].category);
+    document.getElementById(section).innerHTML += renderToDos(allTasks, i, subtasks, category, allTasks[i].category);
+    let inits = getInitails(i, allTasks);
+    for (let j = 0; j < inits.length; j++) {
+      let contact = document.getElementById(`contact-images${allTasks[i].id}`);
+      let colors = getColors(i, allTasks);
+      contact.innerHTML += renderContactsImages(inits[j], colors, j);
+    }
   }
+}
+
+function getCategory(category) {
+  if (category == "User Story") {
+    return "pill-blue";
+  } else if (category == "Technical Task") {
+    return "pill-turkis";
+  }
+}
+
+function getSubtasks(i, allTasks) {
+  let subtasks = allTasks[i].subtask.split(",");
+  return subtasks;
 }
 
 function startDragging(id) {
@@ -108,10 +125,29 @@ function startDragging(id) {
   document.getElementById(`ticket-${id}`).classList.add("shake");
 }
 
-function renderToDos(task, i) {
+function getColors(i, allTasks) {
+  let allcolors = allTasks[i].color.match(/rgb\(\d{1,3},\s*\d{1,3},\s*\d{1,3}\)/g);
+  return allcolors;
+}
+
+function getInitails(i, allTasks) {
+  let inits = [];
+  let contact = allTasks[i].assignedto;
+
+  let contacts = contact.split(",");
+  for (id in contacts) {
+    let name = contacts[id].split(" ");
+    let firstinit = name[0][0];
+    let second = name[1] ? name[1][0] : "";
+    inits.push([firstinit.toUpperCase(), second.toUpperCase()]);
+  }
+  return inits;
+}
+
+function renderToDos(task, i, subtasks, categoryColor, category) {
   return `<div class="ticket-card" id="ticket-${task[i].id}" draggable="true" ondragstart="startDragging('${task[i].id}')">
-                    <div class="pill-blue" id="pill">
-                        <p>User Story</p>
+                    <div class="${categoryColor}" id="pill">
+                        <p>${category}</p>
                     </div>
 
                     <div class="title-notice">
@@ -123,18 +159,21 @@ function renderToDos(task, i) {
                         <div class="progress-bar">
                             <div class="progress-bar-filler"></div>
                         </div>
-                        <p>1/${task[i].subtask.length} Subtasks</p>
+                        <p>1/${subtasks.length} Subtasks</p>
                     </div>
 
                     <div class="contacts-section">
-                        <div class="contacts">
-                            <img src="../assets/img/Profile badge.svg" alt="">
-                            <img src="../assets/img/Profile badge.svg" alt="">
-                            <img src="../assets/img/Profile badge.svg" alt="">
+                        <div class="contacts" id="contact-images${task[i].id}">
                         </div>
                         <img src="../assets/img/Capa 2.svg" alt="">
                     </div>
                 </div>`;
+}
+
+function renderContactsImages(inits, allcolors, j) {
+  return `<div class="contact-initals" id="contact-initals1" style="background-color: ${allcolors[j]};">
+                            <span>${inits[0]}${inits[1]}</span>
+                          </div>`;
 }
 
 function emptySection() {
@@ -152,4 +191,3 @@ function emptySection() {
     }
   }
 }
-
