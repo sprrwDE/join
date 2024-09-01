@@ -369,7 +369,7 @@ input::placeholder {
 
 /* Desktop */
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 1025px) {
     .contact-card {
         flex-direction: row;
         width: 1200px;
