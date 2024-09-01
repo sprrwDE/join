@@ -97,13 +97,24 @@ function renderHelper(section) {
   for (let i = 0; i < allTasks.length; i++) {
     let subtasks = getSubtasks(i, allTasks);
     let category = getCategory(allTasks[i].category);
-    document.getElementById(section).innerHTML += renderToDos(allTasks, i, subtasks, category, allTasks[i].category);
+    let prio = getPrio(i, allTasks)
+    document.getElementById(section).innerHTML += renderToDos(allTasks, i, subtasks, category, prio);
     let inits = getInitails(i, allTasks);
     for (let j = 0; j < inits.length; j++) {
       let contact = document.getElementById(`contact-images${allTasks[i].id}`);
       let colors = getColors(i, allTasks);
       contact.innerHTML += renderContactsImages(inits[j], colors, j);
     }
+  }
+}
+
+function getPrio(i, allTasks) {
+  if (allTasks[i].prio == "urgent") {
+    return "urgent.svg"
+  } else if (allTasks[i].prio == "medium") {
+    return "Capa 2.svg"
+  } else if (allTasks[i].prio == "low") {
+    return "low.svg"
   }
 }
 
@@ -144,10 +155,10 @@ function getInitails(i, allTasks) {
   return inits;
 }
 
-function renderToDos(task, i, subtasks, categoryColor, category) {
+function renderToDos(task, i, subtasks, categoryColor, prio) {
   return `<div class="ticket-card" id="ticket-${task[i].id}" draggable="true" ondragstart="startDragging('${task[i].id}')">
                     <div class="${categoryColor}" id="pill">
-                        <p>${category}</p>
+                        <p>${task[i].category}</p>
                     </div>
 
                     <div class="title-notice">
@@ -159,13 +170,13 @@ function renderToDos(task, i, subtasks, categoryColor, category) {
                         <div class="progress-bar">
                             <div class="progress-bar-filler"></div>
                         </div>
-                        <p>1/${subtasks.length} Subtasks</p>
+                        <p>1/${subtasks.length}Subtasks</p>
                     </div>
 
                     <div class="contacts-section">
                         <div class="contacts" id="contact-images${task[i].id}">
                         </div>
-                        <img src="../assets/img/Capa 2.svg" alt="">
+                        <img src="../assets/img/${prio}" alt="">
                     </div>
                 </div>`;
 }
