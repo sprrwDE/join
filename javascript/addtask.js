@@ -237,6 +237,7 @@ function deleteSelectedColor(color) {
 function getSelectedColor(color) {
   if (!getcolors.includes(color)) {
     getcolors.push(color);
+    tasks.color = getcolors
   }
 }
 
@@ -431,6 +432,7 @@ function getAllInfos() {
   getSubtasks();
   if (requiredFieldsCheck() == true) {
     postInfos();
+    window.location.reload()
   }
 }
 
