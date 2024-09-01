@@ -484,6 +484,7 @@ input::placeholder {
         padding: 0;
         height: 100%;
         width: 35%;
+
     }
 
     .contact-list-wrapper {
@@ -495,11 +496,12 @@ input::placeholder {
         overflow-y: scroll;
         scrollbar-color: grey ;
         scrollbar-width: thin;
+
     }
 
     .contact-detail {
         display: flex !important;
-        background-color: grey;
+
         height: 100%;
         align-items: flex-start
     }
@@ -509,11 +511,23 @@ input::placeholder {
         position: fixed;
         left: calc(232px + 35%);
         height: 100%;
-        top: 160px;
+        top: 80px;
+        background-color: lightgrey !important;
     }
 
     .contact-detail {
         display: none !important;
+    }
+
+    .desk-btn-wrapper {
+        display: flex;
+        justify-content: center;
+        background-color: red;
+        position: fixed;
+        top: 80px;
+        left: 232px;
+        width: 35%;
+        z-index: 1;
     }
 
     .add-button {
@@ -522,6 +536,7 @@ input::placeholder {
 
     .add-btn-desk {
         display: block;
+        width: 90%;
     }
 
     .name-wrapper {

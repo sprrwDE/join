@@ -21,9 +21,9 @@
 <body onload="initialize(), init()">
     <div class="wrapper-header" w3-include-html="./mobile-header.html"></div>
     <main>
+        <div class="desk-btn-wrapper"><button class="add-btn-desk" onclick="openAddContactDialog()">Add new Contact</button></div>
         <!-- Contact List -->
         <section class="contact-list" id="contact-list">
-            <button class="add-btn-desk" onclick="openAddContactDialog()">Add new Contact</button>
             <div class="contact-list-wrapper" id="list-content-outter">
                 <!-- Dynamischer Inhalt hier eingefügt -->
             </div>
@@ -53,7 +53,7 @@
             <h2>Contacts</h2>
             <h3>Tasks are better with a team!</h3>
             <div class="seperator-card"></div>
-            <div class="contact-overlay-desk-content"  id="detail-desk">
+            <div class="contact-overlay-desk-content" id="detail-desk">
 
             </div>
         </div>
