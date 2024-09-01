@@ -12,9 +12,9 @@ function renderPopUp() {
   if (togglePopUp) {
     popUpBox.innerHTML = `
     <div id="headline-pop-up" class="headline-pop-up"> 
-      <a href="">Help</a>
-      <a href="">Legal Notice</a>
-      <a href="">Privacy Policy</a>
+      <a href="../documents/help.html">Help</a>
+      <a href="../documents/legal.html">Legal Notice</a>
+      <a href="../documents/Privacy.html">Privacy Policy</a>
       <a href="../index.html">Log out</a>
     </div>`;
     setTimeout(() => {
@@ -29,5 +29,8 @@ function renderPopUp() {
   }
 }
 
+function moveToLastPage(){
+  history.back();
+}
 
 
