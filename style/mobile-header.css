@@ -1,3 +1,15 @@
+
+.wrapper-header{
+  box-shadow: 0px 8px 4px -5px rgba(0,0,0,0.30);
+  width: 100vw;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  background-color: white;
+  position: fixed;
+  z-index: 2;
+}
+
 header{
   max-width: 1920px;
   width: 100%;
@@ -11,10 +23,23 @@ header{
   position: fixed;
   background-color: white;
 }
+header span{
+  display: none;
+}
 .header-join-icon{
   height: 39px;
   width: 32px;
 }
+
+.help-account-wrapper{
+  display: flex;
+  gap: 24px;
+}
+
+.help-icon{
+  display: none;
+}
+
 .header-user-icon-container{
   display: flex;
   justify-content: center;
@@ -27,17 +52,6 @@ header{
 
 .header-user-icon-container:hover{
   cursor: pointer;
-}
-
-.wrapper-header{
-  box-shadow: 0px 8px 4px -5px rgba(0,0,0,0.30);
-  width: 100vw;
-  height: 80px;
-  display: flex;
-  justify-content: center;
-  background-color: white;
-  position: fixed;
-  z-index: 2;
 }
 
 .headline-pop-up{
@@ -65,4 +79,19 @@ header{
 .headline-pop-up.active {
   right: 10px; /* Endposition innerhalb des Bildschirms */
   opacity: 1; /* Voll sichtbar */
+}
+
+@media (min-width:1025px){
+  header span{
+    display: block;
+  }
+  .header-join-icon{
+    display: none;
+  }
+  .help-icon{
+    display: block;
+  }
+  .pop-up-help{
+    display: none;
+  }
 }
