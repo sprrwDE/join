@@ -173,14 +173,14 @@ function renderSignUpHTML(){
       <div id="wrong-password" class="font-color-red"></div>
       <div class="check-box-container check-box">
         <input type="checkbox" required id="accept-box">
-        <label for="checkbox">I accept the</label><a href="">Privacy policy</a>
+        <label for="checkbox">I accept the</label><a href="./documents/Privacy.html">Privacy policy</a>
       </div>
       <button class="button log-in-button">Sign up</button>
   </div>
   </form>
   <div class="log-in-link-container">
-    <a href="">Privacy Policy</a>
-    <a href="">Legal notice</a>
+    <a href="./documents/Privacy.html">Privacy Policy</a>
+    <a href="./documents/legal.html">Legal notice</a>
   </div>
   <div id="successfully" class="d-none"></div>`;
 }

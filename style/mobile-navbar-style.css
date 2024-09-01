@@ -49,6 +49,8 @@
   }
   header{
     position: relative;
-    
+  }
+  .mobile-navbar{
+    justify-content: center;
   }
 }
