@@ -393,4 +393,5 @@ async function deleteContact(contactId) {
     } catch (error) {
         console.log('Fehler beim Löschen des Kontakts', error);
     }
+    document.getElementById('detail-desk').innerHTML = '';
 }

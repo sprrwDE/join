@@ -39,7 +39,7 @@ function detailTemplate(name, email, phone, first, last, color) {
             <h4>${name}</h4>
             <div class="edit-button-desk-wrapper">
                 <div class="pointer" onclick="openEditContactDialog()">Edit</div>
-                <div class="pointer" onclick="openEditContactDialog()">Delete</div>
+                <div class="pointer" onclick="deleteContact(currentId)">Delete</div>
             </div>
             </div>
         </div>
