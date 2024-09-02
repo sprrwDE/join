@@ -10,9 +10,9 @@ function contactTemplateInitial(initial, index) {
     `;
 }
 
-function getContactsTemplate(name, email, phone, currentId, first, last, color) {
+function getContactsTemplate(name, email, phone, currentId, first, last, color, indexCard) {
     return `
-        <div class="list-card" onclick="openDetailDialog('${name}', '${email}', '${phone}', '${currentId}', '${first}', '${last}', '${color}')">
+        <div class="list-card" id="contact-card-${indexCard}" onclick="openDetailDialog('${name}', '${email}', '${phone}', '${currentId}', '${first}', '${last}', '${color}', '${indexCard}')">
         <div class="card-image list-image" style="background-color: ${color}">
             <h4>${first}${last}</h4>
         </div>

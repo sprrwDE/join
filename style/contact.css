@@ -547,4 +547,8 @@ input::placeholder {
     .edit-button-desk-wrapper {
         display: flex;
     }
+
+    .selected {
+        background-color: blue;
+    }
 }
