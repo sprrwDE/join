@@ -91,10 +91,7 @@ function loadSignUp(){
 }
 
 function BackToLogIn(){
-  document.getElementById('join-logo-overlay').classList.add('d-none');
-  document.getElementById('join-logo-overlay').classList.remove('overlay', 'hidden');
-  document.getElementById('join-log-in-img').classList.remove('log-in-join-logo');
-  document.getElementById('join-log-in-img').classList.add('static-logo');
+
   
   document.getElementById('sign-up').classList.add('d-none');
   document.getElementById('log-in').classList.remove('d-none'); 
