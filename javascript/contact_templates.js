@@ -38,8 +38,8 @@ function detailTemplate(name, email, phone, first, last, color) {
             <div class="name-wrapper">
             <h4>${name}</h4>
             <div class="edit-button-desk-wrapper">
-                <div>Edit</div>
-                <div>Delete</div>
+                <div class="pointer" onclick="openEditContactDialog()">Edit</div>
+                <div class="pointer" onclick="openEditContactDialog()">Delete</div>
             </div>
             </div>
         </div>

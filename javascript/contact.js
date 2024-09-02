@@ -90,12 +90,12 @@ function sortContactGroups() {
 
 function renderContacts(organizedContacts) {
     let sortedInitials = Object.keys(organizedContacts).sort();
-    let globalIndex = 0; 
+    let globalIndex = 0;
 
     for (let index = 0; index < sortedInitials.length; index++) {
         let initial = sortedInitials[index];
         renderInitialGroup(initial, index, organizedContacts[initial], globalIndex);
-        globalIndex += organizedContacts[initial].length; 
+        globalIndex += organizedContacts[initial].length;
     }
 }
 
@@ -114,7 +114,7 @@ function renderContactsForInitial(containerRef, contacts, globalIndex) {
         let initials = contact.initials;
         let currentId = contact.id;
         let color = contact.color;
-        let indexCard = globalIndex + i; 
+        let indexCard = globalIndex + i;
 
         containerRef.innerHTML += getContactsTemplate(currentName, currentEmail, currentPhone, currentId, initials[0], initials[initials.length - 1], color, indexCard);
     }
@@ -194,7 +194,7 @@ function getInitials(name) {
  */
 function openDetailDialog(name, email, phone, id, first, last, color, indexCard) {
     selectElement(indexCard);
-    
+
     if (window.innerWidth >= 1024) {
         openDetailReferenceDesk(name, email, phone, first, last, color);
     } else {
@@ -268,7 +268,9 @@ function hideEditBox() {
 function closeEditContactDialog() {
     editContactRef.classList.add('d-none');
     contactListRef.classList.remove('d-none');
-    listContentRef.classList.add('d-none');
+    if (window.innerWidth <= 1024) {
+        listContentRef.classList.add('d-none');
+    }
 }
 
 function openEditContactDialog() {
@@ -286,7 +288,9 @@ function openEditContactDialog() {
         phoneInput.value = contact.phoneIn;
     }
 
-    contactListRef.classList.add('d-none');
+    if (window.innerWidth <= 1024) {
+        listContentRef.classList.add('d-none');
+    }
 }
 
 function getUpdatedContactData() {
@@ -350,7 +354,7 @@ function updateDetailView(updatedData) {
     const initials = getInitials(updatedData.nameIn);
 
     if (!showDetail.classList.contains('d-none')) {
-        getDetailTemplate(
+        getDetailTemplateMob(
             updatedData.nameIn,
             updatedData.emailIn,
             updatedData.phoneIn,
@@ -359,6 +363,16 @@ function updateDetailView(updatedData) {
             updatedData.color
         );
     }
+
+    openDetailReferenceDesk(
+        updatedData.nameIn,
+        updatedData.emailIn,
+        updatedData.phoneIn,
+        initials[0],
+        initials[1],
+        updatedData.color
+    );
+    initialize();
 }
 
 /**
