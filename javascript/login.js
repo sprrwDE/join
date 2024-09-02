@@ -91,7 +91,8 @@ function loadSignUp(){
 }
 
 function BackToLogIn(){
-
+  document.getElementById('join-image-id').classList.remove('log-in-join-logo');
+  document.getElementById('join-image-id').classList.add('static-logo');
   
   document.getElementById('sign-up').classList.add('d-none');
   document.getElementById('log-in').classList.remove('d-none'); 
