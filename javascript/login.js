@@ -41,9 +41,9 @@ function checkUserData(accounts){
   if(user){
     window.location.href='./documents/summary.html';
   }else{
-    renderWrongLogIn();
-    document.getElementById('user-mail').classList.add('border-color-red');  
-    document.getElementById('user-password').classList.add('border-color-red');  /* border wird noch nicht rot*/ 
+    document.getElementById('user-email').classList.add('border-color-red');  
+    document.getElementById('user-password').classList.add('border-color-red');  
+    renderWrongLogIn(); 
   }
 }
 
@@ -93,7 +93,6 @@ function loadSignUp(){
 function BackToLogIn(){
   document.getElementById('join-image-id').classList.remove('log-in-join-logo');
   document.getElementById('join-image-id').classList.add('static-logo');
-  
   document.getElementById('sign-up').classList.add('d-none');
   document.getElementById('log-in').classList.remove('d-none'); 
 }
