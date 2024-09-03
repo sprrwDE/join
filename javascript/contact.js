@@ -8,6 +8,7 @@ const addButtonRef = document.getElementById('add-button');
 const editButtonRef = document.getElementById('edit-button');
 const editBoxRef = document.getElementById('edit-box');
 const editContactRef = document.getElementById('edit-contact');
+let currentSelectedElement = null;
 
 // Firebase References
 let baseUrl = 'https://join-318-default-rtdb.europe-west1.firebasedatabase.app/';
@@ -89,20 +90,22 @@ function sortContactGroups() {
 
 function renderContacts(organizedContacts) {
     let sortedInitials = Object.keys(organizedContacts).sort();
+    let globalIndex = 0;
 
     for (let index = 0; index < sortedInitials.length; index++) {
         let initial = sortedInitials[index];
-        renderInitialGroup(initial, index, organizedContacts[initial]);
+        renderInitialGroup(initial, index, organizedContacts[initial], globalIndex);
+        globalIndex += organizedContacts[initial].length;
     }
 }
 
-function renderInitialGroup(initial, index, contacts) {
+function renderInitialGroup(initial, index, contacts, globalIndex) {
     listContentRef.innerHTML += contactTemplateInitial(initial, index);
     let currentContactRef = document.getElementById(`list-content-inner-${index}`);
-    renderContactsForInitial(currentContactRef, contacts);
+    renderContactsForInitial(currentContactRef, contacts, globalIndex);
 }
 
-function renderContactsForInitial(containerRef, contacts) {
+function renderContactsForInitial(containerRef, contacts, globalIndex) {
     for (let i = 0; i < contacts.length; i++) {
         let contact = contacts[i];
         let currentName = contact.nameIn;
@@ -111,8 +114,9 @@ function renderContactsForInitial(containerRef, contacts) {
         let initials = contact.initials;
         let currentId = contact.id;
         let color = contact.color;
-        
-        containerRef.innerHTML += getContactsTemplate(currentName, currentEmail, currentPhone, currentId, initials[0], initials[initials.length - 1], color);
+        let indexCard = globalIndex + i;
+
+        containerRef.innerHTML += getContactsTemplate(currentName, currentEmail, currentPhone, currentId, initials[0], initials[initials.length - 1], color, indexCard);
     }
 }
 
@@ -188,13 +192,27 @@ function getInitials(name) {
 /**
  * Detail Dialog
  */
-function openDetailDialog(name, email, phone, id, first, last, color) {
-    currentId = id;
-    
+function openDetailDialog(name, email, phone, id, first, last, color, indexCard) {
+    selectElement(indexCard);
+
     if (window.innerWidth >= 1024) {
         openDetailReferenceDesk(name, email, phone, first, last, color);
     } else {
         openDetailReferenceMob(name, email, phone, first, last, color);
+    }
+}
+
+function selectElement(indexCard) {
+    let selectedElement = document.getElementById(`contact-card-${indexCard}`);
+    if (currentSelectedElement && currentSelectedElement !== selectedElement) {
+        currentSelectedElement.classList.remove('selected');
+    }
+    selectedElement.classList.toggle('selected');
+
+    if (selectedElement.classList.contains('selected')) {
+        currentSelectedElement = selectedElement;
+    } else {
+        currentSelectedElement = null;
     }
 }
 
@@ -250,7 +268,9 @@ function hideEditBox() {
 function closeEditContactDialog() {
     editContactRef.classList.add('d-none');
     contactListRef.classList.remove('d-none');
-    listContentRef.classList.add('d-none');
+    if (window.innerWidth <= 1024) {
+        listContentRef.classList.add('d-none');
+    }
 }
 
 function openEditContactDialog() {
@@ -268,7 +288,9 @@ function openEditContactDialog() {
         phoneInput.value = contact.phoneIn;
     }
 
-    contactListRef.classList.add('d-none');
+    if (window.innerWidth <= 1024) {
+        listContentRef.classList.add('d-none');
+    }
 }
 
 function getUpdatedContactData() {
@@ -332,7 +354,7 @@ function updateDetailView(updatedData) {
     const initials = getInitials(updatedData.nameIn);
 
     if (!showDetail.classList.contains('d-none')) {
-        getDetailTemplate(
+        getDetailTemplateMob(
             updatedData.nameIn,
             updatedData.emailIn,
             updatedData.phoneIn,
@@ -341,6 +363,16 @@ function updateDetailView(updatedData) {
             updatedData.color
         );
     }
+
+    openDetailReferenceDesk(
+        updatedData.nameIn,
+        updatedData.emailIn,
+        updatedData.phoneIn,
+        initials[0],
+        initials[1],
+        updatedData.color
+    );
+    initialize();
 }
 
 /**
@@ -361,4 +393,5 @@ async function deleteContact(contactId) {
     } catch (error) {
         console.log('Fehler beim Löschen des Kontakts', error);
     }
+    document.getElementById('detail-desk').innerHTML = '';
 }

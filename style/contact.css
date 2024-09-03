@@ -1,5 +1,9 @@
 /* Document & Container */
 
+.pointer {
+    cursor: pointer;
+}
+
 .d-none {
     display: none !important;
 }
@@ -546,5 +550,9 @@ input::placeholder {
 
     .edit-button-desk-wrapper {
         display: flex;
+    }
+
+    .selected {
+        background-color: blue;
     }
 }
