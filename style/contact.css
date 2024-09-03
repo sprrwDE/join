@@ -573,7 +573,16 @@ input::placeholder {
     }
 
     .edit-button-desk-wrapper {
+        margin-top: 8px;
         display: flex;
+        gap: 24px;
+    }
+
+    .edit-row-desk {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
     }
 
     .selected {
