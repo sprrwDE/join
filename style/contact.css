@@ -133,6 +133,19 @@
     color: white !important;
 }
 
+.contact-mobile-header {
+    display: flex !important;
+    flex-direction: column !important;
+    margin-top: 120px;
+}
+
+.seperator-card-mobile {
+    width: 90px;
+    height: 3px;
+    background-color: #29ABE2;
+    margin: 16px 0;
+}
+
 .contact-detail-header {
     margin-top: 40px;
     display: flex;
@@ -523,6 +536,16 @@ input::placeholder {
         display: none !important;
     }
 
+    h5 {
+        font-size: 20px;
+        font-weight: 400;
+    }
+
+    .avatar-wrapper h4 {
+        font-size: 48px;
+        font-weight: 500;
+    }
+
     .desk-btn-wrapper {
         display: flex;
         justify-content: center;
@@ -546,6 +569,7 @@ input::placeholder {
     .name-wrapper {
         display: flex;
         flex-direction: column;
+        padding-left: 40px;
     }
 
     .edit-button-desk-wrapper {
@@ -559,5 +583,22 @@ input::placeholder {
     
     .selected a {
         color: white !important;
+    }
+    .contact-desk-header {
+        display: flex !important;
+        flex-direction: row !important;
+        margin-top: 120px;
+        align-items: center;
+    }
+
+    .seperator-card-desk {
+        width: 3px;
+        height: 64px;
+        background-color: #29ABE2;
+        margin: 0 24px;
+    }
+
+    .contact-mobile-header {
+        display: none !important;
     }
 }

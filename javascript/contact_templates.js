@@ -26,6 +26,11 @@ function getContactsTemplate(name, email, phone, currentId, first, last, color, 
 
 function detailTemplate(name, email, phone, first, last, color) {
     return `
+            <div class="contact-mobile-header">
+                <h2>Contacts</h2>
+                <div class="seperator-card-mobile"></div>
+                <h3>Better with a team!</h3>
+            </div>
     <div class="exit-detail" id="exit-detail" onclick="closeDetailDialog()">
         <img src="../assets/img/exit-detail.svg">
     </div>            
@@ -44,7 +49,7 @@ function detailTemplate(name, email, phone, first, last, color) {
             </div>
         </div>
         <div class="contact-content">
-            <h4>Contact information</h4>
+            <h5>Contact information</h5>
             <p><b>Email</b></p>
             <a href="mailto:${email}">${email}</a>
             <p><b>Phone</b></p>
