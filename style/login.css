@@ -27,7 +27,7 @@
   left: 50%; 
   transform: translate(-50%, -50%); 
   animation: moveToPosition 1s ease-out forwards;  
-  z-index: 9999;
+  z-index: 9998;
 }
 
 @keyframes moveToPosition {
@@ -66,7 +66,8 @@
   left: 50%; 
   transform: translate(-50%, -50%); 
   opacity: 0; 
-  animation: moveToPosition 1s ease-out forwards;  
+  animation: moveToPosition 1s ease-out forwards;
+  z-index: 9999;  
 }
 
 .static-logo{

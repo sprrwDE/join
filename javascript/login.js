@@ -13,7 +13,7 @@ function startLogInAnimation() {
 
   setTimeout(() => {
     overlay.classList.add('hidden'); // Overlay ausblenden
-  }, 200); // Verzögerung nach Bedarf 
+  }, 300); // Verzögerung nach Bedarf 
 
 }
 
@@ -175,11 +175,11 @@ function renderSignUpHTML(){
       <input id="new-name" class="input-field name-input" type="text" required placeholder="Name" oninput="checkFormValidity()">
       <input id="new-email" class="input-field email-input" type="email" required placeholder="Email" oninput="checkFormValidity()">
       <div class="input-container">
-        <input id="new-password" class="input-field password-input" type="password" required placeholder="Password" onkeyup="changePasswordIcon('new-password','span-password-icon')" oninput="checkFormValidity()">
+        <input id="new-password" class="input-field password-input" type="password" minlength="6" required placeholder="Password" onkeyup="changePasswordIcon('new-password','span-password-icon')" oninput="checkFormValidity()">
         <span id="span-password-icon" class="password-eye-open d-none"></span>
       </div>
       <div class="input-container">
-        <input id="check-new-password" class="input-field password-input" type="password" required placeholder="Confirm Password" onkeyup="changePasswordIcon('check-new-password','span-check-password-icon')" oninput="checkFormValidity()">
+        <input id="check-new-password" class="input-field password-input" type="password" minlength="6" required placeholder="Confirm Password" onkeyup="changePasswordIcon('check-new-password','span-check-password-icon')" oninput="checkFormValidity()">
         <span id="span-check-password-icon" class="password-eye-open d-none"></span>
       </div>
       <div id="wrong-password" class="font-color-red"></div>
