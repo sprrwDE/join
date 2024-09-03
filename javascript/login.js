@@ -90,6 +90,21 @@ function loadSignUp(){
 
 }
 
+function checkFormValidity() {
+  let name = document.getElementById('new-name').value;
+  let email = document.getElementById('new-email').value;
+  let password = document.getElementById('new-password').value;
+  let confirmPassword = document.getElementById('check-new-password').value;
+  let checkbox = document.getElementById('accept-box').checked;
+  let button = document.getElementById('sign-up-button');
+
+  if (name && email && password && confirmPassword && checkbox) {
+      button.disabled = false;
+  } else {
+      button.disabled = true;
+  }
+}
+
 function BackToLogIn(){
   document.getElementById('join-image-id').classList.remove('log-in-join-logo');
   document.getElementById('join-image-id').classList.add('static-logo');
@@ -157,28 +172,29 @@ function renderSignUpHTML(){
     </div>
     <div class="border-bottom-log-in"></div>
     <form onsubmit="addNewUser(event)">
-      <input id="new-name" class="input-field name-input" type="text" required placeholder="Name">
-      <input id="new-email" class="input-field email-input" type="email" required placeholder="Email">
+      <input id="new-name" class="input-field name-input" type="text" required placeholder="Name" oninput="checkFormValidity()">
+      <input id="new-email" class="input-field email-input" type="email" required placeholder="Email" oninput="checkFormValidity()">
       <div class="input-container">
-      <input id="new-password" class="input-field password-input" type="password" required placeholder="Password" onkeyup="changePasswordIcon('new-password','span-password-icon')">
-      <span id="span-password-icon" class="password-eye-open d-none"></span>
+        <input id="new-password" class="input-field password-input" type="password" required placeholder="Password" onkeyup="changePasswordIcon('new-password','span-password-icon')" oninput="checkFormValidity()">
+        <span id="span-password-icon" class="password-eye-open d-none"></span>
       </div>
       <div class="input-container">
-      <input id="check-new-password" class="input-field password-input" type="password" required placeholder="Confirm Password" onkeyup="changePasswordIcon('check-new-password','span-check-password-icon')">
-      <span id="span-check-password-icon" class="password-eye-open d-none"></span>
+        <input id="check-new-password" class="input-field password-input" type="password" required placeholder="Confirm Password" onkeyup="changePasswordIcon('check-new-password','span-check-password-icon')" oninput="checkFormValidity()">
+        <span id="span-check-password-icon" class="password-eye-open d-none"></span>
       </div>
       <div id="wrong-password" class="font-color-red"></div>
       <div class="check-box-container check-box">
-        <input type="checkbox" required id="accept-box">
+        <input type="checkbox" required id="accept-box" onchange="checkFormValidity()">
         <label for="checkbox">I accept the</label><a href="./documents/Privacy.html">Privacy policy</a>
       </div>
-      <button class="button log-in-button">Sign up</button>
-  </div>
-  </form>
-  <div class="log-in-link-container">
-    <a href="./documents/Privacy.html">Privacy Policy</a>
-    <a href="./documents/legal.html">Legal notice</a>
-  </div>
-  <div id="successfully" class="d-none"></div>`;
+      <button disabled class="button log-in-button" id="sign-up-button">Sign up</button>
+    </div>
+    </form>
+    <div class="log-in-link-container">
+      <a href="./documents/Privacy.html">Privacy Policy</a>
+      <a href="./documents/legal.html">Legal notice</a>
+    </div>
+    <div id="successfully" class="d-none"></div>`;
+
 }
 

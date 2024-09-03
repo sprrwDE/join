@@ -253,7 +253,12 @@ form {
   font-weight: bold;
 }
 
-.log-in-button:hover,
+.log-in-button:disabled{
+  background-color: grey;
+  cursor: not-allowed;
+}
+
+.log-in-button:not(:disabled):hover,
 .log-in-sign-up-button:hover{
   cursor: pointer;
   background-color: #29ABE2;
