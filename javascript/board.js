@@ -97,8 +97,14 @@ function renderHelper(section) {
   for (let i = 0; i < allTasks.length; i++) {
     let subtasks = getSubtasks(i, allTasks);
     let category = getCategory(allTasks[i].category);
-    let prio = getPrio(i, allTasks)
-    document.getElementById(section).innerHTML += renderToDos(allTasks, i, subtasks, category, prio);
+    let prio = getPrio(i, allTasks);
+    document.getElementById(section).innerHTML += renderToDos(
+      allTasks,
+      i,
+      subtasks,
+      category,
+      prio
+    );
     let inits = getInitails(i, allTasks);
     for (let j = 0; j < inits.length; j++) {
       let contact = document.getElementById(`contact-images${allTasks[i].id}`);
@@ -110,11 +116,11 @@ function renderHelper(section) {
 
 function getPrio(i, allTasks) {
   if (allTasks[i].prio == "urgent") {
-    return "urgent.svg"
+    return "urgent.svg";
   } else if (allTasks[i].prio == "medium") {
-    return "Capa 2.svg"
+    return "Capa 2.svg";
   } else if (allTasks[i].prio == "low") {
-    return "low.svg"
+    return "low.svg";
   }
 }
 
@@ -156,7 +162,7 @@ function getInitails(i, allTasks) {
 }
 
 function renderToDos(task, i, subtasks, categoryColor, prio) {
-  return `<div class="ticket-card" id="ticket-${task[i].id}" draggable="true" ondragstart="startDragging('${task[i].id}')">
+  return `<div class="ticket-card" id="ticket-${task[i].id}" draggable="true" onclick="openCard('${task[i].id}')" ondragstart="startDragging('${task[i].id}')">
                     <div class="${categoryColor}" id="pill">
                         <p>${task[i].category}</p>
                     </div>
@@ -201,4 +207,52 @@ function emptySection() {
       empty.classList.add("d-none");
     }
   }
+}
+
+function openAddTask() {
+  let body = document.getElementById("body");
+  let background = document.getElementById("background-grey");
+  background.classList.remove("d-none");
+  body.innerHTML += `<iframe class="add-task-card" id="whole-addtask-card" src="./addtask-card.html"></iframe>`;
+}
+
+function closeWindow(card) {
+  let addtask = document.getElementById(card);
+  let background = document.getElementById("background-grey");
+
+  background.classList.add("d-none");
+  addtask.remove();
+  loadTasks();
+}
+
+function renderInfoCardHelper(sections, card, iframeDocument) {
+  let sectionsElement = iframeDocument.getElementById(sections);
+  sectionsElement.innerHTML = card[`${sections}`];
+}
+
+function renderTaskCardInfos(idnumber) {
+  let iframe = document.getElementById("card-infos");
+  let iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+  tasks.filter((card) => {
+    if (card.id == idnumber) {
+      console.log(card)
+      renderInfoCardHelper("title", card, iframeDocument)
+      renderInfoCardHelper("description", card, iframeDocument)
+      renderInfoCardHelper("date", card, iframeDocument)
+    }
+
+  })
+}
+
+function openCard(id) {
+  let body = document.getElementById("body");
+  let background = document.getElementById("background-grey");
+  background.classList.remove("d-none");
+  console.log(id)
+
+  body.innerHTML += `<iframe class="card-info" id="card-infos" src="./board-card.html"></iframe>`;
+  let iframe = document.getElementById("card-infos");
+  iframe.onload = function () {
+    renderTaskCardInfos(id);
+  };
 }

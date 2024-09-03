@@ -13,8 +13,9 @@
     <title>Board</title>
 </head>
 
-<body onload="initBoard()">
 
+<body onload="initBoard()" id="body">
+    <div class="background-grey d-none" id="background-grey"></div>
     <div class="wrapper-header" w3-include-html="./mobile-header.html"></div>
 
     <div class="content-wrap">
@@ -29,7 +30,7 @@
                     <img src="../assets/img/Vector 3.svg" alt="" class="seperator">
                     <button class="search-btn"><img src="../assets/img/search.svg" alt=""></button>
                 </div>
-                <button class="add-task">Add task <img src="../assets/img/plus_white.svg" alt="" class="plus-img"></button>
+                <button class="add-task" onclick="openAddTask()">Add task <img src="../assets/img/plus_white.svg" alt="" class="plus-img"></button>
             </div>
         </div>
         <div class="content-container">
@@ -90,6 +91,8 @@
 
     </div>
     <div w3-include-html="./mobile-navbar.html"></div>
+    
 </body>
+
 
 </html>
