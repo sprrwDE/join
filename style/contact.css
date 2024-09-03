@@ -553,6 +553,11 @@ input::placeholder {
     }
 
     .selected {
-        background-color: blue;
+        background-color: #2A3647;
+        color: white;
+        border-radius: 16px;    }
+    
+    .selected a {
+        color: white !important;
     }
 }
