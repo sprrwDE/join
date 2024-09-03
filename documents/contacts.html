@@ -21,8 +21,11 @@
 <body onload="initialize(), init()">
     <div class="wrapper-header" w3-include-html="./mobile-header.html"></div>
     <main>
-        <div class="desk-btn-wrapper"><button class="add-btn-desk" onclick="openAddContactDialog()">Add new
-                Contact</button></div>
+        <div class="desk-btn-wrapper">
+            <div class="add-btn-desk" onclick="openAddContactDialog()">
+                Add new Contact 
+                <img src="../assets/img/person_add.svg"></div>
+        </div>
         <!-- Contact List -->
         <section class="contact-list" id="contact-list">
             <div class="contact-list-wrapper" id="list-content-outter">
