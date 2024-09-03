@@ -246,6 +246,11 @@ form {
   border: 1px solid #878d97;
 }
 
+.log-in-button-container{
+  display: flex;
+  flex-direction: column;
+}
+
 .log-in-button {
   margin-bottom: 16px;
   color: white;
@@ -354,5 +359,21 @@ form {
   }
   100% {
       bottom: 50%;
+  }
+}
+
+@media (min-width:1025px){
+  .log-in-button-container{
+    flex-direction: row;
+    gap: 16px;
+  }
+  .log-in-button{
+    width: 110px;
+  }
+  .log-in-sign-up-container{
+    gap: 32px;
+    position: absolute;
+    right: 16px;
+    top: 0;
   }
 }
