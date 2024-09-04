@@ -30,55 +30,30 @@
 
         <div class="priority">
             <p>Priority: </p>
-            <div class="priority-level d-none">  <!-- All 3 Prioritys are here but 2 of them are Display: none (d-none) -->
+            <div class="priority-level d-none" id="medium"> 
                 <p>Medium</p>
                 <img src="../assets/img/Capa 2.svg" alt="">
             </div>
-            <div class="priority-level d-none">
+            <div class="priority-level d-none" id="urgent">
                 <p>Urgent</p>
-                <img src="../assets/img/urgent.svg" alt="">
+                <img src="../assets/img/urgent.svg" alt="" >
             </div>
 
-            <div class="priority-level">
+            <div class="priority-level d-none" id="low">
                 <p>Low</p>
                 <img src="../assets/img/low.svg" alt="">
 
             </div>
         </div>
 
-        <div class="assigned-to">
+        <div class="assigned-to" id="assigned-to">
             <p>Assigned To: </p>
-            <div class="assigned-contacts">
-                <img src="../assets/img/Profile badge.svg" alt="">
-                <p>Emmanuel Mauer</p>
-            </div>
-            <div class="assigned-contacts">
-                <img src="../assets/img/Profile badge.svg" alt="">
-                <p>Emmanuel Mauer</p>
-            </div>
-            <div class="assigned-contacts">
-                <img src="../assets/img/Profile badge.svg" alt="">
-                <p>Emmanuel Mauer</p>
-            </div>
+            
         </div>
 
-        <div class="subtasks">
+        <div class="subtasks" id="subtasks">
             <p>Subtasks</p>
-            <div class="subtasks-checkboxes">
-                <div class="checkbox-wrapper-19">
-                    <input type="checkbox" id="cbtest-19-1" />
-                    <!-- if you have more then one checkbox, set id to "cbtest-19-NUMBER" also on the <label> element -->
-                    <label for="cbtest-19-1" class="check-box">
-                </div>
-                <p>Implement Recipe Recommendation</p>
-            </div>
-            <div class="subtasks-checkboxes">
-                <div class="checkbox-wrapper-19">
-                    <input type="checkbox" id="cbtest-19-2" />
-                    <label for="cbtest-19-2" class="check-box">
-                </div>
-                <p>Start Page Layout</p>
-            </div>
+           
         </div>
 
         <div class="delete-edit">

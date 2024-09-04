@@ -205,7 +205,7 @@ h2 {
   position: absolute;
   height: 0;
   width: calc(var(--checkbox-height) * 0.2);
-  background-color: #34b93d;
+  background-color: black;
   display: inline-block;
   -moz-transform-origin: left top;
   -ms-transform-origin: left top;
@@ -240,7 +240,7 @@ h2 {
 
 .checkbox-wrapper-19 input[type="checkbox"]:checked + .check-box,
 .checkbox-wrapper-19 .check-box.checked {
-  border-color: #34b93d;
+  border-color: black;
 }
 .checkbox-wrapper-19 input[type="checkbox"]:checked + .check-box::after,
 .checkbox-wrapper-19 .check-box.checked::after {
@@ -273,4 +273,16 @@ h2 {
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+
+.contact-circle {
+  background-color: red;
+  width: 32px;
+  height: 32px;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
 }

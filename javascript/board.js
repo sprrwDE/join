@@ -235,20 +235,72 @@ function renderTaskCardInfos(idnumber) {
   let iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
   tasks.filter((card) => {
     if (card.id == idnumber) {
-      console.log(card)
-      renderInfoCardHelper("title", card, iframeDocument)
-      renderInfoCardHelper("description", card, iframeDocument)
-      renderInfoCardHelper("date", card, iframeDocument)
+      renderInfoCardHelper("title", card, iframeDocument);
+      renderInfoCardHelper("description", card, iframeDocument);
+      renderInfoCardHelper("date", card, iframeDocument);
+      setPrio(card, iframeDocument);
+      getAssignedTo(card, iframeDocument);
+      getAllSubtasks(card, iframeDocument);
     }
+  });
+}
 
-  })
+function getAllSubtasks(card, iframeDocument) {
+  let task = card.subtask.split(",");
+
+  let sectionsElement = iframeDocument.getElementById("subtasks");
+  for (let i = 0; i < task.length; i++) {
+    sectionsElement.innerHTML += subtasksHTML(i, task);
+  }
+}
+
+function getAssignedTo(card, iframeDocument) {
+  let inits = card.inits.split(",");
+  inits.pop();
+
+  let contacts = card.assignedto.split(",");
+
+  for (let i = 0; i < contacts.length; i++) {
+    let color = getColors(i, tasks);
+    iframeDocument.getElementById("assigned-to").innerHTML += contactsHTML(
+      contacts[i],
+      inits[i],
+      color[i]
+    );
+  }
+}
+
+function subtasksHTML(i, task) {
+  return `<div class="subtasks-checkboxes">
+                <div class="checkbox-wrapper-19">
+                    <input type="checkbox" id="cbtest-19-${i}" /> <!-- if you have more then one checkbox, set id to "cbtest-19-NUMBER" also on the <label> element -->
+                    <label for="cbtest-19-${i}" class="check-box">
+                </div>
+                <p>${task[i]}</p>
+            </div>`;
+}
+
+function contactsHTML(contact, init, color) {
+  return `<div class="assigned-contacts">
+                <div class="contact-circle" id="contact-circle" style="background-color: ${color};"><span id="contact-inits">${init}</span></div>
+                <p>${contact}</p>
+            </div>`;
+}
+
+function setPrio(card, iframeDocument) {
+  if (card.prio == "urgent") {
+    iframeDocument.getElementById("urgent").classList.remove("d-none");
+  } else if (card.prio == "medium") {
+    iframeDocument.getElementById("medium").classList.remove("d-none");
+  } else if (card.prio == "low") {
+    iframeDocument.getElementById("low").classList.remove("d-none");
+  }
 }
 
 function openCard(id) {
   let body = document.getElementById("body");
   let background = document.getElementById("background-grey");
   background.classList.remove("d-none");
-  console.log(id)
 
   body.innerHTML += `<iframe class="card-info" id="card-infos" src="./board-card.html"></iframe>`;
   let iframe = document.getElementById("card-infos");

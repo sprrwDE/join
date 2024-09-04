@@ -7,10 +7,10 @@ let tasks = {
   category: "",
   subtask: [],
   color: "",
+  inits: "",
 };
 
 function onload() {
-  console.log("start")
   loadContacts();
   includeHTML();
   dropDown();
@@ -32,6 +32,7 @@ function postInfos() {
       status: "todo",
       id: 0,
       color: `${tasks.color}`,
+      inits: `${tasks.inits}`,
     }),
   });
 }
@@ -64,6 +65,8 @@ function renderContacts(contacts) {
   for (i = 0; i < allcontacts.length; i++) {
     allcontacts[i] ||= "Kontakt nicht gefunden";
     let [firstinits, secondinits] = getContactInitials(allcontacts[i]);
+    tasks.inits += firstinits+secondinits+","
+    console.log(tasks.inits)
     contactcontainer.innerHTML += renderAssignedTo(allcontacts, i, firstinits, secondinits, colors);
     contactsImages(i);
   }
