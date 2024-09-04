@@ -1,5 +1,6 @@
 const params = new URLSearchParams(window.location.search);
 const currentName = params.get('name');
+const icon = params.get('icon');
 let togglePopUp = false
 
 
