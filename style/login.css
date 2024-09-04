@@ -70,11 +70,12 @@
   z-index: 9999;  
 }
 
-.static-logo{
+.static-logo{  /* kann raus ?*/
   width: 64px;
   height: 128px;
   margin: 16px 16px 40px 32px;
 }
+
 
 .log-in-container {
   background-color: white;
@@ -376,4 +377,6 @@ form {
     right: 16px;
     top: 0;
   }
+
 }
+

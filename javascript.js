@@ -1,8 +1,15 @@
+const params = new URLSearchParams(window.location.search);
+const currentName = params.get('name');
 let togglePopUp = false
 
 
 function init(){
     includeHTML();
+    loadAccountName();
+}
+
+function loadAccountName() {
+  document.getElementById('greet-name').innerHTML = `${currentName}`;
 }
 
 function renderPopUp() {

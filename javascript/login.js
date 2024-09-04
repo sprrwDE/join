@@ -1,5 +1,8 @@
 let BASE_URL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/accounts.json" 
 
+
+
+
 function start(){
   startLogInAnimation();
   
@@ -37,9 +40,10 @@ function loadAccounts() {
 function checkUserData(accounts){
   let userEmail = document.getElementById('user-email').value;
   let userPassword = document.getElementById('user-password').value;
-  let user = accounts.find(a => a.email == userEmail && a.password == userPassword)
+  let user = accounts.find(a => a.email == userEmail && a.password == userPassword);
   if(user){
-    window.location.href='./documents/summary.html';
+    let currentAccountName = user.name;
+    window.location.href=`./documents/summary.html?name=${encodeURIComponent(currentAccountName)}`;
   }else{
     document.getElementById('user-email').classList.add('border-color-red');  
     document.getElementById('user-password').classList.add('border-color-red');  
