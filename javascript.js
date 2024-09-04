@@ -13,8 +13,21 @@ function loadAccountName() {
   if (currentName) {
     document.getElementById('greet-name').innerHTML = `${currentName}`;  
   }
-  
-  
+}
+
+function changeNavbarColor(){
+  if (icon == 'summary') {
+    document.getElementById('summary').classList.add('background-color');
+  }
+  if (icon == 'board') {
+    document.getElementById('board').classList.add('background-color');
+  }
+  if (icon == 'addtask') {
+    document.getElementById('addtask').classList.add('background-color');
+  }
+  if (icon == 'contacts') {
+    document.getElementById('contacts').classList.add('background-color');
+  }
 }
 
 function renderPopUp() {

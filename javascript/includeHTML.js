@@ -16,6 +16,7 @@ function includeHTML() {
             /* Remove the attribute, and call this function once more: */
             elmnt.removeAttribute("w3-include-html");
             includeHTML();
+
           }
         }
         xhttp.open("GET", file, true);
@@ -24,4 +25,5 @@ function includeHTML() {
         return;
       }
     }
+    changeNavbarColor(); /* function muss hier rein wegen async */
   }
