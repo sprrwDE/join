@@ -9,7 +9,11 @@ function init(){
 }
 
 function loadAccountName() {
-  document.getElementById('greet-name').innerHTML = `${currentName}`;
+  if (currentName) {
+    document.getElementById('greet-name').innerHTML = `${currentName}`;  
+  }
+  
+  
 }
 
 function renderPopUp() {
