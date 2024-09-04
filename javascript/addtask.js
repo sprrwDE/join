@@ -10,6 +10,7 @@ let tasks = {
 };
 
 function onload() {
+  console.log("start")
   loadContacts();
   includeHTML();
   dropDown();
@@ -432,7 +433,9 @@ function getAllInfos() {
   getSubtasks();
   if (requiredFieldsCheck() == true) {
     postInfos();
-    window.location.reload()
+    setTimeout(() => {
+      window.location.reload()
+    }, 1000);
   }
 }
 

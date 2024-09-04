@@ -21,7 +21,11 @@
 <body onload="initialize(), init()">
     <div class="wrapper-header" w3-include-html="./mobile-header.html"></div>
     <main>
-        <div class="desk-btn-wrapper"><button class="add-btn-desk" onclick="openAddContactDialog()">Add new Contact</button></div>
+        <div class="desk-btn-wrapper">
+            <div class="add-btn-desk" onclick="openAddContactDialog()">
+                Add new Contact 
+                <img src="../assets/img/person_add.svg"></div>
+        </div>
         <!-- Contact List -->
         <section class="contact-list" id="contact-list">
             <div class="contact-list-wrapper" id="list-content-outter">
@@ -50,9 +54,11 @@
         </section>
         <!-- End of Contact Overlay -->
         <div class="contact-overlay-desk container">
-            <h2>Contacts</h2>
-            <h3>Tasks are better with a team!</h3>
-            <div class="seperator-card"></div>
+            <div class="contact-desk-header">
+                <h2>Contacts</h2>
+                <div class="seperator-card-desk"></div>
+                <h3>Better with a team!</h3>
+            </div>
             <div class="contact-overlay-desk-content" id="detail-desk">
 
             </div>

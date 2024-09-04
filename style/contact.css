@@ -124,13 +124,27 @@
 }
 
 .list-card:hover {
-    background-color: #2A3647;
-    color: white;
+    background: linear-gradient(#F9F9F9, #F0F0F0);
     border-radius: 16px;
 }
 
-.list-card:hover a {
-    color: white !important;
+.list-card.selected:hover {
+    background: none; 
+    border-radius: 16px; 
+    color: white; 
+}
+
+.contact-mobile-header {
+    display: flex !important;
+    flex-direction: column !important;
+    margin-top: 120px;
+}
+
+.seperator-card-mobile {
+    width: 90px;
+    height: 3px;
+    background-color: #29ABE2;
+    margin: 16px 0;
 }
 
 .contact-detail-header {
@@ -523,10 +537,20 @@ input::placeholder {
         display: none !important;
     }
 
+    h5 {
+        font-size: 20px;
+        font-weight: 400;
+    }
+
+    .avatar-wrapper h4 {
+        font-size: 48px;
+        font-weight: 500;
+    }
+
     .desk-btn-wrapper {
         display: flex;
         justify-content: center;
-        background-color: red;
+        background-color: white;
         position: fixed;
         top: 80px;
         left: 232px;
@@ -539,25 +563,66 @@ input::placeholder {
     }
 
     .add-btn-desk {
-        display: block;
-        width: 90%;
+        display: flex;
+        width: 60%;
+        background-color: #2A3647;
+        color: white;
+        justify-content: center;
+        gap: 24px;
+        align-items: center;
+        border-radius: 16px;
+    }
+
+    .add-btn-desk:hover {
+        box-shadow: 0px 4px 4px 0px #00000040;
+        background-color: #29ABE2;
+    }
+
+    .add-btn-desk:active {
+        box-shadow: 0px 4px 4px 0px #00000040;
+        background-color: #091931;
     }
 
     .name-wrapper {
         display: flex;
         flex-direction: column;
+        padding-left: 40px;
     }
 
     .edit-button-desk-wrapper {
+        margin-top: 8px;
         display: flex;
+        gap: 24px;
+    }
+
+    .edit-row-desk {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
     }
 
     .selected {
-        background-color: #2A3647;
+        background-color: #2A3647 !important;
         color: white;
-        border-radius: 16px;    }
-    
-    .selected a {
-        color: white !important;
+        border-radius: 16px;    
+    }
+
+    .contact-desk-header {
+        display: flex !important;
+        flex-direction: row !important;
+        margin-top: 120px;
+        align-items: center;
+    }
+
+    .seperator-card-desk {
+        width: 3px;
+        height: 64px;
+        background-color: #29ABE2;
+        margin: 0 24px;
+    }
+
+    .contact-mobile-header {
+        display: none !important;
     }
 }

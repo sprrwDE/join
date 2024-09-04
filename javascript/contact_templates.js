@@ -26,6 +26,11 @@ function getContactsTemplate(name, email, phone, currentId, first, last, color, 
 
 function detailTemplate(name, email, phone, first, last, color) {
     return `
+            <div class="contact-mobile-header">
+                <h2>Contacts</h2>
+                <div class="seperator-card-mobile"></div>
+                <h3>Better with a team!</h3>
+            </div>
     <div class="exit-detail" id="exit-detail" onclick="closeDetailDialog()">
         <img src="../assets/img/exit-detail.svg">
     </div>            
@@ -38,13 +43,19 @@ function detailTemplate(name, email, phone, first, last, color) {
             <div class="name-wrapper">
             <h4>${name}</h4>
             <div class="edit-button-desk-wrapper">
-                <div class="pointer" onclick="openEditContactDialog()">Edit</div>
-                <div class="pointer" onclick="deleteContact(currentId)">Delete</div>
+            <div class="edit-row-desk" onclick="openEditContactDialog()">
+                    <img src="../assets/img/edit-small.svg">
+                    <p>Edit</p>
+                </div>
+                <div class="edit-row-desk" onclick="deleteContact(currentId)">
+                    <img src="../assets/img/delete-small.svg">
+                    <p>Delete</p>
+                </div>
             </div>
             </div>
         </div>
         <div class="contact-content">
-            <h4>Contact information</h4>
+            <h5>Contact information</h5>
             <p><b>Email</b></p>
             <a href="mailto:${email}">${email}</a>
             <p><b>Phone</b></p>
