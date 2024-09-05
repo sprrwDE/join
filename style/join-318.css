@@ -8,17 +8,19 @@
 
 .contant-wrapper{
   display: flex;
+  justify-content: center;
   margin-top: 80px;
 }
 
 .contant{
   flex: 1;
+  max-width: 640px;
 }
 
 .join-318-container{
   display: flex;
   flex-direction: column;
-  padding-top: 140px;
+  padding-top: 100px;
   margin-left: 16px;
   margin-bottom: 40px;
   gap: 8px;
@@ -78,7 +80,7 @@ h1{
 .deadline-container{
   background-color: white;
   display: flex;
-  justify-content: space-around;
+  
   align-items: center;
   text-align: center;
   height: 120px;
@@ -87,6 +89,14 @@ h1{
   margin: 24px 16px;
   
 }
+
+.arrow-urgent-box{
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: auto;
+}
+
 .arrow-up-icon{
   width: 40px;
   height: 40px;
@@ -95,7 +105,13 @@ h1{
   height: 68px;
   border: 1px solid #d1d1d1;
   border-radius: 2px;
+  margin: auto;
 }
+
+.deadline-box{
+  margin: auto;
+}
+
 .task-boxes-container{
   display: flex;
   gap: 16px;
@@ -107,11 +123,12 @@ h1{
 .tasks-counter-box{
   background-color: white;
   display: flex;
+  flex: 1;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 120px;
-  width: 100%;
+  
   border-radius: 20px;
 }
 
@@ -132,7 +149,7 @@ h1{
   
   text-align: center;
   margin-top: 215px;
-  flex: 1;
+  flex: 2;
 }
 
 
