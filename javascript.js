@@ -75,12 +75,6 @@ function openHelpPage(){
   window.location.href="../documents/help.html";
 }
 
-
-
-
-
-
-
 function sendToPrivacyPolicyFromNavbar() {
   if (notAMember) {
     let noMember = true;
