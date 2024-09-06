@@ -196,9 +196,9 @@ function openDetailDialog(name, email, phone, id, first, last, color, indexCard)
     selectElement(indexCard);
 
     if (window.innerWidth >= 1024) {
-        openDetailReferenceDesk(name, email, phone, first, last, color);
+        openDetailReferenceDesk(name, email, phone, id, first, last, color);
     } else {
-        openDetailReferenceMob(name, email, phone, first, last, color);
+        openDetailReferenceMob(name, email, phone, id, first, last, color);
     }
 }
 
@@ -216,22 +216,24 @@ function selectElement(indexCard) {
     }
 }
 
-function openDetailReferenceMob(name, email, phone, first, last, color) {
+function openDetailReferenceMob(name, email, phone, id, first, last, color) {
+    currentId = id; 
     showDetail.classList.remove('d-none');
     detailRef.classList.remove('d-none');
     editButtonRef.classList.remove('d-none');
     contactListRef.classList.add('d-none');
     editBoxRef.classList.add('d-none');
     addButtonRef.classList.add('d-none');
-    getDetailTemplateMob(name, email, phone, first, last, color);
+    getDetailTemplateMob(name, email, phone, id, first, last, color);
 }
 
-function openDetailReferenceDesk(name, email, phone, first, last, color) {
-    document.getElementById('detail-desk').innerHTML = detailTemplate(name, email, phone, first, last, color);
+
+function openDetailReferenceDesk(name, email, phone, id, first, last, color) {
+    document.getElementById('detail-desk').innerHTML = detailTemplate(name, email, phone, id, first, last, color);
 }
 
-function getDetailTemplateMob(name, email, phone, first, last, color) {
-    detailRef.innerHTML = detailTemplate(name, email, phone, first, last, color);
+function getDetailTemplateMob(name, email, phone, id, first, last, color) {
+    detailRef.innerHTML = detailTemplate(name, email, phone, id, first, last, color);
 }
 
 function closeDetailDialog() {
@@ -273,10 +275,11 @@ function closeEditContactDialog() {
     }
 }
 
-function openEditContactDialog() {
+function openEditContactDialog(id) {
     editContactRef.classList.remove('d-none');
     editContactRef.innerHTML = showEditOverlay();
     console.log(currentId)
+    currentId = id;
     const contact = db.find(contact => contact.id === currentId);
     const nameInput = document.getElementById('edit-name');
     const emailInput = document.getElementById('edit-email');
@@ -358,8 +361,9 @@ function updateDetailView(updatedData) {
             updatedData.nameIn,
             updatedData.emailIn,
             updatedData.phoneIn,
-            initials[0],
-            initials[1],
+            updatedData.id,  // Pass the id here
+            initials[0],     // Pass first initial
+            initials[1],     // Pass last initial
             updatedData.color
         );
     }
@@ -368,8 +372,9 @@ function updateDetailView(updatedData) {
         updatedData.nameIn,
         updatedData.emailIn,
         updatedData.phoneIn,
-        initials[0],
-        initials[1],
+        updatedData.id,  // Pass the id here
+        initials[0],     // Pass first initial
+        initials[1],     // Pass last initial
         updatedData.color
     );
     initialize();

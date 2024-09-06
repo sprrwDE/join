@@ -397,7 +397,7 @@ function getSubtasks() {
   let subtask = subtasklist.getElementsByTagName("li");
 
   for (let i = 0; i < subtask.length; i++) {
-    tasks.subtask.push(subtask[i].innerHTML);
+    tasks.subtask.push("'" + subtask[i].innerHTML + "'");
   }
 }
 

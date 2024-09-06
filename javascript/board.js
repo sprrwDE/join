@@ -2,9 +2,10 @@ let BASE_URL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/
 
 let tasks = [];
 let currentDraggedElement;
+let clickedCardId;
 
 function initBoard() {
-  includeHTML();
+  includeHTML()
   loadTasks();
 }
 
@@ -54,17 +55,32 @@ function loadTasks() {
       let values = Object.values(result);
       checkTask(keys, values);
     })
-    .catch((error) => console.log("Fehler beim Abrufen der Daten:", error));
+
 }
 
 function checkTask(keys, values) {
   tasks = [];
 
   for (let i = 0; i < values.length; i++) {
+    let subtask = seperatSubtask(values[i].subtask);
+
+
     tasks.push(values[i]);
     tasks[i].id = `${keys[i]}`;
+    tasks[i].subtask = subtask;
   }
   renderTask();
+  console.log(tasks[0]);
+}
+
+
+function seperatSubtask(subtask) {
+  let newsubtaskArray = {};
+  if (-subtask !== "") {
+
+
+    return newsubtaskArray;
+  }
 }
 
 function renderTask() {
@@ -95,13 +111,14 @@ function renderHelper(section) {
   let allTasks = tasks.filter((t) => t["status"] == section);
 
   for (let i = 0; i < allTasks.length; i++) {
-    let subtasks = getSubtasks(i, allTasks);
+
     let category = getCategory(allTasks[i].category);
     let prio = getPrio(i, allTasks);
+    clickedCardId = allTasks[i].id;
     document.getElementById(section).innerHTML += renderToDos(
       allTasks,
       i,
-      subtasks,
+
       category,
       prio
     );
@@ -132,10 +149,7 @@ function getCategory(category) {
   }
 }
 
-function getSubtasks(i, allTasks) {
-  let subtasks = allTasks[i].subtask.split(",");
-  return subtasks;
-}
+
 
 function startDragging(id) {
   currentDraggedElement = id;
@@ -161,7 +175,7 @@ function getInitails(i, allTasks) {
   return inits;
 }
 
-function renderToDos(task, i, subtasks, categoryColor, prio) {
+function renderToDos(task, i, categoryColor, prio) {
   return `<div class="ticket-card" id="ticket-${task[i].id}" draggable="true" onclick="openCard('${task[i].id}')" ondragstart="startDragging('${task[i].id}')">
                     <div class="${categoryColor}" id="pill">
                         <p>${task[i].category}</p>
@@ -176,7 +190,7 @@ function renderToDos(task, i, subtasks, categoryColor, prio) {
                         <div class="progress-bar">
                             <div class="progress-bar-filler"></div>
                         </div>
-                        <p>1/${subtasks.length}Subtasks</p>
+                        <p id="subtasks">0/Subtasks</p>
                     </div>
 
                     <div class="contacts-section">
@@ -233,6 +247,7 @@ function renderInfoCardHelper(sections, card, iframeDocument) {
 function renderTaskCardInfos(idnumber) {
   let iframe = document.getElementById("card-infos");
   let iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+
   tasks.filter((card) => {
     if (card.id == idnumber) {
       renderInfoCardHelper("title", card, iframeDocument);
@@ -249,31 +264,43 @@ function getAllSubtasks(card, iframeDocument) {
   let task = card.subtask.split(",");
 
   let sectionsElement = iframeDocument.getElementById("subtasks");
-  for (let i = 0; i < task.length; i++) {
-    sectionsElement.innerHTML += subtasksHTML(i, task);
+  if (!task[0] == "") {
+    for (let i = 0; i < task.length; i++) {
+      sectionsElement.innerHTML += subtasksHTML(i, task, task.length);
+    }
   }
 }
 
 function getAssignedTo(card, iframeDocument) {
-  let inits = card.inits.split(",");
-  inits.pop();
-
   let contacts = card.assignedto.split(",");
 
+  let inits = [];
+  let contact = card.assignedto;
+
+  let contactss = contact.split(",");
+  for (id in contacts) {
+    let name = contactss[id].split(" ");
+    let firstinit = name[0][0];
+    let second = name[1] ? name[1][0] : "";
+    inits.push([firstinit.toUpperCase(), second.toUpperCase()]);
+  }
+
+  let color = card.color.match(/rgb\(\d{1,3},\s*\d{1,3},\s*\d{1,3}\)/g);
+
   for (let i = 0; i < contacts.length; i++) {
-    let color = getColors(i, tasks);
+    let cleanInits = inits[i].join().replace(",", "");
     iframeDocument.getElementById("assigned-to").innerHTML += contactsHTML(
       contacts[i],
-      inits[i],
+      cleanInits,
       color[i]
     );
   }
 }
 
-function subtasksHTML(i, task) {
+function subtasksHTML(i, task, tasklength) {
   return `<div class="subtasks-checkboxes">
                 <div class="checkbox-wrapper-19">
-                    <input type="checkbox" id="cbtest-19-${i}" /> <!-- if you have more then one checkbox, set id to "cbtest-19-NUMBER" also on the <label> element -->
+                    <input type="checkbox" id="cbtest-19-${i}" onclick="parent.subtaskProcesBar(${i}, ${tasklength})"/>
                     <label for="cbtest-19-${i}" class="check-box">
                 </div>
                 <p>${task[i]}</p>
@@ -308,3 +335,32 @@ function openCard(id) {
     renderTaskCardInfos(id);
   };
 }
+let subTaskCount = 0;
+function subtaskProcesBar(id, tasklength) {
+  let iframe = document.getElementById("card-infos");
+  let iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+  let checkbox = iframeDocument.getElementById(`cbtest-19-${id}`);
+
+  if (checkbox.checked) {
+    subTaskCount++;
+  } else {
+    subTaskCount--;
+  }
+  setSubTaskProces(subTaskCount, tasklength);
+}
+
+function setSubTaskProces(count, tasklength) {
+  let taskCard = document.getElementById(`ticket-${clickedCardId}`);
+  let subtask = taskCard.querySelector("#subtasks");
+
+  subtask.innerHTML = `${count}/${tasklength} Subtasks`;
+}
+
+
+
+
+
+
+
+
+
