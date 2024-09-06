@@ -91,8 +91,9 @@ function loadSignUp(){
   document.getElementById('log-in').classList.add('d-none');
   document.getElementById('sign-up').classList.remove('d-none');
   renderSignUpHTML();
-
 }
+
+
 
 function checkFormValidity() {
   let name = document.getElementById('new-name').value;
@@ -136,6 +137,16 @@ function comparePasswords(newName, newEmail, newPassword, checkNewPassword){
 
 }
 
+function sendToPrivacyPolicy(){
+  let noMember = true;
+  window.location.href = `/documents/Privacy.html?userId=${noMember}`;
+}
+
+function sendTolegalNotice(){
+  let noMember = true;
+  window.location.href = `/documents/legal.html?userId=${noMember}`;
+}
+
 function postNewAccount(newName, newEmail, newPassword) {
   fetch(
     BASE_URL,
@@ -158,7 +169,6 @@ function renderSuccessfully(){
   <div id="sign-up-overlay" class="success-overlay"></div>
   <div class="success-box">You Signed Up successfully</div>
   `;
-  
 }
 
 function renderWrongPassword(){
@@ -166,7 +176,6 @@ function renderWrongPassword(){
 }
 
 function renderSignUpHTML(){
-  
   return document.getElementById('sign-up').innerHTML = `
   <img class="static-logo" src="./assets/img/join-icon.svg" alt="">
   <div class="log-in-container">

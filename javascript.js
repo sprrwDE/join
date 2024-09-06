@@ -1,17 +1,30 @@
 const params = new URLSearchParams(window.location.search);
 const currentName = params.get('name');
 const icon = params.get('icon');
-let togglePopUp = false
+const notAMember = params.get('userId');
+let togglePopUp = false;
 
 
-function init(){
-    includeHTML();
-    loadAccountName();
+function init() {
+  includeHTML().then(() => {
+      loadAccountName();
+      noMemberLink();
+      changeNavbarColor(); 
+  }).catch((error) => {
+      console.error("Error including HTML:", error);
+  });
 }
 
 function loadAccountName() {
   if (currentName) {
     document.getElementById('greet-name').innerHTML = `${currentName}`;  
+  }
+}
+
+function noMemberLink() {
+  if (notAMember) {
+    document.getElementById('navbar-links').classList.add('d-none');
+    document.getElementById('help-account-box').classList.add('d-none');
   }
 }
 
@@ -63,3 +76,25 @@ function openHelpPage(){
 }
 
 
+
+
+
+
+
+function sendToPrivacyPolicyFromNavbar() {
+  if (notAMember) {
+    let noMember = true;
+    window.location.href = `/documents/Privacy.html?userId=${noMember}`;
+  }else{
+    window.location.href = "/documents/Privacy.html"
+  }
+}
+
+function sendTolegalNoticeFromNavbar() {
+  if (notAMember) {
+    let noMember = true;
+    window.location.href = `/documents/legal.html?userId=${noMember}`;
+  }else{
+    window.location.href = "/documents/legal.html"
+  }
+}

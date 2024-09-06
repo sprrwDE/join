@@ -7,12 +7,15 @@
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="../style/mobile-navbar-style.css" />
     <link rel="shortcut icon" href="../assets/img/join_favicon.svg" type="image/x-icon">
+    <script src="/javascript.js"></script>
   </head>
 
   <body>
     <div class="test-container">
       <div class="mobile-navbar">
+        
         <img class="join-logo-sidebar" src="../assets/img/Join-logo-white.svg" alt="">
+        <div id="navbar-links" class="navbar-links-box">
         <a id="summary" class="navbar-icon-container" href="./summary.html?icon=summary">
           <img
             class="navbar-icon"
@@ -44,9 +47,10 @@
             alt=""
           />Contacts
         </a>
+          </div>
         <div class="sidebar-link-container">
-            <a href="../documents/Privacy.html">Privacy Policy</a>
-            <a href="../documents/legal.html">Legal notice</a>
+            <a href="#" onclick="sendToPrivacyPolicyFromNavbar()">Privacy Policy</a>
+            <a href="#" onclick="sendTolegalNoticeFromNavbar()">Legal notice</a>
         </div>
       </div>
     </div>
