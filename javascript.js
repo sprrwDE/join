@@ -79,16 +79,22 @@ function openHelpPage(){
 
 
 
-function sendToPrivacyPolicy(){
-  let noMember = true;
-  const privacyLink = document.getElementById("privacy-link");
-  privacyLink.href = `./documents/Privacy.html?userId=${noMember}`;
+
+
+function sendToPrivacyPolicyFromNavbar() {
+  if (notAMember) {
+    let noMember = true;
+    window.location.href = `/documents/Privacy.html?userId=${noMember}`;
+  }else{
+    window.location.href = "/documents/Privacy.html"
+  }
 }
 
-function sendTolegalNotice(){
-  let noMember = true;
-  const legalNoticeLink = document.getElementById("legal-link");
-  legalNoticeLink.href = `./documents/legal.html?userId=${noMember}`;
+function sendTolegalNoticeFromNavbar() {
+  if (notAMember) {
+    let noMember = true;
+    window.location.href = `/documents/legal.html?userId=${noMember}`;
+  }else{
+    window.location.href = "/documents/legal.html"
+  }
 }
-
-

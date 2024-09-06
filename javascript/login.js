@@ -1,6 +1,6 @@
 let BASE_URL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/accounts.json" 
 
-let noMember = true;
+
 
 
 function start(){
@@ -93,15 +93,7 @@ function loadSignUp(){
   renderSignUpHTML();
 }
 
-function sendToPrivacyPolicy(){
-  const privacyLink = document.getElementById("privacy-link");
-  privacyLink.href = `./documents/Privacy.html?userId=${noMember}`;
-}
 
-function sendTolegalNotice(){
-  const legalNoticeLink = document.getElementById("legal-link");
-  legalNoticeLink.href = `./documents/legal.html?userId=${noMember}`;
-}
 
 function checkFormValidity() {
   let name = document.getElementById('new-name').value;
@@ -143,6 +135,16 @@ function comparePasswords(newName, newEmail, newPassword, checkNewPassword){
     renderWrongPassword();
   }
 
+}
+
+function sendToPrivacyPolicy(){
+  let noMember = true;
+  window.location.href = `/documents/Privacy.html?userId=${noMember}`;
+}
+
+function sendTolegalNotice(){
+  let noMember = true;
+  window.location.href = `/documents/legal.html?userId=${noMember}`;
 }
 
 function postNewAccount(newName, newEmail, newPassword) {
