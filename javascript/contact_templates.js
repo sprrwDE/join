@@ -24,7 +24,7 @@ function getContactsTemplate(name, email, phone, currentId, first, last, color, 
     `;
 }
 
-function detailTemplate(name, email, phone, first, last, color) {
+function detailTemplate(name, email, phone, id, first, last, color) {
     return `
             <div class="contact-mobile-header">
                 <h2>Contacts</h2>
@@ -43,11 +43,11 @@ function detailTemplate(name, email, phone, first, last, color) {
             <div class="name-wrapper">
             <h4>${name}</h4>
             <div class="edit-button-desk-wrapper">
-            <div class="edit-row-desk" onclick="openEditContactDialog()">
+            <div class="edit-row-desk" onclick="openEditContactDialog('${id}')">
                     <img src="../assets/img/edit-small.svg">
                     <p>Edit</p>
                 </div>
-                <div class="edit-row-desk" onclick="deleteContact(currentId)">
+                <div class="edit-row-desk" onclick="deleteContact('${id}')">
                     <img src="../assets/img/delete-small.svg">
                     <p>Delete</p>
                 </div>
