@@ -1,11 +1,11 @@
 let BASE_URL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/";
 
-let tasks = [];
+window.tasks = [];
 let currentDraggedElement;
-let clickedCardId;
+window.clickedCardId;
 
 function initBoard() {
-  includeHTML()
+  includeHTML();
   loadTasks();
 }
 
@@ -54,33 +54,43 @@ function loadTasks() {
       let keys = Object.keys(result);
       let values = Object.values(result);
       checkTask(keys, values);
-    })
+    });
+}
 
+function separatSubtask(tasks) {
+  if (!tasks == "") {
+    let inputString = tasks;
+    let matches = inputString.match(/'([^']*)'/g).map((s) => s.replace(/'/g, ""));
+
+    return matches;
+  } else {
+    console.log("texyst");
+  }
 }
 
 function checkTask(keys, values) {
   tasks = [];
-
   for (let i = 0; i < values.length; i++) {
-    let subtask = seperatSubtask(values[i].subtask);
-
-
-    tasks.push(values[i]);
-    tasks[i].id = `${keys[i]}`;
-    tasks[i].subtask = subtask;
+    if (!values[i].subtask === "" || typeof values[i].subtask === "string") {
+      let sep = separatSubtask(values[i].subtask);
+      let subtask = renderToObject(sep);
+      tasks.push(values[i]);
+      tasks[i].id = `${keys[i]}`;
+      tasks[i].subtask = subtask;
+    } else {
+      tasks.push(values[i]);
+      tasks[i].id = `${keys[i]}`;
+    }
+    renderTask();
   }
-  renderTask();
-  console.log(tasks[0]);
 }
 
-
-function seperatSubtask(subtask) {
+function renderToObject(subtask) {
   let newsubtaskArray = {};
-  if (-subtask !== "") {
-
-
-    return newsubtaskArray;
+  for (let i = 0; i < subtask.length; i++) {
+    newsubtaskArray[subtask[i]] = "inwork";
   }
+  return newsubtaskArray;
 }
 
 function renderTask() {
@@ -111,17 +121,11 @@ function renderHelper(section) {
   let allTasks = tasks.filter((t) => t["status"] == section);
 
   for (let i = 0; i < allTasks.length; i++) {
-
     let category = getCategory(allTasks[i].category);
     let prio = getPrio(i, allTasks);
-    clickedCardId = allTasks[i].id;
-    document.getElementById(section).innerHTML += renderToDos(
-      allTasks,
-      i,
-
-      category,
-      prio
-    );
+    
+    let checked = subtaskChecked(i);
+    document.getElementById(section).innerHTML += renderToDos(allTasks, i, category, prio, checked);
     let inits = getInitails(i, allTasks);
     for (let j = 0; j < inits.length; j++) {
       let contact = document.getElementById(`contact-images${allTasks[i].id}`);
@@ -149,8 +153,6 @@ function getCategory(category) {
   }
 }
 
-
-
 function startDragging(id) {
   currentDraggedElement = id;
   document.getElementById(`ticket-${id}`).classList.add("shake");
@@ -175,8 +177,24 @@ function getInitails(i, allTasks) {
   return inits;
 }
 
-function renderToDos(task, i, categoryColor, prio) {
-  return `<div class="ticket-card" id="ticket-${task[i].id}" draggable="true" onclick="openCard('${task[i].id}')" ondragstart="startDragging('${task[i].id}')">
+function subtaskChecked(i) {
+  let checked = 0;
+  let task = Object.values(tasks[i].subtask);
+  for (let j = 0; j < task.length; j++) {
+    console.log(tasks[i].subtask)
+    if (task[i] == "inwork") {
+      checked++;
+    } else if (task[i] == "done"){
+      checked--;
+    }
+  }
+  return checked;
+}
+
+function renderToDos(task, i, categoryColor, prio, checked) {
+  return `<div class="ticket-card" id="ticket-${task[i].id}" draggable="true" onclick="openCard('${
+    task[i].id
+  }')" ondragstart="startDragging('${task[i].id}')">
                     <div class="${categoryColor}" id="pill">
                         <p>${task[i].category}</p>
                     </div>
@@ -190,7 +208,9 @@ function renderToDos(task, i, categoryColor, prio) {
                         <div class="progress-bar">
                             <div class="progress-bar-filler"></div>
                         </div>
-                        <p id="subtasks">0/Subtasks</p>
+                        <p id="subtasks">${checked}/${
+    Object.keys(tasks[0].subtask).length
+  } Subtasks</p>
                     </div>
 
                     <div class="contacts-section">
@@ -261,13 +281,25 @@ function renderTaskCardInfos(idnumber) {
 }
 
 function getAllSubtasks(card, iframeDocument) {
-  let task = card.subtask.split(",");
-
+  let task = Object.keys(card.subtask);
   let sectionsElement = iframeDocument.getElementById("subtasks");
+
   if (!task[0] == "") {
     for (let i = 0; i < task.length; i++) {
-      sectionsElement.innerHTML += subtasksHTML(i, task, task.length);
+      let checked = ifChecked(card, i);
+
+      sectionsElement.innerHTML += subtasksHTML(i, task, task.length, checked, card);
     }
+  }
+}
+
+function ifChecked(card,i) {
+  console.log(i)
+  let alltasks = Object.values(card.subtask)
+  if(alltasks[i] == "inwork") {
+    return ""
+  } else if (alltasks[i] == "done") {
+    return "checked"
   }
 }
 
@@ -297,10 +329,10 @@ function getAssignedTo(card, iframeDocument) {
   }
 }
 
-function subtasksHTML(i, task, tasklength) {
-  return `<div class="subtasks-checkboxes">
-                <div class="checkbox-wrapper-19">
-                    <input type="checkbox" id="cbtest-19-${i}" onclick="parent.subtaskProcesBar(${i}, ${tasklength})"/>
+function subtasksHTML(i, task, tasklength, checked, card) {
+  return `<div class="subtasks-checkboxes" id="board-card-${card.id}-${i}">
+                <div class="checkbox-wrapper-19" >
+                    <input type="checkbox" id="cbtest-19-${i}" onclick="parent.subtaskProcesBar(${i}, ${tasklength}); boardCardSubtaskChecked(${i})" ${checked}/>
                     <label for="cbtest-19-${i}" class="check-box">
                 </div>
                 <p>${task[i]}</p>
@@ -325,6 +357,7 @@ function setPrio(card, iframeDocument) {
 }
 
 function openCard(id) {
+  clickedCardId = id
   let body = document.getElementById("body");
   let background = document.getElementById("background-grey");
   background.classList.remove("d-none");
@@ -335,6 +368,7 @@ function openCard(id) {
     renderTaskCardInfos(id);
   };
 }
+
 let subTaskCount = 0;
 function subtaskProcesBar(id, tasklength) {
   let iframe = document.getElementById("card-infos");
@@ -355,12 +389,3 @@ function setSubTaskProces(count, tasklength) {
 
   subtask.innerHTML = `${count}/${tasklength} Subtasks`;
 }
-
-
-
-
-
-
-
-
-
