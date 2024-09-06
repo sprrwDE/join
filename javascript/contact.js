@@ -153,6 +153,7 @@ function getInputValues() {
         nameIn: nameInput,
         emailIn: emailInput,
         phoneIn: phoneInput,
+        isUser: false,
         color: getRandomColor()
     };
 
