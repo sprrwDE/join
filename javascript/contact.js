@@ -217,6 +217,7 @@ function selectElement(indexCard) {
 }
 
 function openDetailReferenceMob(name, email, phone, id, first, last, color) {
+    currentId = id; 
     showDetail.classList.remove('d-none');
     detailRef.classList.remove('d-none');
     editButtonRef.classList.remove('d-none');
@@ -225,6 +226,7 @@ function openDetailReferenceMob(name, email, phone, id, first, last, color) {
     addButtonRef.classList.add('d-none');
     getDetailTemplateMob(name, email, phone, id, first, last, color);
 }
+
 
 function openDetailReferenceDesk(name, email, phone, id, first, last, color) {
     document.getElementById('detail-desk').innerHTML = detailTemplate(name, email, phone, id, first, last, color);
