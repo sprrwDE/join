@@ -1,6 +1,6 @@
 let BASE_URL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/accounts.json" 
 
-
+let noMember = true;
 
 
 function start(){
@@ -91,7 +91,16 @@ function loadSignUp(){
   document.getElementById('log-in').classList.add('d-none');
   document.getElementById('sign-up').classList.remove('d-none');
   renderSignUpHTML();
+}
 
+function sendToPrivacyPolicy(){
+  const privacyLink = document.getElementById("privacy-link");
+  privacyLink.href = `./documents/Privacy.html?userId=${noMember}`;
+}
+
+function sendTolegalNotice(){
+  const legalNoticeLink = document.getElementById("legal-link");
+  legalNoticeLink.href = `./documents/legal.html?userId=${noMember}`;
 }
 
 function checkFormValidity() {
@@ -158,7 +167,6 @@ function renderSuccessfully(){
   <div id="sign-up-overlay" class="success-overlay"></div>
   <div class="success-box">You Signed Up successfully</div>
   `;
-  
 }
 
 function renderWrongPassword(){
@@ -166,7 +174,6 @@ function renderWrongPassword(){
 }
 
 function renderSignUpHTML(){
-  
   return document.getElementById('sign-up').innerHTML = `
   <img class="static-logo" src="./assets/img/join-icon.svg" alt="">
   <div class="log-in-container">
