@@ -125,15 +125,18 @@ function renderContactsForInitial(containerRef, contacts, globalIndex) {
  */
 function openAddContactDialog() {
     addDialogRef.classList.remove('d-none');
-    addDialogRef.innerHTML = addDialogTemplate();
-    editButtonRef.classList.add('d-none');
-    addButtonRef.classList.add('d-none');
+    addDialogRef.classList.add('overlay-visible');
+    addDialogRef.classList.remove('overlay-hidden');
 }
 
 function closeAddContactDialog() {
-    addDialogRef.classList.add('d-none');
-    contactListRef.classList.remove('d-none');
-    addButtonRef.classList.remove('d-none');
+    addDialogRef.classList.remove('overlay-visible');
+    addDialogRef.classList.add('overlay-hidden');
+    
+    // Optional: nach der Animation das Overlay ausblenden
+    setTimeout(() => {
+        addDialogRef.classList.add('d-none');
+    }, 500); // Wartezeit sollte der Dauer der Animation entsprechen
 }
 
 /**
