@@ -24,6 +24,7 @@ function loadAccountName() {
 function noMemberLink() {
   if (notAMember) {
     document.getElementById('navbar-links').classList.add('d-none');
+    document.getElementById('help-account-box').classList.add('d-none');
   }
 }
 
