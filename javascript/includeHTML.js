@@ -30,6 +30,6 @@ function includeHTML() {
           }
       }
       resolve(); // Resolve the promise if no elements are left
-      changeNavbarColor(); /* Call this function after includeHTML is done */
+
   });
 }

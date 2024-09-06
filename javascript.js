@@ -76,3 +76,19 @@ function openHelpPage(){
 }
 
 
+
+
+
+function sendToPrivacyPolicy(){
+  let noMember = true;
+  const privacyLink = document.getElementById("privacy-link");
+  privacyLink.href = `./documents/Privacy.html?userId=${noMember}`;
+}
+
+function sendTolegalNotice(){
+  let noMember = true;
+  const legalNoticeLink = document.getElementById("legal-link");
+  legalNoticeLink.href = `./documents/legal.html?userId=${noMember}`;
+}
+
+
