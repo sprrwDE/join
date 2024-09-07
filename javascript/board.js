@@ -124,8 +124,8 @@ function renderHelper(section) {
     let category = getCategory(allTasks[i].category);
     let prio = getPrio(i, allTasks);
     let checked = subtaskChecked(i, allTasks[i]);
-    let count = getCheckedSubtasks(allTasks[i])
-    let subtaskslength = Object.values(allTasks[i].subtask)
+    let count = getCheckedSubtasks(allTasks[i]);
+    let subtaskslength = Object.values(allTasks[i].subtask);
 
     document.getElementById(section).innerHTML += renderToDos(allTasks, i, category, prio, checked);
     let inits = getInitails(i, allTasks);
@@ -134,13 +134,13 @@ function renderHelper(section) {
       let colors = getColors(i, allTasks);
       contact.innerHTML += renderContactsImages(inits[j], colors, j);
     }
-    renderProgressBar(count, subtaskslength.length, allTasks[i].id)
+    renderProgressBar(count, subtaskslength.length, allTasks[i].id);
   }
 }
 
 function renderProgressBar(count, length, id) {
   let progressBar = document.getElementById(`filler-${id}`);
-  let result = (count / length) * 100
+  let result = (count / length) * 100;
   progressBar.style.width = `${result}%`;
 }
 
@@ -187,8 +187,8 @@ function getInitails(i, allTasks) {
 }
 
 function subtaskChecked(i, alltask) {
- let checked = 0
-  let subtasks= Object.values(alltask.subtask)
+  let checked = 0;
+  let subtasks = Object.values(alltask.subtask);
   for (let j = 0; j < subtasks.length; j++) {
     if (subtasks[j] == "done") {
       checked++;
@@ -270,29 +270,61 @@ function renderInfoCardHelper(sections, card, iframeDocument) {
 
 function renderTaskCardInfos(idnumber) {
   let iframe = document.getElementById("card-infos");
-  let iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
-  tasks.filter((card) => {
-    if (card.id == idnumber) {
-      renderInfoCardHelper("title", card, iframeDocument);
-      renderInfoCardHelper("description", card, iframeDocument);
-      renderInfoCardHelper("date", card, iframeDocument);
-      setPrio(card, iframeDocument);
-      getAssignedTo(card, iframeDocument);
-      getAllSubtasks(card, iframeDocument);
-    }
-  });
+  if (iframe) {
+    let iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+    tasks.filter((card) => {
+      if (card.id == idnumber) {
+        renderInfoCardHelper("title", card, iframeDocument);
+        renderInfoCardHelper("description", card, iframeDocument);
+        renderInfoCardHelper("date", card, iframeDocument);
+        setPrio(card, iframeDocument);
+        getAssignedTo(card, iframeDocument);
+        getAllSubtasks(card, iframeDocument);
+      }
+    });
+  } else {
+    let iframe = document.getElementById("edit-card");
+    let iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+    tasks.filter((card) => {
+      if (card.id == idnumber) {
+        renderEditCardInfos(iframeDocument, card);
+      }
+    });
+  }
+}
+
+function renderEditCardInfos(iframeDocument, card) {
+  iframeDocument.getElementById("input-title").value = card.title;
+  iframeDocument.getElementById("text-area").value = card.description;
 }
 
 function getAllSubtasks(card, iframeDocument) {
   let task = Object.keys(card.subtask);
   let sectionsElement = iframeDocument.getElementById("subtasks");
+  sectionsElement.parentElement.id = `board-card-content-${card.id}`;
 
+  let boardCardContent = sectionsElement.parentElement;
   if (!task[0] == "") {
     for (let i = 0; i < task.length; i++) {
       let checked = ifChecked(card, i);
       sectionsElement.innerHTML += subtasksHTML(i, task, task.length, checked, card);
     }
+    boardCardContent.innerHTML += renderBoardCardButtons(card.id);
   }
+}
+
+function renderBoardCardButtons(id) {
+  return `<div class="delete-edit">
+            <div class="delete" id="delete-btn-${id}" onclick="deleteTask('${id}')">
+                <img src="../assets/img/delete.svg" alt="">
+                <p>Delete</p>
+            </div>
+            <img src="../assets/img/Vector 3.svg" alt="">
+            <div class="edit" id="edit-btn-${id}" onclick="parent.editTask('${id}')">
+                <img src="../assets/img/edit.svg" alt="">
+                <p>Edit</p>
+            </div>
+        </div>`;
 }
 
 function ifChecked(card, i) {
@@ -370,10 +402,10 @@ function subtaskProcesBar(cardId, id, tasklength) {
   let iframe = document.getElementById("card-infos");
   let iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
   let checkbox = iframeDocument.getElementById(`cbtest-19-${id}`);
- 
-  let task = getCardById(cardId)
 
-  let subTaskCount = getCheckedSubtasks(task)
+  let task = getCardById(cardId);
+
+  let subTaskCount = getCheckedSubtasks(task);
   if (checkbox.checked) {
     subTaskCount++;
   } else {
@@ -383,23 +415,23 @@ function subtaskProcesBar(cardId, id, tasklength) {
 }
 
 function getCheckedSubtasks(task) {
-  let count = 0; 
-  let checked = Object.values(task.subtask)
+  let count = 0;
+  let checked = Object.values(task.subtask);
   for (let z = 0; z < checked.length; z++) {
     if (checked[z] == "done") {
-      count++
+      count++;
     }
   }
-  return count
+  return count;
 }
 
 function getCardById(crypticId) {
-  let newtask = {}
-  tasks.forEach(task => {
-    if(task.id == crypticId) {
-      newtask = task
+  let newtask = {};
+  tasks.forEach((task) => {
+    if (task.id == crypticId) {
+      newtask = task;
     }
-  })
+  });
   return newtask;
 }
 
@@ -413,6 +445,12 @@ function setSubTaskProces(count, tasklength) {
 
 function fillProgressBar(count, length) {
   let progressBar = document.getElementById(`filler-${clickedCardId}`);
-  let result = (count / length) * 100
+  let result = (count / length) * 100;
   progressBar.style.width = `${result}%`;
+}
+
+function editTask(id) {
+  let card = document.getElementById("card-infos");
+  card.id = "edit-card";
+  card.src = "./board-card-edit.html";
 }

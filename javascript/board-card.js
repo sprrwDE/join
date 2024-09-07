@@ -5,7 +5,7 @@ let BASE_URL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/
 function initBoardCard() {}
 
 function boardCardSubtaskChecked(id) {
-  parent.fillProgressBar()
+  parent.fillProgressBar();
   let checkboxdiv = document.getElementById(`board-card-${clickedCardId}-${id}`);
   let checkbox = checkboxdiv.querySelector(`#cbtest-19-${id}`);
 
@@ -45,6 +45,22 @@ function updateServer(task) {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(task),
+  });
+}
+
+function deleteTask(id) {
+  let index = tasks.findIndex((task) => task.id === id);
+  if (index !== -1) {
+    tasks.splice(index, 1);
+  }
+  deleteFromServer(id)
+  window.parent.tasks = tasks;
+  console.log(tasks);
+}
+
+function deleteFromServer(id) {
+  fetch(BASE_URL + "/addTask/" + id + ".json", {
+    method: "DELETE"
   });
 }
 
