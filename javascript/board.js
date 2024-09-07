@@ -7,6 +7,7 @@ window.clickedCardId;
 function initBoard() {
   includeHTML();
   loadTasks();
+  init();
 }
 
 function allowDrop(event) {

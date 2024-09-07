@@ -15,6 +15,7 @@ function onload() {
   includeHTML();
   dropDown();
   taskSelected();
+  init();
 }
 
 function postInfos() {
