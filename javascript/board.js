@@ -124,6 +124,9 @@ function renderHelper(section) {
     let category = getCategory(allTasks[i].category);
     let prio = getPrio(i, allTasks);
     let checked = subtaskChecked(i, allTasks[i]);
+    let count = getCheckedSubtasks(allTasks[i])
+    let subtaskslength = Object.values(allTasks[i].subtask)
+
     document.getElementById(section).innerHTML += renderToDos(allTasks, i, category, prio, checked);
     let inits = getInitails(i, allTasks);
     for (let j = 0; j < inits.length; j++) {
@@ -131,7 +134,14 @@ function renderHelper(section) {
       let colors = getColors(i, allTasks);
       contact.innerHTML += renderContactsImages(inits[j], colors, j);
     }
+    renderProgressBar(count, subtaskslength.length, allTasks[i].id)
   }
+}
+
+function renderProgressBar(count, length, id) {
+  let progressBar = document.getElementById(`filler-${id}`);
+  let result = (count / length) * 100
+  progressBar.style.width = `${result}%`;
 }
 
 function getPrio(i, allTasks) {
@@ -319,7 +329,7 @@ function getAssignedTo(card, iframeDocument) {
 function subtasksHTML(i, task, tasklength, checked, card) {
   return `<div class="subtasks-checkboxes" id="board-card-${card.id}-${i}">
                 <div class="checkbox-wrapper-19" >
-                    <input type="checkbox" id="cbtest-19-${i}" onclick="parent.subtaskProcesBar(${i}, ${tasklength}); boardCardSubtaskChecked(${i})" ${checked}/>
+                    <input type="checkbox" id="cbtest-19-${i}" onclick="parent.subtaskProcesBar('${card.id}', ${i}, ${tasklength}); boardCardSubtaskChecked(${i})" ${checked}/>
                     <label for="cbtest-19-${i}" class="check-box">
                 </div>
                 <p>${task[i]}</p>
@@ -355,19 +365,42 @@ function openCard(id) {
     renderTaskCardInfos(id);
   };
 }
-let subTaskCount= 0;
-function subtaskProcesBar(id, tasklength) {
-  
+
+function subtaskProcesBar(cardId, id, tasklength) {
   let iframe = document.getElementById("card-infos");
   let iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
   let checkbox = iframeDocument.getElementById(`cbtest-19-${id}`);
+ 
+  let task = getCardById(cardId)
 
+  let subTaskCount = getCheckedSubtasks(task)
   if (checkbox.checked) {
     subTaskCount++;
   } else {
     subTaskCount--;
   }
   setSubTaskProces(subTaskCount, tasklength);
+}
+
+function getCheckedSubtasks(task) {
+  let count = 0; 
+  let checked = Object.values(task.subtask)
+  for (let z = 0; z < checked.length; z++) {
+    if (checked[z] == "done") {
+      count++
+    }
+  }
+  return count
+}
+
+function getCardById(crypticId) {
+  let newtask = {}
+  tasks.forEach(task => {
+    if(task.id == crypticId) {
+      newtask = task
+    }
+  })
+  return newtask;
 }
 
 function setSubTaskProces(count, tasklength) {

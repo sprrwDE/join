@@ -7,7 +7,7 @@ function contactTemplateInitial(initial, index) {
         <div class="seperator-list"></div>
         <div class="list-content-wrapper" id="list-content-inner-${index}">
         </div>
-    `;aa
+    `;
 }
 
 function getContactsTemplate(name, email, phone, contactId, first, last, color, indexCard) {
@@ -42,7 +42,7 @@ function detailTemplate(name, email, phone, id, first, last, color) {
                 <div class="name-wrapper">
                     <h4>${name}</h4>
                     <div class="edit-button-desk-wrapper">
-                        <div class="edit-row-desk" onclick="openEditContactDialog('${id}')">
+                        <div class="edit-row-desk" onclick="openEditContactDialog('${id}', '${name}', '${email}',)">
                             <img src="../assets/img/edit-small.svg">
                             <p>Edit</p>
                         </div>
@@ -107,7 +107,7 @@ function addDialogTemplate() {
     </div>`;
 }
 
-function showEditOverlay() {
+function showEditOverlay(name, email) {
     return `
     <div class="contact-card add">
     <div class="exit-wrapper">
@@ -139,10 +139,10 @@ function showEditOverlay() {
         </div>
         <div class="btn-wrapper">
             <button class="btn cancel" onclick="closeEditContactDialog()">
-                Cancel
+                Cancel‚
                 <img src="../assets/img/contact-card/exit.svg">
             </button>
-            <button class='btn create' onclick="updateContact()">
+            <button class='btn create' onclick="updateContact(), updateAccount()">
                 Save changes
                 <img src="../assets/img/contact-card/check.svg">
             </button>
