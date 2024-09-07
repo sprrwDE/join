@@ -31,7 +31,7 @@ function loadAccounts() {
   fetch(BASE_URL)
     .then((response) => response.json())
     .then((result) => {
-      const accounts = Object.entries(result);
+      const accounts = Object.values(result);
       checkUserData(accounts);})
     .catch((error) => console.log('Fehler beim Abrufen der Daten:', error));
     
@@ -125,15 +125,16 @@ function addNewUser(event) {
   let newPassword = document.getElementById('new-password').value;
   let checkNewPassword = document.getElementById('check-new-password').value;  
   comparePasswords(newName, newEmail, newPassword, checkNewPassword);
-  getInputValues( newName, newEmail);
+  getInputValues( newName, newEmail,newPassword);
 }
 /*übergibt daten für an contacts */
-function getInputValues(contactName, contactEmail) {
+function getInputValues(contactName, contactEmail, newPassword) {
   inputData = {
       nameIn: contactName,
       emailIn: contactEmail,
       phoneIn: '',
       isUser: true,
+      password: newPassword,
       color: getRandomColor()
   };
   pushData(inputData);

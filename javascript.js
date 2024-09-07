@@ -29,7 +29,10 @@ function noMemberLink() {
 }
 
 function changeNavbarColor(){
+  if (icon) {
     document.getElementById(`${icon}`).classList.add('background-color');
+  }
+    
 }
 
 function renderPopUp() {
@@ -81,3 +84,15 @@ function sendTolegalNoticeFromNavbar() {
     window.location.href = "/documents/legal.html"
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
