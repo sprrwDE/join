@@ -71,6 +71,9 @@ async function initialize() {
         // Leere die Kontaktliste und rendere neu
         listContentRef.innerHTML = '';
         renderContactGroups();
+        if (currentId) {
+            selectElement(currentId);
+        }
     }
 }
 
@@ -227,24 +230,24 @@ function openDetailDialog(name, email, phone, id, first, last, color, indexCard)
 }
 
 function selectElement(contactId) {
-    // Finde das ausgewählte Element anhand der ID des Kontakts
+    // Finde das Element mit der gegebenen ID
     const selectedElement = document.getElementById(`contact-card-${contactId}`);
-    
-    // Falls das Element nicht gefunden wird, beende die Funktion (sicherstellen, dass das Element existiert)
+
+    // Sicherstellen, dass das Element existiert
     if (!selectedElement) {
         console.error(`Element mit ID contact-card-${contactId} konnte nicht gefunden werden.`);
         return;
     }
 
     // Entferne die 'selected'-Klasse vom vorherigen Element, falls vorhanden
-    if (currentSelectedElement) {
+    if (currentSelectedElement && currentSelectedElement !== selectedElement) {
         currentSelectedElement.classList.remove('selected');
     }
 
-    // Füge die 'selected'-Klasse zum neuen ausgewählten Element hinzu
+    // Füge die 'selected'-Klasse zum aktuellen Element hinzu
     selectedElement.classList.add('selected');
 
-    // Aktualisiere das aktuell ausgewählte Element
+    // Setze das aktuell ausgewählte Element
     currentSelectedElement = selectedElement;
 }
 
@@ -394,21 +397,24 @@ async function updateContact() {
 
     if (!updatedData) return;
 
-    // Versuche, das Update zu senden
+    // Versuche das Update zu senden
     const success = await sendUpdateRequest(currentId, updatedData);
 
     if (success) {
         // Aktualisiere die lokale Datenbank
         updateLocalDatabase(currentId, updatedData);
 
-        // Aktualisiere die Detailansicht (mobiler und Desktop-Modus)
-        updateDetailView(updatedData);
-
         // Schließe den Bearbeitungsdialog
         closeEditContactDialog();
 
         // Aktualisiere die Kontaktliste
         initialize();
+
+        // Selektiere den gerade bearbeiteten Kontakt in der Liste erneut
+        selectElement(currentId);
+
+        // Aktualisiere die Detailansicht
+        updateDetailView(updatedData);
     } else {
         alert("Fehler beim Aktualisieren des Kontakts.");
     }
