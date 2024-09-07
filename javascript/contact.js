@@ -49,6 +49,7 @@ async function getData(path) {
                 };
             });
             db.push(...contactsArray);
+            console.log(db)
         }
     } catch (error) {
         console.log('Fehler beim Abrufen der Daten:', error);
@@ -254,7 +255,6 @@ function getDetailTemplateMob(name, email, phone, id, first, last, color) {
     detailRef.innerHTML = detailTemplate(name, email, phone, id, first, last, color);
 }
 
-
 function closeDetailDialog() {
     showDetail.classList.add('d-none');
     detailRef.classList.add('d-none');
@@ -295,9 +295,9 @@ function closeEditContactDialog() {
 }
 
 
-function openEditContactDialog(id) {
+function openEditContactDialog(id, name, email) {
     editContactRef.classList.remove('d-none');
-    editContactRef.innerHTML = showEditOverlay();
+    editContactRef.innerHTML = showEditOverlay(name, email);
     currentId = id;
     const contact = db.find(contact => contact.id === currentId);
     const nameInput = document.getElementById('edit-name');
@@ -408,4 +408,61 @@ async function deleteContact(contactId) {
         console.log('Fehler beim Löschen des Kontakts', error);
     }
     document.getElementById('detail-desk').innerHTML = '';
+}
+
+/**
+ * Edit User
+ */
+
+let userDb;
+
+async function initializeUsers() {
+    try {
+        userDb = [];
+        await getUserData("accounts");
+    } catch (error) {
+        console.log('Fehler beim Abrufen der Daten:', error);
+    }
+} 
+
+async function getUserData(path) {
+    try {
+        let userResponse = await fetch(baseUrl + path + '.json');
+        let userData = await userResponse.json();
+
+        if (userData) {
+            let userArray = Object.entries(userData).map(([key, value]) => {
+                return {
+                    id: key,
+                    ...value
+                };
+            });
+            userDb.push(...userArray);
+            console.log(userDb)
+        }
+    } catch (error) {
+        console.log('Fehler beim Abrufen der Daten:', error);
+    }
+}
+
+async function updateAccount()  {
+    try {
+        const updatedData = getUpdatedContactData();
+        console.log(currentId);
+        let response = await fetch(`${baseUrl}accounts/${currentId}.json`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedData) // Ensure you're passing updatedData correctly
+        });
+
+        if (!response.ok) {
+            throw new Error('Fehler beim Bearbeiten des Accounts');
+        }
+        return true;
+    } catch (error) {
+        console.log('Fehler beim Bearbeiten des Kontakts', error);
+        return false;
+    }
 }
