@@ -46,14 +46,19 @@
   align-items: flex-start;
   position: absolute;
   bottom: 80px;
-  left: 64px;
+  left: 0px;
   gap: 16px;
 }
 
 .sidebar-link-container a{
   text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #878d97;
   transition: transform 0.1s;
+  width: 232px;
+  height: 76px;
 }
 
 .join-logo-sidebar {
