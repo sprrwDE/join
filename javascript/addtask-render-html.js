@@ -24,7 +24,7 @@ function renderContactsImages(inits, i) {
 
 function renderAddToSubtaskList(id, input) {
   return `<div class="task" id="id-${id}">
-                            <li id="subtask${id}">${input.value}</li>
+                            <li id="subtask${id}">${input}</li>
                             <div class="edit-delete"  id="edit-delete${id}">
                                 <img src="../assets/img/edit.svg" alt="" onclick="editSubtask(${id})">
                                 <img src="../assets/img/Vector 3.svg" alt="">

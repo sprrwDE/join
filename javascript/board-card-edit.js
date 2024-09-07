@@ -328,7 +328,7 @@ let tasks = {
     if (input.value == "") {
       subtaskIsEmpty();
     } else {
-      subtaskcontainer.innerHTML += renderAddToSubtaskList(id, input);
+      subtaskcontainer.innerHTML += renderAddToSubtaskList(id, input.value);
       input.value = "";
     }
   }

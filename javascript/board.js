@@ -294,8 +294,30 @@ function renderTaskCardInfos(idnumber) {
 }
 
 function renderEditCardInfos(iframeDocument, card) {
+  let iframe = document.getElementById('edit-card');
+  let subtaskcontainer = iframeDocument.getElementById("subtasklist");
   iframeDocument.getElementById("input-title").value = card.title;
   iframeDocument.getElementById("text-area").value = card.description;
+  iframeDocument.getElementById("input-date").value = card.date;
+  iframe.contentWindow.selectedPrio(card.prio);
+  for (let i = 0; i < Object.values(card.subtask).length; i++) {
+    let keys = Object.keys(card.subtask)
+    subtaskcontainer.innerHTML += iframe.contentWindow.renderAddToSubtaskList(id, keys[i]);
+  }
+  
+}
+
+let id = 0;
+function setSubtasks() {
+  let input = document.getElementById("input-subtask");
+  let subtaskcontainer = document.getElementById("subtasklist");
+  id++;
+  if (input.value == "") {
+    subtaskIsEmpty();
+  } else {
+    subtaskcontainer.innerHTML += renderAddToSubtaskList(id, input.value);
+    input.value = "";
+  }
 }
 
 function getAllSubtasks(card, iframeDocument) {
