@@ -23,18 +23,11 @@ let organizedContacts = {};
  * Fetches Firebase RealtimeDB
  */
 function closeEditContactDialog() {
-    // Verberge den Edit-Dialog
     editContactRef.classList.add('d-none');
-
-    // Zeige die Kontaktliste wieder an
     contactListRef.classList.remove('d-none');
-
-    // Wenn wir im mobilen Modus sind, blende die Listeninhalte wieder ein
     if (window.innerWidth <= 1024) {
         listContentRef.classList.remove('d-none');
     }
-
-    // Rücksetzen der Formularfelder im Edit-Dialog (optional)
     const nameInput = document.getElementById('edit-name');
     const emailInput = document.getElementById('edit-email');
     const phoneInput = document.getElementById('edit-phone');
@@ -42,7 +35,6 @@ function closeEditContactDialog() {
     if (emailInput) emailInput.value = '';
     if (phoneInput) phoneInput.value = '';
 }
-
 
 async function getData(path) {
     try {
@@ -52,7 +44,7 @@ async function getData(path) {
         if (data) {
             let contactsArray = Object.entries(data).map(([key, value]) => {
                 return {
-                    id: key,  // Hier wird die Firebase ID dem Kontakt zugewiesen
+                    id: key,  
                     ...value
                 };
             });
@@ -75,7 +67,6 @@ async function initialize() {
         }
     }
 }
-
 
 /**
  * Renders Contact List into DOM
@@ -245,23 +236,19 @@ function openDetailReferenceMob(name, email, phone, id, first, last, color) {
     currentId = id; 
     showDetail.classList.remove('d-none');
     detailRef.classList.remove('d-none');
-    editButtonRef.classList.remove('d-none');
     contactListRef.classList.add('d-none');
+    editButtonRef.classList.remove('d-none');
     editBoxRef.classList.add('d-none');
     addButtonRef.classList.add('d-none');
     getDetailTemplateMob(name, email, phone, id, first, last, color);
     selectElement(id);
 }
 
-
-
 function openDetailReferenceDesk(name, email, phone, id, first, last, color) {
     currentId = id;
     document.getElementById('detail-desk').innerHTML = detailTemplate(name, email, phone, id, first, last, color);
     selectElement(id);
 }
-
-
 
 function getDetailTemplateMob(name, email, phone, id, first, last, color) {
     detailRef.innerHTML = detailTemplate(name, email, phone, id, first, last, color);
@@ -316,13 +303,11 @@ function openEditContactDialog(id) {
     const nameInput = document.getElementById('edit-name');
     const emailInput = document.getElementById('edit-email');
     const phoneInput = document.getElementById('edit-phone');
-
     if (contact && nameInput && emailInput && phoneInput) {
         nameInput.value = contact.nameIn;
         emailInput.value = contact.emailIn;
         phoneInput.value = contact.phoneIn;
     }
-
     if (window.innerWidth <= 1024) {
         listContentRef.classList.add('d-none');
     }
@@ -333,12 +318,10 @@ function getUpdatedContactData() {
     const emailIn = document.getElementById('edit-email').value.trim();
     const phoneIn = document.getElementById('edit-phone').value.trim();
     const color = getRandomColor();
-
     if (!nameIn || !emailIn || !phoneIn) {
         alert('Bitte füllen Sie alle Felder aus.');
         return null;
     }
-
     return { nameIn, emailIn, phoneIn, color };
 }
 
@@ -383,9 +366,6 @@ async function updateContact() {
     }
 }
 
-
-
-
 function updateDetailView(updatedData) {
     const initials = getInitials(updatedData.nameIn);
     if (!showDetail.classList.contains('d-none')) {
@@ -414,7 +394,6 @@ function updateDetailView(updatedData) {
 /**
  * Delete
  */
-
 async function deleteContact(contactId) {
     try {
         let response = await fetch(baseUrl + `contacts/${contactId}.json`, {
