@@ -8,6 +8,7 @@ function initBoard() {
   includeHTML();
   loadTasks();
   init();
+  
 }
 
 function allowDrop(event) {
@@ -294,17 +295,17 @@ function renderTaskCardInfos(idnumber) {
 }
 
 function renderEditCardInfos(iframeDocument, card) {
-  let iframe = document.getElementById('edit-card');
+  let iframe = document.getElementById("edit-card");
   let subtaskcontainer = iframeDocument.getElementById("subtasklist");
   iframeDocument.getElementById("input-title").value = card.title;
   iframeDocument.getElementById("text-area").value = card.description;
   iframeDocument.getElementById("input-date").value = card.date;
   iframe.contentWindow.selectedPrio(card.prio);
   for (let i = 0; i < Object.values(card.subtask).length; i++) {
-    let keys = Object.keys(card.subtask)
-    subtaskcontainer.innerHTML += iframe.contentWindow.renderAddToSubtaskList(id, keys[i]);
+    let keys = Object.keys(card.subtask);
+    subtaskcontainer.innerHTML += iframe.contentWindow.renderAddToSubtaskList(i, keys[i]);
   }
-  
+
 }
 
 let id = 0;
@@ -471,7 +472,7 @@ function fillProgressBar(count, length) {
   progressBar.style.width = `${result}%`;
 }
 
-function editTask(id) {
+function editTask() {
   let card = document.getElementById("card-infos");
   card.id = "edit-card";
   card.src = "./board-card-edit.html";
