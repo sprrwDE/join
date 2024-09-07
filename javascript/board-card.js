@@ -6,7 +6,6 @@ function initBoardCard() {}
 
 function boardCardSubtaskChecked(id) {
   let checkboxdiv = document.getElementById(`board-card-${clickedCardId}-${id}`);
-  console.log(checkboxdiv)
   let checkbox = checkboxdiv.querySelector(`#cbtest-19-${id}`);
 
   if (checkbox.checked) {
@@ -19,7 +18,6 @@ function boardCardSubtaskChecked(id) {
         Object.keys(task.subtask).forEach((key, index) => {
           task.subtask[key] = status[index];
         });
-        console.log(task.subtask);
         updateServer(task.subtask);
         window.parent.tasks = tasks;
       }
@@ -34,7 +32,6 @@ function boardCardSubtaskChecked(id) {
         Object.keys(task.subtask).forEach((key, index) => {
           task.subtask[key] = status[index];
         });
-        console.log(task.subtask);
         updateServer(task.subtask);
         window.parent.tasks = tasks;
       }
