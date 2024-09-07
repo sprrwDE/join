@@ -8,7 +8,6 @@ function initBoard() {
   includeHTML();
   loadTasks();
   init();
-  
 }
 
 function allowDrop(event) {
@@ -301,11 +300,14 @@ function renderEditCardInfos(iframeDocument, card) {
   iframeDocument.getElementById("text-area").value = card.description;
   iframeDocument.getElementById("input-date").value = card.date;
   iframe.contentWindow.selectedPrio(card.prio);
+
+  let imgContainer = iframeDocument.getElementById("contacts-imges");
+  imgContainer.innerHTML += `<span class="d-none" id="deliver-names">${card.assignedto}</span>`;
+
   for (let i = 0; i < Object.values(card.subtask).length; i++) {
     let keys = Object.keys(card.subtask);
     subtaskcontainer.innerHTML += iframe.contentWindow.renderAddToSubtaskList(i, keys[i]);
   }
-
 }
 
 let id = 0;

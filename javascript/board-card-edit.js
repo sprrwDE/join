@@ -10,9 +10,6 @@ let tasks = {
   inits: "",
 };
 
-window.allContacts = [];
-
-
 function onload() {
   loadContacts();
   dropDown();
@@ -64,13 +61,25 @@ function renderContacts(contacts) {
     colors.push(contacts[letter].color);
   }
   for (i = 0; i < allcontacts.length; i++) {
+    
     allcontacts[i] ||= "Kontakt nicht gefunden";
-    allContacts.push(allcontacts[i]);
     let [firstinits, secondinits] = getContactInitials(allcontacts[i]);
     tasks.inits += firstinits + secondinits + ",";
     contactcontainer.innerHTML += renderAssignedTo(allcontacts, i, firstinits, secondinits, colors);
     contactsImages(i);
+    test(allcontacts[i], i);
   }
+}
+
+function test(contact, i) {
+  let asd = document.getElementById("deliver-names");
+  let xxx = asd.innerHTML.split(",");
+
+  xxx.forEach((element) => {
+    if (element == contact) {
+      assignedToChecked(i)
+    }
+  });
 }
 
 function contactsImages(i) {
@@ -373,7 +382,7 @@ function requiredFieldsCheck() {
     date.style.border = "1px solid rgb(255, 129, 144)";
     document.getElementById("date-required").classList.remove("d-none");
   }
-  if (!tasks.date || !tasks.title || !tasks.category) {
+  if (!tasks.date || !tasks.title) {
     return false;
   } else {
     return true;
@@ -385,6 +394,7 @@ function getAllInfos() {
   getDescription();
   getSubtasks();
   getDate();
+  console.log(tasks)
   if (requiredFieldsCheck() == true) {
     // postInfos();
     setTimeout(() => {
