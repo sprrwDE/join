@@ -139,12 +139,12 @@ function comparePasswords(newName, newEmail, newPassword, checkNewPassword){
 
 function sendToPrivacyPolicy(){
   let noMember = true;
-  window.location.href = `/documents/Privacy.html?userId=${noMember}`;
+  window.open(`/documents/Privacy.html?userId=${noMember}`, '_blank');
 }
 
 function sendTolegalNotice(){
   let noMember = true;
-  window.location.href = `/documents/legal.html?userId=${noMember}`;
+  window.open(`/documents/legal.html?userId=${noMember}`, '_blank');
 }
 
 function postNewAccount(newName, newEmail, newPassword) {

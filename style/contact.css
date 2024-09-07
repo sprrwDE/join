@@ -169,8 +169,7 @@
 }
 
 .contact-info-wrapper {
-    display: flex;
-    flex-direction: column;
+    display: none;
 }
 
 .avatar-wrapper {
@@ -587,6 +586,11 @@ input::placeholder {
         display: flex;
         flex-direction: column;
         padding-left: 40px;
+    }
+
+    .contact-info-wrapper {
+        display: flex;
+        flex-direction: column;
     }
 
     .edit-button-desk-wrapper {
