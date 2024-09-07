@@ -1,5 +1,5 @@
 let BASE_URL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/accounts.json" 
-
+let contacsFatch = 'https://join-318-default-rtdb.europe-west1.firebasedatabase.app/';
 
 
 
@@ -31,7 +31,7 @@ function loadAccounts() {
   fetch(BASE_URL)
     .then((response) => response.json())
     .then((result) => {
-      const accounts = Object.values(result);
+      const accounts = Object.entries(result);
       checkUserData(accounts);})
     .catch((error) => console.log('Fehler beim Abrufen der Daten:', error));
     
@@ -40,6 +40,7 @@ function loadAccounts() {
 function checkUserData(accounts){
   let userEmail = document.getElementById('user-email').value;
   let userPassword = document.getElementById('user-password').value;
+
   let user = accounts.find(a => a.email == userEmail && a.password == userPassword);
   if(user){
     let currentAccountName = user.name;
@@ -124,8 +125,47 @@ function addNewUser(event) {
   let newPassword = document.getElementById('new-password').value;
   let checkNewPassword = document.getElementById('check-new-password').value;  
   comparePasswords(newName, newEmail, newPassword, checkNewPassword);
+  getInputValues( newName, newEmail);
+}
+/*übergibt daten für an contacts */
+function getInputValues(contactName, contactEmail) {
+  inputData = {
+      nameIn: contactName,
+      emailIn: contactEmail,
+      phoneIn: '',
+      isUser: true,
+      color: getRandomColor()
+  };
+  pushData(inputData);
 }
 
+async function pushData(inputData) {
+  try {
+      let response = await fetch(contacsFatch + 'contacts.json', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(inputData)
+      });
+
+      if (!response.ok) {
+          throw new Error('Fehler beim Pushen der Daten');
+      }
+
+      closeAddContactDialog();
+      initialize();
+  } catch (error) {
+      console.log('Fehler beim Pushen der Daten', error);
+  }
+}
+
+function getRandomColor() {
+  let randomNumber = Math.floor(Math.random() * 16777215);
+  let randomColor = "#" + randomNumber.toString(16).padStart(6, "0");
+  return randomColor;
+}
+// übergabe fertig
 function comparePasswords(newName, newEmail, newPassword, checkNewPassword){
   if (newPassword == checkNewPassword) {
     postNewAccount(newName, newEmail, newPassword);
