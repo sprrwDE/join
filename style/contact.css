@@ -129,9 +129,9 @@
 }
 
 .list-card.selected:hover {
-    background: none; 
-    border-radius: 16px; 
-    color: white; 
+    background: none;
+    border-radius: 16px;
+    color: white;
 }
 
 .contact-mobile-header {
@@ -169,7 +169,8 @@
 }
 
 .contact-info-wrapper {
-    display: none;
+    display: flex;
+    flex-direction: column;
 }
 
 .avatar-wrapper {
@@ -511,7 +512,7 @@ input::placeholder {
         width: 100%;
         height: 100%;
         overflow-y: scroll;
-        scrollbar-color: grey ;
+        scrollbar-color: grey;
         scrollbar-width: thin;
 
     }
@@ -588,11 +589,6 @@ input::placeholder {
         padding-left: 40px;
     }
 
-    .contact-info-wrapper {
-        display: flex;
-        flex-direction: column;
-    }
-
     .edit-button-desk-wrapper {
         margin-top: 8px;
         display: flex;
@@ -609,7 +605,7 @@ input::placeholder {
     .selected {
         background-color: #2A3647 !important;
         color: white;
-        border-radius: 16px;    
+        border-radius: 16px;
     }
 
     .contact-desk-header {
@@ -628,5 +624,13 @@ input::placeholder {
 
     .contact-mobile-header {
         display: none !important;
+    }
+
+    .contact-mobile-header {
+        display: none
+    }
+
+    .exit-detail {
+        display: none;
     }
 }
