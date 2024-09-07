@@ -11,7 +11,6 @@ function contactTemplateInitial(initial, index) {
 }
 
 function getContactsTemplate(name, email, phone, contactId, first, last, color, indexCard) {
-    console.log(contactId); // Debugging, um sicherzustellen, dass die ID korrekt ist
     return `
         <div class="list-card" id="contact-card-${contactId}" onclick="openDetailDialog('${name}', '${email}', '${phone}', '${contactId}', '${first}', '${last}', '${color}', '${indexCard}')">
             <div class="card-image list-image" style="background-color: ${color}">

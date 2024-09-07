@@ -65,10 +65,9 @@ async function getData(path) {
 
 async function initialize() {
     try {
-        db = [];  // Setze die lokale Datenbank zurück
-        await getData("contacts");  // Hole neue Daten aus Firebase
+        db = [];  
+        await getData("contacts");  
     } finally {
-        // Leere die Kontaktliste und rendere neu
         listContentRef.innerHTML = '';
         renderContactGroups();
         if (currentId) {
@@ -139,7 +138,7 @@ function renderContactsForInitial(containerRef, contacts, globalIndex) {
         let currentEmail = contact.emailIn;
         let currentPhone = contact.phoneIn;
         let initials = contact.initials;
-        let contactId = contact.id; // Hier wird die ID des Kontakts festgelegt
+        let contactId = contact.id; 
         let color = contact.color;
         let indexCard = globalIndex + i;
 
@@ -230,29 +229,20 @@ function openDetailDialog(name, email, phone, id, first, last, color, indexCard)
 }
 
 function selectElement(contactId) {
-    // Finde das Element mit der gegebenen ID
     const selectedElement = document.getElementById(`contact-card-${contactId}`);
-
-    // Sicherstellen, dass das Element existiert
     if (!selectedElement) {
         console.error(`Element mit ID contact-card-${contactId} konnte nicht gefunden werden.`);
         return;
     }
-
-    // Entferne die 'selected'-Klasse vom vorherigen Element, falls vorhanden
     if (currentSelectedElement && currentSelectedElement !== selectedElement) {
         currentSelectedElement.classList.remove('selected');
     }
-
-    // Füge die 'selected'-Klasse zum aktuellen Element hinzu
     selectedElement.classList.add('selected');
-
-    // Setze das aktuell ausgewählte Element
     currentSelectedElement = selectedElement;
 }
 
 function openDetailReferenceMob(name, email, phone, id, first, last, color) {
-    currentId = id;  // Setze die aktuelle ID
+    currentId = id; 
     showDetail.classList.remove('d-none');
     detailRef.classList.remove('d-none');
     editButtonRef.classList.remove('d-none');
@@ -260,21 +250,14 @@ function openDetailReferenceMob(name, email, phone, id, first, last, color) {
     editBoxRef.classList.add('d-none');
     addButtonRef.classList.add('d-none');
     getDetailTemplateMob(name, email, phone, id, first, last, color);
-
-    // Selektiere das entsprechende Element in der Liste
     selectElement(id);
 }
 
 
 
 function openDetailReferenceDesk(name, email, phone, id, first, last, color) {
-    // Setze die aktuelle ID des Kontakts
     currentId = id;
-
-    // Aktualisiere den Inhalt des Detailbereichs
     document.getElementById('detail-desk').innerHTML = detailTemplate(name, email, phone, id, first, last, color);
-
-    // Markiere das entsprechende Element in der Liste als ausgewählt
     selectElement(id);
 }
 
@@ -317,13 +300,8 @@ function hideEditBox() {
 }
 
 function closeEditContactDialog() {
-    // Verberge den Edit-Dialog
     editContactRef.classList.add('d-none');
-
-    // Zeige die Kontaktliste wieder an
     contactListRef.classList.remove('d-none');
-
-    // Wenn wir im mobilen Modus sind, blende die Listeninhalte aus
     if (window.innerWidth <= 1024) {
         listContentRef.classList.remove('d-none');
     }
@@ -373,11 +351,9 @@ async function sendUpdateRequest(contactId, updatedData) {
             },
             body: JSON.stringify(updatedData)
         });
-
         if (!response.ok) {
             throw new Error('Fehler beim Bearbeiten des Kontakts');
         }
-
         return true;
     } catch (error) {
         console.log('Fehler beim Bearbeiten des Kontakts', error);
@@ -394,26 +370,13 @@ function updateLocalDatabase(contactId, updatedData) {
 
 async function updateContact() {
     const updatedData = getUpdatedContactData();
-
     if (!updatedData) return;
-
-    // Versuche das Update zu senden
     const success = await sendUpdateRequest(currentId, updatedData);
-
     if (success) {
-        // Aktualisiere die lokale Datenbank
         updateLocalDatabase(currentId, updatedData);
-
-        // Schließe den Bearbeitungsdialog
         closeEditContactDialog();
-
-        // Aktualisiere die Kontaktliste
         initialize();
-
-        // Selektiere den gerade bearbeiteten Kontakt in der Liste erneut
         selectElement(currentId);
-
-        // Aktualisiere die Detailansicht
         updateDetailView(updatedData);
     } else {
         alert("Fehler beim Aktualisieren des Kontakts.");
@@ -425,28 +388,25 @@ async function updateContact() {
 
 function updateDetailView(updatedData) {
     const initials = getInitials(updatedData.nameIn);
-
-    // Aktualisiere die mobile Detailansicht, falls sie sichtbar ist
     if (!showDetail.classList.contains('d-none')) {
         getDetailTemplateMob(
             updatedData.nameIn,
             updatedData.emailIn,
             updatedData.phoneIn,
-            currentId,  // Verwende die aktualisierte ID
-            initials[0],     // Initial des Vornamens
-            initials[1],     // Initial des Nachnamens
+            currentId,  
+            initials[0],
+            initials[1],
             updatedData.color
         );
     }
 
-    // Aktualisiere die Desktop-Detailansicht
     openDetailReferenceDesk(
         updatedData.nameIn,
         updatedData.emailIn,
         updatedData.phoneIn,
-        currentId,  // Verwende die aktualisierte ID
-        initials[0],     // Initial des Vornamens
-        initials[1],     // Initial des Nachnamens
+        currentId,  
+        initials[0],   
+        initials[1], 
         updatedData.color
     );
 }
@@ -460,7 +420,6 @@ async function deleteContact(contactId) {
         let response = await fetch(baseUrl + `contacts/${contactId}.json`, {
             method: 'DELETE'
         });
-
         if (!response.ok) {
             throw new Error('Fehler beim Löschen des Kontakts');
         }
