@@ -5,6 +5,7 @@ let BASE_URL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/
 function initBoardCard() {}
 
 function boardCardSubtaskChecked(id) {
+  parent.fillProgressBar()
   let checkboxdiv = document.getElementById(`board-card-${clickedCardId}-${id}`);
   let checkbox = checkboxdiv.querySelector(`#cbtest-19-${id}`);
 
@@ -46,3 +47,4 @@ function updateServer(task) {
     body: JSON.stringify(task),
   });
 }
+

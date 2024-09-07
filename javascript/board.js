@@ -82,8 +82,8 @@ function checkTask(keys, values) {
       tasks.push(values[i]);
       tasks[i].id = `${keys[i]}`;
     }
-    renderTask();
   }
+  renderTask();
 }
 
 function renderToObject(subtask) {
@@ -120,12 +120,10 @@ function renderTask() {
 
 function renderHelper(section) {
   let allTasks = tasks.filter((t) => t["status"] == section);
-
   for (let i = 0; i < allTasks.length; i++) {
     let category = getCategory(allTasks[i].category);
     let prio = getPrio(i, allTasks);
-
-    let checked = subtaskChecked(i);
+    let checked = subtaskChecked(i, allTasks[i]);
     document.getElementById(section).innerHTML += renderToDos(allTasks, i, category, prio, checked);
     let inits = getInitails(i, allTasks);
     for (let j = 0; j < inits.length; j++) {
@@ -178,14 +176,12 @@ function getInitails(i, allTasks) {
   return inits;
 }
 
-function subtaskChecked(i) {
-  let checked = 0;
-  let task = Object.values(tasks[i].subtask);
-  for (let j = 0; j < task.length; j++) {
-    if (task[i] == "inwork") {
+function subtaskChecked(i, alltask) {
+ let checked = 0
+  let subtasks= Object.values(alltask.subtask)
+  for (let j = 0; j < subtasks.length; j++) {
+    if (subtasks[j] == "done") {
       checked++;
-    } else if (task[i] == "done") {
-      checked--;
     }
   }
   return checked;
@@ -206,9 +202,9 @@ function renderToDos(task, i, categoryColor, prio, checked) {
 
                     <div class="progress-bar-section">
                         <div class="progress-bar">
-                            <div class="progress-bar-filler"></div>
+                            <div class="progress-bar-filler" id="filler-${task[i].id}"></div>
                         </div>
-                        <p id="subtasks">${checked}/${Object.keys(tasks[0].subtask).length} Subtasks</p>
+                        <p id="subtasks">${checked}/${Object.keys(task[i].subtask).length} Subtasks</p>
                     </div>
 
                     <div class="contacts-section">
@@ -265,7 +261,6 @@ function renderInfoCardHelper(sections, card, iframeDocument) {
 function renderTaskCardInfos(idnumber) {
   let iframe = document.getElementById("card-infos");
   let iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
-
   tasks.filter((card) => {
     if (card.id == idnumber) {
       renderInfoCardHelper("title", card, iframeDocument);
@@ -285,7 +280,6 @@ function getAllSubtasks(card, iframeDocument) {
   if (!task[0] == "") {
     for (let i = 0; i < task.length; i++) {
       let checked = ifChecked(card, i);
-
       sectionsElement.innerHTML += subtasksHTML(i, task, task.length, checked, card);
     }
   }
@@ -361,9 +355,9 @@ function openCard(id) {
     renderTaskCardInfos(id);
   };
 }
-
-let subTaskCount = 0;
+let subTaskCount= 0;
 function subtaskProcesBar(id, tasklength) {
+  
   let iframe = document.getElementById("card-infos");
   let iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
   let checkbox = iframeDocument.getElementById(`cbtest-19-${id}`);
@@ -381,4 +375,11 @@ function setSubTaskProces(count, tasklength) {
   let subtask = taskCard.querySelector("#subtasks");
 
   subtask.innerHTML = `${count}/${tasklength} Subtasks`;
+  fillProgressBar(count, tasklength);
+}
+
+function fillProgressBar(count, length) {
+  let progressBar = document.getElementById(`filler-${clickedCardId}`);
+  let result = (count / length) * 100
+  progressBar.style.width = `${result}%`;
 }

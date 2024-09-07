@@ -216,7 +216,7 @@ h3 {
 
 .progress-bar-filler {
   background-color: rgb(69, 137, 255);
-  width: 64px;
+  width: 0px;
   height: 8px;
   border-radius: 16px;
 }
