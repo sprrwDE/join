@@ -626,26 +626,3 @@ input::placeholder {
         display: none !important;
     }
 }
-
-/* CSS für das Hereinfliegen des Overlays von rechts */
-.overlay-slide-in {
-    position: fixed;
-    top: 0;
-    right: -100%; /* Startposition außerhalb des Bildschirms */
-    width: 100%;
-    height: 100%;
-    transition: transform 0.5s ease;
-  }
-  
-  .overlay-visible {
-    transform: translateX(-100%); /* Bringt das Overlay vollständig ins Bild */
-  }
-  
-  .overlay-hidden {
-    transform: translateX(0); /* Overlay wird wieder versteckt */
-  }
-  
-  /* Du kannst auch ein bisschen Schatten hinzufügen, um den Effekt zu verstärken */
-  .overlay {
-    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.2);
-  }

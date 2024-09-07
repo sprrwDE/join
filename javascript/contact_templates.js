@@ -7,65 +7,58 @@ function contactTemplateInitial(initial, index) {
         <div class="seperator-list"></div>
         <div class="list-content-wrapper" id="list-content-inner-${index}">
         </div>
-    `;
+    `;aa
 }
 
-function getContactsTemplate(name, email, phone, currentId, first, last, color, indexCard) {
+function getContactsTemplate(name, email, phone, contactId, first, last, color, indexCard) {
+    console.log(contactId); // Debugging, um sicherzustellen, dass die ID korrekt ist
     return `
-        <div class="list-card" id="contact-card-${indexCard}" onclick="openDetailDialog('${name}', '${email}', '${phone}', '${currentId}', '${first}', '${last}', '${color}', '${indexCard}')">
-        <div class="card-image list-image" style="background-color: ${color}">
-            <h4>${first}${last}</h4>
-        </div>
-        <div>
-            <h4 class="list-name">${name}</h4>
-            <a href="mailto:${email}" class="list-email">${email}</a>
-        </div>
+        <div class="list-card" id="contact-card-${contactId}" onclick="openDetailDialog('${name}', '${email}', '${phone}', '${contactId}', '${first}', '${last}', '${color}', '${indexCard}')">
+            <div class="card-image list-image" style="background-color: ${color}">
+                <h4>${first}${last}</h4>
+            </div>
+            <div>
+                <h4 class="list-name">${name}</h4>
+                <a href="mailto:${email}" class="list-email">${email}</a>
+            </div>
         </div>
     `;
 }
 
 function detailTemplate(name, email, phone, id, first, last, color) {
     return `
-            <div class="contact-mobile-header">
-                <h2>Contacts</h2>
-                <div class="seperator-card-mobile"></div>
-                <h3>Better with a team!</h3>
-            </div>
-    <div class="exit-detail" id="exit-detail" onclick="closeDetailDialog()">
-        <img src="../assets/img/exit-detail.svg">
-    </div>            
-
-    <div class="contact-info-wrapper">
-        <div class="avatar-wrapper">
-            <div class="card-image" style="background-color: ${color}">
-                <h4>${first}${last}</h4> 
-            </div>
-            <div class="name-wrapper">
-            <h4>${name}</h4>
-            <div class="edit-button-desk-wrapper">
-            <div class="edit-row-desk" onclick="openEditContactDialog('${id}')">
-                    <img src="../assets/img/edit-small.svg">
-                    <p>Edit</p>
+        <div class="contact-info-wrapper">
+            <div class="avatar-wrapper">
+                <div class="card-image" style="background-color: ${color}">
+                    <h4>${first}${last}</h4>
                 </div>
-                <div class="edit-row-desk" onclick="deleteContact('${id}')">
-                    <img src="../assets/img/delete-small.svg">
-                    <p>Delete</p>
+                <div class="name-wrapper">
+                    <h4>${name}</h4>
+                    <div class="edit-button-desk-wrapper">
+                        <div class="edit-row-desk" onclick="openEditContactDialog('${id}')">
+                            <img src="../assets/img/edit-small.svg">
+                            <p>Edit</p>
+                        </div>
+                        <div class="edit-row-desk" onclick="deleteContact('${id}')">
+                            <img src="../assets/img/delete-small.svg">
+                            <p>Delete</p>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <div class="contact-content">
+                <h5>Contact information</h5>
+                <p><b>Email</b></p>
+                <a href="mailto:${email}">${email}</a>
+                <p><b>Phone</b></p>
+                <p>${phone}</p>
             </div>
-        </div>
-        <div class="contact-content">
-            <h5>Contact information</h5>
-            <p><b>Email</b></p>
-            <a href="mailto:${email}">${email}</a>
-            <p><b>Phone</b></p>
-            <p>${phone}</p>
-        </div>
-    </div>`;
+        </div>`;
 }
 
 function addDialogTemplate() {
-    return `<div class="contact-card add">
+    return `
+    <div class="contact-card add">
         <div class="exit-wrapper">
             <img class="exit" src="../assets/img/contact-card/close.svg" onclick="closeAddContactDialog()">
         </div>
@@ -108,7 +101,7 @@ function addDialogTemplate() {
 }
 
 function showEditOverlay() {
-    return`
+    return `
     <div class="contact-card add">
     <div class="exit-wrapper">
         <img class="exit" src="../assets/img/contact-card/close.svg" onclick="closeEditContactDialog()">
