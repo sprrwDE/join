@@ -15,6 +15,7 @@ function onload() {
   includeHTML();
   dropDown();
   taskSelected();
+  init();
 }
 
 function postInfos() {
@@ -66,7 +67,6 @@ function renderContacts(contacts) {
     allcontacts[i] ||= "Kontakt nicht gefunden";
     let [firstinits, secondinits] = getContactInitials(allcontacts[i]);
     tasks.inits += firstinits+secondinits+","
-    console.log(tasks.inits)
     contactcontainer.innerHTML += renderAssignedTo(allcontacts, i, firstinits, secondinits, colors);
     contactsImages(i);
   }
@@ -210,7 +210,6 @@ function assignedToChecked(id) {
   let contactid = document.getElementById(`id=${id}`);
   let contact = contactid.getElementsByTagName("p");
   toggleCheckbox(id);
-  console.log(id)
 
   if (checkbox.checked) {
     img.classList.remove("d-none");
@@ -341,7 +340,6 @@ function getTitle() {
   let required = document.getElementById("title-required");
 
   if (input.value == "") {
-    console.log(input.value);
     input.style.border = "1px solid rgb(248, 84, 103)";
     required.classList.remove("d-none");
   } else {

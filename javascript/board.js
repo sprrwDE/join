@@ -7,6 +7,7 @@ window.clickedCardId;
 function initBoard() {
   includeHTML();
   loadTasks();
+  init();
 }
 
 function allowDrop(event) {
@@ -123,7 +124,7 @@ function renderHelper(section) {
   for (let i = 0; i < allTasks.length; i++) {
     let category = getCategory(allTasks[i].category);
     let prio = getPrio(i, allTasks);
-    
+
     let checked = subtaskChecked(i);
     document.getElementById(section).innerHTML += renderToDos(allTasks, i, category, prio, checked);
     let inits = getInitails(i, allTasks);
@@ -181,10 +182,9 @@ function subtaskChecked(i) {
   let checked = 0;
   let task = Object.values(tasks[i].subtask);
   for (let j = 0; j < task.length; j++) {
-    console.log(tasks[i].subtask)
     if (task[i] == "inwork") {
       checked++;
-    } else if (task[i] == "done"){
+    } else if (task[i] == "done") {
       checked--;
     }
   }
@@ -208,9 +208,7 @@ function renderToDos(task, i, categoryColor, prio, checked) {
                         <div class="progress-bar">
                             <div class="progress-bar-filler"></div>
                         </div>
-                        <p id="subtasks">${checked}/${
-    Object.keys(tasks[0].subtask).length
-  } Subtasks</p>
+                        <p id="subtasks">${checked}/${Object.keys(tasks[0].subtask).length} Subtasks</p>
                     </div>
 
                     <div class="contacts-section">
@@ -293,13 +291,12 @@ function getAllSubtasks(card, iframeDocument) {
   }
 }
 
-function ifChecked(card,i) {
-  console.log(i)
-  let alltasks = Object.values(card.subtask)
-  if(alltasks[i] == "inwork") {
-    return ""
+function ifChecked(card, i) {
+  let alltasks = Object.values(card.subtask);
+  if (alltasks[i] == "inwork") {
+    return "";
   } else if (alltasks[i] == "done") {
-    return "checked"
+    return "checked";
   }
 }
 
@@ -321,11 +318,7 @@ function getAssignedTo(card, iframeDocument) {
 
   for (let i = 0; i < contacts.length; i++) {
     let cleanInits = inits[i].join().replace(",", "");
-    iframeDocument.getElementById("assigned-to").innerHTML += contactsHTML(
-      contacts[i],
-      cleanInits,
-      color[i]
-    );
+    iframeDocument.getElementById("assigned-to").innerHTML += contactsHTML(contacts[i], cleanInits, color[i]);
   }
 }
 
@@ -357,7 +350,7 @@ function setPrio(card, iframeDocument) {
 }
 
 function openCard(id) {
-  clickedCardId = id
+  clickedCardId = id;
   let body = document.getElementById("body");
   let background = document.getElementById("background-grey");
   background.classList.remove("d-none");
