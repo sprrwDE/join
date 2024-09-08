@@ -245,8 +245,8 @@ function renderSignUpHTML(){
     </div>
     </form>
     <div class="log-in-link-container">
-      <a href="./documents/Privacy.html">Privacy Policy</a>
-      <a href="./documents/legal.html">Legal notice</a>
+      <a id="privacy-link" onclick="sendToPrivacyPolicy()" href="#">Privacy Policy</a>
+      <a id="legal-link" onclick="sendTolegalNotice()" href="#">Legal notice</a>
     </div>
     <div id="successfully" class="d-none"></div>`;
 
