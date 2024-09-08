@@ -164,21 +164,7 @@ function renderTask() {
   renderHelper("done");
   emptySection();
 }
-/* 
-category : Pflicht
-date: Pflicht
-id: Pflicht
-title: Pflicht
-status: Pflicht
-inits: Pflicht
 
-assignedto: false
-color: false
-description: false
-prio: false
-subtask: false
-
-*/
 function renderHelper(section) {
   let allTasks = tasks.filter((t) => t["status"] == section);
   for (let i = 0; i < allTasks.length; i++) {
@@ -188,13 +174,11 @@ function renderHelper(section) {
     if (cleaned.description == false) {
       allTasks[i].description = "";
     }
-
     if (!cleaned.prio == false) {
       prio = getPrio(i, allTasks);
     } else {
       prio = "noprio.svg"
     }
-
     let checked = 0
     if (!cleaned.subtask == false) {
       checked = subtaskChecked(i, allTasks[i]);
@@ -203,11 +187,9 @@ function renderHelper(section) {
     } else {
       subtaskslength = []
     }
-
     if (cleaned.color == false) {
       allTasks[i].color = ""
     }
-
 
     document.getElementById(section).innerHTML += renderToDos(allTasks, subtaskslength.length, i, category, prio, checked);
     let inits = getInitails(i, allTasks);
@@ -221,7 +203,6 @@ function renderHelper(section) {
     } else {
       document.getElementById(`progress-bar-section${allTasks[i].id}`).classList.add("d-none")
     }
-    
   }
 }
 
