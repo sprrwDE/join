@@ -358,11 +358,11 @@ function emptySection() {
   }
 }
 
-function openAddTask() {
+function openAddTask(section) {
   let body = document.getElementById("body");
   let background = document.getElementById("background-grey");
   background.classList.remove("d-none");
-  body.innerHTML += `<iframe class="add-task-card" id="whole-addtask-card" src="./addtask-card.html"></iframe>`;
+  body.innerHTML += `<iframe class="add-task-card" name="${section}" id="whole-addtask-card" src="./addtask-card.html"></iframe>`;
 }
 
 function closeWindow(card) {

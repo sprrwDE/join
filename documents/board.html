@@ -23,7 +23,7 @@
         <div class="top-wrapper">
             <div class="top-section">
                 <h1 class="top-section-title">Board</h1>
-                <img src="../assets/img/plus add task mobile.svg" alt="" class="add-task-btn" onclick="openAddTask()">
+                <img src="../assets/img/plus add task mobile.svg" alt="" class="add-task-btn" onclick="openAddTask('todo')">
             </div>
             <div class="search-wrap">
                 <div class="search-section">
@@ -31,7 +31,7 @@
                     <img src="../assets/img/Vector 3.svg" alt="" class="seperator">
                     <button class="search-btn"><img src="../assets/img/search.svg" alt=""></button>
                 </div>
-                <button class="add-task" onclick="openAddTask()">Add task <img src="../assets/img/plus_white.svg" alt="" class="plus-img"></button>
+                <button class="add-task" onclick="openAddTask('todo')">Add task <img src="../assets/img/plus_white.svg" alt="" class="plus-img"></button>
             </div>
         </div>
         <div class="content-container">
@@ -39,7 +39,7 @@
                 ondragover="allowDrop(event); highlight('todo')">
                 <div class="section-title">
                     <h3>To do</h3>
-                    <img src="../assets/img/plus button mobile.svg" alt="" class="add-btn">
+                    <img src="../assets/img/plus button mobile.svg" alt="" class="add-btn" onclick="openAddTask('todo')">
                 </div>
 
                 <div class="to-do-empty d-none" id="todo-empty">
@@ -51,7 +51,7 @@
                 ondragleave="removeHighlight('inprogress')" ondragover="allowDrop(event); highlight('inprogress')">
                 <div class="section-title">
                     <h3>In progress</h3>
-                    <img src="../assets/img/plus button mobile.svg" alt="" class="add-btn">
+                    <img src="../assets/img/plus button mobile.svg" alt="" class="add-btn" onclick="openAddTask('inprogress')">
                 </div>
                 <div class="to-do-empty d-none" id="inprogress-empty">
                     <p>No tasks To do</p>
@@ -65,7 +65,7 @@
                 ondragover="allowDrop(event); highlight('awaitfeedback')">
                 <div class="section-title">
                     <h3>Await feedback</h3>
-                    <img src="../assets/img/plus button mobile.svg" alt="" class="add-btn">
+                    <img src="../assets/img/plus button mobile.svg" alt="" class="add-btn" onclick="openAddTask('awaitfeedback')">
                 </div>
 
                 <div class="to-do-empty d-none" id="awaitfeedback-empty">

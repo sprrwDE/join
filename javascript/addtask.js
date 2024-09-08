@@ -10,7 +10,10 @@ let tasks = {
   inits: "",
 };
 
+let section;
+
 function onload() {
+  checkStatus()
   loadContacts();
   includeHTML();
   dropDown();
@@ -30,7 +33,7 @@ function postInfos() {
       prio: `${tasks.prio}`,
       category: `${tasks.category}`,
       subtask: `${tasks.subtask}`,
-      status: "todo",
+      status: `${section}`,
       id: 0,
       color: `${tasks.color}`,
       inits: `${tasks.inits}`,
@@ -66,7 +69,7 @@ function renderContacts(contacts) {
   for (i = 0; i < allcontacts.length; i++) {
     allcontacts[i] ||= "Kontakt nicht gefunden";
     let [firstinits, secondinits] = getContactInitials(allcontacts[i]);
-    tasks.inits += firstinits+secondinits+","
+    tasks.inits += firstinits + secondinits + ","
     contactcontainer.innerHTML += renderAssignedTo(allcontacts, i, firstinits, secondinits, colors);
     contactsImages(i);
   }
@@ -397,6 +400,7 @@ function getSubtasks() {
   for (let i = 0; i < subtask.length; i++) {
     tasks.subtask.push("'" + subtask[i].innerHTML + "'");
   }
+
 }
 
 function requiredFieldsCheck() {
@@ -428,11 +432,18 @@ function isCategroySelected() {
   }
 }
 
+function checkStatus() {
+  let iframe = window.parent.document.getElementById('whole-addtask-card');
+  let name = iframe.getAttribute("name")
+  section = name
+}
+
 function getAllInfos() {
   getTitle();
   getDescription();
   getSubtasks();
   if (requiredFieldsCheck() == true) {
+    checkStatus()
     postInfos();
     setTimeout(() => {
       window.location.reload()
