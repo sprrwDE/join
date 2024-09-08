@@ -105,8 +105,6 @@ function separatSubtask(atasks) {
     let inputString = atasks;
     let matches = inputString.match(/'([^']*)'/g).map((s) => s.replace(/'/g, ""));
     return matches;
-  } else {
-    console.log("texyst");
   }
 }
 
@@ -170,7 +168,6 @@ function renderHelper(section) {
   for (let i = 0; i < allTasks.length; i++) {
     let category = getCategory(allTasks[i].category);
     let cleaned = isEmpty(allTasks[i])
-    console.log(cleaned)
     if (cleaned.description == false) {
       allTasks[i].description = "";
     }
@@ -481,6 +478,7 @@ function ifChecked(card, i) {
 }
 
 function getAssignedTo(card, iframeDocument) {
+  if(!card.assignedto == false) {
   if (typeof card.assignedto === "object") {
     let newcard = JSON.stringify(card.assignedto);
     let reuslt = newcard.replaceAll("[", "").replaceAll("]", "").replaceAll('"', "");
@@ -510,6 +508,7 @@ function getAssignedTo(card, iframeDocument) {
     let cleanInits = inits[i].join().replace(",", "");
     iframeDocument.getElementById("assigned-to").innerHTML += contactsHTML(contacts[i], cleanInits, color[i]);
   }
+}
 }
 
 function subtasksHTML(i, task, tasklength, checked, card) {
