@@ -380,3 +380,27 @@ form {
 
 }
 
+@media (max-width:450px){
+  .sign-in-title-container{
+    width: 300px;
+  }
+  .log-in-container{
+    width: 280px;
+  }
+  .input-field{
+    width: 270px;
+    background-position: 240px 2px;
+  }
+  .password-eye-open{
+    left: 241px;
+  }
+  .check-box-container{
+    width: 100%;
+  }
+  .label-margin-right{
+    margin-right: 127px;
+  }
+  #wrong-log-in{
+    width: 270px;
+  }
+}
