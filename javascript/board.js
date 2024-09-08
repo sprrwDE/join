@@ -6,14 +6,18 @@ window.clickedCardId;
 let amounts = {}
 
 function initBoard() {
+  
   includeHTML();
   loadTasks();
+  
   init();
+  
 }
 
 function allowDrop(event) {
   event.preventDefault();
 }
+
 
 function getAmountsOfAllSections() {
   let todoAmount = getAmounthelper("todo");
@@ -25,14 +29,27 @@ function getAmountsOfAllSections() {
   amounts["inprogress"] = inprogressAmount
   amounts["awaitfeedback"] = awaitAmount
   amounts["done"] = doneAmount
+  let urgent = getUrgentNumber()
+  amounts["urgent"] = urgent
   uploadAmount()
+}
+
+function getUrgentNumber() {
+  let amount = 0
+  for (let i = 0; i < tasks.length; i++) {
+    let task = tasks[i]
+    if (task.prio == "urgent") {
+      amount++
+    } 
+  }
+  return amount
 }
 
 function uploadAmount() {
   fetch(BASE_URL + "/Status.json", {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(Amounts),
+    body: JSON.stringify(amounts),
   });
 }
 
@@ -85,6 +102,7 @@ function loadTasks() {
       let values = Object.values(result);
       checkTask(keys, values);
     });
+    
 }
 
 function separatSubtask(atasks) {
@@ -96,6 +114,7 @@ function separatSubtask(atasks) {
   } else {
     console.log("texyst");
   }
+ 
 }
 
 function checkTask(keys, values) {
@@ -119,6 +138,7 @@ function checkTask(keys, values) {
     }
   }
   renderTask();
+  getAmountsOfAllSections();
 }
 
 function renderToObject(subtask) {
