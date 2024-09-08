@@ -3,6 +3,7 @@ let BASE_URL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/
 window.tasks = [];
 let currentDraggedElement;
 window.clickedCardId;
+let amounts = {}
 
 function initBoard() {
   includeHTML();
@@ -19,10 +20,20 @@ function getAmountsOfAllSections() {
   let inprogressAmount = getAmounthelper("inprogress");
   let awaitAmount = getAmounthelper("awaitfeedback");
   let doneAmount = getAmounthelper("done");
-  console.log(todoAmount);
-  console.log(inprogressAmount);
-  console.log(awaitAmount);
-  console.log(doneAmount);
+
+  amounts["todo"] = todoAmount
+  amounts["inprogress"] = inprogressAmount
+  amounts["awaitfeedback"] = awaitAmount
+  amounts["done"] = doneAmount
+  uploadAmount()
+}
+
+function uploadAmount() {
+  fetch(BASE_URL + "/Status.json", {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(Amounts),
+  });
 }
 
 function getAmounthelper(section) {
@@ -40,6 +51,7 @@ function moveTo(status) {
   }
   removeHighlightDragArea();
   renderTask();
+  getAmountsOfAllSections()
 }
 
 function removeHighlightDragArea() {
@@ -75,11 +87,11 @@ function loadTasks() {
     });
 }
 
-function separatSubtask(tasks) {
-  if (!tasks == "") {
-    let inputString = tasks;
+function separatSubtask(atasks) {
+  console.log(atasks)
+  if (!atasks == "") {
+    let inputString = atasks;
     let matches = inputString.match(/'([^']*)'/g).map((s) => s.replace(/'/g, ""));
-
     return matches;
   } else {
     console.log("texyst");
@@ -90,8 +102,11 @@ function checkTask(keys, values) {
   tasks = [];
   for (let i = 0; i < values.length; i++) {
     if (!values[i].subtask === "" || typeof values[i].subtask === "string") {
+      
       if (values[i].subtask === "") {
-        values[i].subtask == "''";
+        console.log("hier")
+        values[i].subtask = "''";
+        console.log(values[i].subtask)
       }
       let sep = separatSubtask(values[i].subtask);
       let subtask = renderToObject(sep);
@@ -107,11 +122,14 @@ function checkTask(keys, values) {
 }
 
 function renderToObject(subtask) {
-  let newsubtaskArray = {};
-  for (let i = 0; i < subtask.length; i++) {
-    newsubtaskArray[subtask[i]] = "inwork";
-  }
-  return newsubtaskArray;
+  console.log(subtask)
+  if (subtask) {
+    let newsubtaskArray = {};
+    for (let i = 0; i < subtask.length; i++) {
+      newsubtaskArray[subtask[i]] = "inwork";
+    }
+    return newsubtaskArray;
+  } 
 }
 
 function renderTask() {
@@ -393,10 +411,10 @@ function ifChecked(card, i) {
 }
 
 function getAssignedTo(card, iframeDocument) {
-  if(typeof card.assignedto === "object") {
-   let newcard = JSON.stringify(card.assignedto)
-   let reuslt = newcard.replaceAll("[", "").replaceAll("]", "").replaceAll('"', "")
-   card.assignedto = reuslt
+  if (typeof card.assignedto === "object") {
+    let newcard = JSON.stringify(card.assignedto);
+    let reuslt = newcard.replaceAll("[", "").replaceAll("]", "").replaceAll('"', "");
+    card.assignedto = reuslt;
   }
   let contacts = card.assignedto.split(",");
 
@@ -411,11 +429,11 @@ function getAssignedTo(card, iframeDocument) {
     inits.push([firstinit.toUpperCase(), second.toUpperCase()]);
   }
 
-  if(typeof card.color === "object") {
-    let newcolor = JSON.stringify(card.color)
-    let reuslt = newcolor.replaceAll("[", "").replaceAll("]", "") 
-    card.color = reuslt
-   }
+  if (typeof card.color === "object") {
+    let newcolor = JSON.stringify(card.color);
+    let reuslt = newcolor.replaceAll("[", "").replaceAll("]", "");
+    card.color = reuslt;
+  }
   let color = card.color.match(/rgb\(\d{1,3},\s*\d{1,3},\s*\d{1,3}\)/g);
 
   for (let i = 0; i < contacts.length; i++) {
