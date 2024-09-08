@@ -3,46 +3,41 @@ let BASE_URL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/
 window.tasks = [];
 let currentDraggedElement;
 window.clickedCardId;
-let amounts = {}
+let amounts = {};
 
 function initBoard() {
-  
   includeHTML();
   loadTasks();
-  
   init();
-  
 }
 
 function allowDrop(event) {
   event.preventDefault();
 }
 
-
 function getAmountsOfAllSections() {
   let todoAmount = getAmounthelper("todo");
   let inprogressAmount = getAmounthelper("inprogress");
   let awaitAmount = getAmounthelper("awaitfeedback");
   let doneAmount = getAmounthelper("done");
-
-  amounts["todo"] = todoAmount
-  amounts["inprogress"] = inprogressAmount
-  amounts["awaitfeedback"] = awaitAmount
-  amounts["done"] = doneAmount
-  let urgent = getUrgentNumber()
-  amounts["urgent"] = urgent
-  uploadAmount()
+  let urgent = getUrgentNumber();
+  amounts["todo"] = todoAmount;
+  amounts["inprogress"] = inprogressAmount;
+  amounts["awaitfeedback"] = awaitAmount;
+  amounts["done"] = doneAmount;
+  amounts["urgent"] = urgent;
+  uploadAmount();
 }
 
 function getUrgentNumber() {
-  let amount = 0
+  let amount = 0;
   for (let i = 0; i < tasks.length; i++) {
-    let task = tasks[i]
+    let task = tasks[i];
     if (task.prio == "urgent") {
-      amount++
-    } 
+      amount++;
+    }
   }
-  return amount
+  return amount;
 }
 
 function uploadAmount() {
@@ -68,7 +63,7 @@ function moveTo(status) {
   }
   removeHighlightDragArea();
   renderTask();
-  getAmountsOfAllSections()
+  getAmountsOfAllSections();
 }
 
 function removeHighlightDragArea() {
@@ -102,11 +97,10 @@ function loadTasks() {
       let values = Object.values(result);
       checkTask(keys, values);
     });
-    
 }
 
 function separatSubtask(atasks) {
-  console.log(atasks)
+  console.log(atasks);
   if (!atasks == "") {
     let inputString = atasks;
     let matches = inputString.match(/'([^']*)'/g).map((s) => s.replace(/'/g, ""));
@@ -114,18 +108,16 @@ function separatSubtask(atasks) {
   } else {
     console.log("texyst");
   }
- 
 }
 
 function checkTask(keys, values) {
   tasks = [];
   for (let i = 0; i < values.length; i++) {
     if (!values[i].subtask === "" || typeof values[i].subtask === "string") {
-      
       if (values[i].subtask === "") {
-        console.log("hier")
+        console.log("hier");
         values[i].subtask = "''";
-        console.log(values[i].subtask)
+        console.log(values[i].subtask);
       }
       let sep = separatSubtask(values[i].subtask);
       let subtask = renderToObject(sep);
@@ -142,14 +134,14 @@ function checkTask(keys, values) {
 }
 
 function renderToObject(subtask) {
-  console.log(subtask)
+  console.log(subtask);
   if (subtask) {
     let newsubtaskArray = {};
     for (let i = 0; i < subtask.length; i++) {
       newsubtaskArray[subtask[i]] = "inwork";
     }
     return newsubtaskArray;
-  } 
+  }
 }
 
 function renderTask() {
@@ -179,6 +171,7 @@ function renderTask() {
 function renderHelper(section) {
   let allTasks = tasks.filter((t) => t["status"] == section);
   for (let i = 0; i < allTasks.length; i++) {
+    isEmpty(allTasks[i].category)
     let category = getCategory(allTasks[i].category);
     let prio = getPrio(i, allTasks);
     let checked = subtaskChecked(i, allTasks[i]);
@@ -194,6 +187,10 @@ function renderHelper(section) {
     }
     renderProgressBar(count, subtaskslength.length, allTasks[i].id);
   }
+}
+
+function isEmpty(Task) {
+  
 }
 
 function renderProgressBar(count, length, id) {
@@ -238,17 +235,34 @@ function getColors(i, allTasks) {
 
 function getInitails(i, allTasks) {
   let inits = [];
-  let contactt = JSON.stringify(allTasks[i].assignedto);
-  contact = contactt.replaceAll('"', "").replaceAll("[", "").replaceAll("]", "");
-  let contacts = contact.split(",");
-
-  for (id in contacts) {
-    let name = contacts[id].split(" ");
-    let firstinit = name[0][0];
-    let second = name[1] ? name[1][0] : "";
-    inits.push([firstinit.toUpperCase(), second.toUpperCase()]);
+  let contact;
+  if (allTasks[i].assignedto) {
+    if (typeof allTasks[i].assignedto === "object") {
+      let contactt = JSON.stringify(allTasks[i].assignedto);
+      contact = contactt.replaceAll('"', "").replaceAll("[", "").replaceAll("]", "");
+    } else {
+      contact = allTasks[i].assignedto;
+    }
+  } else {
+    console.log("hier");
+    contact = "";
   }
-  return inits;
+
+  console.log(contact);
+
+  if (!contact == "") {
+    let contacts = contact.split(",");
+
+    for (id in contacts) {
+      let name = contacts[id].split(" ");
+      let firstinit = name[0][0];
+      let second = name[1] ? name[1][0] : "";
+      inits.push([firstinit.toUpperCase(), second.toUpperCase()]);
+    }
+    return inits;
+  } else {
+    return "Leer"
+  }
 }
 
 function subtaskChecked(i, alltask) {
@@ -367,7 +381,8 @@ function renderEditCardInfos(iframeDocument, card) {
   iframe.contentWindow.selectedPrio(card.prio);
 
   let imgContainer = iframeDocument.getElementById("contacts-imges");
-  imgContainer.innerHTML += `<span class="d-none" id="deliver-names">${card.assignedto}</span>
+  imgContainer.innerHTML += `
+  <span class="d-none" id="deliver-names">${card.assignedto}</span>
   <span class="d-none" id="deliver-category">${card.category}</span>
   <span class="d-none" id="deliver-status">${card.status}</span>
   <span class="d-none" id="deliver-cardId">${card.id}</span>
