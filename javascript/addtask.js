@@ -13,7 +13,6 @@ let tasks = {
 let section;
 
 function onload() {
-  checkStatus()
   loadContacts();
   includeHTML();
   dropDown();
@@ -434,8 +433,12 @@ function isCategroySelected() {
 
 function checkStatus() {
   let iframe = window.parent.document.getElementById('whole-addtask-card');
-  let name = iframe.getAttribute("name")
-  section = name
+  if (iframe) {
+    let name = iframe.getAttribute("name")
+    section = name
+  } else {
+    section = "todo"
+  }
 }
 
 function getAllInfos() {
