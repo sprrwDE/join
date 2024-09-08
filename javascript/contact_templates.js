@@ -10,9 +10,10 @@ function contactTemplateInitial(initial, index) {
     `;
 }
 
-function getContactsTemplate(name, email, phone, contactId, first, last, color, indexCard) {
+function getContactsTemplate(name, email, phone, contactId, first, last, color, indexCard, user) {
+
     return `
-        <div class="list-card" id="contact-card-${contactId}" onclick="openDetailDialog('${name}', '${email}', '${phone}', '${contactId}', '${first}', '${last}', '${color}', '${indexCard}')">
+        <div class="list-card" id="contact-card-${contactId}" onclick="openDetailDialog('${name}', '${email}', '${phone}', '${contactId}', '${first}', '${last}', '${color}', '${indexCard}', ${user})">
             <div class="card-image list-image" style="background-color: ${color}">
                 <h4>${first}${last}</h4>
             </div>
@@ -24,7 +25,7 @@ function getContactsTemplate(name, email, phone, contactId, first, last, color, 
     `;
 }
 
-function detailTemplate(name, email, phone, id, first, last, color) {
+function detailTemplate(name, email, phone, id, first, last, color, user) {
     return `
             <div class="contact-mobile-header">
                 <h2>Contacts</h2>
@@ -42,7 +43,7 @@ function detailTemplate(name, email, phone, id, first, last, color) {
                 <div class="name-wrapper">
                     <h4>${name}</h4>
                     <div class="edit-button-desk-wrapper">
-                        <div class="edit-row-desk" onclick="openEditContactDialog('${id}', '${name}', '${email}',)">
+                        <div class="edit-row-desk" onclick="openEditContactDialog('${id}', '${name}', '${email}', ${user})">
                             <img src="../assets/img/edit-small.svg">
                             <p>Edit</p>
                         </div>
@@ -107,7 +108,7 @@ function addDialogTemplate() {
     </div>`;
 }
 
-function showEditOverlay(name, email) {
+function showEditOverlay(name, email, user) {
     return `
     <div class="contact-card add">
     <div class="exit-wrapper">
@@ -142,11 +143,10 @@ function showEditOverlay(name, email) {
                 Cancel‚
                 <img src="../assets/img/contact-card/exit.svg">
             </button>
-            <button class='btn create' onclick="updateContact(), updateAccount()">
-                Save changes
-                <img src="../assets/img/contact-card/check.svg">
-            </button>
-        </div>
+        <button class='btn create' onclick="updateContact(); if(isCurrentUser) { updateAccount(); }">
+            Save changes
+            <img src="../assets/img/contact-card/check.svg">
+        </button>
     </div>
 </div>`
 }

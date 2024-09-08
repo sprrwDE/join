@@ -13,6 +13,7 @@ let currentSelectedElement = null;
 // Firebase References
 let baseUrl = 'https://join-318-default-rtdb.europe-west1.firebasedatabase.app/';
 let currentId;
+let isCurrentUser
 
 // Data Storage
 let db = [];
@@ -133,8 +134,9 @@ function renderContactsForInitial(containerRef, contacts, globalIndex) {
         let contactId = contact.id; 
         let color = contact.color;
         let indexCard = globalIndex + i;
+        let user = contact.isUser
 
-        containerRef.innerHTML += getContactsTemplate(currentName, currentEmail, currentPhone, contactId, initials[0], initials[initials.length - 1], color, indexCard);
+        containerRef.innerHTML += getContactsTemplate(currentName, currentEmail, currentPhone, contactId, initials[0], initials[initials.length - 1], color, indexCard, user);
     }
 }
 
@@ -211,12 +213,11 @@ function getInitials(name) {
 /**
  * Detail Dialog
  */
-function openDetailDialog(name, email, phone, id, first, last, color, indexCard) {
-
+function openDetailDialog(name, email, phone, id, first, last, color, indexCard, user) {
     if (window.innerWidth >= 1024) {
-        openDetailReferenceDesk(name, email, phone, id, first, last, color);
+        openDetailReferenceDesk(name, email, phone, id, first, last, color, user);
     } else {
-        openDetailReferenceMob(name, email, phone, id, first, last, color);
+        openDetailReferenceMob(name, email, phone, id, first, last, color, user);
     }
 }
 
@@ -233,7 +234,7 @@ function selectElement(contactId) {
     currentSelectedElement = selectedElement;
 }
 
-function openDetailReferenceMob(name, email, phone, id, first, last, color) {
+function openDetailReferenceMob(name, email, phone, id, first, last, color, user) {
     currentId = id; 
     showDetail.classList.remove('d-none');
     detailRef.classList.remove('d-none');
@@ -241,18 +242,19 @@ function openDetailReferenceMob(name, email, phone, id, first, last, color) {
     editButtonRef.classList.remove('d-none');
     editBoxRef.classList.add('d-none');
     addButtonRef.classList.add('d-none');
-    getDetailTemplateMob(name, email, phone, id, first, last, color);
+    getDetailTemplateMob(name, email, phone, id, first, last, color, user);
     selectElement(id);
 }
 
-function openDetailReferenceDesk(name, email, phone, id, first, last, color) {
+function openDetailReferenceDesk(name, email, phone, id, first, last, color, user) {
+    console.log(user)
     currentId = id;
-    document.getElementById('detail-desk').innerHTML = detailTemplate(name, email, phone, id, first, last, color);
+    document.getElementById('detail-desk').innerHTML = detailTemplate(name, email, phone, id, first, last, color, user);
     selectElement(id);
 }
 
-function getDetailTemplateMob(name, email, phone, id, first, last, color) {
-    detailRef.innerHTML = detailTemplate(name, email, phone, id, first, last, color);
+function getDetailTemplateMob(name, email, phone, id, first, last, color, user) {
+    detailRef.innerHTML = detailTemplate(name, email, phone, id, first, last, color, user);
 }
 
 function closeDetailDialog() {
@@ -294,12 +296,17 @@ function closeEditContactDialog() {
     }
 }
 
-
-function openEditContactDialog(id, name, email) {
+function openEditContactDialog(id, name, email, user) {
+    console.log("Editing user: ", user);
     editContactRef.classList.remove('d-none');
-    editContactRef.innerHTML = showEditOverlay(name, email);
+    editContactRef.innerHTML = showEditOverlay(name, email, user);
     currentId = id;
+    
+    // Verwende den `isUser`-Status direkt vom Kontakt, statt `isCurrentUser` manuell zu setzen
     const contact = db.find(contact => contact.id === currentId);
+    isCurrentUser = contact.isUser; // Setze den Status erneut aus dem Kontaktobjekt
+    console.log("isCurrentUser: ", isCurrentUser);
+    
     const nameInput = document.getElementById('edit-name');
     const emailInput = document.getElementById('edit-email');
     const phoneInput = document.getElementById('edit-phone');
@@ -308,21 +315,25 @@ function openEditContactDialog(id, name, email) {
         emailInput.value = contact.emailIn;
         phoneInput.value = contact.phoneIn;
     }
+
     if (window.innerWidth <= 1024) {
         listContentRef.classList.add('d-none');
     }
 }
+
 
 function getUpdatedContactData() {
     const nameIn = document.getElementById('edit-name').value.trim();
     const emailIn = document.getElementById('edit-email').value.trim();
     const phoneIn = document.getElementById('edit-phone').value.trim();
     const color = getRandomColor();
+    const isUser = isCurrentUser; // Nutze den aktualisierten isCurrentUser-Wert
+    
     if (!nameIn || !emailIn || !phoneIn) {
         alert('Bitte füllen Sie alle Felder aus.');
         return null;
     }
-    return { nameIn, emailIn, phoneIn, color };
+    return { nameIn, emailIn, phoneIn, color, isUser };
 }
 
 async function sendUpdateRequest(contactId, updatedData) {
@@ -354,6 +365,7 @@ function updateLocalDatabase(contactId, updatedData) {
 async function updateContact() {
     const updatedData = getUpdatedContactData();
     if (!updatedData) return;
+
     const success = await sendUpdateRequest(currentId, updatedData);
     if (success) {
         updateLocalDatabase(currentId, updatedData);
@@ -361,6 +373,11 @@ async function updateContact() {
         initialize();
         selectElement(currentId);
         updateDetailView(updatedData);
+        
+        // Prüfe, ob es sich um den aktuellen Benutzer handelt und rufe `updateAccount` auf
+        if (updatedData.isUser) {
+            await updateAccount();
+        }
     } else {
         alert("Fehler beim Aktualisieren des Kontakts.");
     }
@@ -419,7 +436,7 @@ let userDb;
 async function initializeUsers() {
     try {
         userDb = [];
-        await getUserData("accounts");
+        await getUserData("curent-user");
     } catch (error) {
         console.log('Fehler beim Abrufen der Daten:', error);
     }
@@ -433,7 +450,7 @@ async function getUserData(path) {
         if (userData) {
             let userArray = Object.entries(userData).map(([key, value]) => {
                 return {
-                    id: key,
+                    userId: key,
                     ...value
                 };
             });
@@ -445,24 +462,25 @@ async function getUserData(path) {
     }
 }
 
-async function updateAccount()  {
+async function updateAccount() {
+    console.log("Aktualisiere Benutzer...");
     try {
         const updatedData = getUpdatedContactData();
-        console.log(currentId);
-        let response = await fetch(`${baseUrl}accounts/${currentId}.json`, {
+        let response = await fetch(`${baseUrl}curent-user.json`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(updatedData) // Ensure you're passing updatedData correctly
+            body: JSON.stringify(updatedData)
         });
 
         if (!response.ok) {
-            throw new Error('Fehler beim Bearbeiten des Accounts');
+            throw new Error('Fehler beim Bearbeiten des Benutzerkontos');
         }
+        console.log("Benutzerkonto erfolgreich aktualisiert.");
         return true;
     } catch (error) {
-        console.log('Fehler beim Bearbeiten des Kontakts', error);
+        console.log('Fehler beim Aktualisieren des Benutzerkontos:', error);
         return false;
     }
 }
