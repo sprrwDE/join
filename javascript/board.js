@@ -450,8 +450,8 @@ function getAllSubtasks(card, iframeDocument) {
       let checked = ifChecked(card, i);
       sectionsElement.innerHTML += subtasksHTML(i, task, task.length, checked, card);
     }
-    boardCardContent.innerHTML += renderBoardCardButtons(card.id);
   }
+  boardCardContent.innerHTML += renderBoardCardButtons(card.id);
 }
 
 function renderBoardCardButtons(id) {
@@ -478,37 +478,37 @@ function ifChecked(card, i) {
 }
 
 function getAssignedTo(card, iframeDocument) {
-  if(!card.assignedto == false) {
-  if (typeof card.assignedto === "object") {
-    let newcard = JSON.stringify(card.assignedto);
-    let reuslt = newcard.replaceAll("[", "").replaceAll("]", "").replaceAll('"', "");
-    card.assignedto = reuslt;
-  }
-  let contacts = card.assignedto.split(",");
+  if (!card.assignedto == false) {
+    if (typeof card.assignedto === "object") {
+      let newcard = JSON.stringify(card.assignedto);
+      let reuslt = newcard.replaceAll("[", "").replaceAll("]", "").replaceAll('"', "");
+      card.assignedto = reuslt;
+    }
+    let contacts = card.assignedto.split(",");
 
-  let inits = [];
-  let contact = card.assignedto;
+    let inits = [];
+    let contact = card.assignedto;
 
-  let contactss = contact.split(",");
-  for (id in contacts) {
-    let name = contactss[id].split(" ");
-    let firstinit = name[0][0];
-    let second = name[1] ? name[1][0] : "";
-    inits.push([firstinit.toUpperCase(), second.toUpperCase()]);
-  }
+    let contactss = contact.split(",");
+    for (id in contacts) {
+      let name = contactss[id].split(" ");
+      let firstinit = name[0][0];
+      let second = name[1] ? name[1][0] : "";
+      inits.push([firstinit.toUpperCase(), second.toUpperCase()]);
+    }
 
-  if (typeof card.color === "object") {
-    let newcolor = JSON.stringify(card.color);
-    let reuslt = newcolor.replaceAll("[", "").replaceAll("]", "");
-    card.color = reuslt;
-  }
-  let color = card.color.match(/rgb\(\d{1,3},\s*\d{1,3},\s*\d{1,3}\)/g);
+    if (typeof card.color === "object") {
+      let newcolor = JSON.stringify(card.color);
+      let reuslt = newcolor.replaceAll("[", "").replaceAll("]", "");
+      card.color = reuslt;
+    }
+    let color = card.color.match(/rgb\(\d{1,3},\s*\d{1,3},\s*\d{1,3}\)/g);
 
-  for (let i = 0; i < contacts.length; i++) {
-    let cleanInits = inits[i].join().replace(",", "");
-    iframeDocument.getElementById("assigned-to").innerHTML += contactsHTML(contacts[i], cleanInits, color[i]);
+    for (let i = 0; i < contacts.length; i++) {
+      let cleanInits = inits[i].join().replace(",", "");
+      iframeDocument.getElementById("assigned-to").innerHTML += contactsHTML(contacts[i], cleanInits, color[i]);
+    }
   }
-}
 }
 
 function subtasksHTML(i, task, tasklength, checked, card) {
