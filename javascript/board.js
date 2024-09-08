@@ -76,7 +76,6 @@ function loadTasks() {
 }
 
 function separatSubtask(tasks) {
-  console.log(tasks);
   if (!tasks == "") {
     let inputString = tasks;
     let matches = inputString.match(/'([^']*)'/g).map((s) => s.replace(/'/g, ""));
