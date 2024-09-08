@@ -188,15 +188,22 @@ function startDragging(id) {
 }
 
 function getColors(i, allTasks) {
-  let allcolors = allTasks[i].color.match(/rgb\(\d{1,3},\s*\d{1,3},\s*\d{1,3}\)/g);
+  let color = [];
+  if (typeof allTasks[i].color === "object") {
+    color = JSON.stringify(allTasks[i].color);
+  } else {
+    color = allTasks[i].color;
+  }
+  let allcolors = color.match(/rgb\(\d{1,3},\s*\d{1,3},\s*\d{1,3}\)/g);
   return allcolors;
 }
 
 function getInitails(i, allTasks) {
   let inits = [];
-  let contact = allTasks[i].assignedto;
-
+  let contactt = JSON.stringify(allTasks[i].assignedto);
+  contact = contactt.replaceAll('"', "").replaceAll("[", "").replaceAll("]", "");
   let contacts = contact.split(",");
+
   for (id in contacts) {
     let name = contacts[id].split(" ");
     let firstinit = name[0][0];
@@ -386,6 +393,11 @@ function ifChecked(card, i) {
 }
 
 function getAssignedTo(card, iframeDocument) {
+  if(typeof card.assignedto === "object") {
+   let newcard = JSON.stringify(card.assignedto)
+   let reuslt = newcard.replaceAll("[", "").replaceAll("]", "").replaceAll('"', "")
+   card.assignedto = reuslt
+  }
   let contacts = card.assignedto.split(",");
 
   let inits = [];
@@ -399,6 +411,11 @@ function getAssignedTo(card, iframeDocument) {
     inits.push([firstinit.toUpperCase(), second.toUpperCase()]);
   }
 
+  if(typeof card.color === "object") {
+    let newcolor = JSON.stringify(card.color)
+    let reuslt = newcolor.replaceAll("[", "").replaceAll("]", "") 
+    card.color = reuslt
+   }
   let color = card.color.match(/rgb\(\d{1,3},\s*\d{1,3},\s*\d{1,3}\)/g);
 
   for (let i = 0; i < contacts.length; i++) {
