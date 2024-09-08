@@ -61,23 +61,25 @@ function renderContacts(contacts) {
     colors.push(contacts[letter].color);
   }
   for (i = 0; i < allcontacts.length; i++) {
-    
     allcontacts[i] ||= "Kontakt nicht gefunden";
     let [firstinits, secondinits] = getContactInitials(allcontacts[i]);
     tasks.inits += firstinits + secondinits + ",";
     contactcontainer.innerHTML += renderAssignedTo(allcontacts, i, firstinits, secondinits, colors);
     contactsImages(i);
-    test(allcontacts[i], i);
+    getContactsByParent(allcontacts[i], i);
   }
 }
 
-function test(contact, i) {
-  let asd = document.getElementById("deliver-names");
-  let xxx = asd.innerHTML.split(",");
-
-  xxx.forEach((element) => {
+function getContactsByParent(contact, i) {
+  let category = document.getElementById("deliver-category");
+  let status = document.getElementById("deliver-status");
+  let parentContact = document.getElementById("deliver-names");
+  let splitedNames = parentContact.innerHTML.split(",");
+  tasks.status = status.innerHTML;
+  tasks.category = category.innerHTML;
+  splitedNames.forEach((element) => {
     if (element == contact) {
-      assignedToChecked(i)
+      assignedToChecked(i);
     }
   });
 }
@@ -389,14 +391,24 @@ function requiredFieldsCheck() {
   }
 }
 
+function updateServer() {
+  let cardId = document.getElementById("deliver-cardId").innerHTML;
+
+  fetch(BASE_URL + "/addTask/" + cardId + ".json", {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(tasks),
+  });
+}
+
 function getAllInfos() {
   getTitle();
   getDescription();
   getSubtasks();
   getDate();
-  console.log(tasks)
+  console.log(tasks);
   if (requiredFieldsCheck() == true) {
-    // postInfos();
+    updateServer();
     setTimeout(() => {
       window.location.reload();
     }, 1000);

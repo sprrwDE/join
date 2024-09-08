@@ -14,6 +14,23 @@ function allowDrop(event) {
   event.preventDefault();
 }
 
+function getAmountsOfAllSections() {
+  let todoAmount = getAmounthelper("todo");
+  let inprogressAmount = getAmounthelper("inprogress");
+  let awaitAmount = getAmounthelper("awaitfeedback");
+  let doneAmount = getAmounthelper("done");
+  console.log(todoAmount);
+  console.log(inprogressAmount);
+  console.log(awaitAmount);
+  console.log(doneAmount);
+}
+
+function getAmounthelper(section) {
+  let todo = document.getElementById(section);
+  let card = todo.getElementsByClassName("ticket-card");
+  return card.length;
+}
+
 function moveTo(status) {
   for (let i = 0; i < tasks.length; i++) {
     if (tasks[i].id == currentDraggedElement) {
@@ -59,6 +76,7 @@ function loadTasks() {
 }
 
 function separatSubtask(tasks) {
+  console.log(tasks);
   if (!tasks == "") {
     let inputString = tasks;
     let matches = inputString.match(/'([^']*)'/g).map((s) => s.replace(/'/g, ""));
@@ -73,6 +91,9 @@ function checkTask(keys, values) {
   tasks = [];
   for (let i = 0; i < values.length; i++) {
     if (!values[i].subtask === "" || typeof values[i].subtask === "string") {
+      if (values[i].subtask === "") {
+        values[i].subtask == "''";
+      }
       let sep = separatSubtask(values[i].subtask);
       let subtask = renderToObject(sep);
       tasks.push(values[i]);
@@ -302,7 +323,11 @@ function renderEditCardInfos(iframeDocument, card) {
   iframe.contentWindow.selectedPrio(card.prio);
 
   let imgContainer = iframeDocument.getElementById("contacts-imges");
-  imgContainer.innerHTML += `<span class="d-none" id="deliver-names">${card.assignedto}</span>`;
+  imgContainer.innerHTML += `<span class="d-none" id="deliver-names">${card.assignedto}</span>
+  <span class="d-none" id="deliver-category">${card.category}</span>
+  <span class="d-none" id="deliver-status">${card.status}</span>
+  <span class="d-none" id="deliver-cardId">${card.id}</span>
+  `;
 
   for (let i = 0; i < Object.values(card.subtask).length; i++) {
     let keys = Object.keys(card.subtask);
