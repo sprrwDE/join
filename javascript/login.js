@@ -27,12 +27,12 @@ function logIn(event){
   
 }
 
-async function postCurrentUser(userName) {
+async function postCurrentUser(userName, userEmail) {
   try {
     const response = await fetch(currentUserURL, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: `${userName}` }),
+      body: JSON.stringify({ name: `${userName}`, email: `${userEmail}`}),
     });
     if (!response.ok) {
       throw new Error('Fehler beim Posten der Daten');
@@ -59,7 +59,8 @@ async function checkUserData(accounts){
   let user = accounts.find(a => a.email == userEmail && a.password == userPassword);
   if(user){
     let currentAccountName = user.name;
-    await postCurrentUser(currentAccountName);
+    let currentEmail = user.email
+    await postCurrentUser(currentAccountName, currentEmail);
     window.location.href=`./documents/summary.html?name=${encodeURIComponent(currentAccountName)}`;
     
   }else{
