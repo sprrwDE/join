@@ -1,3 +1,5 @@
+let currentUserURL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/curent-user.json"
+
 const params = new URLSearchParams(window.location.search);
 const currentName = params.get('name');
 const icon = params.get('icon');
@@ -9,7 +11,8 @@ function init() {
   includeHTML().then(() => {
       loadAccountName();
       noMemberLink();
-      changeNavbarColor(); 
+      changeNavbarColor();
+      loadUserName(); 
   }).catch((error) => {
       console.error("Error including HTML:", error);
   });

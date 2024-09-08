@@ -1,6 +1,6 @@
 let BASE_URL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/accounts.json" 
 let contacsFatch = 'https://join-318-default-rtdb.europe-west1.firebasedatabase.app/';
-let currentUserURL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/curent-user.json"
+
 
 
 function start(){
