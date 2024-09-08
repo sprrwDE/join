@@ -1,6 +1,6 @@
 let BASE_URL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/accounts.json" 
 let contacsFatch = 'https://join-318-default-rtdb.europe-west1.firebasedatabase.app/';
-
+let currentUserURL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/curent-user.json"
 
 
 function start(){
@@ -27,6 +27,21 @@ function logIn(event){
   
 }
 
+async function postCurrentUser(userName) {
+  try {
+    const response = await fetch(currentUserURL, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: `${userName}` }),
+    });
+    if (!response.ok) {
+      throw new Error('Fehler beim Posten der Daten');
+    }
+  } catch (error) {
+    console.error('Fehler beim Posten des aktuellen Benutzers:', error);
+  }
+}
+
 function loadAccounts() {
   fetch(BASE_URL)
     .then((response) => response.json())
@@ -37,14 +52,16 @@ function loadAccounts() {
     
 }
 
-function checkUserData(accounts){
+async function checkUserData(accounts){
   let userEmail = document.getElementById('user-email').value;
   let userPassword = document.getElementById('user-password').value;
 
   let user = accounts.find(a => a.email == userEmail && a.password == userPassword);
   if(user){
     let currentAccountName = user.name;
+    await postCurrentUser(currentAccountName);
     window.location.href=`./documents/summary.html?name=${encodeURIComponent(currentAccountName)}`;
+    
   }else{
     document.getElementById('user-email').classList.add('border-color-red');  
     document.getElementById('user-password').classList.add('border-color-red');  
