@@ -15,16 +15,17 @@ function allowDrop(event) {
   event.preventDefault();
 }
 
+function helpAmount() {
+  let sections = ["todo", "inprogress", "awaitfeedback", "done"]
+  for (let i = 0; i < sections.length; i++) {
+    let section = getAmounthelper(sections[i])
+    amounts[sections[i]] = section
+  }
+}
+
 function getAmountsOfAllSections() {
-  let todoAmount = getAmounthelper("todo");
-  let inprogressAmount = getAmounthelper("inprogress");
-  let awaitAmount = getAmounthelper("awaitfeedback");
-  let doneAmount = getAmounthelper("done");
+  helpAmount()
   let urgent = getUrgentNumber();
-  amounts["todo"] = todoAmount;
-  amounts["inprogress"] = inprogressAmount;
-  amounts["awaitfeedback"] = awaitAmount;
-  amounts["done"] = doneAmount;
   amounts["urgent"] = urgent;
   uploadAmount();
 }
@@ -100,7 +101,6 @@ function loadTasks() {
 }
 
 function separatSubtask(atasks) {
-  console.log(atasks);
   if (!atasks == "") {
     let inputString = atasks;
     let matches = inputString.match(/'([^']*)'/g).map((s) => s.replace(/'/g, ""));
@@ -115,9 +115,7 @@ function checkTask(keys, values) {
   for (let i = 0; i < values.length; i++) {
     if (!values[i].subtask === "" || typeof values[i].subtask === "string") {
       if (values[i].subtask === "") {
-        console.log("hier");
         values[i].subtask = "''";
-        console.log(values[i].subtask);
       }
       let sep = separatSubtask(values[i].subtask);
       let subtask = renderToObject(sep);
@@ -134,7 +132,6 @@ function checkTask(keys, values) {
 }
 
 function renderToObject(subtask) {
-  console.log(subtask);
   if (subtask) {
     let newsubtaskArray = {};
     for (let i = 0; i < subtask.length; i++) {
@@ -167,30 +164,85 @@ function renderTask() {
   renderHelper("done");
   emptySection();
 }
+/* 
+category : Pflicht
+date: Pflicht
+id: Pflicht
+title: Pflicht
+status: Pflicht
+inits: Pflicht
 
+assignedto: false
+color: false
+description: false
+prio: false
+subtask: false
+
+*/
 function renderHelper(section) {
   let allTasks = tasks.filter((t) => t["status"] == section);
   for (let i = 0; i < allTasks.length; i++) {
-    isEmpty(allTasks[i].category)
     let category = getCategory(allTasks[i].category);
-    let prio = getPrio(i, allTasks);
-    let checked = subtaskChecked(i, allTasks[i]);
-    let count = getCheckedSubtasks(allTasks[i]);
-    let subtaskslength = Object.values(allTasks[i].subtask);
+    let cleaned = isEmpty(allTasks[i])
+    console.log(cleaned)
+    if (cleaned.description == false) {
+      allTasks[i].description = "";
+    }
 
-    document.getElementById(section).innerHTML += renderToDos(allTasks, i, category, prio, checked);
+    if (!cleaned.prio == false) {
+      prio = getPrio(i, allTasks);
+    } else {
+      prio = "noprio.svg"
+    }
+
+    let checked = 0
+    if (!cleaned.subtask == false) {
+      checked = subtaskChecked(i, allTasks[i]);
+      count = getCheckedSubtasks(allTasks[i]);
+      subtaskslength = Object.values(allTasks[i].subtask);
+    } else {
+      subtaskslength = []
+    }
+
+    if (cleaned.color == false) {
+      allTasks[i].color = ""
+    }
+
+
+    document.getElementById(section).innerHTML += renderToDos(allTasks, subtaskslength.length, i, category, prio, checked);
     let inits = getInitails(i, allTasks);
     for (let j = 0; j < inits.length; j++) {
       let contact = document.getElementById(`contact-images${allTasks[i].id}`);
       let colors = getColors(i, allTasks);
       contact.innerHTML += renderContactsImages(inits[j], colors, j);
     }
-    renderProgressBar(count, subtaskslength.length, allTasks[i].id);
+    if (!subtaskslength.length == 0) {
+      renderProgressBar(count, subtaskslength.length, allTasks[i].id);
+    } else {
+      document.getElementById(`progress-bar-section${allTasks[i].id}`).classList.add("d-none")
+    }
+    
   }
 }
 
-function isEmpty(Task) {
-  
+function isEmpty(task) {
+
+  if (task.assignedto == "") {
+    task.assignedto = false
+  }
+  if (task.color == "") {
+    task.color = false
+  }
+  if (task.description == "") {
+    task.description = false
+  }
+  if (task.prio == "") {
+    task.prio = false
+  }
+  if (Object.keys(task.subtask) == "") {
+    task.subtask = false
+  }
+  return task
 }
 
 function renderProgressBar(count, length, id) {
@@ -229,7 +281,13 @@ function getColors(i, allTasks) {
   } else {
     color = allTasks[i].color;
   }
-  let allcolors = color.match(/rgb\(\d{1,3},\s*\d{1,3},\s*\d{1,3}\)/g);
+
+  if (color == "") {
+    allcolors = "white"
+  } else {
+    allcolors = color.match(/rgb\(\d{1,3},\s*\d{1,3},\s*\d{1,3}\)/g);
+  }
+
   return allcolors;
 }
 
@@ -244,11 +302,8 @@ function getInitails(i, allTasks) {
       contact = allTasks[i].assignedto;
     }
   } else {
-    console.log("hier");
     contact = "";
   }
-
-  console.log(contact);
 
   if (!contact == "") {
     let contacts = contact.split(",");
@@ -261,7 +316,7 @@ function getInitails(i, allTasks) {
     }
     return inits;
   } else {
-    return "Leer"
+    return []
   }
 }
 
@@ -276,10 +331,9 @@ function subtaskChecked(i, alltask) {
   return checked;
 }
 
-function renderToDos(task, i, categoryColor, prio, checked) {
-  return `<div class="ticket-card" id="ticket-${task[i].id}" draggable="true" onclick="openCard('${
-    task[i].id
-  }')" ondragstart="startDragging('${task[i].id}')">
+function renderToDos(task, subtasklength, i, categoryColor, prio, checked) {
+  return `<div class="ticket-card" id="ticket-${task[i].id}" draggable="true" onclick="openCard('${task[i].id
+    }')" ondragstart="startDragging('${task[i].id}')">
                     <div class="${categoryColor}" id="pill">
                         <p>${task[i].category}</p>
                     </div>
@@ -289,11 +343,11 @@ function renderToDos(task, i, categoryColor, prio, checked) {
                         <p id="ticket-notice">${task[i].description}</p>
                     </div>
 
-                    <div class="progress-bar-section">
+                    <div class="progress-bar-section" id="progress-bar-section${task[i].id}">
                         <div class="progress-bar">
                             <div class="progress-bar-filler" id="filler-${task[i].id}"></div>
                         </div>
-                        <p id="subtasks">${checked}/${Object.keys(task[i].subtask).length} Subtasks</p>
+                        <p id="subtasks">${checked}/${subtasklength} Subtasks</p>
                     </div>
 
                     <div class="contacts-section">
