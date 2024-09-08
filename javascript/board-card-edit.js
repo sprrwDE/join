@@ -15,7 +15,6 @@ function onload() {
   dropDown();
 }
 
-
 let BASE_URL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/";
 
 function loadContacts() {
@@ -353,11 +352,12 @@ function getDate() {
 function getSubtasks() {
   let subtasklist = document.getElementById("subtasklist");
   let subtask = subtasklist.getElementsByTagName("li");
-
+  let newsubtask = {};
 
   for (let i = 0; i < subtask.length; i++) {
-    tasks.subtask[subtask[i].innerHTML] = "inwork";
+    newsubtask[subtask[i].innerHTML] = "inwork";
   }
+  tasks.subtask = newsubtask
 }
 
 function requiredFieldsCheck() {
@@ -376,7 +376,7 @@ function requiredFieldsCheck() {
 
 function updateServer() {
   let cardId = document.getElementById("deliver-cardId").innerHTML;
-
+  tasks.id = cardId;
   fetch(BASE_URL + "/addTask/" + cardId + ".json", {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
@@ -389,8 +389,9 @@ function getAllInfos() {
   getDescription();
   getSubtasks();
   getDate();
+  console.log(tasks);
   if (requiredFieldsCheck() == true) {
-    // updateServer();
+    updateServer();
     setTimeout(() => {
       window.location.reload();
     }, 1000);
