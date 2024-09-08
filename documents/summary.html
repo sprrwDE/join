@@ -15,9 +15,10 @@
   <script src="../javascript/login.js"></script>
   <script src="../javascript/includeHTML.js"></script>
   <script src="../javascript/header.js"></script>
+  <script src="../javascript/summary.js"></script>
 </head>
 
-<body onload="init()">
+<body onload="init(), loadSummary()">
   <section id="log-in"></section>
   <section id="join-main-section">
     <div  class="wrapper-header" w3-include-html="./mobile-header.html"></div>
@@ -35,14 +36,14 @@
         <div class="to-do-box">
           <img class="to-do-img" src="../assets/img/eddit-icon.svg" alt="" />
           <div class="to-do-block">
-            <p id="to-do-counter" class="count-number">1</p>
+            <p id="to-do-counter" class="count-number"></p>
             <p>To-Do</p>
           </div>
         </div>
         <div class="to-do-box">
           <img class="to-do-img" src="../assets/img/check-icon.svg" alt="" />
           <div class="to-do-block">
-            <p id="done-counter" class="count-number">1</p>
+            <p id="done-counter" class="count-number"></p>
             <p>Done</p>
           </div>
         </div>
@@ -51,8 +52,8 @@
         <div class="arrow-urgent-box">
         <img class="arrow-up-icon" src="../assets/img/arrow-up-icon.svg" alt="Arrow-img" />
         <div class="urgent-box">
-          <p id="urgent-counter" class="count-number">1</p>
-          <p id="urgent-counter">Urgent</p>
+          <p id="urgent-counter" class="count-number"></p>
+          <p>Urgent</p>
         </div>
       </div>
         <div class="vertical-border"></div>
@@ -63,15 +64,15 @@
       </div>
       <div class="task-boxes-container">
         <div class="tasks-counter-box">
-          <p id="tasks-in-board-counter" class="count-number">5</p>
+          <p id="tasks-in-board-counter" class="count-number"></p>
           <p>Task in <br />Board</p>
         </div>
         <div class="tasks-counter-box">
-          <p id="tasks-in-progress-counter" class="count-number">5</p>
+          <p id="tasks-in-progress-counter" class="count-number"></p>
           <p>Task in <br />Progress</p>
         </div>
         <div class="tasks-counter-box">
-          <p id="awaiting-feedback-counter" class="count-number">5</p>
+          <p id="awaiting-feedback-counter" class="count-number"></p>
           <p>Awaiting <br />feedback</p>
         </div>
       </div>
