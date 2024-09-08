@@ -183,3 +183,10 @@ h1{
     display: none;
   }
 }
+
+@media (max-width:500px){
+  .to-do-box{
+    height: 95px;
+    width: 115px;
+  }
+}
