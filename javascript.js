@@ -103,5 +103,6 @@ function getContactInitials(name) {
   return [initialFirst, initialLast];
 }
 
-
-
+function stopPropagation(event) {
+  event.stopPropagation();
+}

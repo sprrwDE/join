@@ -8,36 +8,17 @@ const addButtonRef = document.getElementById('add-button');
 const editButtonRef = document.getElementById('edit-button');
 const editBoxRef = document.getElementById('edit-box');
 const editContactRef = document.getElementById('edit-contact');
+const detailHeaderMob = document.getElementById('mobile-overlay-detail')
 let currentSelectedElement = null;
 
-// Firebase References
-let baseUrl = 'https://join-318-default-rtdb.europe-west1.firebasedatabase.app/';
-let currentId;
-let isCurrentUser
+
 
 // Data Storage
 let db = [];
 let inputData;
 let organizedContacts = {};
-
-
-/**
- * Initializes Contact List
- */
-
-async function initializeContactList() {
-    init();
-    try {
-        db = [];  
-        await getData("contacts");  
-    } finally {
-        listContentRef.innerHTML = '';
-        renderContactGroups();
-        if (currentId) {
-            selectElement(currentId);
-        }
-    }
-}
+let currentId;
+let isCurrentUser
 
 /**
  * Renders Contact List into DOM
@@ -162,42 +143,6 @@ function openDetailDialog(name, email, phone, id, first, last, color, indexCard,
     }
 }
 
-function selectElement(contactId) {
-    const selectedElement = document.getElementById(`contact-card-${contactId}`);
-    if (!selectedElement) {
-        console.error(`Element mit ID contact-card-${contactId} konnte nicht gefunden werden.`);
-        return;
-    }
-    if (currentSelectedElement && currentSelectedElement !== selectedElement) {
-        currentSelectedElement.classList.remove('selected');
-    }
-    selectedElement.classList.add('selected');
-    currentSelectedElement = selectedElement;
-}
-
-function openDetailReferenceMob(name, email, phone, id, first, last, color, user) {
-    currentId = id; 
-    showDetail.classList.remove('d-none');
-    detailRef.classList.remove('d-none');
-    contactListRef.classList.add('d-none');
-    editButtonRef.classList.remove('d-none');
-    editBoxRef.classList.add('d-none');
-    addButtonRef.classList.add('d-none');
-    getDetailTemplateMob(name, email, phone, id, first, last, color, user);
-    selectElement(id);
-}
-
-function openDetailReferenceDesk(name, email, phone, id, first, last, color, user) {
-    console.log(user)
-    currentId = id;
-    document.getElementById('detail-desk').innerHTML = detailTemplate(name, email, phone, id, first, last, color, user);
-    selectElement(id);
-}
-
-function getDetailTemplateMob(name, email, phone, id, first, last, color, user) {
-    detailRef.innerHTML = detailTemplate(name, email, phone, id, first, last, color, user);
-}
-
 function closeDetailDialog() {
     showDetail.classList.add('d-none');
     detailRef.classList.add('d-none');
@@ -208,11 +153,54 @@ function closeDetailDialog() {
 }
 
 /**
+ * Desktop Detail
+ */
+
+function openDetailReferenceDesk(name, email, phone, id, first, last, color, user) {
+    currentId = id;
+    document.getElementById('detail-desk').innerHTML = detailTemplate(name, email, phone, id, first, last, color, user);
+    selectElement(id);
+}
+
+function selectElement(contactId) {
+    const selectedElement = document.getElementById(`contact-card-${contactId}`);
+    if (!selectedElement) {
+        return;
+    }
+    if (currentSelectedElement && currentSelectedElement !== selectedElement) {
+        currentSelectedElement.classList.remove('selected');
+    }
+    selectedElement.classList.add('selected');
+    currentSelectedElement = selectedElement;
+}
+
+/**
+ * Mobile Detail
+ */
+
+function openDetailReferenceMob(name, email, phone, id, first, last, color, user) {
+    currentId = id; 
+    mobileDetailDivs();
+    getDetailTemplateMob(name, email, phone, id, first, last, color, user);
+    selectElement(id);
+}
+
+function mobileDetailDivs() {
+    showDetail.classList.remove('d-none');
+    detailRef.classList.remove('d-none');
+    editButtonRef.classList.remove('d-none');
+    contactListRef.classList.add('d-none');
+    editBoxRef.classList.add('d-none');
+    addButtonRef.classList.add('d-none');
+}
+
+function getDetailTemplateMob(name, email, phone, id, first, last, color, user) {
+    detailRef.innerHTML = detailTemplate(name, email, phone, id, first, last, color, user);
+}
+
+/**
  * Edit / Delete
  */
-function stopPropagation(event) {
-    event.stopPropagation();
-}
 
 function showEditBox(event) {
     stopPropagation(event);
@@ -223,23 +211,13 @@ function hideEditBox() {
     editBoxRef.classList.add('d-none');
 }
 
-function closeEditContactDialog() {
-    editContactRef.classList.add('d-none');
-    contactListRef.classList.remove('d-none');
-    if (window.innerWidth <= 1024) {
-        listContentRef.classList.remove('d-none');
-    }
-}
-
 function openEditContactDialog(id, name, email, user) {
-    console.log("Editing user: ", user);
     editContactRef.classList.remove('d-none');
     editContactRef.innerHTML = showEditOverlay(name, email, user);
     currentId = id;
     
     const contact = db.find(contact => contact.id === currentId);
     isCurrentUser = contact.isUser; 
-    console.log("isCurrentUser: ", isCurrentUser);
     
     const nameInput = document.getElementById('edit-name');
     const emailInput = document.getElementById('edit-email');
@@ -285,26 +263,6 @@ function getUpdatedContactData() {
         return null;
     }
     return { nameIn, emailIn, phoneIn, color, isUser };
-}
-
-async function updateContact() {
-    const updatedData = getUpdatedContactData();
-    if (!updatedData) return;
-
-    const success = await sendUpdateRequest(currentId, updatedData);
-    if (success) {
-        updateLocalDatabase(currentId, updatedData);
-        closeEditContactDialog();
-        initializeContactList();
-        selectElement(currentId);
-        updateDetailView(updatedData);
-        
-        if (updatedData.isUser) {
-            await updateAccount();
-        }
-    } else {
-        alert("Fehler beim Aktualisieren des Kontakts.");
-    }
 }
 
 function updateLocalDatabase(contactId, updatedData) {
