@@ -7,6 +7,12 @@ input {
   border: unset;
 }
 
+:root {
+  --basic-blue: rgb(42, 54, 71);
+  --selected-blue: rgb(41, 171, 226);
+  --hover-blue: rgb(9, 25, 49);
+}
+
 button {
   cursor: pointer;
 }
@@ -83,7 +89,7 @@ textarea {
 .create-btn {
   padding: 16px;
   border-radius: 10px;
-  background-color: #2a3647;
+  background-color: var(--basic-blue);
   color: white;
   font-size: 21px;
   display: flex;
@@ -196,8 +202,13 @@ textarea {
   outline: none;
 }
 
-.contacts {
+.dropdown-warp {
+  position: relative;
   width: 100%;
+}
+
+.contacts {
+  width: 87%;
   padding: 12px 0px 12px 0px;
   background-color: white;
   border-bottom-left-radius: 10px;
@@ -206,7 +217,7 @@ textarea {
   flex-direction: column;
   height: auto;
   overflow-y: scroll;
-  position: relative;
+  position: absolute;
   z-index: 999;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
@@ -445,6 +456,8 @@ textarea {
   gap: 16px;
   display: flex;
   flex-direction: column;
+  overflow-y: scroll;
+  max-height: 130px;
 }
 
 .subtasks-list {
@@ -571,7 +584,7 @@ input[type="search"]::-webkit-search-results-decoration {
 
 .create-btn:hover {
   cursor: pointer;
-  background-color: rgb(41, 171, 226);
+  background-color: var(--hover-blue);
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
 

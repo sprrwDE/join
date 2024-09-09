@@ -1,6 +1,6 @@
 body {
   justify-content: center !important;
-  background-color: rgba(241, 228, 228, 0.4);
+  background-color: rgba(241, 228, 228, 0);
   flex-direction: row !important;
   align-items: center;
 }
@@ -16,7 +16,7 @@ p {
 
 .conten-container {
   width: 525px;
-  height: 100vh;
+  height: auto;
   border-radius: 30px;
   background-color: white;
   display: flex;

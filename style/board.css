@@ -5,6 +5,12 @@ body {
   overflow-x: hidden;
 }
 
+:root {
+  --basic-blue: rgb(42, 54, 71);
+  --selected-blue: rgb(41, 171, 226);
+  --hover-blue: rgb(9, 25, 49);
+}
+
 footer {
   height: 500px;
 }
@@ -54,9 +60,12 @@ p {
 
 .input-field {
   width: 364px;
-  height: 32px;
+  height: 34px;
   border: none;
   background-color: white;
+  outline: none;
+  font-size: 21px;
+  padding: 16px;
 }
 
 .search-btn {
@@ -118,6 +127,10 @@ h3 {
   height: 30px;
 }
 
+.add-btn:hover {
+  cursor: pointer;
+}
+
 .to-do-empty {
   background-color: rgb(231, 231, 231);
   height: 48px;
@@ -158,6 +171,20 @@ h3 {
   display: flex;
   flex-direction: column;
   margin-bottom: 16px;
+}
+
+.ticket-card:hover {
+  cursor: pointer;
+  animation: bigger 0.05s ease-in forwards;
+}
+
+@keyframes bigger {
+  0%{
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.05);
+  }
 }
 
 .pill-blue {
@@ -328,7 +355,7 @@ h3 {
     border-radius: 10px;
     padding: 8px, 16px, 8px, 16px;
     border: unset;
-    background-color: #2a3647;
+    background-color: var(--basic-blue);
     color: white;
     display: flex;
     justify-content: center;
@@ -336,6 +363,11 @@ h3 {
     font-size: 21px;
     font-weight: 700;
     gap: 4px;
+  }
+
+  .add-task:hover {
+    cursor: pointer;
+    background-color: var(--hover-blue);
   }
 
   .plus-img {
@@ -373,7 +405,7 @@ h3 {
   width: 80%;
   height: 80%;
   border: unset;
-  animation: slideanimation 0.7s forwards;
+  animation: slideanimation 0.7s forwards ease-in;
 }
 
 .background-grey {
@@ -403,10 +435,9 @@ h3 {
   }
 
   100% {
-    transform: translateX(0%);
+    transform: translateX(0);
   }
 }
-
 
 @keyframes slideanimation2 {
   0% {
