@@ -55,7 +55,6 @@ function deleteTask(id) {
   }
   deleteFromServer(id)
   window.parent.tasks = tasks;
-  console.log(tasks);
 }
 
 function deleteFromServer(id) {

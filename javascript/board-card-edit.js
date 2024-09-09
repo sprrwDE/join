@@ -389,7 +389,6 @@ function getAllInfos() {
   getDescription();
   getSubtasks();
   getDate();
-  console.log(tasks);
   if (requiredFieldsCheck() == true) {
     updateServer();
     setTimeout(() => {
