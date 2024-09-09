@@ -633,4 +633,8 @@ input::placeholder {
     .exit-detail {
         display: none;
     }
+
+    .contact-mobile-header-detail {
+        display: none;
+    }
 }

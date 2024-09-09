@@ -34,13 +34,12 @@ function getContactsTemplate(name, email, phone, contactId, first, last, color, 
  */
 
 function detailTemplate(name, email, phone, id, first, last, color, user) {
-    return `
-            <div class="contact-mobile-header">
+    return `<div class="contact-mobile-header-detail" id="mobile-overlay-detail">
                 <h2>Contacts</h2>
                 <div class="seperator-card-desk"></div>
                 <h3>Better with a team!</h3>
             </div>
-                <div class="exit-detail" id="exit-detail" onclick="closeDetailDialog()">
+    <div class="exit-detail" id="exit-detail" onclick="closeDetailDialog()">
         <img src="../assets/img/exit-detail.svg">
     </div>   
         <div class="contact-info-wrapper">

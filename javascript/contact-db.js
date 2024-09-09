@@ -1,3 +1,24 @@
+// Firebase References
+let baseUrl = 'https://join-318-default-rtdb.europe-west1.firebasedatabase.app/';
+
+/**
+ * Initializes Contact List
+ */
+
+async function initializeContactList() {
+    init();
+    try {
+        db = [];  
+        await getData("contacts");  
+    } finally {
+        listContentRef.innerHTML = '';
+        renderContactGroups();
+        if (currentId) {
+            selectElement(currentId);
+        }
+    }
+}
+
 /**
  * Loads Contact Firebase RealtimeDB
  */
@@ -15,7 +36,6 @@ async function getData(path) {
                 };
             });
             db.push(...contactsArray);
-            console.log(db)
         }
     } catch (error) {
         console.log('Fehler beim Abrufen der Daten:', error);
@@ -89,6 +109,26 @@ async function sendUpdateRequest(contactId, updatedData) {
     }
 }
 
+async function updateContact() {
+    const updatedData = getUpdatedContactData();
+    if (!updatedData) return;
+
+    const success = await sendUpdateRequest(currentId, updatedData);
+    if (success) {
+        updateLocalDatabase(currentId, updatedData);
+        closeEditContactDialog();
+        initializeContactList();
+        selectElement(currentId);
+        updateDetailView(updatedData);
+        
+        if (updatedData.isUser) {
+            await updateAccount();
+        }
+    } else {
+        alert("Fehler beim Aktualisieren des Kontakts.");
+    }
+}
+
 /**
  * Edits User in Firebase Realtime DB
  */
@@ -124,7 +164,6 @@ async function getUserData(path) {
 }
 
 async function updateAccount() {
-    console.log("Aktualisiere Benutzer...");
     try {
         const updatedData = getUpdatedContactData();
         let response = await fetch(`${baseUrl}curent-user.json`, {
@@ -138,7 +177,6 @@ async function updateAccount() {
         if (!response.ok) {
             throw new Error('Fehler beim Bearbeiten des Benutzerkontos');
         }
-        console.log("Benutzerkonto erfolgreich aktualisiert.");
         return true;
     } catch (error) {
         console.log('Fehler beim Aktualisieren des Benutzerkontos:', error);
