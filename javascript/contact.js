@@ -11,8 +11,6 @@ const editContactRef = document.getElementById('edit-contact');
 const detailHeaderMob = document.getElementById('mobile-overlay-detail')
 let currentSelectedElement = null;
 
-
-
 // Data Storage
 let db = [];
 let inputData;
@@ -21,7 +19,8 @@ let currentId;
 let isCurrentUser
 
 /**
- * Renders Contact List into DOM
+ * Renders Contact List into DOM.
+ * Clears the current list, organizes and sorts contacts, and renders them.
  */
 function renderContactGroups() {
     listContentRef.innerHTML = '';
@@ -31,6 +30,9 @@ function renderContactGroups() {
     renderContacts(organizedContacts);
 }
 
+/**
+ * Groups contacts by the initial letter of their names.
+ */
 function groupContactsByInitials() {
     for (let i = 0; i < db.length; i++) {
         let contact = db[i];
@@ -47,6 +49,9 @@ function groupContactsByInitials() {
     }
 }
 
+/**
+ * Sorts the contact groups alphabetically by their initials.
+ */
 function sortContactGroups() {
     const letters = Object.keys(organizedContacts);
     for (let i = 0; i < letters.length; i++) {
@@ -57,6 +62,11 @@ function sortContactGroups() {
     }
 }
 
+/**
+ * Renders the sorted contact groups into the DOM.
+ * 
+ * @param {Object} organizedContacts - The contacts organized by initials.
+ */
 function renderContacts(organizedContacts) {
     let sortedInitials = Object.keys(organizedContacts).sort();
     let globalIndex = 0;
@@ -68,32 +78,47 @@ function renderContacts(organizedContacts) {
     }
 }
 
+/**
+ * Renders an initial group of contacts into the DOM.
+ * 
+ * @param {string} initial - The initial letter of the group.
+ * @param {number} index - The index of the group.
+ * @param {Array} contacts - The contacts belonging to the group.
+ * @param {number} globalIndex - The global index of the contacts.
+ */
 function renderInitialGroup(initial, index, contacts, globalIndex) {
     listContentRef.innerHTML += contactTemplateInitial(initial, index);
     let currentContactRef = document.getElementById(`list-content-inner-${index}`);
     renderContactsForInitial(currentContactRef, contacts, globalIndex);
 }
 
+/**
+ * Renders the individual contacts for a specific initial group.
+ * 
+ * @param {HTMLElement} containerRef - The container to render the contacts in.
+ * @param {Array} contacts - The contacts to render.
+ * @param {number} globalIndex - The global index for contacts.
+ */
 function renderContactsForInitial(containerRef, contacts, globalIndex) {
     for (let i = 0; i < contacts.length; i++) {
         let contact = contacts[i];
-        let currentName = contact.nameIn;
-        let currentEmail = contact.emailIn;
-        let currentPhone = contact.phoneIn;
-        let initials = contact.initials;
-        let contactId = contact.id; 
-        let color = contact.color;
-        let indexCard = globalIndex + i;
-        let user = contact.isUser
-
-        containerRef.innerHTML += getContactsTemplate(currentName, currentEmail, currentPhone, contactId, initials[0], initials[initials.length - 1], color, indexCard, user);
+        containerRef.innerHTML += getContactsTemplate(
+            contact.nameIn, 
+            contact.emailIn, 
+            contact.phoneIn, 
+            contact.id, 
+            contact.initials[0], 
+            contact.initials[1], 
+            contact.color, 
+            globalIndex + i, 
+            contact.isUser
+        );
     }
 }
 
 /**
- * Add Contact Dialog
+ * Opens the "Add Contact" dialog.
  */
-
 function openAddContactDialog() {
     addDialogRef.classList.remove('d-none');
     addDialogRef.innerHTML = addDialogTemplate();
@@ -101,6 +126,9 @@ function openAddContactDialog() {
     addButtonRef.classList.add('d-none');
 }
 
+/**
+ * Closes the "Add Contact" dialog.
+ */
 function closeAddContactDialog() {
     addDialogRef.classList.add('d-none');
     contactListRef.classList.remove('d-none');
@@ -108,9 +136,9 @@ function closeAddContactDialog() {
 }
 
 /**
- * Add Contact Logic
+ * Gets input values for a new contact.
+ * Validates the input and stores it in `inputData`.
  */
-
 function getInputValues() {
     const nameInput = document.getElementById('name').value.trim();
     const emailInput = document.getElementById('email').value.trim();
@@ -133,7 +161,17 @@ function getInputValues() {
 }
 
 /**
- * Detail Dialog
+ * Opens the detail dialog for a contact.
+ * 
+ * @param {string} name - Contact's name.
+ * @param {string} email - Contact's email.
+ * @param {string} phone - Contact's phone number.
+ * @param {number} id - Contact's ID.
+ * @param {string} first - Contact's first initial.
+ * @param {string} last - Contact's last initial.
+ * @param {string} color - Contact's assigned color.
+ * @param {number} indexCard - The index of the contact card.
+ * @param {boolean} user - Whether the contact is the user.
  */
 function openDetailDialog(name, email, phone, id, first, last, color, indexCard, user) {
     if (window.innerWidth >= 1024) {
@@ -143,6 +181,9 @@ function openDetailDialog(name, email, phone, id, first, last, color, indexCard,
     }
 }
 
+/**
+ * Closes the detail dialog.
+ */
 function closeDetailDialog() {
     showDetail.classList.add('d-none');
     detailRef.classList.add('d-none');
@@ -153,15 +194,28 @@ function closeDetailDialog() {
 }
 
 /**
- * Desktop Detail
+ * Opens the desktop version of the detail view.
+ * 
+ * @param {string} name - Contact's name.
+ * @param {string} email - Contact's email.
+ * @param {string} phone - Contact's phone number.
+ * @param {number} id - Contact's ID.
+ * @param {string} first - Contact's first initial.
+ * @param {string} last - Contact's last initial.
+ * @param {string} color - Contact's assigned color.
+ * @param {boolean} user - Whether the contact is the user.
  */
-
 function openDetailReferenceDesk(name, email, phone, id, first, last, color, user) {
     currentId = id;
     document.getElementById('detail-desk').innerHTML = detailTemplate(name, email, phone, id, first, last, color, user);
     selectElement(id);
 }
 
+/**
+ * Selects a contact card element in the DOM.
+ * 
+ * @param {number} contactId - The ID of the contact to select.
+ */
 function selectElement(contactId) {
     const selectedElement = document.getElementById(`contact-card-${contactId}`);
     if (!selectedElement) {
@@ -175,9 +229,17 @@ function selectElement(contactId) {
 }
 
 /**
- * Mobile Detail
+ * Opens the mobile version of the detail view.
+ * 
+ * @param {string} name - Contact's name.
+ * @param {string} email - Contact's email.
+ * @param {string} phone - Contact's phone number.
+ * @param {number} id - Contact's ID.
+ * @param {string} first - Contact's first initial.
+ * @param {string} last - Contact's last initial.
+ * @param {string} color - Contact's assigned color.
+ * @param {boolean} user - Whether the contact is the user.
  */
-
 function openDetailReferenceMob(name, email, phone, id, first, last, color, user) {
     currentId = id; 
     mobileDetailDivs();
@@ -185,6 +247,9 @@ function openDetailReferenceMob(name, email, phone, id, first, last, color, user
     selectElement(id);
 }
 
+/**
+ * Toggles visibility of detail divs for mobile view.
+ */
 function mobileDetailDivs() {
     showDetail.classList.remove('d-none');
     detailRef.classList.remove('d-none');
@@ -194,23 +259,47 @@ function mobileDetailDivs() {
     addButtonRef.classList.add('d-none');
 }
 
+/**
+ * Populates the mobile detail template.
+ * 
+ * @param {string} name - The contact's name.
+ * @param {string} email - The contact's email.
+ * @param {string} phone - The contact's phone number.
+ * @param {number} id - The contact's ID.
+ * @param {string} first - The contact's first initial.
+ * @param {string} last - The contact's last initial.
+ * @param {string} color - The contact's color.
+ * @param {boolean} user - Is the contact a user?
+ */
 function getDetailTemplateMob(name, email, phone, id, first, last, color, user) {
     detailRef.innerHTML = detailTemplate(name, email, phone, id, first, last, color, user);
 }
 
 /**
- * Edit / Delete
+ * Displays the edit box for a contact.
+ * 
+ * @param {Event} event - The event that triggers the edit box.
  */
-
 function showEditBox(event) {
     stopPropagation(event);
     editBoxRef.classList.remove('d-none');
 }
 
+/**
+ * Hides the edit box.
+ */
 function hideEditBox() {
     editBoxRef.classList.add('d-none');
 }
 
+/**
+ * Opens the dialog to edit an existing contact.
+ * 
+ * @param {number} id - The contact's ID.
+ * @param {string} name - The contact's name.
+ * @param {string} email - The contact's email.
+ * @param {boolean} user - Is the contact a user?
+ */
 function openEditContactDialog(id, name, email, user) {
     editContactRef.classList.remove('d-none');
     editContactRef.innerHTML = showEditOverlay(name, email, user);
@@ -233,6 +322,9 @@ function openEditContactDialog(id, name, email, user) {
     }
 }
 
+/**
+ * Closes the edit contact dialog.
+ */
 function closeEditContactDialog() {
     editContactRef.classList.add('d-none');
     contactListRef.classList.remove('d-none');
@@ -248,9 +340,10 @@ function closeEditContactDialog() {
 }
 
 /**
- * Update Contact Logic
+ * Gets the updated contact data from the input fields.
+ * 
+ * @returns {Object|null} The updated contact data or null if validation fails.
  */
-
 function getUpdatedContactData() {
     const nameIn = document.getElementById('edit-name').value.trim();
     const emailIn = document.getElementById('edit-email').value.trim();
@@ -265,6 +358,12 @@ function getUpdatedContactData() {
     return { nameIn, emailIn, phoneIn, color, isUser };
 }
 
+/**
+ * Updates the local database with the new contact data.
+ * 
+ * @param {number} contactId - The contact's ID.
+ * @param {Object} updatedData - The updated contact data.
+ */
 function updateLocalDatabase(contactId, updatedData) {
     const contactIndex = db.findIndex(contact => contact.id === contactId);
     if (contactIndex > -1) {
@@ -272,6 +371,11 @@ function updateLocalDatabase(contactId, updatedData) {
     }
 }
 
+/**
+ * Updates the detail view with the new contact data.
+ * 
+ * @param {Object} updatedData - The updated contact data.
+ */
 function updateDetailView(updatedData) {
     const initials = getContactInitials(updatedData.nameIn);
     if (!showDetail.classList.contains('d-none')) {

@@ -1,10 +1,11 @@
 // Firebase References
+/** @type {string} */
 let baseUrl = 'https://join-318-default-rtdb.europe-west1.firebasedatabase.app/';
 
 /**
- * Initializes Contact List
+ * Initializes the contact list by fetching data from Firebase.
+ * Clears the existing list and renders contacts.
  */
-
 async function initializeContactList() {
     init();
     try {
@@ -20,9 +21,10 @@ async function initializeContactList() {
 }
 
 /**
- * Loads Contact Firebase RealtimeDB
+ * Fetches contact data from Firebase RealtimeDB.
+ * 
+ * @param {string} path - The path in the Firebase DB to fetch data from.
  */
-
 async function getData(path) {
     try {
         let response = await fetch(baseUrl + path + '.json');
@@ -43,9 +45,10 @@ async function getData(path) {
 }
 
 /**
- * Pushes Input Data into Contact Firebase RealtimeDB
+ * Pushes new contact data into Firebase RealtimeDB.
+ * 
+ * @param {Object} inputData - The contact data to push into the database.
  */
-
 async function pushData(inputData) {
     try {
         let response = await fetch(baseUrl + 'contacts.json', {
@@ -68,7 +71,9 @@ async function pushData(inputData) {
 }
 
 /**
- * Deletes Contact in Firebase DB
+ * Deletes a contact from Firebase RealtimeDB.
+ * 
+ * @param {number} contactId - The ID of the contact to delete.
  */
 async function deleteContact(contactId) {
     try {
@@ -87,9 +92,12 @@ async function deleteContact(contactId) {
 }
 
 /**
- * Updates Contact in Firebase Realtime DB
+ * Sends an update request to Firebase RealtimeDB for a specific contact.
+ * 
+ * @param {number} contactId - The ID of the contact to update.
+ * @param {Object} updatedData - The updated contact data.
+ * @returns {boolean} True if the request was successful, false otherwise.
  */
-
 async function sendUpdateRequest(contactId, updatedData) {
     try {
         let response = await fetch(baseUrl + `contacts/${contactId}.json`, {
@@ -109,6 +117,9 @@ async function sendUpdateRequest(contactId, updatedData) {
     }
 }
 
+/**
+ * Updates the contact information in Firebase RealtimeDB and local database.
+ */
 async function updateContact() {
     const updatedData = getUpdatedContactData();
     if (!updatedData) return;
@@ -129,12 +140,14 @@ async function updateContact() {
     }
 }
 
-/**
- * Edits User in Firebase Realtime DB
- */
+// User-related functions
 
+/** @type {Array<Object>} */
 let userDb;
 
+/**
+ * Initializes the user database by fetching user data from Firebase.
+ */
 async function initializeUsers() {
     try {
         userDb = [];
@@ -142,8 +155,13 @@ async function initializeUsers() {
     } catch (error) {
         console.log('Fehler beim Abrufen der Daten:', error);
     }
-} 
+}
 
+/**
+ * Fetches user data from Firebase RealtimeDB.
+ * 
+ * @param {string} path - The path in the Firebase DB to fetch user data from.
+ */
 async function getUserData(path) {
     try {
         let userResponse = await fetch(baseUrl + path + '.json');
@@ -163,6 +181,11 @@ async function getUserData(path) {
     }
 }
 
+/**
+ * Updates the user account data in Firebase RealtimeDB.
+ * 
+ * @returns {boolean} True if the update was successful, false otherwise.
+ */
 async function updateAccount() {
     try {
         const updatedData = getUpdatedContactData();

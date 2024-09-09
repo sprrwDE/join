@@ -1,7 +1,10 @@
 /**
- * Initial Circle
+ * Generates HTML for a contact group's initial letter and its container.
+ * 
+ * @param {string} initial - The initial letter of the contact group.
+ * @param {number} index - The index of the contact group.
+ * @returns {string} The HTML for the initial letter and container.
  */
-
 function contactTemplateInitial(initial, index) {
     return `
         <h2 class="initial-letter">${initial}</h2>
@@ -12,9 +15,19 @@ function contactTemplateInitial(initial, index) {
 }
 
 /**
- * Contact List
+ * Generates HTML for an individual contact card.
+ * 
+ * @param {string} name - The contact's name.
+ * @param {string} email - The contact's email.
+ * @param {string} phone - The contact's phone number.
+ * @param {number} contactId - The contact's ID.
+ * @param {string} first - The first initial of the contact.
+ * @param {string} last - The last initial of the contact.
+ * @param {string} color - The background color of the contact's avatar.
+ * @param {number} indexCard - The index of the contact card.
+ * @param {boolean} user - Whether the contact is the current user.
+ * @returns {string} The HTML for the contact card.
  */
-
 function getContactsTemplate(name, email, phone, contactId, first, last, color, indexCard, user) {
     return `
         <div class="list-card" id="contact-card-${contactId}" onclick="openDetailDialog('${name}', '${email}', '${phone}', '${contactId}', '${first}', '${last}', '${color}', '${indexCard}', ${user})">
@@ -30,9 +43,18 @@ function getContactsTemplate(name, email, phone, contactId, first, last, color, 
 }
 
 /**
- * Contact Detail
+ * Generates HTML for the contact detail view.
+ * 
+ * @param {string} name - The contact's name.
+ * @param {string} email - The contact's email.
+ * @param {string} phone - The contact's phone number.
+ * @param {number} id - The contact's ID.
+ * @param {string} first - The first initial of the contact.
+ * @param {string} last - The last initial of the contact.
+ * @param {string} color - The background color of the contact's avatar.
+ * @param {boolean} user - Whether the contact is the current user.
+ * @returns {string} The HTML for the contact detail view.
  */
-
 function detailTemplate(name, email, phone, id, first, last, color, user) {
     return `<div class="contact-mobile-header-detail" id="mobile-overlay-detail">
                 <h2>Contacts</h2>
@@ -72,9 +94,10 @@ function detailTemplate(name, email, phone, id, first, last, color, user) {
 }
 
 /**
- * Add Popup
+ * Generates HTML for the "Add Contact" dialog.
+ * 
+ * @returns {string} The HTML for the add contact dialog.
  */
-
 function addDialogTemplate() {
     return `
     <div class="contact-card add">
@@ -120,9 +143,10 @@ function addDialogTemplate() {
 }
 
 /**
- * Edit Popup
+ * Generates HTML for the "Edit Contact" dialog.
+ * 
+ * @returns {string} The HTML for the edit contact dialog.
  */
-
 function showEditOverlay() {
     return `
     <div class="contact-card add">
@@ -155,7 +179,7 @@ function showEditOverlay() {
         </div>
         <div class="btn-wrapper">
             <button class="btn cancel" onclick="closeEditContactDialog()">
-                Cancel‚
+                Cancel
                 <img src="../assets/img/contact-card/exit.svg">
             </button>
         <button class='btn create' onclick="updateContact(); if(isCurrentUser) { updateAccount(); }">
