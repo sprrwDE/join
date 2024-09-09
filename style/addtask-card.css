@@ -8,7 +8,6 @@ body {
   --hover-blue: rgb(9, 25, 49);
 }
 
-
 button,
 input {
   border: unset;
@@ -546,7 +545,6 @@ textarea {
   z-index: 999;
   position: absolute;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-
 }
 
 .categorys p:hover {
@@ -675,9 +673,9 @@ input[type="search"]::-webkit-search-results-decoration {
   }
 
   .clear-btn:hover {
-    border: 1px solid rgb(41, 171, 226);
+    border: 1px solid var(--selected-blue);
     box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
-    color: rgb(41, 171, 226);
+    color: var(--selected-blue);
   }
 
   .clear-btn:hover img {
@@ -687,4 +685,10 @@ input[type="search"]::-webkit-search-results-decoration {
 
 .arrow {
   padding: 10px;
+}
+
+.x-close:hover {
+  cursor: pointer;
+  background-color: rgb(238,238,238);
+  border-radius: 100%;
 }
