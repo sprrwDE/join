@@ -128,7 +128,7 @@ async function updateContact() {
     if (success) {
         updateLocalDatabase(currentId, updatedData);
         closeEditContactDialog();
-        initializeContactList();
+        await initializeContactList();
         selectElement(currentId);
         updateDetailView(updatedData);
         
