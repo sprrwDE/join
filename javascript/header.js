@@ -16,5 +16,5 @@ function renderUserName(result) {
   if (result) {
     document.getElementById('header-user-icon').innerHTML = `${firstLetter}`;  
   }
-  
 }       
+
