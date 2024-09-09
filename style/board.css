@@ -117,6 +117,7 @@ p {
   height: 32px;
   margin: 16px 0px;
   min-width: 250px;
+
 }
 
 h3 {
@@ -326,6 +327,7 @@ h3 {
     width: calc(100% - 232px);
     position: absolute;
     height: 100vh;
+    max-width: 1800px;
   }
 
   .content-container {
