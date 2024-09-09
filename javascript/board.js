@@ -368,10 +368,12 @@ function openAddTask(section) {
 function closeWindow(card) {
   let addtask = document.getElementById(card);
   let background = document.getElementById("background-grey");
+  setTimeout(() => {
+    background.classList.add("d-none");
+    addtask.remove();
+    loadTasks();
+  }, 100);
 
-  background.classList.add("d-none");
-  addtask.remove();
-  loadTasks();
 }
 
 function renderInfoCardHelper(sections, card, iframeDocument) {
@@ -456,7 +458,7 @@ function getAllSubtasks(card, iframeDocument) {
 
 function renderBoardCardButtons(id) {
   return `<div class="delete-edit">
-            <div class="delete" id="delete-btn-${id}" onclick="deleteTask('${id}')">
+            <div class="delete" id="delete-btn-${id}" onclick="deleteTask('${id}'), parent.closeWindow('card-infos')">
                 <img src="../assets/img/delete.svg" alt="">
                 <p>Delete</p>
             </div>
