@@ -10,6 +10,7 @@ async function loadSummary() {
   setTaskInProgress();
   setAwaitFeedback();
   setTaskInBoard();
+  getGreeting();
 }
 
 
@@ -20,6 +21,26 @@ async function loadAccounts() {
       amounts = result})
     .catch((error) => console.log('Fehler beim Abrufen der Daten:', error));
     
+}
+
+function getGreeting() {
+  const now = new Date();
+  const hour = now.getHours();
+  let greeting;
+
+  if (hour < 12) {
+      greeting = "Guten Morgen";
+  } else if (hour < 18) {
+      greeting = "Guten Tag";
+  } else {
+      greeting = "Guten Abend";
+  }
+
+  showGreeting(greeting);
+}
+
+function showGreeting(greeting) {
+  document.getElementById('greeting').innerHTML = `${greeting}`;
 }
 
 
