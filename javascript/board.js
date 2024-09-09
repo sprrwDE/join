@@ -607,3 +607,23 @@ function editTask() {
   card.id = "edit-card";
   card.src = "./board-card-edit.html";
 }
+
+function searchCard() {
+  addEventListener("keyup", () => {
+    let input = document.getElementById("search-field")
+    if (input.value.length >= 3) {
+      for (let i = 0; i < tasks.length; i++) {
+        let card = document.getElementById(`ticket-${tasks[i].id}`)
+        card.classList.add("d-none")
+        if (input.value == tasks[i].title || input.value == tasks[i].description) {
+          card.classList.remove("d-none")
+        }
+      }
+    } else {
+      for (let i = 0; i < tasks.length; i++) {
+        let card = document.getElementById(`ticket-${tasks[i].id}`)
+        card.classList.remove("d-none")
+      }
+    }
+  })
+}
