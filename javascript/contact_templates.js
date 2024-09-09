@@ -1,6 +1,7 @@
 /**
- * Templates
+ * Initial Circle
  */
+
 function contactTemplateInitial(initial, index) {
     return `
         <h2 class="initial-letter">${initial}</h2>
@@ -10,8 +11,11 @@ function contactTemplateInitial(initial, index) {
     `;
 }
 
-function getContactsTemplate(name, email, phone, contactId, first, last, color, indexCard, user) {
+/**
+ * Contact List
+ */
 
+function getContactsTemplate(name, email, phone, contactId, first, last, color, indexCard, user) {
     return `
         <div class="list-card" id="contact-card-${contactId}" onclick="openDetailDialog('${name}', '${email}', '${phone}', '${contactId}', '${first}', '${last}', '${color}', '${indexCard}', ${user})">
             <div class="card-image list-image" style="background-color: ${color}">
@@ -24,6 +28,10 @@ function getContactsTemplate(name, email, phone, contactId, first, last, color, 
         </div>
     `;
 }
+
+/**
+ * Contact Detail
+ */
 
 function detailTemplate(name, email, phone, id, first, last, color, user) {
     return `
@@ -63,6 +71,10 @@ function detailTemplate(name, email, phone, id, first, last, color, user) {
             </div>
         </div>`;
 }
+
+/**
+ * Add Popup
+ */
 
 function addDialogTemplate() {
     return `
@@ -108,7 +120,11 @@ function addDialogTemplate() {
     </div>`;
 }
 
-function showEditOverlay(name, email, user) {
+/**
+ * Edit Popup
+ */
+
+function showEditOverlay() {
     return `
     <div class="contact-card add">
     <div class="exit-wrapper">

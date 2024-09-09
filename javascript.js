@@ -88,14 +88,20 @@ function sendTolegalNoticeFromNavbar() {
   }
 }
 
+function getRandomColor() {
+  let randomNumber = Math.floor(Math.random() * 16777215);
+  let randomColor = "#" + randomNumber.toString(16).padStart(6, "0");
+  return randomColor;
+}
 
-
-
-
-
-
-
-
+function getContactInitials(name) {
+  let namesArray = name.trim().split(' ');
+  let lastName = namesArray[namesArray.length - 1];
+  let firstName = namesArray[0];
+  let initialFirst = firstName.charAt(0).toUpperCase();
+  let initialLast = lastName.charAt(0).toUpperCase();
+  return [initialFirst, initialLast];
+}
 
 
 

@@ -20,44 +20,13 @@ let db = [];
 let inputData;
 let organizedContacts = {};
 
+
 /**
- * Fetches Firebase RealtimeDB
+ * Initializes Contact List
  */
-function closeEditContactDialog() {
-    editContactRef.classList.add('d-none');
-    contactListRef.classList.remove('d-none');
-    if (window.innerWidth <= 1024) {
-        listContentRef.classList.remove('d-none');
-    }
-    const nameInput = document.getElementById('edit-name');
-    const emailInput = document.getElementById('edit-email');
-    const phoneInput = document.getElementById('edit-phone');
-    if (nameInput) nameInput.value = '';
-    if (emailInput) emailInput.value = '';
-    if (phoneInput) phoneInput.value = '';
-}
 
-async function getData(path) {
-    try {
-        let response = await fetch(baseUrl + path + '.json');
-        let data = await response.json();
-
-        if (data) {
-            let contactsArray = Object.entries(data).map(([key, value]) => {
-                return {
-                    id: key,  
-                    ...value
-                };
-            });
-            db.push(...contactsArray);
-            console.log(db)
-        }
-    } catch (error) {
-        console.log('Fehler beim Abrufen der Daten:', error);
-    }
-}
-
-async function initialize() {
+async function initializeContactList() {
+    init();
     try {
         db = [];  
         await getData("contacts");  
@@ -84,7 +53,7 @@ function renderContactGroups() {
 function groupContactsByInitials() {
     for (let i = 0; i < db.length; i++) {
         let contact = db[i];
-        let initials = getInitials(contact.nameIn);
+        let initials = getContactInitials(contact.nameIn);
         let letter = initials[1];
 
         if (!organizedContacts[letter]) {
@@ -143,6 +112,7 @@ function renderContactsForInitial(containerRef, contacts, globalIndex) {
 /**
  * Add Contact Dialog
  */
+
 function openAddContactDialog() {
     addDialogRef.classList.remove('d-none');
     addDialogRef.innerHTML = addDialogTemplate();
@@ -157,8 +127,9 @@ function closeAddContactDialog() {
 }
 
 /**
- * Push Data from input-fields into Firebase Database
+ * Add Contact Logic
  */
+
 function getInputValues() {
     const nameInput = document.getElementById('name').value.trim();
     const emailInput = document.getElementById('email').value.trim();
@@ -178,36 +149,6 @@ function getInputValues() {
     };
 
     pushData(inputData);
-}
-
-async function pushData(inputData) {
-    try {
-        let response = await fetch(baseUrl + 'contacts.json', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(inputData)
-        });
-
-        if (!response.ok) {
-            throw new Error('Fehler beim Pushen der Daten');
-        }
-
-        closeAddContactDialog();
-        initialize();
-    } catch (error) {
-        console.log('Fehler beim Pushen der Daten', error);
-    }
-}
-
-function getInitials(name) {
-    let namesArray = name.trim().split(' ');
-    let lastName = namesArray[namesArray.length - 1];
-    let firstName = namesArray[0];
-    let initialFirst = firstName.charAt(0).toUpperCase();
-    let initialLast = lastName.charAt(0).toUpperCase();
-    return [initialFirst, initialLast];
 }
 
 /**
@@ -266,12 +207,6 @@ function closeDetailDialog() {
     listContentRef.classList.remove('d-none');
 }
 
-function getRandomColor() {
-    let randomNumber = Math.floor(Math.random() * 16777215);
-    let randomColor = "#" + randomNumber.toString(16).padStart(6, "0");
-    return randomColor;
-}
-
 /**
  * Edit / Delete
  */
@@ -302,9 +237,8 @@ function openEditContactDialog(id, name, email, user) {
     editContactRef.innerHTML = showEditOverlay(name, email, user);
     currentId = id;
     
-    // Verwende den `isUser`-Status direkt vom Kontakt, statt `isCurrentUser` manuell zu setzen
     const contact = db.find(contact => contact.id === currentId);
-    isCurrentUser = contact.isUser; // Setze den Status erneut aus dem Kontaktobjekt
+    isCurrentUser = contact.isUser; 
     console.log("isCurrentUser: ", isCurrentUser);
     
     const nameInput = document.getElementById('edit-name');
@@ -321,45 +255,36 @@ function openEditContactDialog(id, name, email, user) {
     }
 }
 
+function closeEditContactDialog() {
+    editContactRef.classList.add('d-none');
+    contactListRef.classList.remove('d-none');
+    if (window.innerWidth <= 1024) {
+        listContentRef.classList.remove('d-none');
+    }
+    const nameInput = document.getElementById('edit-name');
+    const emailInput = document.getElementById('edit-email');
+    const phoneInput = document.getElementById('edit-phone');
+    if (nameInput) nameInput.value = '';
+    if (emailInput) emailInput.value = '';
+    if (phoneInput) phoneInput.value = '';
+}
+
+/**
+ * Update Contact Logic
+ */
 
 function getUpdatedContactData() {
     const nameIn = document.getElementById('edit-name').value.trim();
     const emailIn = document.getElementById('edit-email').value.trim();
     const phoneIn = document.getElementById('edit-phone').value.trim();
     const color = getRandomColor();
-    const isUser = isCurrentUser; // Nutze den aktualisierten isCurrentUser-Wert
+    const isUser = isCurrentUser; 
     
     if (!nameIn || !emailIn || !phoneIn) {
         alert('Bitte füllen Sie alle Felder aus.');
         return null;
     }
     return { nameIn, emailIn, phoneIn, color, isUser };
-}
-
-async function sendUpdateRequest(contactId, updatedData) {
-    try {
-        let response = await fetch(baseUrl + `contacts/${contactId}.json`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(updatedData)
-        });
-        if (!response.ok) {
-            throw new Error('Fehler beim Bearbeiten des Kontakts');
-        }
-        return true;
-    } catch (error) {
-        console.log('Fehler beim Bearbeiten des Kontakts', error);
-        return false;
-    }
-}
-
-function updateLocalDatabase(contactId, updatedData) {
-    const contactIndex = db.findIndex(contact => contact.id === contactId);
-    if (contactIndex > -1) {
-        db[contactIndex] = { id: contactId, ...updatedData };
-    }
 }
 
 async function updateContact() {
@@ -370,11 +295,10 @@ async function updateContact() {
     if (success) {
         updateLocalDatabase(currentId, updatedData);
         closeEditContactDialog();
-        initialize();
+        initializeContactList();
         selectElement(currentId);
         updateDetailView(updatedData);
         
-        // Prüfe, ob es sich um den aktuellen Benutzer handelt und rufe `updateAccount` auf
         if (updatedData.isUser) {
             await updateAccount();
         }
@@ -383,8 +307,15 @@ async function updateContact() {
     }
 }
 
+function updateLocalDatabase(contactId, updatedData) {
+    const contactIndex = db.findIndex(contact => contact.id === contactId);
+    if (contactIndex > -1) {
+        db[contactIndex] = { id: contactId, ...updatedData };
+    }
+}
+
 function updateDetailView(updatedData) {
-    const initials = getInitials(updatedData.nameIn);
+    const initials = getContactInitials(updatedData.nameIn);
     if (!showDetail.classList.contains('d-none')) {
         getDetailTemplateMob(
             updatedData.nameIn,
@@ -406,81 +337,4 @@ function updateDetailView(updatedData) {
         initials[1], 
         updatedData.color
     );
-}
-
-/**
- * Delete
- */
-async function deleteContact(contactId) {
-    try {
-        let response = await fetch(baseUrl + `contacts/${contactId}.json`, {
-            method: 'DELETE'
-        });
-        if (!response.ok) {
-            throw new Error('Fehler beim Löschen des Kontakts');
-        }
-        closeDetailDialog();
-        initialize();
-    } catch (error) {
-        console.log('Fehler beim Löschen des Kontakts', error);
-    }
-    document.getElementById('detail-desk').innerHTML = '';
-}
-
-/**
- * Edit User
- */
-
-let userDb;
-
-async function initializeUsers() {
-    try {
-        userDb = [];
-        await getUserData("curent-user");
-    } catch (error) {
-        console.log('Fehler beim Abrufen der Daten:', error);
-    }
-} 
-
-async function getUserData(path) {
-    try {
-        let userResponse = await fetch(baseUrl + path + '.json');
-        let userData = await userResponse.json();
-
-        if (userData) {
-            let userArray = Object.entries(userData).map(([key, value]) => {
-                return {
-                    userId: key,
-                    ...value
-                };
-            });
-            userDb.push(...userArray);
-            console.log(userDb)
-        }
-    } catch (error) {
-        console.log('Fehler beim Abrufen der Daten:', error);
-    }
-}
-
-async function updateAccount() {
-    console.log("Aktualisiere Benutzer...");
-    try {
-        const updatedData = getUpdatedContactData();
-        let response = await fetch(`${baseUrl}curent-user.json`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(updatedData)
-        });
-
-        if (!response.ok) {
-            throw new Error('Fehler beim Bearbeiten des Benutzerkontos');
-        }
-        console.log("Benutzerkonto erfolgreich aktualisiert.");
-        return true;
-    } catch (error) {
-        console.log('Fehler beim Aktualisieren des Benutzerkontos:', error);
-        return false;
-    }
 }
