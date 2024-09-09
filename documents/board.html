@@ -18,12 +18,13 @@
 <body onload="initBoard()" id="body">
     <div class="background-grey d-none" id="background-grey"></div>
     <div class="wrapper-header" w3-include-html="./mobile-header.html"></div>
-    
+
     <div class="content-wrap">
         <div class="top-wrapper">
             <div class="top-section">
                 <h1 class="top-section-title">Board</h1>
-                <img src="../assets/img/plus add task mobile.svg" alt="" class="add-task-btn" onclick="openAddTask('todo')">
+                <img src="../assets/img/plus add task mobile.svg" alt="" class="add-task-btn"
+                    onclick="openAddTask('todo')">
             </div>
             <div class="search-wrap">
                 <div class="search-section">
@@ -31,7 +32,8 @@
                     <img src="../assets/img/Vector 3.svg" alt="" class="seperator">
                     <button class="search-btn"><img src="../assets/img/search.svg" alt=""></button>
                 </div>
-                <button class="add-task" onclick="openAddTask('todo')">Add task <img src="../assets/img/plus_white.svg" alt="" class="plus-img"></button>
+                <button class="add-task" onclick="openAddTask('todo')">Add task <img src="../assets/img/plus_white.svg"
+                        alt="" class="plus-img"></button>
             </div>
         </div>
         <div class="content-container">
@@ -39,11 +41,13 @@
                 ondragover="allowDrop(event); highlight('todo')">
                 <div class="section-title">
                     <h3>To do</h3>
-                    <img src="../assets/img/plus button mobile.svg" alt="" class="add-btn" onclick="openAddTask('todo')">
+                    <img src="../assets/img/plus button mobile.svg" alt="" class="add-btn"
+                        onclick="openAddTask('todo')">
                 </div>
-
-                <div class="to-do-empty d-none" id="todo-empty">
-                    <p>No tasks To do</p>
+                <div class="all-tasks" id="todo-card">
+                    <div class="to-do-empty d-none" id="todo-empty">
+                        <p>No tasks To do</p>
+                    </div>
                 </div>
             </div>
 
@@ -51,12 +55,14 @@
                 ondragleave="removeHighlight('inprogress')" ondragover="allowDrop(event); highlight('inprogress')">
                 <div class="section-title">
                     <h3>In progress</h3>
-                    <img src="../assets/img/plus button mobile.svg" alt="" class="add-btn" onclick="openAddTask('inprogress')">
+                    <img src="../assets/img/plus button mobile.svg" alt="" class="add-btn"
+                        onclick="openAddTask('inprogress')">
                 </div>
-                <div class="to-do-empty d-none" id="inprogress-empty">
-                    <p>No tasks To do</p>
+                <div class="all-tasks" id="inprogress-card">
+                    <div class="to-do-empty d-none" id="inprogress-empty">
+                        <p>No tasks To do</p>
+                    </div>
                 </div>
-
             </div>
 
 
@@ -65,13 +71,14 @@
                 ondragover="allowDrop(event); highlight('awaitfeedback')">
                 <div class="section-title">
                     <h3>Await feedback</h3>
-                    <img src="../assets/img/plus button mobile.svg" alt="" class="add-btn" onclick="openAddTask('awaitfeedback')">
+                    <img src="../assets/img/plus button mobile.svg" alt="" class="add-btn"
+                        onclick="openAddTask('awaitfeedback')">
                 </div>
-
-                <div class="to-do-empty d-none" id="awaitfeedback-empty">
-                    <p>No tasks To do</p>
+                <div class="all-tasks" id="awaitfeedback-card">
+                    <div class="to-do-empty d-none" id="awaitfeedback-empty">
+                        <p>No tasks To do</p>
+                    </div>
                 </div>
-
                 <div class="tickets">
 
 
@@ -82,16 +89,17 @@
                 <div class="section-title">
                     <h3>Done</h3>
                 </div>
-
-                <div class="to-do-empty d-none" id="done-empty">
-                    <p>No tasks To do</p>
+                <div class="all-tasks" id="done-card">
+                    <div class="to-do-empty d-none" id="done-empty">
+                        <p>No tasks To do</p>
+                    </div>
                 </div>
             </div>
         </div>
 
     </div>
     <div w3-include-html="./mobile-navbar.html"></div>
-    
+
 </body>
 
 

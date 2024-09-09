@@ -188,7 +188,7 @@ function renderHelper(section) {
       allTasks[i].color = ""
     }
 
-    document.getElementById(section).innerHTML += renderToDos(allTasks, subtaskslength.length, i, category, prio, checked);
+    document.getElementById(`${section}-card`).innerHTML += renderToDos(allTasks, subtaskslength.length, i, category, prio, checked);
     let inits = getInitails(i, allTasks);
     for (let j = 0; j < inits.length; j++) {
       let contact = document.getElementById(`contact-images${allTasks[i].id}`);
