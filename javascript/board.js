@@ -617,7 +617,8 @@ function searchCard() {
       for (let i = 0; i < tasks.length; i++) {
         let card = document.getElementById(`ticket-${tasks[i].id}`)
         card.classList.add("d-none")
-        if (input.value == tasks[i].title || input.value == tasks[i].description) {
+        if (tasks[i].title.toLowerCase().includes(input.value.toLowerCase()) ||
+          tasks[i].description.toLowerCase().includes(input.value.toLowerCase())) {
           card.classList.remove("d-none")
         }
       }
