@@ -81,6 +81,10 @@ header span{
   opacity: 1; /* Voll sichtbar */
 }
 
+.font-color-blue{
+  color: #29ABE2;
+}
+
 @media (min-width:1025px){
   header span{
     display: block;

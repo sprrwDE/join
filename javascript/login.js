@@ -102,8 +102,26 @@ function changeInputType(inputID,spanID){
     <img onclick="changeInputType('${inputID}', '${spanID}')" src="./assets/img/visibility_off.svg" alt="open-eye">`;} 
 }
 
-function logInAsGuest(){
+async function logInAsGuest(){
+  await setNoCurrentUser();
   window.location.href='./documents/summary.html';
+  
+}
+
+async function setNoCurrentUser() {
+  let userName = 'Guest';
+  try {
+    const response = await fetch(currentUserURL, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ nameIn: `${userName}`}),
+    });
+    if (!response.ok) {
+      throw new Error('Fehler beim Posten der Daten');
+    }
+  } catch (error) {
+    console.error('Fehler beim Posten des aktuellen Benutzers:', error);
+  }
 }
 
 function loadSignUp(){

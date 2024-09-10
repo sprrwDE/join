@@ -33,6 +33,10 @@ main {
   padding: 0 24px
 }
 
+.font-color-blue{
+  color: #29ABE2;
+}
+
 /* Link Styling */
 
 a {
