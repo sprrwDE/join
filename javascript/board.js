@@ -315,7 +315,7 @@ function subtaskChecked(i, alltask) {
   return checked;
 }
 
-function renderToDos(task, subtasklength, i, categoryColor, prio, checked) { 
+function renderToDos(task, subtasklength, i, categoryColor, prio, checked) {
   return `<div class="ticket-card" id="ticket-${task[i].id}" draggable="true" onclick="openCard('${task[i].id}')"
         ondragstart="startDragging('${task[i].id}')">
         <div class="top-part" id="top-part">
@@ -323,7 +323,7 @@ function renderToDos(task, subtasklength, i, categoryColor, prio, checked) {
                 <p>${task[i].category}</p>
             </div>
             <div class="dropdown">
-                 <img src="../assets/img/3dots.svg" alt="" class="dots" onclick="openMenu('${task[i].id}', event)">
+                 <img src="../assets/img/3dots.svg" alt="" id="dots-${task[i].id}" class="dots" onclick="openMenu('${task[i].id}', event)">
               <div id="myDropdown-${task[i].id}" class="dropdown-content">
                 <a onclick="stopEventPropagation(event); changeSections('todo','${task[i].id}');">To do</a>
                 <a onclick="stopEventPropagation(event); changeSections('inprogress', '${task[i].id}');">In progress</a>
@@ -352,8 +352,8 @@ function renderToDos(task, subtasklength, i, categoryColor, prio, checked) {
 }
 
 function changeSections(section, id) {
-  currentDraggedElement = id
-  moveTo(section)
+  currentDraggedElement = id;
+  moveTo(section);
 }
 
 function renderContactsImages(inits, allcolors, j) {
@@ -656,36 +656,35 @@ function searchCard() {
   });
 }
 
-
 function openMenu(id, event) {
-  // Stoppe das Event-Bubbling
+  let dots = document.getElementById(`dots-${id}`);
+  dots.src = "../assets/img/3drots-blue.svg";
   event.stopPropagation();
 
-  // Zuerst alle offenen Dropdown-Menüs schließen
-  var dropdowns = document.getElementsByClassName("dropdown-content");
-  for (var i = 0; i < dropdowns.length; i++) {
+  let dropdowns = document.getElementsByClassName("dropdown-content");
+  for (let i = 0; i < dropdowns.length; i++) {
     if (dropdowns[i].classList.contains("show") && dropdowns[i].id !== `myDropdown-${id}`) {
       dropdowns[i].classList.remove("show");
     }
   }
-
-  // Das angeklickte Dropdown-Menü öffnen oder schließen
   document.getElementById(`myDropdown-${id}`).classList.toggle("show");
 }
 
-// Schließen des Dropdown-Menüs, wenn außerhalb geklickt wird
 window.onclick = function (event) {
+  let allDots = document.getElementsByClassName("dots");
+  for (let x = 0; x < allDots.length; x++) {
+    allDots[x].src = "../assets/img/3dots.svg";
+  }
   if (!event.target.matches(".dots")) {
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    for (var i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
+    let dropdowns = document.getElementsByClassName("dropdown-content");
+    for (let i = 0; i < dropdowns.length; i++) {
+      let openDropdown = dropdowns[i];
       if (openDropdown.classList.contains("show")) {
         openDropdown.classList.remove("show");
       }
     }
   }
 };
-
 
 function stopEventPropagation(event) {
   event.stopPropagation();
