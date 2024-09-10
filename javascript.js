@@ -88,12 +88,23 @@ function sendTolegalNoticeFromNavbar() {
   }
 }
 
+/**
+ * Generates a random hexadecimal color code.
+ * 
+ * @returns {string} A random color in hexadecimal format (e.g., "#a1b2c3").
+ */
 function getRandomColor() {
   let randomNumber = Math.floor(Math.random() * 16777215);
   let randomColor = "#" + randomNumber.toString(16).padStart(6, "0");
   return randomColor;
 }
 
+/**
+ * Extracts the initials from a full name.
+ * 
+ * @param {string} name - The full name of the contact.
+ * @returns {Array<string>} An array containing the initials of the first and last name.
+ */
 function getContactInitials(name) {
   let namesArray = name.trim().split(' ');
   let lastName = namesArray[namesArray.length - 1];
@@ -103,6 +114,12 @@ function getContactInitials(name) {
   return [initialFirst, initialLast];
 }
 
+/**
+ * Stops the propagation of an event.
+ * 
+ * @param {Event} event - The event to stop propagation for.
+ */
 function stopPropagation(event) {
   event.stopPropagation();
 }
+

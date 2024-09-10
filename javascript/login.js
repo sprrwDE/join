@@ -32,7 +32,7 @@ async function postCurrentUser(userName, userEmail) {
     const response = await fetch(currentUserURL, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ nameIn: `${userName}`, emailIn: `${userEmail}`}),
+      body: JSON.stringify({ nameIn: `${userName}`, emailIn: `${userEmail}`, phoneIn: ''}),
     });
     if (!response.ok) {
       throw new Error('Fehler beim Posten der Daten');

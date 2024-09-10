@@ -27,7 +27,7 @@ button {
 }
 
 .background {
-  background-color: rgb(42, 54, 71) !important;
+  background-color: var(--basic-blue) !important;
   color: white;
 }
 
