@@ -370,6 +370,10 @@ h3 {
     background-color: var(--hover-blue);
   }
 
+  .add-task:focus {
+    background-color: var(--selected-blue);
+  }
+
   .plus-img {
     width: 32px;
     height: 32px;
