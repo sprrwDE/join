@@ -99,7 +99,7 @@ function detailTemplate(name, email, phone, id, first, last, color, user) {
  * @returns {string} The HTML for the add contact dialog.
  */
 function addDialogTemplate() {
-    return `
+    return html`
     <div class="contact-card add">
         <div class="exit-wrapper">
             <img class="exit" src="../assets/img/contact-card/close.svg" onclick="closeAddContactDialog()">
@@ -113,7 +113,7 @@ function addDialogTemplate() {
         <div class="card-image-outter">
             <div class="card-image"><img src="../assets/img/contact-card/avatar.svg"></div>
         </div>
-        <div class="card-body">
+        <form class="card-body form" id="contactForm">
             <div class="input-wrapper">
                 <div class="input-container">
                     <input type="text" required placeholder="Name" id="name">
@@ -129,16 +129,16 @@ function addDialogTemplate() {
                 </div>
             </div>
             <div class="btn-wrapper">
-                <button class="btn cancel" onclick="closeAddContactDialog()">
+                <button class="btn cancel" onclick="closeAddContactDialog(event)">
                     Cancel
                     <img src="../assets/img/contact-card/exit.svg">
                 </button>
-                <button class='btn create' onclick="getInputValues()">
+                <button class="btn create" onclick="getInputValues(event)">
                     Create contact
                     <img src="../assets/img/contact-card/check.svg">
                 </button>
             </div>
-        </div>
+        </form>
     </div>`;
 }
 
@@ -162,7 +162,7 @@ function showEditOverlay() {
     <div class="card-image-outter">
         <div class="card-image"><img src="../assets/img/contact-card/avatar.svg"></div>
     </div>
-    <div class="card-body">
+    <form class="card-body form">
         <div class="input-wrapper">
             <div class="input-container">
                 <input type="text" required placeholder="Name" id="edit-name">
@@ -186,6 +186,6 @@ function showEditOverlay() {
             Save changes
             <img src="../assets/img/contact-card/check.svg">
         </button>
-    </div>
+    </form>
 </div>`
 }

@@ -122,21 +122,36 @@ async function sendUpdateRequest(contactId, updatedData) {
  */
 async function updateContact() {
     const updatedData = getUpdatedContactData();
-    if (!updatedData) return;
 
-    const success = await sendUpdateRequest(currentId, updatedData);
-    if (success) {
-        updateLocalDatabase(currentId, updatedData);
-        closeEditContactDialog();
-        await initializeContactList();
-        selectElement(currentId);
-        updateDetailView(updatedData);
-        
-        if (updatedData.isUser) {
-            await updateAccount();
+    // Führe die Validierung durch, bevor du fortfährst
+    if (!updatedData) {
+        return; // Bei ungültigen Eingaben wird die Funktion abgebrochen
+    }
+
+    // Führe die Validierung durch
+    const isValid = validateInput(updatedData.nameIn, updatedData.emailIn, updatedData.phoneIn);
+    if (!isValid) {
+        return; // Bei Validierungsfehler wird die Funktion abgebrochen
+    }
+
+    try {
+        const success = await sendUpdateRequest(currentId, updatedData);
+        if (success) {
+            updateLocalDatabase(currentId, updatedData);
+            closeEditContactDialog();
+            
+            // Aktualisiere die Kontaktliste und die Detailansicht
+            await refreshContactListAndView(currentId, updatedData);
+
+            // Überprüfe, ob der aktualisierte Kontakt der Benutzer selbst ist
+            if (updatedData.isUser) {
+                await updateAccount();
+            }
+        } else {
+            throw new Error("Fehler beim Aktualisieren des Kontakts.");
         }
-    } else {
-        alert("Fehler beim Aktualisieren des Kontakts.");
+    } catch (error) {
+        alert(error.message);
     }
 }
 

@@ -103,14 +103,14 @@ function renderContactsForInitial(containerRef, contacts, globalIndex) {
     for (let i = 0; i < contacts.length; i++) {
         let contact = contacts[i];
         containerRef.innerHTML += getContactsTemplate(
-            contact.nameIn, 
-            contact.emailIn, 
-            contact.phoneIn, 
-            contact.id, 
-            contact.initials[0], 
-            contact.initials[1], 
-            contact.color, 
-            globalIndex + i, 
+            contact.nameIn,
+            contact.emailIn,
+            contact.phoneIn,
+            contact.id,
+            contact.initials[0],
+            contact.initials[1],
+            contact.color,
+            globalIndex + i,
             contact.isUser
         );
     }
@@ -139,17 +139,18 @@ function closeAddContactDialog() {
  * Gets input values for a new contact.
  * Validates the input and stores it in `inputData`.
  */
-function getInputValues() {
+function getInputValues(event) {
+    event.preventDefault(); // Verhindert das Abschicken des Formulars
+
     const nameInput = document.getElementById('name').value.trim();
     const emailInput = document.getElementById('email').value.trim();
     const phoneInput = document.getElementById('phone').value.trim();
 
-    if (!nameInput || !emailInput || !phoneInput) {
-        alert('Bitte füllen Sie alle Felder aus.');
-        return;
+    if (!validateInput(nameInput, emailInput, phoneInput)) {
+        return; // Bei Validierungsfehler Funktion beenden
     }
 
-    inputData = {
+    const inputData = {
         nameIn: nameInput,
         emailIn: emailInput,
         phoneIn: phoneInput,
@@ -241,7 +242,7 @@ function selectElement(contactId) {
  * @param {boolean} user - Whether the contact is the user.
  */
 function openDetailReferenceMob(name, email, phone, id, first, last, color, user) {
-    currentId = id; 
+    currentId = id;
     mobileDetailDivs();
     getDetailTemplateMob(name, email, phone, id, first, last, color, user);
     selectElement(id);
@@ -304,10 +305,10 @@ function openEditContactDialog(id, name, email, user) {
     editContactRef.classList.remove('d-none');
     editContactRef.innerHTML = showEditOverlay(name, email, user);
     currentId = id;
-    
+
     const contact = db.find(contact => contact.id === currentId);
-    isCurrentUser = contact.isUser; 
-    
+    isCurrentUser = contact.isUser;
+
     const nameInput = document.getElementById('edit-name');
     const emailInput = document.getElementById('edit-email');
     const phoneInput = document.getElementById('edit-phone');
@@ -349,12 +350,12 @@ function getUpdatedContactData() {
     const emailIn = document.getElementById('edit-email').value.trim();
     const phoneIn = document.getElementById('edit-phone').value.trim();
     const color = getRandomColor();
-    const isUser = isCurrentUser; 
-    
-    if (!nameIn || !emailIn || !phoneIn) {
-        alert('Bitte füllen Sie alle Felder aus.');
-        return null;
+    const isUser = isCurrentUser;
+
+    if (!validateInput(nameIn, emailIn, phoneIn)) {
+        return null; // Validierung fehlgeschlagen
     }
+
     return { nameIn, emailIn, phoneIn, color, isUser };
 }
 
@@ -383,7 +384,7 @@ function updateDetailView(updatedData) {
             updatedData.nameIn,
             updatedData.emailIn,
             updatedData.phoneIn,
-            currentId,  
+            currentId,
             initials[0],
             initials[1],
             updatedData.color
@@ -394,9 +395,72 @@ function updateDetailView(updatedData) {
         updatedData.nameIn,
         updatedData.emailIn,
         updatedData.phoneIn,
-        currentId,  
-        initials[0],   
-        initials[1], 
+        currentId,
+        initials[0],
+        initials[1],
         updatedData.color
     );
+}
+
+// Eventuell in global JS schieben?
+
+/**
+ * Validates the input data for a contact.
+ * Checks if all fields are filled, the email is in correct format,
+ * and the phone number is valid.
+ * 
+ * @param {string} name - The name of the contact.
+ * @param {string} email - The email address of the contact.
+ * @param {string} phone - The phone number of the contact.
+ * @returns {boolean} - Returns `true` if all inputs are valid, otherwise `false`.
+ */
+function validateInput(name, email, phone) {
+    if (!isNotEmpty(name, email, phone)) {
+        alert('Please fill in all fields.');
+        return false;
+    }
+
+    if (!isValidEmail(email)) {
+        alert('Please enter a valid email address.');
+        return false;
+    }
+
+    if (!isValidPhone(phone)) {
+        alert('Please enter a valid phone number.');
+        return false;
+    }
+
+    return true; // All validations passed
+}
+
+/**
+ * Checks if all provided fields are not empty.
+ * 
+ * @param {...string} fields - A list of fields to check.
+ * @returns {boolean} - Returns `true` if all fields are non-empty, otherwise `false`.
+ */
+function isNotEmpty(...fields) {
+    return fields.every(field => field.trim() !== '');
+}
+
+/**
+ * Validates an email address.
+ * 
+ * @param {string} email - The email address to validate.
+ * @returns {boolean} - Returns `true` if the email is valid, otherwise `false`.
+ */
+function isValidEmail(email) {
+    const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return re.test(String(email).toLowerCase());
+}
+
+/**
+ * Validates a phone number.
+ * 
+ * @param {string} phone - The phone number to validate.
+ * @returns {boolean} - Returns `true` if the phone number has at least 10 digits, otherwise `false`.
+ */
+function isValidPhone(phone) {
+    const re = /^[0-9]{10,}$/;
+    return re.test(phone);
 }

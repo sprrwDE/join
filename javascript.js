@@ -122,3 +122,4 @@ function getContactInitials(name) {
 function stopPropagation(event) {
   event.stopPropagation();
 }
+
