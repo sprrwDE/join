@@ -16,15 +16,15 @@ function allowDrop(event) {
 }
 
 function helpAmount() {
-  let sections = ["todo", "inprogress", "awaitfeedback", "done"]
+  let sections = ["todo", "inprogress", "awaitfeedback", "done"];
   for (let i = 0; i < sections.length; i++) {
-    let section = getAmounthelper(sections[i])
-    amounts[sections[i]] = section
+    let section = getAmounthelper(sections[i]);
+    amounts[sections[i]] = section;
   }
 }
 
 function getAmountsOfAllSections() {
-  helpAmount()
+  helpAmount();
   let urgent = getUrgentNumber();
   amounts["urgent"] = urgent;
   uploadAmount();
@@ -167,28 +167,35 @@ function renderHelper(section) {
   let allTasks = tasks.filter((t) => t["status"] == section);
   for (let i = 0; i < allTasks.length; i++) {
     let category = getCategory(allTasks[i].category);
-    let cleaned = isEmpty(allTasks[i])
+    let cleaned = isEmpty(allTasks[i]);
     if (cleaned.description == false) {
       allTasks[i].description = "";
     }
     if (!cleaned.prio == false) {
       prio = getPrio(i, allTasks);
     } else {
-      prio = "noprio.svg"
+      prio = "noprio.svg";
     }
-    let checked = 0
+    let checked = 0;
     if (!cleaned.subtask == false) {
       checked = subtaskChecked(i, allTasks[i]);
       count = getCheckedSubtasks(allTasks[i]);
       subtaskslength = Object.values(allTasks[i].subtask);
     } else {
-      subtaskslength = []
+      subtaskslength = [];
     }
     if (cleaned.color == false) {
-      allTasks[i].color = ""
+      allTasks[i].color = "";
     }
 
-    document.getElementById(`${section}-card`).innerHTML += renderToDos(allTasks, subtaskslength.length, i, category, prio, checked);
+    document.getElementById(`${section}-card`).innerHTML += renderToDos(
+      allTasks,
+      subtaskslength.length,
+      i,
+      category,
+      prio,
+      checked
+    );
     let inits = getInitails(i, allTasks);
     for (let j = 0; j < inits.length; j++) {
       let contact = document.getElementById(`contact-images${allTasks[i].id}`);
@@ -198,29 +205,28 @@ function renderHelper(section) {
     if (!subtaskslength.length == 0) {
       renderProgressBar(count, subtaskslength.length, allTasks[i].id);
     } else {
-      document.getElementById(`progress-bar-section${allTasks[i].id}`).classList.add("d-none")
+      document.getElementById(`progress-bar-section${allTasks[i].id}`).classList.add("d-none");
     }
   }
 }
 
 function isEmpty(task) {
-
   if (task.assignedto == "") {
-    task.assignedto = false
+    task.assignedto = false;
   }
   if (task.color == "") {
-    task.color = false
+    task.color = false;
   }
   if (task.description == "") {
-    task.description = false
+    task.description = false;
   }
   if (task.prio == "") {
-    task.prio = false
+    task.prio = false;
   }
   if (Object.keys(task.subtask) == "") {
-    task.subtask = false
+    task.subtask = false;
   }
-  return task
+  return task;
 }
 
 function renderProgressBar(count, length, id) {
@@ -261,7 +267,7 @@ function getColors(i, allTasks) {
   }
 
   if (color == "") {
-    allcolors = "white"
+    allcolors = "white";
   } else {
     allcolors = color.match(/rgb\(\d{1,3},\s*\d{1,3},\s*\d{1,3}\)/g);
   }
@@ -294,7 +300,7 @@ function getInitails(i, allTasks) {
     }
     return inits;
   } else {
-    return []
+    return [];
   }
 }
 
@@ -309,31 +315,45 @@ function subtaskChecked(i, alltask) {
   return checked;
 }
 
-function renderToDos(task, subtasklength, i, categoryColor, prio, checked) {
-  return `<div class="ticket-card" id="ticket-${task[i].id}" draggable="true" onclick="openCard('${task[i].id
-    }')" ondragstart="startDragging('${task[i].id}')">
-                    <div class="${categoryColor}" id="pill">
-                        <p>${task[i].category}</p>
-                    </div>
+function renderToDos(task, subtasklength, i, categoryColor, prio, checked) { 
+  return `<div class="ticket-card" id="ticket-${task[i].id}" draggable="true" onclick="openCard('${task[i].id}')"
+        ondragstart="startDragging('${task[i].id}')">
+        <div class="top-part" id="top-part">
+            <div class="${categoryColor}" id="pill">
+                <p>${task[i].category}</p>
+            </div>
+            <div class="dropdown">
+                 <img src="../assets/img/3dots.svg" alt="" class="dots" onclick="openMenu('${task[i].id}', event)">
+              <div id="myDropdown-${task[i].id}" class="dropdown-content">
+                <a onclick="stopEventPropagation(event); changeSections('todo','${task[i].id}');">To do</a>
+                <a onclick="stopEventPropagation(event); changeSections('inprogress', '${task[i].id}');">In progress</a>
+                <a onclick="stopEventPropagation(event); changeSections('awaitfeedback', '${task[i].id}');">Await feedback</a>
+                <a onclick="stopEventPropagation(event); changeSections('done','${task[i].id}');">Done</a>
+              </div>
+            </div>
+        </div>
+        <div class="title-notice">
+            <p id="ticket-title">${task[i].title}</p>
+            <p class="ticket-notice" id="ticket-notice">${task[i].description}</p>
+        </div>
 
-                    <div class="title-notice">
-                        <p id="ticket-title">${task[i].title}</p>
-                        <p id="ticket-notice">${task[i].description}</p>
-                    </div>
+        <div class="progress-bar-section" id="progress-bar-section${task[i].id}">
+            <div class="progress-bar">
+                <div class="progress-bar-filler" id="filler-${task[i].id}"></div>
+            </div>
+            <p id="subtasks">${checked}/${subtasklength} Subtasks</p>
+        </div>
 
-                    <div class="progress-bar-section" id="progress-bar-section${task[i].id}">
-                        <div class="progress-bar">
-                            <div class="progress-bar-filler" id="filler-${task[i].id}"></div>
-                        </div>
-                        <p id="subtasks">${checked}/${subtasklength} Subtasks</p>
-                    </div>
+        <div class="contacts-section">
+            <div class="contacts" id="contact-images${task[i].id}"></div>
+            <img src="../assets/img/${prio}" alt="" />
+        </div>
+    </div>`;
+}
 
-                    <div class="contacts-section">
-                        <div class="contacts" id="contact-images${task[i].id}">
-                        </div>
-                        <img src="../assets/img/${prio}" alt="">
-                    </div>
-                </div>`;
+function changeSections(section, id) {
+  currentDraggedElement = id
+  moveTo(section)
 }
 
 function renderContactsImages(inits, allcolors, j) {
@@ -359,10 +379,14 @@ function emptySection() {
 }
 
 function openAddTask(section) {
-  let body = document.getElementById("body");
-  let background = document.getElementById("background-grey");
-  background.classList.remove("d-none");
-  body.innerHTML += `<iframe class="add-task-card" name="${section}" id="whole-addtask-card" src="./addtask-card.html"></iframe>`;
+  if (window.innerWidth > 1024) {
+    let body = document.getElementById("body");
+    let background = document.getElementById("background-grey");
+    background.classList.remove("d-none");
+    body.innerHTML += `<iframe class="add-task-card" name="${section}" id="whole-addtask-card" src="./addtask-card.html"></iframe>`;
+  } else {
+    window.location.href = "./addtask.html";
+  }
 }
 
 function closeWindow(card) {
@@ -373,7 +397,6 @@ function closeWindow(card) {
     addtask.remove();
     loadTasks();
   }, 100);
-
 }
 
 function renderInfoCardHelper(sections, card, iframeDocument) {
@@ -612,21 +635,58 @@ function editTask() {
 
 function searchCard() {
   addEventListener("keyup", () => {
-    let input = document.getElementById("search-field")
+    let input = document.getElementById("search-field");
     if (input.value.length >= 3) {
       for (let i = 0; i < tasks.length; i++) {
-        let card = document.getElementById(`ticket-${tasks[i].id}`)
-        card.classList.add("d-none")
-        if (tasks[i].title.toLowerCase().includes(input.value.toLowerCase()) ||
-          tasks[i].description.toLowerCase().includes(input.value.toLowerCase())) {
-          card.classList.remove("d-none")
+        let card = document.getElementById(`ticket-${tasks[i].id}`);
+        card.classList.add("d-none");
+        if (
+          tasks[i].title.toLowerCase().includes(input.value.toLowerCase()) ||
+          tasks[i].description.toLowerCase().includes(input.value.toLowerCase())
+        ) {
+          card.classList.remove("d-none");
         }
       }
     } else {
       for (let i = 0; i < tasks.length; i++) {
-        let card = document.getElementById(`ticket-${tasks[i].id}`)
-        card.classList.remove("d-none")
+        let card = document.getElementById(`ticket-${tasks[i].id}`);
+        card.classList.remove("d-none");
       }
     }
-  })
+  });
+}
+
+
+function openMenu(id, event) {
+  // Stoppe das Event-Bubbling
+  event.stopPropagation();
+
+  // Zuerst alle offenen Dropdown-Menüs schließen
+  var dropdowns = document.getElementsByClassName("dropdown-content");
+  for (var i = 0; i < dropdowns.length; i++) {
+    if (dropdowns[i].classList.contains("show") && dropdowns[i].id !== `myDropdown-${id}`) {
+      dropdowns[i].classList.remove("show");
+    }
+  }
+
+  // Das angeklickte Dropdown-Menü öffnen oder schließen
+  document.getElementById(`myDropdown-${id}`).classList.toggle("show");
+}
+
+// Schließen des Dropdown-Menüs, wenn außerhalb geklickt wird
+window.onclick = function (event) {
+  if (!event.target.matches(".dots")) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    for (var i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains("show")) {
+        openDropdown.classList.remove("show");
+      }
+    }
+  }
+};
+
+
+function stopEventPropagation(event) {
+  event.stopPropagation();
 }
