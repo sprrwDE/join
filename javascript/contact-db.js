@@ -118,37 +118,37 @@ async function sendUpdateRequest(contactId, updatedData) {
 }
 
 /**
- * Updates the contact information in Firebase RealtimeDB and local database.
+ * Updates the contact information in Firebase RealtimeDB and the local database.
+ * Validates the updated contact data, sends the update request, updates the local
+ * contact list, selects the updated contact, updates the contact detail view, and
+ * updates the user account if necessary.
+ * 
+ * @async
+ * @function updateContact
+ * @returns {Promise<void>} Nothing is returned; the function handles asynchronous operations.
  */
-async function updateContact() {
+async function updateContact(event) {
+    if (event) {
+        event.preventDefault();  // Verhindert, dass das Formular automatisch gesendet wird
+    }
+
     const updatedData = getUpdatedContactData();
-
-    // Führe die Validierung durch, bevor du fortfährst
-    if (!updatedData) {
-        return; // Bei ungültigen Eingaben wird die Funktion abgebrochen
-    }
-
-    // Führe die Validierung durch
-    const isValid = validateInput(updatedData.nameIn, updatedData.emailIn, updatedData.phoneIn);
-    if (!isValid) {
-        return; // Bei Validierungsfehler wird die Funktion abgebrochen
-    }
+    if (!updatedData) return;
 
     try {
         const success = await sendUpdateRequest(currentId, updatedData);
         if (success) {
             updateLocalDatabase(currentId, updatedData);
             closeEditContactDialog();
-            
-            // Aktualisiere die Kontaktliste und die Detailansicht
-            await refreshContactListAndView(currentId, updatedData);
+            await initializeContactList();
+            selectElement(currentId);
+            updateDetailView(updatedData);
 
-            // Überprüfe, ob der aktualisierte Kontakt der Benutzer selbst ist
             if (updatedData.isUser) {
                 await updateAccount();
             }
         } else {
-            throw new Error("Fehler beim Aktualisieren des Kontakts.");
+            alert("Fehler beim Aktualisieren des Kontakts.");
         }
     } catch (error) {
         alert(error.message);

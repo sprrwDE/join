@@ -99,7 +99,7 @@ function detailTemplate(name, email, phone, id, first, last, color, user) {
  * @returns {string} The HTML for the add contact dialog.
  */
 function addDialogTemplate() {
-    return html`
+    return `
     <div class="contact-card add">
         <div class="exit-wrapper">
             <img class="exit" src="../assets/img/contact-card/close.svg" onclick="closeAddContactDialog()">
@@ -165,15 +165,15 @@ function showEditOverlay() {
     <form class="card-body form">
         <div class="input-wrapper">
             <div class="input-container">
-                <input type="text" required placeholder="Name" id="edit-name">
+                <input type="text" required placeholder="Name" id="edit-name" value="">
                 <img class="icon" src="../assets/img/contact-card/person.svg">
             </div>
             <div class="input-container">
-                <input type="text" required placeholder="Email" id="edit-email">
+                <input type="text" required placeholder="Email" id="edit-email" value="">
                 <img class="icon" src="../assets/img/contact-card/mail.svg">
             </div>
             <div class="input-container">
-                <input type="text" required placeholder="Phone" id="edit-phone">
+                <input type="text" required placeholder="Phone" id="edit-phone" value="">
                 <img class="icon" src="../assets/img/contact-card/call.svg">
             </div>
         </div>
@@ -182,10 +182,10 @@ function showEditOverlay() {
                 Cancel
                 <img src="../assets/img/contact-card/exit.svg">
             </button>
-        <button class='btn create' onclick="updateContact(); if(isCurrentUser) { updateAccount(); }">
-            Save changes
-            <img src="../assets/img/contact-card/check.svg">
-        </button>
+            <button class='btn create' onclick="updateContact(event); if(isCurrentUser) { updateAccount(); }">
+                Save changes
+                <img src="../assets/img/contact-card/check.svg">
+            </button>
     </form>
 </div>`
 }

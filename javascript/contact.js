@@ -304,23 +304,30 @@ function hideEditBox() {
 function openEditContactDialog(id, name, email, user) {
     editContactRef.classList.remove('d-none');
     editContactRef.innerHTML = showEditOverlay(name, email, user);
-    currentId = id;
 
+    currentId = id;
     const contact = db.find(contact => contact.id === currentId);
     isCurrentUser = contact.isUser;
 
     const nameInput = document.getElementById('edit-name');
     const emailInput = document.getElementById('edit-email');
     const phoneInput = document.getElementById('edit-phone');
-    if (contact && nameInput && emailInput && phoneInput) {
-        nameInput.value = contact.nameIn;
-        emailInput.value = contact.emailIn;
-        phoneInput.value = contact.phoneIn;
-    }
 
-    if (window.innerWidth <= 1024) {
-        listContentRef.classList.add('d-none');
-    }
+    // Delay to ensure DOM is fully loaded
+    setTimeout(() => {
+        if (contact && nameInput && emailInput && phoneInput) {
+            nameInput.value = contact.nameIn;
+            emailInput.value = contact.emailIn;
+            phoneInput.value = contact.phoneIn;
+        }
+
+        // Log the input values to ensure they are set correctly
+        console.log("Edit dialog values: ", {
+            name: nameInput.value,
+            email: emailInput.value,
+            phone: phoneInput.value
+        });
+    }, 100); // Delay of 100ms to ensure DOM is updated
 }
 
 /**
@@ -349,15 +356,22 @@ function getUpdatedContactData() {
     const nameIn = document.getElementById('edit-name').value.trim();
     const emailIn = document.getElementById('edit-email').value.trim();
     const phoneIn = document.getElementById('edit-phone').value.trim();
+
+    // Debugging: Überprüfe, ob die Werte korrekt ausgelesen werden
+    console.log("Name input:", nameIn);
+    console.log("Email input:", emailIn);
+    console.log("Phone input:", phoneIn);
+
+    if (!validateInput(nameIn, emailIn, phoneIn)) {
+        return null;  // Validation failed
+    }
+
     const color = getRandomColor();
     const isUser = isCurrentUser;
 
-    if (!validateInput(nameIn, emailIn, phoneIn)) {
-        return null; // Validierung fehlgeschlagen
-    }
-
     return { nameIn, emailIn, phoneIn, color, isUser };
 }
+
 
 /**
  * Updates the local database with the new contact data.
@@ -402,6 +416,8 @@ function updateDetailView(updatedData) {
     );
 }
 
+///
+///
 // Eventuell in global JS schieben?
 
 /**
@@ -415,6 +431,8 @@ function updateDetailView(updatedData) {
  * @returns {boolean} - Returns `true` if all inputs are valid, otherwise `false`.
  */
 function validateInput(name, email, phone) {
+    console.log("Validating input:", { name, email, phone });
+
     if (!isNotEmpty(name, email, phone)) {
         alert('Please fill in all fields.');
         return false;
@@ -432,6 +450,7 @@ function validateInput(name, email, phone) {
 
     return true; // All validations passed
 }
+
 
 /**
  * Checks if all provided fields are not empty.
