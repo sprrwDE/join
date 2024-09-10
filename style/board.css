@@ -104,7 +104,7 @@ p {
   flex-direction: column;
 }
 
-.all-tasks{
+.all-tasks {
   display: flex;
   gap: 16px;
   overflow-x: scroll;
@@ -320,7 +320,38 @@ h3 {
   }
 }
 
+.card-info {
+  width: 90%;
+  height: 931px;
+  position: fixed;
+  z-index: 999999;
+  border-radius: 30px;
+  left: 50%;
+  top: 50%;
+  border: unset;
+  animation: slideanimation2 0.7s forwards;
+  border-radius: 30px;
+}
+
+.background-grey {
+  width: 100% !important;
+  height: 100% !important;
+  position: fixed
+}
+
 @media (min-width: 1025px) {
+  .card-info {
+    width: 525px;
+    height: 931px;
+    position: fixed;
+    z-index: 999999;
+    border-radius: 30px;
+    left: 50%;
+    top: 50%;
+    border: unset;
+    animation: slideanimation2 0.7s forwards;
+  }
+
   .content-wrap {
     display: flex;
     left: 232px;
@@ -446,17 +477,7 @@ h3 {
   top: 0;
 }
 
-.card-info {
-  width: 525px;
-  height: 931px;
-  position: fixed;
-  z-index: 999999;
-  border-radius: 30px;
-  left: 50%;
-  top: 50%;
-  border: unset;
-  animation: slideanimation2 0.7s forwards;
-}
+
 
 @keyframes slideanimation {
   0% {
