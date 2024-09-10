@@ -108,8 +108,9 @@ p {
 
 .all-tasks {
   display: flex;
-  gap: 16px;
+  gap: 21px;
   overflow-x: scroll;
+  padding: 21px;
 }
 
 .section-title {
