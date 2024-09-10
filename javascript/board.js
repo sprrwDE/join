@@ -188,7 +188,7 @@ function renderHelper(section) {
       allTasks[i].color = ""
     }
 
-    document.getElementById(section).innerHTML += renderToDos(allTasks, subtaskslength.length, i, category, prio, checked);
+    document.getElementById(`${section}-card`).innerHTML += renderToDos(allTasks, subtaskslength.length, i, category, prio, checked);
     let inits = getInitails(i, allTasks);
     for (let j = 0; j < inits.length; j++) {
       let contact = document.getElementById(`contact-images${allTasks[i].id}`);
@@ -617,7 +617,8 @@ function searchCard() {
       for (let i = 0; i < tasks.length; i++) {
         let card = document.getElementById(`ticket-${tasks[i].id}`)
         card.classList.add("d-none")
-        if (input.value == tasks[i].title || input.value == tasks[i].description) {
+        if (tasks[i].title.toLowerCase().includes(input.value.toLowerCase()) ||
+          tasks[i].description.toLowerCase().includes(input.value.toLowerCase())) {
           card.classList.remove("d-none")
         }
       }
