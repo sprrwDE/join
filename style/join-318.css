@@ -67,6 +67,12 @@ h1{
   border-radius: 20px;
   gap: 10px;
 }
+.to-do-box:hover,
+.deadline-container:hover,
+.tasks-counter-box:hover{
+  background-color: #091931;
+  color: white;
+}
 .to-do-img{
   height: 40px;
   width: 40px;
