@@ -120,11 +120,24 @@ function renderContactsForInitial(containerRef, contacts, globalIndex) {
  * Opens the "Add Contact" dialog.
  */
 function openAddContactDialog() {
-    addDialogRef.classList.remove('d-none');
-    addDialogRef.innerHTML = addDialogTemplate();
-    editButtonRef.classList.add('d-none');
-    addButtonRef.classList.add('d-none');
+    const addContactRef = document.getElementById('add-contact');
+    
+    // Setze den HTML-Inhalt für das Add Contact-Dialog
+    addContactRef.innerHTML = addDialogTemplate();
+    
+    // Entferne sicherheitshalber die 'd-none'-Klasse, damit die Sektion sichtbar wird
+    addContactRef.classList.remove('d-none');
+    
+    // Füge die Animation hinzu, um das Einfliegen von unten zu aktivieren
+    const contactCard = addContactRef.querySelector('.contact-card.add');
+    contactCard.classList.add('animate-from-bottom');
+    
+    // Entferne die Animationsklasse nach dem Abspielen der Animation
+    contactCard.addEventListener('animationend', function() {
+        contactCard.classList.remove('animate-from-bottom');
+    });
 }
+
 
 /**
  * Closes the "Add Contact" dialog.
@@ -325,32 +338,47 @@ function hideEditBox() {
  * @param {boolean} user - Is the contact a user?
  */
 function openEditContactDialog(id, name, email, user) {
+    // Entferne die d-none Klasse, um die Sektion anzuzeigen
     editContactRef.classList.remove('d-none');
+    
+    // Fülle den HTML-Inhalt für das Edit-Overlay
     editContactRef.innerHTML = showEditOverlay(name, email, user);
 
+    // Setze die aktuelle ID und finde den Kontakt in der Datenbank
     currentId = id;
     const contact = db.find(contact => contact.id === currentId);
     isCurrentUser = contact.isUser;
 
+    // Referenzen zu den Eingabefeldern
     const nameInput = document.getElementById('edit-name');
     const emailInput = document.getElementById('edit-email');
     const phoneInput = document.getElementById('edit-phone');
 
-    // Delay to ensure DOM is fully loaded
+    // Verzögerung, um sicherzustellen, dass der DOM vollständig geladen ist
     setTimeout(() => {
         if (contact && nameInput && emailInput && phoneInput) {
+            // Setze die Werte in die Eingabefelder
             nameInput.value = contact.nameIn;
             emailInput.value = contact.emailIn;
             phoneInput.value = contact.phoneIn;
         }
 
-        // Log the input values to ensure they are set correctly
+        // Logge die Werte zur Überprüfung
         console.log("Edit dialog values: ", {
             name: nameInput.value,
             email: emailInput.value,
             phone: phoneInput.value
         });
-    }, 100); // Delay of 100ms to ensure DOM is updated
+    }, 100); // Verzögerung von 100ms
+
+    // Füge die Animation hinzu, um das Einfliegen von unten zu aktivieren
+    const contactCard = editContactRef.querySelector('.contact-card.add');
+    contactCard.classList.add('animate-from-bottom');
+    
+    // Entferne die Animationsklasse nach der Animation
+    contactCard.addEventListener('animationend', function() {
+        contactCard.classList.remove('animate-from-bottom');
+    });
 }
 
 /**

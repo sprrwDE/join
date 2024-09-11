@@ -97,12 +97,7 @@
 /* Contact Overlay */
 
 .contact-overlay-desk {
-    display: block;
-    position: fixed;
-    left: calc(232px + 35%);
-    height: 100%;
-    top: 80px;
-    background-color: lightgrey !important;
+    display: none;
 }
 
 .animate-detail {
@@ -217,6 +212,9 @@
     right: 0;
     background: rgba(0, 0, 0, 0.1);
     z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .contact-card {
@@ -224,14 +222,11 @@
     flex-direction: column;
     width: 90%;
     height: 760px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     border-radius: 30px;
     box-shadow: 0px 0px 4px 0px #0000001A;
     background-color: white;
     z-index: 999;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
 }
 
 .exit-wrapper {
@@ -491,6 +486,15 @@ input::placeholder {
         margin-top: 48px;
     }
 
+    .contact-overlay-desk {
+        display: block;
+        position: fixed;
+        left: calc(232px + 35%);
+        height: 100%;
+        top: 80px;
+        background-color: lightgrey !important;
+    }
+
     .cancel {
         border: 1px solid #2A3647;
         color: #2A3647;
@@ -661,4 +665,19 @@ input::placeholder {
         transform: translateX(0);
         opacity: 1;
     }
+}
+
+@keyframes slideInFromBottom {
+    0% {
+        transform: translateY(100%); /* Startpunkt: Unterhalb des Bildschirms */
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0); /* Endpunkt: Normale Position */
+        opacity: 1;
+    }
+}
+
+.animate-from-bottom {
+    animation: slideInFromBottom 0.5s ease-in-out;
 }

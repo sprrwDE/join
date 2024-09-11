@@ -112,15 +112,15 @@ function addDialogTemplate() {
         <form class="card-body form" id="contactForm">
             <div class="input-wrapper">
                 <div class="input-container">
-                    <input type="text" required placeholder="Name" id="name">
+                    <input type="text" required placeholder="Name" id="name" name="name">
                     <img class="icon" src="../assets/img/contact-card/person.svg">
                 </div>
                 <div class="input-container">
-                    <input type="text" required placeholder="Email" id="email">
+                    <input type="text" required placeholder="Email" id="email" name="email">
                     <img class="icon" src="../assets/img/contact-card/mail.svg">
                 </div>
                 <div class="input-container">
-                    <input type="text" required placeholder="Phone" id="phone">
+                    <input type="text" required placeholder="Phone" id="phone" name="phone">
                     <img class="icon" src="../assets/img/contact-card/call.svg">
                 </div>
             </div>
@@ -161,15 +161,15 @@ function showEditOverlay() {
     <form class="card-body form">
         <div class="input-wrapper">
             <div class="input-container">
-                <input type="text" required placeholder="Name" id="edit-name" value="">
+                <input type="text" required placeholder="Name" id="edit-name" name="name" value="">
                 <img class="icon" src="../assets/img/contact-card/person.svg">
             </div>
             <div class="input-container">
-                <input type="text" required placeholder="Email" id="edit-email" value="">
+                <input type="text" required placeholder="Email" id="edit-email" name="email" value="">
                 <img class="icon" src="../assets/img/contact-card/mail.svg">
             </div>
             <div class="input-container">
-                <input type="text" required placeholder="Phone" id="edit-phone" value="">
+                <input type="text" required placeholder="Phone" id="edit-phone" name="phone" value="">
                 <img class="icon" src="../assets/img/contact-card/call.svg">
             </div>
         </div>
