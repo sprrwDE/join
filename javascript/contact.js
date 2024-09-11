@@ -138,7 +138,6 @@ function openAddContactDialog() {
     });
 }
 
-
 /**
  * Closes the "Add Contact" dialog.
  */
@@ -338,44 +337,29 @@ function hideEditBox() {
  * @param {boolean} user - Is the contact a user?
  */
 function openEditContactDialog(id, name, email, user) {
-    // Entferne die d-none Klasse, um die Sektion anzuzeigen
     editContactRef.classList.remove('d-none');
     
-    // Fülle den HTML-Inhalt für das Edit-Overlay
     editContactRef.innerHTML = showEditOverlay(name, email, user);
 
-    // Setze die aktuelle ID und finde den Kontakt in der Datenbank
     currentId = id;
     const contact = db.find(contact => contact.id === currentId);
     isCurrentUser = contact.isUser;
 
-    // Referenzen zu den Eingabefeldern
     const nameInput = document.getElementById('edit-name');
     const emailInput = document.getElementById('edit-email');
     const phoneInput = document.getElementById('edit-phone');
 
-    // Verzögerung, um sicherzustellen, dass der DOM vollständig geladen ist
     setTimeout(() => {
         if (contact && nameInput && emailInput && phoneInput) {
-            // Setze die Werte in die Eingabefelder
             nameInput.value = contact.nameIn;
             emailInput.value = contact.emailIn;
             phoneInput.value = contact.phoneIn;
         }
+    }, 100); 
 
-        // Logge die Werte zur Überprüfung
-        console.log("Edit dialog values: ", {
-            name: nameInput.value,
-            email: emailInput.value,
-            phone: phoneInput.value
-        });
-    }, 100); // Verzögerung von 100ms
-
-    // Füge die Animation hinzu, um das Einfliegen von unten zu aktivieren
     const contactCard = editContactRef.querySelector('.contact-card.add');
     contactCard.classList.add('animate-from-bottom');
     
-    // Entferne die Animationsklasse nach der Animation
     contactCard.addEventListener('animationend', function() {
         contactCard.classList.remove('animate-from-bottom');
     });
@@ -422,7 +406,6 @@ function getUpdatedContactData() {
 
     return { nameIn, emailIn, phoneIn, color, isUser };
 }
-
 
 /**
  * Updates the local database with the new contact data.
@@ -501,7 +484,6 @@ function validateInput(name, email, phone) {
 
     return true; // All validations passed
 }
-
 
 /**
  * Checks if all provided fields are not empty.

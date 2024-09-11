@@ -22,6 +22,10 @@
     top: 0;
 }
 
+.contact-mobile-header-detail {
+    margin-top: 40px;
+}
+
 .edit-box {
     display: flex;
     flex-direction: column;
@@ -230,7 +234,7 @@
 }
 
 .exit-wrapper {
-    position: absolute;
+    position: fixed;
     top: 24px;
     right: 24px;
     transition: transform .7s ease-in-out;
