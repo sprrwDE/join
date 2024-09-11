@@ -208,8 +208,26 @@ function closeDetailDialog() {
  */
 function openDetailReferenceDesk(name, email, phone, id, first, last, color, user) {
     currentId = id;
-    document.getElementById('detail-desk').innerHTML = detailTemplate(name, email, phone, id, first, last, color, user);
-    selectElement(id);
+    const detailContentRef = document.getElementById('detail-desk'); // Das Template-Element
+    
+    // Setze den HTML-Inhalt des Templates
+    detailContentRef.innerHTML = detailTemplate(name, email, phone, id, first, last, color, user);
+    
+    // Entferne die Animationsklasse, falls sie bereits vorhanden ist
+    detailContentRef.classList.remove('animate-detail');
+    
+    // Stelle sicher, dass die Animation nur nach dem Laden des Inhalts gestartet wird
+    setTimeout(() => {
+        // Füge die Animationsklasse erst hinzu, nachdem der Inhalt vollständig gerendert wurde
+        detailContentRef.classList.add('animate-detail');
+        
+        // Entferne die Animationsklasse, sobald die Animation beendet ist
+        detailContentRef.addEventListener('animationend', function() {
+            detailContentRef.classList.remove('animate-detail');
+        });
+    }, 10); // Ein kleines Timeout, um sicherzustellen, dass der Inhalt geladen wurde
+
+    selectElement(id);  // Optional: Markiere das ausgewählte Element
 }
 
 /**

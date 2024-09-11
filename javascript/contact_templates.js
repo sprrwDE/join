@@ -56,11 +56,7 @@ function getContactsTemplate(name, email, phone, contactId, first, last, color, 
  * @returns {string} The HTML for the contact detail view.
  */
 function detailTemplate(name, email, phone, id, first, last, color, user) {
-    return `<div class="contact-mobile-header-detail" id="mobile-overlay-detail">
-                <h2>Contacts</h2>
-                <div class="seperator-card-desk"></div>
-                <h3>Better with a team!</h3>
-            </div>
+    return `
     <div class="exit-detail" id="exit-detail" onclick="closeDetailDialog()">
         <img src="../assets/img/exit-detail.svg">
     </div>   
