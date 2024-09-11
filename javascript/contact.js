@@ -284,7 +284,12 @@ function getDetailTemplateMob(name, email, phone, id, first, last, color, user) 
 function showEditBox(event) {
     stopPropagation(event);
     editBoxRef.classList.remove('d-none');
+    editBoxRef.style.animation = 'slideInFromRight 0.5s ease-in-out';
 }
+
+editBoxRef.addEventListener('animationend', function() {
+    editBoxRef.style.animation = ''; // Entfernt die Animation nach dem ersten Abspielen
+});
 
 /**
  * Hides the edit box.
