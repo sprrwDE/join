@@ -496,13 +496,12 @@ input::placeholder {
 
     .contact-list {
         display: flex !important;
-        position: absolute;
+        position: fixed;
         top: 160px;
         left: 232px;
         padding: 0;
-        height: 100%;
+        height: 85%;
         width: 35%;
-
     }
 
     .contact-list-wrapper {
