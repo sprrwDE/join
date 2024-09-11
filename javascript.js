@@ -73,18 +73,18 @@ function openHelpPage(){
 function sendToPrivacyPolicyFromNavbar() {
   if (notAMember) {
     let noMember = true;
-    window.location.href = `/documents/Privacy.html?userId=${noMember}&icon=privacy`;
+    window.location.href = `../documents/Privacy.html?userId=${noMember}&icon=privacy`;
   }else{
-    window.location.href = "/documents/Privacy.html?icon=privacy"
+    window.location.href = "../documents/Privacy.html?icon=privacy"
   }
 }
 
 function sendTolegalNoticeFromNavbar() {
   if (notAMember) {
     let noMember = true;
-    window.location.href = `/documents/legal.html?userId=${noMember}&icon=legal`;
+    window.location.href = `../documents/legal.html?userId=${noMember}&icon=legal`;
   }else{
-    window.location.href = "/documents/legal.html?icon=legal"
+    window.location.href = "../documents/legal.html?icon=legal"
   }
 }
 
