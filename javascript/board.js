@@ -91,11 +91,12 @@ function updateServer(task, alltask) {
 }
 
 function loadTasks() {
+  
   fetch(BASE_URL + "/addTask.json")
     .then((response) => response.json())
     .then((result) => {
-      let keys = Object.keys(result);
-      let values = Object.values(result);
+      let keys = (result && typeof result === 'object') ? Object.keys(result) : "";
+      let values = (result && typeof result === 'object') ? Object.values(result) : ""
       checkTask(keys, values);
     });
 }
@@ -211,6 +212,10 @@ function renderHelper(section) {
 }
 
 function isEmpty(task) {
+  if (task.subtask === undefined) {
+    task.subtask = ""
+  }
+
   if (task.assignedto == "") {
     task.assignedto = false;
   }
