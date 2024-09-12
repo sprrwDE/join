@@ -17,6 +17,7 @@ function onload() {
   includeHTML();
   dropDown();
   taskSelected();
+  selectedPrio("medium")
   init();
 }
 
