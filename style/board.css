@@ -1,7 +1,6 @@
 body {
   margin: 0;
   background-color: rgb(245, 245, 245);
-  overflow-y: hidden;
   overflow-x: hidden;
 }
 
@@ -91,15 +90,13 @@ p {
   overflow-y: auto;
   overflow-x: hidden;
   display: flex;
-  flex-direction: column;
-  overflow-y: auto;
+  bottom: 87px;
 }
 
 .progress-container {
   width: 100%;
   box-sizing: border-box;
   padding: 16px;
-  height: 100vh;
   max-height: 75vh;
 }
 
@@ -315,6 +312,7 @@ h3 {
   .content-container {
     display: flex;
     flex-direction: column !important;
+    overflow-y: scroll;
   }
 
   .all-tasks {
