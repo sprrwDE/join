@@ -448,12 +448,18 @@ function getAllInfos() {
   if (requiredFieldsCheck() == true) {
     checkStatus()
     postInfos();
+    successDisplay()
     setTimeout(() => {
-      window.location.reload()
-    }, 1000);
+      window.location = "./board.html"
+    }, 2000);
   }
 }
 
 function clearAllFields() {
   window.location.reload();
+}
+
+function successDisplay() {
+  let container = document.getElementById("success-container")
+  container.classList.remove("d-none")
 }
