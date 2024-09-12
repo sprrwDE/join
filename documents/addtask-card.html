@@ -16,6 +16,11 @@
 </head>
 
 <body onload="onload()">
+    <div class="success-container d-none" id="success-container">
+        <div class="success" id="success">
+            <span>Task erfolgreich erstellt</span>
+        </div>
+    </div>
     <div class="content-wrapper">
         <div class="title-section">
             <span class="title">Add Task</span>
@@ -65,7 +70,7 @@
             <div class="date-section">
                 <p>Due date<span class="red">*</span></p>
                 <input type="date" class="date" id="input-date" onchange="getDate()" required min="1900-01-01"
-                    max="2023-12-31">
+                    max="2030-12-31">
                 <p class="red-text d-none" id="date-required">This field is required</p>
             </div>
 

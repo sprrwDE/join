@@ -14,6 +14,18 @@ p {
   display: none !important;
 }
 
+.close-btn:hover{
+  cursor: pointer;
+  background-color: rgba(128, 128, 128, 0.281);
+  border-radius: 100%;
+ }
+
+.delete:hover, .edit:hover {
+  cursor: pointer;
+  background-color: rgba(128, 128, 128, 0.281);
+  border-radius: 10px;
+}
+
 .conten-container {
   width: 100%;
   height: auto;
@@ -274,6 +286,7 @@ h2 {
   align-items: center;
   gap: 8px;
 }
+
 
 
 .contact-circle {

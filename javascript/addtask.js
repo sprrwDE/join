@@ -19,7 +19,9 @@ function onload() {
   taskSelected();
   selectedPrio("medium")
   init();
+  
 }
+
 
 function postInfos() {
   fetch(BASE_URL + "/addTask.json", {
@@ -442,6 +444,15 @@ function checkStatus() {
   }
 }
 
+function checkWindowLoaction() {
+  console.log(window.location.href)
+  if(window.location.href.endsWith("documents/addtask-card.html")) {
+    return true
+  } else {
+    return false
+  }
+}
+
 function getAllInfos() {
   getTitle();
   getDescription();
@@ -449,6 +460,11 @@ function getAllInfos() {
   if (requiredFieldsCheck() == true) {
     checkStatus()
     postInfos();
+    if(checkWindowLoaction()) {
+      console.log("check")
+      
+
+    }
     successDisplay()
     setTimeout(() => {
       window.location = "./board.html"
