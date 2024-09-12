@@ -84,7 +84,6 @@ p {
 
 .content-container {
   width: 396px;
-  height: 58%;
   position: absolute;
   top: 296px;
   left: 16px;
@@ -93,7 +92,7 @@ p {
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
-  width: 100%;
+  overflow-y: auto;
 }
 
 .progress-container {
@@ -101,8 +100,6 @@ p {
   box-sizing: border-box;
   padding: 16px;
   height: 100vh;
-  display: flex;
-  flex-direction: column;
   max-height: 75vh;
 }
 
