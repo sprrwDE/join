@@ -466,14 +466,17 @@ function getAllInfos() {
     checkStatus()
     postInfos();
     if (checkWindowLoaction()) {
-      console.log("check")
-
-
+      successDisplay()
+      setTimeout(() => {
+        parent.closeWindow('whole-addtask-card')
+      }, 2000);
+    } else {
+      successDisplay()
+      setTimeout(() => {
+        window.location = "./board.html"
+      }, 2000);
     }
-    successDisplay()
-    setTimeout(() => {
-      window.location = "./board.html"
-    }, 2000);
+
   }
 }
 
@@ -489,7 +492,7 @@ function clearAllFields() {
     color: "",
     inits: "",
   };
-  
+
   let title = document.getElementById("input-title")
   let desc = document.getElementById("text-area")
   let contacts = document.getElementById("all-contacts")
