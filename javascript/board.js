@@ -91,7 +91,6 @@ function updateServer(task, alltask) {
 }
 
 function loadTasks() {
-  
   fetch(BASE_URL + "/addTask.json")
     .then((response) => response.json())
     .then((result) => {

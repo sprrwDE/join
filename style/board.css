@@ -259,6 +259,7 @@ h3 {
 }
 
 .contacts-section {
+  min-height: 64px;
   display: flex;
   width: 100%;
   height: fit-content;
@@ -572,8 +573,4 @@ h3 {
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
 .show {
   display: block;
-}
-
-.dots:hover {
-  src: "../assets/img/3drots-blue.svg";
 }
