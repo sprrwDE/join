@@ -4,6 +4,10 @@
     cursor: pointer;
 }
 
+body::-webkit-scrollbar {
+    display: none;
+}
+
 .d-none {
     display: none !important;
 }
@@ -237,10 +241,10 @@ main {
 
 .exit-wrapper {
     position: absolute;
-    top: 16px; /* Abstand vom oberen Rand des Popups */
-    right: 16px; /* Abstand vom rechten Rand des Popups */
+    top: 16px; 
+    right: 16px; 
     cursor: pointer;
-    z-index: 1000; /* Sicherstellen, dass es über anderen Elementen liegt */
+    z-index: 1000; 
 }
 
 .exit-wrapper img {
@@ -691,7 +695,7 @@ input::placeholder {
     }
 
     .popup {
-        position: fixed;
+        margin-top: 40px;
         width: 320px;
         height: 80px;
         background-color: #2A3647;
@@ -701,9 +705,6 @@ input::placeholder {
         align-items: center;
         justify-content: center;
         border-radius: 8px;
-        top: 70%;
-        right: 26%;
-        transform: translate(-70%, -26%);
         z-index: 1000;
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     }

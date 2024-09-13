@@ -302,6 +302,7 @@ function showEditContactDialog(contact) {
     const color = contact.color;
     editContactRef.innerHTML = showEditOverlay(contact.nameIn, contact.emailIn, contact.isUser, color);
     currentId = contact.id;
+    hideEditBox()
 }
 
 /**

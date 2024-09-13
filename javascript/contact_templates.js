@@ -92,7 +92,9 @@ function detailTemplate(name, email, phone, id, first, last, color, user) {
                 <p><b>Phone</b></p>
                 <p>${phone}</p>
             </div>
-        </div>`;
+        </div>
+                                        <!-- Success -->
+        <div id="success-popup" class="popup d-none">Contact successfully created</div>`;
 }
 
 /**
