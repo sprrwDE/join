@@ -441,6 +441,14 @@ input::placeholder {
 
     }
 
+    .edit-box {
+        display: none;
+    }
+
+    .edit-row {
+        display: none;
+    }
+
     .card-image-outter {
         display: flex;
         justify-content: center;

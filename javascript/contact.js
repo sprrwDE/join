@@ -125,12 +125,22 @@ function openAddContactDialog() {
     // Setze den HTML-Inhalt für das Add Contact-Dialog
     addContactRef.innerHTML = addDialogTemplate();
     
-    // Entferne sicherheitshalber die 'd-none'-Klasse, damit die Sektion sichtbar wird
+    // Entferne die 'd-none'-Klasse, damit die Sektion sichtbar wird
     addContactRef.classList.remove('d-none');
     
     // Füge die Animation hinzu, um das Einfliegen von unten zu aktivieren
     const contactCard = addContactRef.querySelector('.contact-card.add');
     contactCard.classList.add('animate-from-bottom');
+    
+    // **Verhindere das Event-Bubbling innerhalb des Dialogs**
+    contactCard.addEventListener('click', function(event) {
+        event.stopPropagation();
+    });
+    
+    // **Schließe den Dialog bei Klick auf das Overlay (außerhalb des Dialogs)**
+    addContactRef.addEventListener('click', function() {
+        closeAddContactDialog();
+    });
     
     // Entferne die Animationsklasse nach dem Abspielen der Animation
     contactCard.addEventListener('animationend', function() {
@@ -142,9 +152,9 @@ function openAddContactDialog() {
  * Closes the "Add Contact" dialog.
  */
 function closeAddContactDialog() {
-    addDialogRef.classList.add('d-none');
-    contactListRef.classList.remove('d-none');
-    addButtonRef.classList.remove('d-none');
+    const addContactRef = document.getElementById('add-contact');
+    addContactRef.classList.add('d-none');
+    addContactRef.innerHTML = ''; // Optional: Entfernt den Inhalt des Dialogs
 }
 
 /**
@@ -338,12 +348,21 @@ function hideEditBox() {
  */
 function openEditContactDialog(id, name, email, user) {
     editContactRef.classList.remove('d-none');
-    
     editContactRef.innerHTML = showEditOverlay(name, email, user);
-
     currentId = id;
     const contact = db.find(contact => contact.id === currentId);
     isCurrentUser = contact.isUser;
+
+    // **Event-Bubbling verhindern**
+    const contactCard = editContactRef.querySelector('.contact-card.add');
+    contactCard.addEventListener('click', function(event) {
+        event.stopPropagation();
+    });
+
+    // **Schließen bei Klick außerhalb des Dialogs**
+    editContactRef.addEventListener('click', function() {
+        closeEditContactDialog();
+    });
 
     const nameInput = document.getElementById('edit-name');
     const emailInput = document.getElementById('edit-email');
@@ -357,7 +376,7 @@ function openEditContactDialog(id, name, email, user) {
         }
     }, 100); 
 
-    const contactCard = editContactRef.querySelector('.contact-card.add');
+    // **Animation hinzufügen**
     contactCard.classList.add('animate-from-bottom');
     
     contactCard.addEventListener('animationend', function() {
