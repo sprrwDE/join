@@ -262,6 +262,7 @@ function taskSelected(task) {
   let user = document.getElementById("user");
   let categorytext = document.getElementById("category-required");
   let categoryDiv = document.getElementById("input-category");
+  selecttask.innerHTML = "Select task category"
 
   document.addEventListener("click", (event) => {
     if (!category.contains(event.target)) {
@@ -493,13 +494,18 @@ function clearAllFields() {
   let desc = document.getElementById("text-area")
   let contacts = document.getElementById("all-contacts")
   let imges = document.getElementById("contacts-imges")
+  let date = document.getElementById("input-date")
+  let subtasks = document.getElementById("subtasklist")
 
+  subtasks.innerHTML = "";
+  date.value = "";
   imges.innerHTML = "";
   title.value = "";
   desc.value = "";
   contacts.innerHTML = "";
   renderContacts(listOfContacts)
-
+  selectedPrio("medium")
+  taskSelected()
 }
 
 function successDisplay() {
