@@ -313,8 +313,13 @@ function mobileDetailDivs() {
  * @param {boolean} user - Is the contact a user?
  */
 function getDetailTemplateMob(name, email, phone, id, first, last, color, user) {
+    // Initialen neu berechnen
+    const initialsArray = getContactInitials(name);
+    first = initialsArray[0];
+    last = initialsArray[1];
     detailRef.innerHTML = detailTemplate(name, email, phone, id, first, last, color, user);
 }
+
 
 /**
  * Displays the edit box for a contact.
@@ -348,40 +353,43 @@ function hideEditBox() {
  */
 function openEditContactDialog(id, name, email, user) {
     editContactRef.classList.remove('d-none');
-    editContactRef.innerHTML = showEditOverlay(name, email, user);
-    currentId = id;
-    const contact = db.find(contact => contact.id === currentId);
+    const contact = db.find(contact => contact.id === id);
     isCurrentUser = contact.isUser;
+    const color = contact.color; // Farbe des Kontakts
+    editContactRef.innerHTML = showEditOverlay(name, email, user, color);
+    currentId = id;
 
-    // **Event-Bubbling verhindern**
-    const contactCard = editContactRef.querySelector('.contact-card.add');
-    contactCard.addEventListener('click', function(event) {
-        event.stopPropagation();
-    });
-
-    // **Schließen bei Klick außerhalb des Dialogs**
-    editContactRef.addEventListener('click', function() {
-        closeEditContactDialog();
-    });
-
-    const nameInput = document.getElementById('edit-name');
-    const emailInput = document.getElementById('edit-email');
-    const phoneInput = document.getElementById('edit-phone');
-
+    // Rest des Codes innerhalb von setTimeout verschieben
     setTimeout(() => {
+        const contactCard = editContactRef.querySelector('.contact-card.add');
+
+        // Event-Bubbling verhindern
+        contactCard.addEventListener('click', function(event) {
+            event.stopPropagation();
+        });
+
+        // Schließen bei Klick außerhalb des Dialogs
+        editContactRef.addEventListener('click', function() {
+            closeEditContactDialog();
+        });
+
+        // Animation hinzufügen
+        contactCard.classList.add('animate-from-bottom');
+        contactCard.addEventListener('animationend', function() {
+            contactCard.classList.remove('animate-from-bottom');
+        });
+
+        // Formularelemente ausfüllen
+        const nameInput = document.getElementById('edit-name');
+        const emailInput = document.getElementById('edit-email');
+        const phoneInput = document.getElementById('edit-phone');
+
         if (contact && nameInput && emailInput && phoneInput) {
             nameInput.value = contact.nameIn;
             emailInput.value = contact.emailIn;
             phoneInput.value = contact.phoneIn;
         }
-    }, 100); 
-
-    // **Animation hinzufügen**
-    contactCard.classList.add('animate-from-bottom');
-    
-    contactCard.addEventListener('animationend', function() {
-        contactCard.classList.remove('animate-from-bottom');
-    });
+    }, 0);
 }
 
 /**

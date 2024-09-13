@@ -56,6 +56,7 @@ function getContactsTemplate(name, email, phone, contactId, first, last, color, 
  * @returns {string} The HTML for the contact detail view.
  */
 function detailTemplate(name, email, phone, id, first, last, color, user) {
+    const initials = first + last; // Kombiniert die Initialen
     return `                
         <div class="contact-mobile-header-detail" id="mobile-overlay-detail">
             <h2>Contacts</h2>
@@ -68,7 +69,7 @@ function detailTemplate(name, email, phone, id, first, last, color, user) {
         <div class="contact-info-wrapper">
             <div class="avatar-wrapper">
                 <div class="card-image" style="background-color: ${color}">
-                    <h4>${first}${last}</h4>
+                    <h4>${initials}</h4>
                 </div>
                 <div class="name-wrapper">
                     <h4>${name}</h4>
@@ -148,45 +149,50 @@ function addDialogTemplate() {
  * 
  * @returns {string} The HTML for the edit contact dialog.
  */
-function showEditOverlay() {
+function showEditOverlay(name, email, user, color) {
+    const initialsArray = getContactInitials(name);
+    const initials = initialsArray.join(''); // Kombiniert die Initialen zu einem String
     return `
     <div class="contact-card add">
-    <div class="exit-wrapper">
-        <img class="exit" src="../assets/img/contact-card/close.svg" onclick="closeEditContactDialog()">
-    </div>
-    <div class="card-header">
-        <img src="../assets/img/contact-card/join-logo-card.svg">
-        <h2>Edit contact</h2>
-        <h3>Tasks are better with a team!</h3>
-        <div class="seperator-card"></div>
-    </div>
-    <div class="card-image-outter">
-        <div class="card-image"><img src="../assets/img/contact-card/avatar.svg"></div>
-    </div>
-    <form class="card-body form">
-        <div class="input-wrapper">
-            <div class="input-container">
-                <input type="text" required placeholder="Name" id="edit-name" name="name" value="">
-                <img class="icon" src="../assets/img/contact-card/person.svg">
-            </div>
-            <div class="input-container">
-                <input type="text" required placeholder="Email" id="edit-email" name="email" value="">
-                <img class="icon" src="../assets/img/contact-card/mail.svg">
-            </div>
-            <div class="input-container">
-                <input type="text" required placeholder="Phone" id="edit-phone" name="phone" value="">
-                <img class="icon" src="../assets/img/contact-card/call.svg">
+        <div class="exit-wrapper">
+            <img class="exit" src="../assets/img/contact-card/close.svg" onclick="closeEditContactDialog()">
+        </div>
+        <div class="card-header">
+            <img src="../assets/img/contact-card/join-logo-card.svg">
+            <h2>Edit contact</h2>
+            <h3>Tasks are better with a team!</h3>
+            <div class="seperator-card"></div>
+        </div>
+        <div class="card-image-outter">
+            <div class="card-image" style="background-color: ${color};">
+                <h4>${initials}</h4>
             </div>
         </div>
-        <div class="btn-wrapper">
-            <button class="btn cancel" onclick="closeEditContactDialog()">
-                Cancel
-                <img src="../assets/img/contact-card/exit.svg">
-            </button>
-            <button class='btn create' onclick="updateContact(event); if(isCurrentUser) { updateAccount(); }">
-                Save changes
-                <img src="../assets/img/contact-card/check.svg">
-            </button>
-    </form>
-</div>`
+        <form class="card-body form">
+            <div class="input-wrapper">
+                <div class="input-container">
+                    <input type="text" required placeholder="Name" id="edit-name" name="name" value="">
+                    <img class="icon" src="../assets/img/contact-card/person.svg">
+                </div>
+                <div class="input-container">
+                    <input type="text" required placeholder="Email" id="edit-email" name="email" value="">
+                    <img class="icon" src="../assets/img/contact-card/mail.svg">
+                </div>
+                <div class="input-container">
+                    <input type="text" required placeholder="Phone" id="edit-phone" name="phone" value="">
+                    <img class="icon" src="../assets/img/contact-card/call.svg">
+                </div>
+            </div>
+            <div class="btn-wrapper">
+                <button class="btn cancel" onclick="closeEditContactDialog()">
+                    Cancel
+                    <img src="../assets/img/contact-card/exit.svg">
+                </button>
+                <button class='btn create' onclick="updateContact(event); if(isCurrentUser) { updateAccount(); }">
+                    Save changes
+                    <img src="../assets/img/contact-card/check.svg">
+                </button>
+            </div>
+        </form>
+    </div>`;
 }
