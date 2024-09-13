@@ -1,20 +1,53 @@
+/**
+ * Base URL for the Firebase Realtime Database.
+ * @constant {string}
+ */
 let BASE_URL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/";
 
+/**
+ * Array of all tasks.
+ * @type {Array<Object>}
+ */
 window.tasks = [];
+
+/**
+ * Currently dragged element ID.
+ * @type {string}
+ */
 let currentDraggedElement;
+
+/**
+ * ID of the clicked card.
+ * @type {string}
+ */
 window.clickedCardId;
+
+/**
+ * Object storing the number of tasks in each section.
+ * @type {Object}
+ */
 let amounts = {};
 
+/**
+ * Initializes the board by including HTML components and loading tasks.
+ */
 function initBoard() {
   includeHTML();
   loadTasks();
   init();
 }
 
+/**
+ * Allows the drop event on an element.
+ * @param {DragEvent} event - The drag event.
+ */
 function allowDrop(event) {
   event.preventDefault();
 }
 
+/**
+ * Calculates the number of tasks in each section and updates the amounts object.
+ */
 function helpAmount() {
   let sections = ["todo", "inprogress", "awaitfeedback", "done"];
   for (let i = 0; i < sections.length; i++) {
@@ -23,6 +56,9 @@ function helpAmount() {
   }
 }
 
+/**
+ * Updates the number of tasks in each section and uploads the data to the server.
+ */
 function getAmountsOfAllSections() {
   helpAmount();
   let urgent = getUrgentNumber();
@@ -30,6 +66,10 @@ function getAmountsOfAllSections() {
   uploadAmount();
 }
 
+/**
+ * Gets the number of tasks with 'urgent' priority.
+ * @returns {number} The count of urgent tasks.
+ */
 function getUrgentNumber() {
   let amount = 0;
   for (let i = 0; i < tasks.length; i++) {
@@ -41,6 +81,9 @@ function getUrgentNumber() {
   return amount;
 }
 
+/**
+ * Uploads the amounts object to the server.
+ */
 function uploadAmount() {
   fetch(BASE_URL + "/Status.json", {
     method: "PUT",
@@ -49,12 +92,21 @@ function uploadAmount() {
   });
 }
 
+/**
+ * Helper function to get the number of cards in a section.
+ * @param {string} section - The ID of the section.
+ * @returns {number} The number of cards in the section.
+ */
 function getAmounthelper(section) {
   let todo = document.getElementById(section);
   let card = todo.getElementsByClassName("ticket-card");
   return card.length;
 }
 
+/**
+ * Moves the current dragged element to a new status.
+ * @param {string} status - The new status to move the task to.
+ */
 function moveTo(status) {
   for (let i = 0; i < tasks.length; i++) {
     if (tasks[i].id == currentDraggedElement) {
@@ -67,6 +119,9 @@ function moveTo(status) {
   getAmountsOfAllSections();
 }
 
+/**
+ * Removes the highlight class from all drag areas.
+ */
 function removeHighlightDragArea() {
   let sections = ["todo", "inprogress", "awaitfeedback", "done"];
   for (let i = 0; i < sections.length; i++) {
@@ -74,14 +129,27 @@ function removeHighlightDragArea() {
   }
 }
 
+/**
+ * Adds highlight to a drag area.
+ * @param {string} id - The ID of the drag area to highlight.
+ */
 function highlight(id) {
   document.getElementById(`${id}`).classList.add("drag-area-highlight");
 }
 
+/**
+ * Removes highlight from a drag area.
+ * @param {string} id - The ID of the drag area.
+ */
 function removeHighlight(id) {
   document.getElementById(id).classList.remove("drag-area-highlight");
 }
 
+/**
+ * Updates the task on the server.
+ * @param {string} task - The task ID.
+ * @param {Object} alltask - The task object to update.
+ */
 function updateServer(task, alltask) {
   fetch(BASE_URL + "/addTask/" + task + ".json", {
     method: "PUT",
@@ -90,16 +158,24 @@ function updateServer(task, alltask) {
   });
 }
 
+/**
+ * Loads tasks from the server and processes them.
+ */
 function loadTasks() {
   fetch(BASE_URL + "/addTask.json")
     .then((response) => response.json())
     .then((result) => {
-      let keys = (result && typeof result === 'object') ? Object.keys(result) : "";
-      let values = (result && typeof result === 'object') ? Object.values(result) : ""
+      let keys = result && typeof result === "object" ? Object.keys(result) : "";
+      let values = result && typeof result === "object" ? Object.values(result) : "";
       checkTask(keys, values);
     });
 }
 
+/**
+ * Separates subtasks from a string.
+ * @param {string} atasks - The string containing subtasks.
+ * @returns {Array<string>} An array of subtasks.
+ */
 function separatSubtask(atasks) {
   if (!atasks == "") {
     let inputString = atasks;
@@ -108,6 +184,11 @@ function separatSubtask(atasks) {
   }
 }
 
+/**
+ * Processes tasks and prepares them for rendering.
+ * @param {Array<string>} keys - The task IDs.
+ * @param {Array<Object>} values - The task objects.
+ */
 function checkTask(keys, values) {
   tasks = [];
   for (let i = 0; i < values.length; i++) {
@@ -129,6 +210,11 @@ function checkTask(keys, values) {
   getAmountsOfAllSections();
 }
 
+/**
+ * Converts an array of subtasks into an object.
+ * @param {Array<string>} subtask - The array of subtasks.
+ * @returns {Object} An object with subtasks as keys and 'inwork' as values.
+ */
 function renderToObject(subtask) {
   if (subtask) {
     let newsubtaskArray = {};
@@ -139,6 +225,9 @@ function renderToObject(subtask) {
   }
 }
 
+/**
+ * Renders all tasks to the board.
+ */
 function renderTask() {
   let todo = document.getElementById("todo");
   let inProgess = document.getElementById("inprogress");
@@ -163,6 +252,10 @@ function renderTask() {
   emptySection();
 }
 
+/**
+ * Helper function to render tasks in a specific section.
+ * @param {string} section - The section to render tasks in.
+ */
 function renderHelper(section) {
   let allTasks = tasks.filter((t) => t["status"] == section);
   for (let i = 0; i < allTasks.length; i++) {
@@ -171,12 +264,15 @@ function renderHelper(section) {
     if (cleaned.description == false) {
       allTasks[i].description = "";
     }
+    let prio;
     if (!cleaned.prio == false) {
       prio = getPrio(i, allTasks);
     } else {
       prio = "noprio.svg";
     }
     let checked = 0;
+    let count;
+    let subtaskslength;
     if (!cleaned.subtask == false) {
       checked = subtaskChecked(i, allTasks[i]);
       count = getCheckedSubtasks(allTasks[i]);
@@ -210,35 +306,39 @@ function renderHelper(section) {
   }
 }
 
+/**
+ * Checks if task properties are empty and sets default values.
+ * @param {Object} task - The task object.
+ * @returns {Object} The cleaned task object.
+ */
 function isEmpty(task) {
-  if (task.subtask === undefined) {
-    task.subtask = ""
-  }
-
-  if (task.assignedto == "") {
-    task.assignedto = false;
-  }
-  if (task.color == "") {
-    task.color = false;
-  }
-  if (task.description == "") {
-    task.description = false;
-  }
-  if (task.prio == "") {
-    task.prio = false;
-  }
-  if (Object.keys(task.subtask) == "") {
-    task.subtask = false;
-  }
+  task.subtask = task.subtask ?? "";
+  task.assignedto = task.assignedto || false;
+  task.color = task.color || false;
+  task.description = task.description || false;
+  task.prio = task.prio || false;
+  if (!Object.keys(task.subtask).length) task.subtask = false;
   return task;
 }
 
+/**
+ * Renders the progress bar for a task.
+ * @param {number} count - The number of completed subtasks.
+ * @param {number} length - The total number of subtasks.
+ * @param {string} id - The task ID.
+ */
 function renderProgressBar(count, length, id) {
   let progressBar = document.getElementById(`filler-${id}`);
   let result = (count / length) * 100;
   progressBar.style.width = `${result}%`;
 }
 
+/**
+ * Gets the priority icon based on task priority.
+ * @param {number} i - Index of the task.
+ * @param {Array<Object>} allTasks - Array of all tasks.
+ * @returns {string} The file name of the priority icon.
+ */
 function getPrio(i, allTasks) {
   if (allTasks[i].prio == "urgent") {
     return "urgent.svg";
@@ -249,6 +349,11 @@ function getPrio(i, allTasks) {
   }
 }
 
+/**
+ * Gets the category class based on the category name.
+ * @param {string} category - The category name.
+ * @returns {string} The CSS class for the category pill.
+ */
 function getCategory(category) {
   if (category == "User Story") {
     return "pill-blue";
@@ -257,11 +362,21 @@ function getCategory(category) {
   }
 }
 
+/**
+ * Starts dragging a task.
+ * @param {string} id - The ID of the task.
+ */
 function startDragging(id) {
   currentDraggedElement = id;
   document.getElementById(`ticket-${id}`).classList.add("shake");
 }
 
+/**
+ * Gets the colors associated with assigned contacts.
+ * @param {number} i - Index of the task.
+ * @param {Array<Object>} allTasks - Array of all tasks.
+ * @returns {Array<string>} Array of color strings.
+ */
 function getColors(i, allTasks) {
   let color = [];
   if (typeof allTasks[i].color === "object") {
@@ -270,6 +385,7 @@ function getColors(i, allTasks) {
     color = allTasks[i].color;
   }
 
+  let allcolors;
   if (color == "") {
     allcolors = "white";
   } else {
@@ -279,6 +395,12 @@ function getColors(i, allTasks) {
   return allcolors;
 }
 
+/**
+ * Gets the initials of assigned contacts.
+ * @param {number} i - Index of the task.
+ * @param {Array<Object>} allTasks - Array of all tasks.
+ * @returns {Array<Array<string>>} Array of initials.
+ */
 function getInitails(i, allTasks) {
   let inits = [];
   let contact;
@@ -296,7 +418,7 @@ function getInitails(i, allTasks) {
   if (!contact == "") {
     let contacts = contact.split(",");
 
-    for (id in contacts) {
+    for (let id in contacts) {
       let name = contacts[id].split(" ");
       let firstinit = name[0][0];
       let second = name[1] ? name[1][0] : "";
@@ -308,6 +430,12 @@ function getInitails(i, allTasks) {
   }
 }
 
+/**
+ * Counts the number of completed subtasks.
+ * @param {number} i - Index of the task.
+ * @param {Object} alltask - The task object.
+ * @returns {number} Number of completed subtasks.
+ */
 function subtaskChecked(i, alltask) {
   let checked = 0;
   let subtasks = Object.values(alltask.subtask);
@@ -319,53 +447,79 @@ function subtaskChecked(i, alltask) {
   return checked;
 }
 
+/**
+ * Renders a task card.
+ * @param {Array<Object>} task - Array of tasks in the section.
+ * @param {number} subtasklength - Number of subtasks.
+ * @param {number} i - Index of the task.
+ * @param {string} categoryColor - CSS class for the category.
+ * @param {string} prio - Priority icon file name.
+ * @param {number} checked - Number of completed subtasks.
+ * @returns {string} HTML string for the task card.
+ */
 function renderToDos(task, subtasklength, i, categoryColor, prio, checked) {
-  return `<div class="ticket-card" id="ticket-${task[i].id}" draggable="true" onclick="openCard('${task[i].id}')"
-        ondragstart="startDragging('${task[i].id}')">
-        <div class="top-part" id="top-part">
-            <div class="${categoryColor}" id="pill">
-                <p>${task[i].category}</p>
+  return `
+      <div class="ticket-card" id="ticket-${task[i].id}" draggable="true" onclick="openCard('${task[i].id}')"
+            ondragstart="startDragging('${task[i].id}')">
+            <div class="top-part" id="top-part">
+                <div class="${categoryColor}" id="pill">
+                    <p>${task[i].category}</p>
+                </div>
+                <div class="dropdown">
+                     <img src="../assets/img/3dots.svg" alt="" id="dots-${task[i].id}" class="dots" onclick="openMenu('${task[i].id}', event)">
+                  <div id="myDropdown-${task[i].id}" class="dropdown-content">
+                    <a onclick="stopEventPropagation(event); changeSections('todo','${task[i].id}');">To do</a>
+                    <a onclick="stopEventPropagation(event); changeSections('inprogress', '${task[i].id}');">In progress</a>
+                    <a onclick="stopEventPropagation(event); changeSections('awaitfeedback', '${task[i].id}');">Await feedback</a>
+                    <a onclick="stopEventPropagation(event); changeSections('done','${task[i].id}');">Done</a>
+                  </div>
+                </div>
             </div>
-            <div class="dropdown">
-                 <img src="../assets/img/3dots.svg" alt="" id="dots-${task[i].id}" class="dots" onclick="openMenu('${task[i].id}', event)">
-              <div id="myDropdown-${task[i].id}" class="dropdown-content">
-                <a onclick="stopEventPropagation(event); changeSections('todo','${task[i].id}');">To do</a>
-                <a onclick="stopEventPropagation(event); changeSections('inprogress', '${task[i].id}');">In progress</a>
-                <a onclick="stopEventPropagation(event); changeSections('awaitfeedback', '${task[i].id}');">Await feedback</a>
-                <a onclick="stopEventPropagation(event); changeSections('done','${task[i].id}');">Done</a>
-              </div>
+            <div class="title-notice">
+                <p id="ticket-title">${task[i].title}</p>
+                <p class="ticket-notice" id="ticket-notice">${task[i].description}</p>
             </div>
-        </div>
-        <div class="title-notice">
-            <p id="ticket-title">${task[i].title}</p>
-            <p class="ticket-notice" id="ticket-notice">${task[i].description}</p>
-        </div>
 
-        <div class="progress-bar-section" id="progress-bar-section${task[i].id}">
-            <div class="progress-bar">
-                <div class="progress-bar-filler" id="filler-${task[i].id}"></div>
+            <div class="progress-bar-section" id="progress-bar-section${task[i].id}">
+                <div class="progress-bar">
+                    <div class="progress-bar-filler" id="filler-${task[i].id}"></div>
+                </div>
+                <p id="subtasks">${checked}/${subtasklength} Subtasks</p>
             </div>
-            <p id="subtasks">${checked}/${subtasklength} Subtasks</p>
-        </div>
 
-        <div class="contacts-section">
-            <div class="contacts" id="contact-images${task[i].id}"></div>
-            <img src="../assets/img/${prio}" alt="" />
-        </div>
-    </div>`;
+            <div class="contacts-section">
+                <div class="contacts" id="contact-images${task[i].id}"></div>
+                <img src="../assets/img/${prio}" alt="" />
+            </div>
+      </div>`;
 }
 
+/**
+ * Changes the section of a task.
+ * @param {string} section - The new section to move the task to.
+ * @param {string} id - The ID of the task.
+ */
 function changeSections(section, id) {
   currentDraggedElement = id;
   moveTo(section);
 }
 
+/**
+ * Renders contact initials.
+ * @param {Array<string>} inits - Initials of the contact.
+ * @param {Array<string>} allcolors - Colors associated with contacts.
+ * @param {number} j - Index of the contact.
+ * @returns {string} HTML string for the contact initials.
+ */
 function renderContactsImages(inits, allcolors, j) {
   return `<div class="contact-initals" id="contact-initals1" style="background-color: ${allcolors[j]};">
-                            <span>${inits[0]}${inits[1]}</span>
-                          </div>`;
+                                <span>${inits[0]}${inits[1]}</span>
+                              </div>`;
 }
 
+/**
+ * Checks if sections are empty and shows/hides the empty message.
+ */
 function emptySection() {
   let sections = ["todo", "inprogress", "awaitfeedback", "done"];
 
@@ -382,6 +536,10 @@ function emptySection() {
   }
 }
 
+/**
+ * Opens the 'Add Task' form.
+ * @param {string} section - The section where the task will be added.
+ */
 function openAddTask(section) {
   if (window.innerWidth > 1024) {
     let body = document.getElementById("body");
@@ -393,6 +551,10 @@ function openAddTask(section) {
   }
 }
 
+/**
+ * Closes a window or modal.
+ * @param {string} card - The ID of the card or modal to close.
+ */
 function closeWindow(card) {
   let addtask = document.getElementById(card);
   let background = document.getElementById("background-grey");
@@ -403,11 +565,21 @@ function closeWindow(card) {
   }, 100);
 }
 
+/**
+ * Helper function to render information in the task card.
+ * @param {string} sections - The section to render.
+ * @param {Object} card - The task object.
+ * @param {Document} iframeDocument - The document of the iframe.
+ */
 function renderInfoCardHelper(sections, card, iframeDocument) {
   let sectionsElement = iframeDocument.getElementById(sections);
   sectionsElement.innerHTML = card[`${sections}`];
 }
 
+/**
+ * Renders the information of a task in the task card.
+ * @param {string} idnumber - The ID of the task.
+ */
 function renderTaskCardInfos(idnumber) {
   let iframe = document.getElementById("card-infos");
   if (iframe) {
@@ -433,6 +605,11 @@ function renderTaskCardInfos(idnumber) {
   }
 }
 
+/**
+ * Renders information in the edit task card.
+ * @param {Document} iframeDocument - The document of the iframe.
+ * @param {Object} card - The task object.
+ */
 function renderEditCardInfos(iframeDocument, card) {
   let iframe = document.getElementById("edit-card");
   let subtaskcontainer = iframeDocument.getElementById("subtasklist");
@@ -443,11 +620,11 @@ function renderEditCardInfos(iframeDocument, card) {
 
   let imgContainer = iframeDocument.getElementById("contacts-imges");
   imgContainer.innerHTML += `
-  <span class="d-none" id="deliver-names">${card.assignedto}</span>
-  <span class="d-none" id="deliver-category">${card.category}</span>
-  <span class="d-none" id="deliver-status">${card.status}</span>
-  <span class="d-none" id="deliver-cardId">${card.id}</span>
-  `;
+      <span class="d-none" id="deliver-names">${card.assignedto}</span>
+      <span class="d-none" id="deliver-category">${card.category}</span>
+      <span class="d-none" id="deliver-status">${card.status}</span>
+      <span class="d-none" id="deliver-cardId">${card.id}</span>
+      `;
 
   for (let i = 0; i < Object.values(card.subtask).length; i++) {
     let keys = Object.keys(card.subtask);
@@ -455,7 +632,15 @@ function renderEditCardInfos(iframeDocument, card) {
   }
 }
 
+/**
+ * ID counter for subtasks.
+ * @type {number}
+ */
 let id = 0;
+
+/**
+ * Adds a subtask to the subtask list.
+ */
 function setSubtasks() {
   let input = document.getElementById("input-subtask");
   let subtaskcontainer = document.getElementById("subtasklist");
@@ -468,6 +653,11 @@ function setSubtasks() {
   }
 }
 
+/**
+ * Retrieves all subtasks of a task and renders them.
+ * @param {Object} card - The task object.
+ * @param {Document} iframeDocument - The document of the iframe.
+ */
 function getAllSubtasks(card, iframeDocument) {
   let task = Object.keys(card.subtask);
   let sectionsElement = iframeDocument.getElementById("subtasks");
@@ -483,20 +673,31 @@ function getAllSubtasks(card, iframeDocument) {
   boardCardContent.innerHTML += renderBoardCardButtons(card.id);
 }
 
+/**
+ * Renders the delete and edit buttons on the task card.
+ * @param {string} id - The ID of the task.
+ * @returns {string} HTML string for the buttons.
+ */
 function renderBoardCardButtons(id) {
   return `<div class="delete-edit">
-            <div class="delete" id="delete-btn-${id}" onclick="deleteTask('${id}'), parent.closeWindow('card-infos')">
-                <img src="../assets/img/delete.svg" alt="">
-                <p>Delete</p>
-            </div>
-            <img src="../assets/img/Vector 3.svg" alt="">
-            <div class="edit" id="edit-btn-${id}" onclick="parent.editTask('${id}')">
-                <img src="../assets/img/edit.svg" alt="">
-                <p>Edit</p>
-            </div>
-        </div>`;
+                <div class="delete" id="delete-btn-${id}" onclick="deleteTask('${id}'), parent.closeWindow('card-infos')">
+                    <img src="../assets/img/delete.svg" alt="">
+                    <p>Delete</p>
+                </div>
+                <img src="../assets/img/Vector 3.svg" alt="">
+                <div class="edit" id="edit-btn-${id}" onclick="parent.editTask('${id}')">
+                    <img src="../assets/img/edit.svg" alt="">
+                    <p>Edit</p>
+                </div>
+            </div>`;
 }
 
+/**
+ * Checks if a subtask is completed.
+ * @param {Object} card - The task object.
+ * @param {number} i - Index of the subtask.
+ * @returns {string} 'checked' if completed, otherwise an empty string.
+ */
 function ifChecked(card, i) {
   let alltasks = Object.values(card.subtask);
   if (alltasks[i] == "inwork") {
@@ -506,6 +707,11 @@ function ifChecked(card, i) {
   }
 }
 
+/**
+ * Retrieves and renders assigned contacts for a task.
+ * @param {Object} card - The task object.
+ * @param {Document} iframeDocument - The document of the iframe.
+ */
 function getAssignedTo(card, iframeDocument) {
   if (!card.assignedto == false) {
     if (typeof card.assignedto === "object") {
@@ -519,7 +725,7 @@ function getAssignedTo(card, iframeDocument) {
     let contact = card.assignedto;
 
     let contactss = contact.split(",");
-    for (id in contacts) {
+    for (let id in contacts) {
       let name = contactss[id].split(" ");
       let firstinit = name[0][0];
       let second = name[1] ? name[1][0] : "";
@@ -540,23 +746,44 @@ function getAssignedTo(card, iframeDocument) {
   }
 }
 
+/**
+ * Renders HTML for a subtask checkbox.
+ * @param {number} i - Index of the subtask.
+ * @param {Array<string>} task - Array of subtask names.
+ * @param {number} tasklength - Total number of subtasks.
+ * @param {string} checked - 'checked' if the subtask is completed.
+ * @param {Object} card - The task object.
+ * @returns {string} HTML string for the subtask checkbox.
+ */
 function subtasksHTML(i, task, tasklength, checked, card) {
   return `<div class="subtasks-checkboxes" id="board-card-${card.id}-${i}">
-                <div class="checkbox-wrapper-19" >
-                    <input type="checkbox" id="cbtest-19-${i}" onclick="parent.subtaskProcesBar('${card.id}', ${i}, ${tasklength}); boardCardSubtaskChecked(${i})" ${checked}/>
-                    <label for="cbtest-19-${i}" class="check-box">
-                </div>
-                <p>${task[i]}</p>
-            </div>`;
+                    <div class="checkbox-wrapper-19" >
+                        <input type="checkbox" id="cbtest-19-${i}" onclick="parent.subtaskProcesBar('${card.id}', ${i}, ${tasklength}); boardCardSubtaskChecked(${i})" ${checked}/>
+                        <label for="cbtest-19-${i}" class="check-box">
+                    </div>
+                    <p>${task[i]}</p>
+                </div>`;
 }
 
+/**
+ * Renders HTML for an assigned contact.
+ * @param {string} contact - Name of the contact.
+ * @param {string} init - Initials of the contact.
+ * @param {string} color - Color associated with the contact.
+ * @returns {string} HTML string for the assigned contact.
+ */
 function contactsHTML(contact, init, color) {
   return `<div class="assigned-contacts">
-                <div class="contact-circle" id="contact-circle" style="background-color: ${color};"><span id="contact-inits">${init}</span></div>
-                <p>${contact}</p>
-            </div>`;
+                    <div class="contact-circle" id="contact-circle" style="background-color: ${color};"><span id="contact-inits">${init}</span></div>
+                    <p>${contact}</p>
+                </div>`;
 }
 
+/**
+ * Sets the priority indicator in the task card.
+ * @param {Object} card - The task object.
+ * @param {Document} iframeDocument - The document of the iframe.
+ */
 function setPrio(card, iframeDocument) {
   if (card.prio == "urgent") {
     iframeDocument.getElementById("urgent").classList.remove("d-none");
@@ -567,6 +794,10 @@ function setPrio(card, iframeDocument) {
   }
 }
 
+/**
+ * Opens the detailed view of a task.
+ * @param {string} id - The ID of the task.
+ */
 function openCard(id) {
   clickedCardId = id;
   let body = document.getElementById("body");
@@ -580,6 +811,12 @@ function openCard(id) {
   };
 }
 
+/**
+ * Updates the subtask progress bar when a subtask is checked or unchecked.
+ * @param {string} cardId - The ID of the task.
+ * @param {number} id - Index of the subtask.
+ * @param {number} tasklength - Total number of subtasks.
+ */
 function subtaskProcesBar(cardId, id, tasklength) {
   let iframe = document.getElementById("card-infos");
   let iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
@@ -596,6 +833,11 @@ function subtaskProcesBar(cardId, id, tasklength) {
   setSubTaskProces(subTaskCount, tasklength);
 }
 
+/**
+ * Gets the number of completed subtasks in a task.
+ * @param {Object} task - The task object.
+ * @returns {number} Number of completed subtasks.
+ */
 function getCheckedSubtasks(task) {
   let count = 0;
   let checked = Object.values(task.subtask);
@@ -607,6 +849,11 @@ function getCheckedSubtasks(task) {
   return count;
 }
 
+/**
+ * Retrieves a task by its ID.
+ * @param {string} crypticId - The ID of the task.
+ * @returns {Object} The task object.
+ */
 function getCardById(crypticId) {
   let newtask = {};
   tasks.forEach((task) => {
@@ -617,6 +864,11 @@ function getCardById(crypticId) {
   return newtask;
 }
 
+/**
+ * Updates the subtask progress on the task card.
+ * @param {number} count - Number of completed subtasks.
+ * @param {number} tasklength - Total number of subtasks.
+ */
 function setSubTaskProces(count, tasklength) {
   let taskCard = document.getElementById(`ticket-${clickedCardId}`);
   let subtask = taskCard.querySelector("#subtasks");
@@ -625,18 +877,29 @@ function setSubTaskProces(count, tasklength) {
   fillProgressBar(count, tasklength);
 }
 
+/**
+ * Fills the progress bar based on completed subtasks.
+ * @param {number} count - Number of completed subtasks.
+ * @param {number} length - Total number of subtasks.
+ */
 function fillProgressBar(count, length) {
   let progressBar = document.getElementById(`filler-${clickedCardId}`);
   let result = (count / length) * 100;
   progressBar.style.width = `${result}%`;
 }
 
+/**
+ * Switches the task card to edit mode.
+ */
 function editTask() {
   let card = document.getElementById("card-infos");
   card.id = "edit-card";
   card.src = "./board-card-edit.html";
 }
 
+/**
+ * Searches for tasks based on user input.
+ */
 function searchCard() {
   addEventListener("keyup", () => {
     let input = document.getElementById("search-field");
@@ -660,6 +923,11 @@ function searchCard() {
   });
 }
 
+/**
+ * Opens the dropdown menu for a task card.
+ * @param {string} id - The ID of the task.
+ * @param {Event} event - The click event.
+ */
 function openMenu(id, event) {
   let dots = document.getElementById(`dots-${id}`);
   dots.src = "../assets/img/3drots-blue.svg";
@@ -674,6 +942,10 @@ function openMenu(id, event) {
   document.getElementById(`myDropdown-${id}`).classList.toggle("show");
 }
 
+/**
+ * Global click handler to close dropdown menus when clicking outside.
+ * @param {Event} event - The click event.
+ */
 window.onclick = function (event) {
   let allDots = document.getElementsByClassName("dots");
   for (let x = 0; x < allDots.length; x++) {
@@ -690,6 +962,10 @@ window.onclick = function (event) {
   }
 };
 
+/**
+ * Stops event propagation.
+ * @param {Event} event - The event to stop propagation on.
+ */
 function stopEventPropagation(event) {
   event.stopPropagation();
 }
