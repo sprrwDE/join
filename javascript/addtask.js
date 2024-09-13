@@ -218,6 +218,7 @@ function assignedToChecked(id) {
   let color = contactimg.style.backgroundColor;
   let contactid = document.getElementById(`id=${id}`);
   let contact = contactid.getElementsByTagName("p");
+  checkbox.checked = false;
   toggleCheckbox(id);
 
   if (checkbox.checked) {

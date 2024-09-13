@@ -62,4 +62,3 @@ function deleteFromServer(id) {
     method: "DELETE"
   });
 }
-

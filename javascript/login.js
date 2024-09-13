@@ -1,3 +1,4 @@
+
 let BASE_URL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/accounts.json" 
 let contacsFatch = 'https://join-318-default-rtdb.europe-west1.firebasedatabase.app/';
 
@@ -287,5 +288,3 @@ function renderSignUpHTML(){
     <div id="successfully" class="d-none"></div>`;
 
 }
-
-
