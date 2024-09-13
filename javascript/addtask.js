@@ -12,6 +12,8 @@ let tasks = {
 
 let section;
 
+let listOfContacts;
+
 function onload() {
   loadContacts();
   includeHTML();
@@ -19,7 +21,7 @@ function onload() {
   taskSelected();
   selectedPrio("medium")
   init();
-  
+
 }
 
 
@@ -53,6 +55,7 @@ function loadContacts() {
 }
 
 function getContactInitials(contacts) {
+
   let newcontact = contacts.split(" ");
   let firstinits = newcontact[0]?.charAt(0).toUpperCase() || "";
   let secondinits = newcontact[1]?.charAt(0).toUpperCase() || "";
@@ -60,6 +63,7 @@ function getContactInitials(contacts) {
 }
 
 function renderContacts(contacts) {
+  listOfContacts = contacts
   let contactcontainer = document.getElementById("all-contacts");
   let allcontacts = [];
   let colors = [];
@@ -214,13 +218,14 @@ function assignedToChecked(id) {
   let color = contactimg.style.backgroundColor;
   let contactid = document.getElementById(`id=${id}`);
   let contact = contactid.getElementsByTagName("p");
+  checkbox.checked = false;
   toggleCheckbox(id);
 
   if (checkbox.checked) {
     img.classList.remove("d-none");
     img.style.backgroundColor = color;
-    tasks.assignedto.push(contact[0].textContent);
     getSelectedColor(color);
+    tasks.assignedto.push(contact[0].textContent);
   } else {
     deleteSelectedColor(color);
     img.classList.add("d-none");
@@ -445,8 +450,7 @@ function checkStatus() {
 }
 
 function checkWindowLoaction() {
-  console.log(window.location.href)
-  if(window.location.href.endsWith("documents/addtask-card.html")) {
+  if (window.location.href.endsWith("documents/addtask-card.html")) {
     return true
   } else {
     return false
@@ -460,9 +464,9 @@ function getAllInfos() {
   if (requiredFieldsCheck() == true) {
     checkStatus()
     postInfos();
-    if(checkWindowLoaction()) {
+    if (checkWindowLoaction()) {
       console.log("check")
-      
+
 
     }
     successDisplay()
@@ -473,7 +477,29 @@ function getAllInfos() {
 }
 
 function clearAllFields() {
-  window.location.reload();
+  tasks = {
+    title: "",
+    description: "",
+    assignedto: [],
+    date: "",
+    prio: "",
+    category: "",
+    subtask: [],
+    color: "",
+    inits: "",
+  };
+  
+  let title = document.getElementById("input-title")
+  let desc = document.getElementById("text-area")
+  let contacts = document.getElementById("all-contacts")
+  let imges = document.getElementById("contacts-imges")
+
+  imges.innerHTML = "";
+  title.value = "";
+  desc.value = "";
+  contacts.innerHTML = "";
+  renderContacts(listOfContacts)
+
 }
 
 function successDisplay() {
