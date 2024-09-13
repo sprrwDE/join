@@ -26,6 +26,13 @@ main {
     margin-top: 40px;
 }
 
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 4px;
+    display: none; /* Anfangs versteckt */
+}
+
 .edit-box {
     display: flex;
     flex-direction: column;
@@ -141,12 +148,6 @@ main {
     border-radius: 16px;
 }
 
-.list-card.selected:hover {
-    background: none;
-    border-radius: 16px;
-    color: white;
-}
-
 .contact-mobile-header {
     display: flex !important;
     flex-direction: column !important;
@@ -222,6 +223,7 @@ main {
 }
 
 .contact-card {
+    position: relative;
     display: flex;
     flex-direction: column;
     width: 90%;
@@ -234,15 +236,21 @@ main {
 }
 
 .exit-wrapper {
-    position: fixed;
-    top: 24px;
-    right: 24px;
-    transition: transform .7s ease-in-out;
+    position: absolute;
+    top: 16px; /* Abstand vom oberen Rand des Popups */
+    right: 16px; /* Abstand vom rechten Rand des Popups */
     cursor: pointer;
+    z-index: 1000; /* Sicherstellen, dass es über anderen Elementen liegt */
 }
 
-.exit-wrapper:hover {
-    transform: rotate(90deg) scale(1.2);
+.exit-wrapper img {
+    width: 24px;
+    height: 24px;
+}
+
+.exit-wrapper img:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
 }
 
 .card-header {
@@ -391,12 +399,16 @@ input::placeholder {
 }
 
 .create:hover {
-    background-color: #0f0f0f;
-    transform: scale(1.05);
+    box-shadow: 0px 4px 4px 0px #00000040;
+    background-color: #29ABE2;
 }
 
 .cancel {
     display: none;
+}
+
+.cancel:hover {
+    box-shadow: 0px 4px 4px 0px #00000040;
 }
 
 .edit-button-desk-wrapper {
@@ -454,6 +466,12 @@ input::placeholder {
         justify-content: center;
         align-items: center;
         transform: translateY(0);
+    }
+
+    .list-card.selected:hover {
+        background: none;
+        border-radius: 16px;
+        color: white;
     }
 
     .input-wrapper {
@@ -514,10 +532,6 @@ input::placeholder {
         background-color: white !important;
         font-weight: 400;
         transition: transform .2s ease-in-out;
-    }
-
-    .cancel:hover {
-        transform: scale(1.05);
     }
 
     .card-header img {
@@ -632,6 +646,18 @@ input::placeholder {
         cursor: pointer;
     }
 
+    .edit-row:hover {
+        transform: scale(1.2);
+    }
+
+    .edit-row-desk:hover p {
+        color:#007CEE;
+    }
+
+    .edit-row-desk:hover img {
+        filter: brightness(0) saturate(100%) invert(32%) sepia(90%) saturate(3226%) hue-rotate(185deg) brightness(93%) contrast(101%);
+    }
+
     .selected {
         background-color: #2A3647 !important;
         color: white;
@@ -663,6 +689,25 @@ input::placeholder {
     .contact-mobile-header-detail {
         display: none;
     }
+
+    .popup {
+        position: fixed;
+        width: 320px;
+        height: 80px;
+        background-color: #2A3647;
+        color: white;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        top: 70%;
+        right: 26%;
+        transform: translate(-70%, -26%);
+        z-index: 1000;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
 }
 
 @keyframes slideInFromRight {
@@ -687,13 +732,19 @@ input::placeholder {
     }
 }
 
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
 .animate-from-bottom {
     animation: slideInFromBottom 0.5s ease-in-out;
 }
 
-.error-message {
-    color: red;
-    font-size: 12px;
-    margin-top: 4px;
-    display: none; /* Anfangs versteckt */
+.fade-out {
+    animation: fadeOut 2s forwards;
 }
