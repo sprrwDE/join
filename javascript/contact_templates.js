@@ -117,18 +117,21 @@ function addDialogTemplate() {
         </div>
         <form class="card-body form" id="contactForm">
             <div class="input-wrapper">
-                <div class="input-container">
-                    <input type="text" required placeholder="Name" id="name" name="name">
-                    <img class="icon" src="../assets/img/contact-card/person.svg">
-                </div>
-                <div class="input-container">
-                    <input type="text" required placeholder="Email" id="email" name="email">
-                    <img class="icon" src="../assets/img/contact-card/mail.svg">
-                </div>
-                <div class="input-container">
-                    <input type="text" required placeholder="Phone" id="phone" name="phone">
-                    <img class="icon" src="../assets/img/contact-card/call.svg">
-                </div>
+<div class="input-container">
+    <input type="text" required placeholder="Name" id="name" name="name">
+    <img class="icon" src="../assets/img/contact-card/person.svg">
+    <div class="error-message" id="name-error"></div>
+</div>
+<div class="input-container">
+    <input type="text" required placeholder="Email" id="email" name="email">
+    <img class="icon" src="../assets/img/contact-card/mail.svg">
+    <div class="error-message" id="email-error"></div>
+</div>
+<div class="input-container">
+    <input type="text" required placeholder="Phone" id="phone" name="phone">
+    <img class="icon" src="../assets/img/contact-card/call.svg">
+    <div class="error-message" id="phone-error"></div>
+</div>
             </div>
             <div class="btn-wrapper">
                 <button class="btn cancel" onclick="closeAddContactDialog(event)">
@@ -171,17 +174,20 @@ function showEditOverlay(name, email, user, color) {
         <form class="card-body form">
             <div class="input-wrapper">
                 <div class="input-container">
-                    <input type="text" required placeholder="Name" id="edit-name" name="name" value="">
-                    <img class="icon" src="../assets/img/contact-card/person.svg">
-                </div>
-                <div class="input-container">
-                    <input type="text" required placeholder="Email" id="edit-email" name="email" value="">
-                    <img class="icon" src="../assets/img/contact-card/mail.svg">
-                </div>
-                <div class="input-container">
-                    <input type="text" required placeholder="Phone" id="edit-phone" name="phone" value="">
-                    <img class="icon" src="../assets/img/contact-card/call.svg">
-                </div>
+    <input type="text" required placeholder="Name" id="edit-name" name="name" value="">
+    <img class="icon" src="../assets/img/contact-card/person.svg">
+    <div class="error-message" id="edit-name-error"></div>
+</div>
+<div class="input-container">
+    <input type="text" required placeholder="Email" id="edit-email" name="email" value="">
+    <img class="icon" src="../assets/img/contact-card/mail.svg">
+    <div class="error-message" id="edit-email-error"></div>
+</div>
+<div class="input-container">
+    <input type="text" required placeholder="Phone" id="edit-phone" name="phone" value="">
+    <img class="icon" src="../assets/img/contact-card/call.svg">
+    <div class="error-message" id="edit-phone-error"></div>
+</div>
             </div>
             <div class="btn-wrapper">
                 <button class="btn cancel" onclick="closeEditContactDialog()">

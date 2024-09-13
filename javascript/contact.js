@@ -1,7 +1,7 @@
 // Div References
 const showDetail = document.getElementById('contact-detail');
 const detailRef = document.getElementById('detail');
-const addDialogRef = document.getElementById('add-contact');
+const addContactRef = document.getElementById('add-contact');
 const contactListRef = document.getElementById('contact-list');
 const listContentRef = document.getElementById('list-content-outter');
 const addButtonRef = document.getElementById('add-button');
@@ -120,41 +120,36 @@ function renderContactsForInitial(containerRef, contacts, globalIndex) {
  * Opens the "Add Contact" dialog.
  */
 function openAddContactDialog() {
-    const addContactRef = document.getElementById('add-contact');
-    
-    // Setze den HTML-Inhalt für das Add Contact-Dialog
     addContactRef.innerHTML = addDialogTemplate();
-    
-    // Entferne die 'd-none'-Klasse, damit die Sektion sichtbar wird
     addContactRef.classList.remove('d-none');
-    
-    // Füge die Animation hinzu, um das Einfliegen von unten zu aktivieren
     const contactCard = addContactRef.querySelector('.contact-card.add');
     contactCard.classList.add('animate-from-bottom');
-    
-    // **Verhindere das Event-Bubbling innerhalb des Dialogs**
     contactCard.addEventListener('click', function(event) {
         event.stopPropagation();
     });
-    
-    // **Schließe den Dialog bei Klick auf das Overlay (außerhalb des Dialogs)**
     addContactRef.addEventListener('click', function() {
         closeAddContactDialog();
     });
-    
-    // Entferne die Animationsklasse nach dem Abspielen der Animation
     contactCard.addEventListener('animationend', function() {
         contactCard.classList.remove('animate-from-bottom');
     });
+    ['name', 'email', 'phone'].forEach(id => {
+        const input = document.getElementById(id);
+        input.addEventListener('input', () => {
+            const errorElement = document.getElementById(`${id}-error`);
+            errorElement.textContent = '';
+            errorElement.style.display = 'none';
+        });
+    });
 }
+
 
 /**
  * Closes the "Add Contact" dialog.
  */
 function closeAddContactDialog() {
-    const addContactRef = document.getElementById('add-contact');
     addContactRef.classList.add('d-none');
-    addContactRef.innerHTML = ''; // Optional: Entfernt den Inhalt des Dialogs
+    addContactRef.innerHTML = ''; 
 }
 
 /**
@@ -162,14 +157,14 @@ function closeAddContactDialog() {
  * Validates the input and stores it in `inputData`.
  */
 function getInputValues(event) {
-    event.preventDefault(); // Verhindert das Abschicken des Formulars
+    event.preventDefault(); 
 
     const nameInput = document.getElementById('name').value.trim();
     const emailInput = document.getElementById('email').value.trim();
     const phoneInput = document.getElementById('phone').value.trim();
 
     if (!validateInput(nameInput, emailInput, phoneInput)) {
-        return; // Bei Validierungsfehler Funktion beenden
+        return; 
     }
 
     const inputData = {
@@ -181,6 +176,7 @@ function getInputValues(event) {
     };
 
     pushData(inputData);
+    closeAddContactDialog();
 }
 
 /**
@@ -230,26 +226,16 @@ function closeDetailDialog() {
  */
 function openDetailReferenceDesk(name, email, phone, id, first, last, color, user) {
     currentId = id;
-    const detailContentRef = document.getElementById('detail-desk'); // Das Template-Element
-    
-    // Setze den HTML-Inhalt des Templates
+    const detailContentRef = document.getElementById('detail-desk'); 
     detailContentRef.innerHTML = detailTemplate(name, email, phone, id, first, last, color, user);
-    
-    // Entferne die Animationsklasse, falls sie bereits vorhanden ist
     detailContentRef.classList.remove('animate-detail');
-    
-    // Stelle sicher, dass die Animation nur nach dem Laden des Inhalts gestartet wird
     setTimeout(() => {
-        // Füge die Animationsklasse erst hinzu, nachdem der Inhalt vollständig gerendert wurde
         detailContentRef.classList.add('animate-detail');
-        
-        // Entferne die Animationsklasse, sobald die Animation beendet ist
         detailContentRef.addEventListener('animationend', function() {
             detailContentRef.classList.remove('animate-detail');
         });
-    }, 10); // Ein kleines Timeout, um sicherzustellen, dass der Inhalt geladen wurde
-
-    selectElement(id);  // Optional: Markiere das ausgewählte Element
+    }, 10); 
+    selectElement(id);  
 }
 
 /**
@@ -343,53 +329,77 @@ function hideEditBox() {
     editBoxRef.classList.add('d-none');
 }
 
-/**
- * Opens the dialog to edit an existing contact.
- * 
- * @param {number} id - The contact's ID.
- * @param {string} name - The contact's name.
- * @param {string} email - The contact's email.
- * @param {boolean} user - Is the contact a user?
- */
 function openEditContactDialog(id, name, email, user) {
-    editContactRef.classList.remove('d-none');
     const contact = db.find(contact => contact.id === id);
+    showEditContactDialog(contact);
+    initializeEditDialog(contact);
+    addInputEventListenersToClearErrors('edit-');
+}
+
+function showEditContactDialog(contact) {
+    editContactRef.classList.remove('d-none');
     isCurrentUser = contact.isUser;
     const color = contact.color; // Farbe des Kontakts
-    editContactRef.innerHTML = showEditOverlay(name, email, user, color);
-    currentId = id;
+    editContactRef.innerHTML = showEditOverlay(contact.nameIn, contact.emailIn, contact.isUser, color);
+    currentId = contact.id;
+}
 
-    // Rest des Codes innerhalb von setTimeout verschieben
+function initializeEditDialog(contact) {
     setTimeout(() => {
-        const contactCard = editContactRef.querySelector('.contact-card.add');
-
-        // Event-Bubbling verhindern
-        contactCard.addEventListener('click', function(event) {
-            event.stopPropagation();
-        });
-
-        // Schließen bei Klick außerhalb des Dialogs
-        editContactRef.addEventListener('click', function() {
-            closeEditContactDialog();
-        });
-
-        // Animation hinzufügen
-        contactCard.classList.add('animate-from-bottom');
-        contactCard.addEventListener('animationend', function() {
-            contactCard.classList.remove('animate-from-bottom');
-        });
-
-        // Formularelemente ausfüllen
-        const nameInput = document.getElementById('edit-name');
-        const emailInput = document.getElementById('edit-email');
-        const phoneInput = document.getElementById('edit-phone');
-
-        if (contact && nameInput && emailInput && phoneInput) {
-            nameInput.value = contact.nameIn;
-            emailInput.value = contact.emailIn;
-            phoneInput.value = contact.phoneIn;
-        }
+        setupEditDialogEventListeners();
+        setupEditDialogAnimation();
+        populateEditDialogFields(contact);
     }, 0);
+}
+
+function setupEditDialogEventListeners() {
+    const contactCard = editContactRef.querySelector('.contact-card.add');
+
+    // Event-Bubbling verhindern
+    contactCard.addEventListener('click', function(event) {
+        event.stopPropagation();
+    });
+
+    // Schließen bei Klick außerhalb des Dialogs
+    editContactRef.addEventListener('click', function() {
+        closeEditContactDialog();
+    });
+}
+
+function setupEditDialogAnimation() {
+    const contactCard = editContactRef.querySelector('.contact-card.add');
+
+    // Animation hinzufügen
+    contactCard.classList.add('animate-from-bottom');
+    contactCard.addEventListener('animationend', function() {
+        contactCard.classList.remove('animate-from-bottom');
+    });
+}
+
+function populateEditDialogFields(contact) {
+    const nameInput = document.getElementById('edit-name');
+    const emailInput = document.getElementById('edit-email');
+    const phoneInput = document.getElementById('edit-phone');
+
+    if (contact && nameInput && emailInput && phoneInput) {
+        nameInput.value = contact.nameIn;
+        emailInput.value = contact.emailIn;
+        phoneInput.value = contact.phoneIn;
+    }
+}
+
+function addInputEventListenersToClearErrors(prefix) {
+    ['name', 'email', 'phone'].forEach(field => {
+        const inputId = `${prefix}${field}`;
+        const input = document.getElementById(inputId);
+        input.addEventListener('input', () => {
+            const errorElement = document.getElementById(`${inputId}-error`);
+            if (errorElement) {
+                errorElement.textContent = '';
+                errorElement.style.display = 'none';
+            }
+        });
+    });
 }
 
 /**
@@ -419,13 +429,8 @@ function getUpdatedContactData() {
     const emailIn = document.getElementById('edit-email').value.trim();
     const phoneIn = document.getElementById('edit-phone').value.trim();
 
-    // Debugging: Überprüfe, ob die Werte korrekt ausgelesen werden
-    console.log("Name input:", nameIn);
-    console.log("Email input:", emailIn);
-    console.log("Phone input:", phoneIn);
-
-    if (!validateInput(nameIn, emailIn, phoneIn)) {
-        return null;  // Validation failed
+    if (!validateInput(nameIn, emailIn, phoneIn, 'edit-')) {
+        return null;  // Validierung fehlgeschlagen
     }
 
     const color = getRandomColor();
@@ -450,7 +455,7 @@ function updateLocalDatabase(contactId, updatedData) {
 /**
  * Updates the detail view with the new contact data.
  * 
- * @param {Object} updatedData - The updated contact data.
+ * @param {Object} updatedData 
  */
 function updateDetailView(updatedData) {
     const initials = getContactInitials(updatedData.nameIn);
@@ -479,7 +484,7 @@ function updateDetailView(updatedData) {
 
 ///
 ///
-// Eventuell in global JS schieben?
+// Eventuell in andere Datei schieben?
 
 /**
  * Validates the input data for a contact.
@@ -491,30 +496,25 @@ function updateDetailView(updatedData) {
  * @param {string} phone - The phone number of the contact.
  * @returns {boolean} - Returns `true` if all inputs are valid, otherwise `false`.
  */
-function validateInput(name, email, phone) {
-    console.log("Validating input:", { name, email, phone });
-
-    if (!isNotEmpty(name, email, phone)) {
-        alert('Please fill in all fields.');
-        return false;
+function validateInput(name, email, phone, prefix = '') {
+    resetErrorMessages(prefix);
+    let isValid = true;
+    const fields = [
+        { name: 'name', value: name, validate: isValidName, emptyMsg: 'Bitte geben Sie einen Namen ein.', invalidMsg: 'Bitte geben Sie einen gültigen Namen ohne Zahlen ein.' },
+        { name: 'email', value: email, validate: isValidEmail, emptyMsg: 'Bitte geben Sie eine E-Mail-Adresse ein.', invalidMsg: 'Bitte geben Sie eine gültige E-Mail-Adresse ein.' },
+        { name: 'phone', value: phone, validate: isValidPhone, emptyMsg: 'Bitte geben Sie eine Telefonnummer ein.', invalidMsg: 'Bitte geben Sie eine gültige Telefonnummer ein.' }
+    ];
+    for (let field of fields) {
+        const errorId = `${prefix}${field.name}-error`;
+        if (field.value.trim() === '') {
+            displayErrorMessage(errorId, field.emptyMsg);
+            isValid = false;
+        } else if (!field.validate(field.value)) {
+            displayErrorMessage(errorId, field.invalidMsg);
+            isValid = false;
+        }
     }
-
-    if (!isValidName(name)) {
-        alert('Please enter a valid name without numbers.');
-        return false;
-    }
-
-    if (!isValidEmail(email)) {
-        alert('Please enter a valid email address.');
-        return false;
-    }
-
-    if (!isValidPhone(phone)) {
-        alert('Please enter a valid phone number.');
-        return false;
-    }
-
-    return true; // All validations passed
+    return isValid;
 }
 
 /**
@@ -558,6 +558,31 @@ function isValidEmail(email) {
  * @returns {boolean} - Returns `true` if the phone number has at least 10 digits, otherwise `false`.
  */
 function isValidPhone(phone) {
-    const re = /^[0-9]{10,}$/;
+    const re = /^[\d\s+\-()]+$/;
     return re.test(phone);
+}
+
+/**
+ * Zeigt eine Fehlermeldung unter dem entsprechenden Eingabefeld an.
+ * @param {string} elementId - Die ID des Fehlermeldungs-Elements.
+ * @param {string} message - Die anzuzeigende Fehlermeldung.
+ */
+function displayErrorMessage(elementId, message) {
+    const errorElement = document.getElementById(elementId);
+    if (errorElement) {
+        errorElement.textContent = message;
+        errorElement.style.display = 'block';
+    }
+}
+
+/**
+ * Setzt alle Fehlermeldungen zurück.
+ * @param {string} prefix - Optionaler Präfix für die Fehlermeldungs-IDs.
+ */
+function resetErrorMessages(prefix = '') {
+    const errorElements = document.querySelectorAll(`.error-message[id^="${prefix}"]`);
+    errorElements.forEach(element => {
+        element.textContent = '';
+        element.style.display = 'none';
+    });
 }

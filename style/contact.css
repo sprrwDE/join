@@ -690,3 +690,10 @@ input::placeholder {
 .animate-from-bottom {
     animation: slideInFromBottom 0.5s ease-in-out;
 }
+
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 4px;
+    display: none; /* Anfangs versteckt */
+}
