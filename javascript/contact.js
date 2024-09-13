@@ -16,6 +16,9 @@ let organizedContacts = {};
 let currentId;
 let isCurrentUser;
 
+/**
+ * Renders the contact groups on the page.
+ */
 function renderContactGroups() {
     listContentRef.innerHTML = '';
     organizedContacts = {};
@@ -24,6 +27,9 @@ function renderContactGroups() {
     renderContacts(organizedContacts);
 }
 
+/**
+ * Groups contacts by their initials.
+ */
 function groupContactsByInitials() {
     db.forEach(contact => {
         let initials = getContactInitials(contact.nameIn);
@@ -39,12 +45,19 @@ function groupContactsByInitials() {
     });
 }
 
+/**
+ * Sorts the contact groups alphabetically.
+ */
 function sortContactGroups() {
     Object.keys(organizedContacts).forEach(letter => {
         organizedContacts[letter].sort((a, b) => a.nameIn.localeCompare(b.nameIn));
     });
 }
 
+/**
+ * Renders the sorted contact groups.
+ * @param {Object} organizedContacts - The contacts organized by initials.
+ */
 function renderContacts(organizedContacts) {
     let sortedInitials = Object.keys(organizedContacts).sort();
     let globalIndex = 0;
@@ -55,12 +68,25 @@ function renderContacts(organizedContacts) {
     });
 }
 
+/**
+ * Renders a group of contacts under a specific initial.
+ * @param {string} initial - The initial letter.
+ * @param {number} index - The index of the group.
+ * @param {Array} contacts - The contacts under this initial.
+ * @param {number} globalIndex - The global index for contacts.
+ */
 function renderInitialGroup(initial, index, contacts, globalIndex) {
     listContentRef.innerHTML += contactTemplateInitial(initial, index);
     let currentContactRef = document.getElementById(`list-content-inner-${index}`);
     renderContactsForInitial(currentContactRef, contacts, globalIndex);
 }
 
+/**
+ * Renders individual contacts in a group.
+ * @param {HTMLElement} containerRef - The container element.
+ * @param {Array} contacts - The contacts to render.
+ * @param {number} globalIndex - The global index for contacts.
+ */
 function renderContactsForInitial(containerRef, contacts, globalIndex) {
     contacts.forEach((contact, i) => {
         containerRef.innerHTML += getContactsTemplate(
@@ -77,6 +103,9 @@ function renderContactsForInitial(containerRef, contacts, globalIndex) {
     });
 }
 
+/**
+ * Opens the add contact dialog.
+ */
 function openAddContactDialog() {
     addContactRef.innerHTML = addDialogTemplate();
     addContactRef.classList.remove('d-none');
@@ -84,10 +113,17 @@ function openAddContactDialog() {
     addInputEventListeners(['name', 'email', 'phone']);
 }
 
+/**
+ * Closes the add contact dialog.
+ */
 function closeAddContactDialog() {
     closeDialog(addContactRef);
 }
 
+/**
+ * Retrieves input values from the add contact form.
+ * @param {Event} event - The form submit event.
+ */
 function getInputValues(event) {
     event.preventDefault();
 
@@ -109,6 +145,18 @@ function getInputValues(event) {
     closeAddContactDialog();
 }
 
+/**
+ * Opens the contact detail dialog.
+ * @param {string} name - Contact's name.
+ * @param {string} email - Contact's email.
+ * @param {string} phone - Contact's phone number.
+ * @param {string} id - Contact's ID.
+ * @param {string} first - Contact's first initial.
+ * @param {string} last - Contact's last initial.
+ * @param {string} color - Contact's color.
+ * @param {number} indexCard - Index of the contact card.
+ * @param {boolean} user - Whether this contact is the current user.
+ */
 function openDetailDialog(name, email, phone, id, first, last, color, indexCard, user) {
     if (window.innerWidth >= 1024) {
         openDetailReferenceDesk(name, email, phone, id, first, last, color, user);
@@ -117,6 +165,9 @@ function openDetailDialog(name, email, phone, id, first, last, color, indexCard,
     }
 }
 
+/**
+ * Closes the contact detail dialog.
+ */
 function closeDetailDialog() {
     showDetail.classList.add('d-none');
     detailRef.classList.add('d-none');
@@ -126,6 +177,17 @@ function closeDetailDialog() {
     listContentRef.classList.remove('d-none');
 }
 
+/**
+ * Opens the contact detail view for desktop.
+ * @param {string} name - Contact's name.
+ * @param {string} email - Contact's email.
+ * @param {string} phone - Contact's phone number.
+ * @param {string} id - Contact's ID.
+ * @param {string} first - Contact's first initial.
+ * @param {string} last - Contact's last initial.
+ * @param {string} color - Contact's color.
+ * @param {boolean} user - Whether this contact is the current user.
+ */
 function openDetailReferenceDesk(name, email, phone, id, first, last, color, user) {
     currentId = id;
     const detailContentRef = document.getElementById('detail-desk');
@@ -134,6 +196,10 @@ function openDetailReferenceDesk(name, email, phone, id, first, last, color, use
     selectElement(id);
 }
 
+/**
+ * Highlights the selected contact element.
+ * @param {string} contactId - The ID of the contact to select.
+ */
 function selectElement(contactId) {
     const selectedElement = document.getElementById(`contact-card-${contactId}`);
     if (!selectedElement) return;
@@ -144,12 +210,26 @@ function selectElement(contactId) {
     currentSelectedElement = selectedElement;
 }
 
+/**
+ * Opens the contact detail view for mobile.
+ * @param {string} name - Contact's name.
+ * @param {string} email - Contact's email.
+ * @param {string} phone - Contact's phone number.
+ * @param {string} id - Contact's ID.
+ * @param {string} first - Contact's first initial.
+ * @param {string} last - Contact's last initial.
+ * @param {string} color - Contact's color.
+ * @param {boolean} user - Whether this contact is the current user.
+ */
 function openDetailReferenceMob(name, email, phone, id, first, last, color, user) {
     currentId = id;
     mobileDetailDivs();
     getDetailTemplateMob(name, email, phone, id, first, last, color, user);
 }
 
+/**
+ * Adjusts the display for mobile detail view.
+ */
 function mobileDetailDivs() {
     showDetail.classList.remove('d-none');
     detailRef.classList.remove('d-none');
@@ -159,6 +239,17 @@ function mobileDetailDivs() {
     addButtonRef.classList.add('d-none');
 }
 
+/**
+ * Populates the contact detail template for mobile.
+ * @param {string} name - Contact's name.
+ * @param {string} email - Contact's email.
+ * @param {string} phone - Contact's phone number.
+ * @param {string} id - Contact's ID.
+ * @param {string} first - Contact's first initial.
+ * @param {string} last - Contact's last initial.
+ * @param {string} color - Contact's color.
+ * @param {boolean} user - Whether this contact is the current user.
+ */
 function getDetailTemplateMob(name, email, phone, id, first, last, color, user) {
     const initialsArray = getContactInitials(name);
     first = initialsArray[0];
@@ -166,6 +257,10 @@ function getDetailTemplateMob(name, email, phone, id, first, last, color, user) 
     detailRef.innerHTML = detailTemplate(name, email, phone, id, first, last, color, user);
 }
 
+/**
+ * Shows the edit box for editing a contact.
+ * @param {Event} event - The event that triggered this function.
+ */
 function showEditBox(event) {
     stopPropagation(event);
     editBoxRef.classList.remove('d-none');
@@ -176,10 +271,20 @@ editBoxRef.addEventListener('animationend', function () {
     editBoxRef.style.animation = '';
 });
 
+/**
+ * Hides the edit box.
+ */
 function hideEditBox() {
     editBoxRef.classList.add('d-none');
 }
 
+/**
+ * Opens the edit contact dialog.
+ * @param {string} id - Contact's ID.
+ * @param {string} name - Contact's name.
+ * @param {string} email - Contact's email.
+ * @param {boolean} user - Whether this contact is the current user.
+ */
 function openEditContactDialog(id, name, email, user) {
     const contact = db.find(contact => contact.id === id);
     showEditContactDialog(contact);
@@ -187,6 +292,10 @@ function openEditContactDialog(id, name, email, user) {
     addInputEventListeners(['edit-name', 'edit-email', 'edit-phone']);
 }
 
+/**
+ * Displays the edit contact dialog.
+ * @param {Object} contact - The contact object.
+ */
 function showEditContactDialog(contact) {
     editContactRef.classList.remove('d-none');
     isCurrentUser = contact.isUser;
@@ -195,6 +304,10 @@ function showEditContactDialog(contact) {
     currentId = contact.id;
 }
 
+/**
+ * Initializes the edit dialog with contact data.
+ * @param {Object} contact - The contact object.
+ */
 function initializeEditDialog(contact) {
     setTimeout(() => {
         setupDialogAnimation(editContactRef);
@@ -202,6 +315,11 @@ function initializeEditDialog(contact) {
     }, 0);
 }
 
+/**
+ * Adds animation to a dialog.
+ * @param {HTMLElement} dialogRef - The dialog element.
+ * @param {string} [animationClass='animate-from-bottom'] - The animation class.
+ */
 function setupDialogAnimation(dialogRef, animationClass = 'animate-from-bottom') {
     const dialogCard = dialogRef.querySelector('.contact-card.add');
     dialogCard.classList.add(animationClass);
@@ -216,6 +334,10 @@ function setupDialogAnimation(dialogRef, animationClass = 'animate-from-bottom')
     });
 }
 
+/**
+ * Adds animation to the detail view.
+ * @param {HTMLElement} detailRef - The detail view element.
+ */
 function setupDetailAnimation(detailRef) {
     detailRef.classList.remove('animate-detail');
     setTimeout(() => {
@@ -226,12 +348,21 @@ function setupDetailAnimation(detailRef) {
     }, 10);
 }
 
+/**
+ * Populates the edit dialog fields with contact data.
+ * @param {Object} contact - The contact object.
+ */
 function populateEditDialogFields(contact) {
     document.getElementById('edit-name').value = contact.nameIn;
     document.getElementById('edit-email').value = contact.emailIn;
     document.getElementById('edit-phone').value = contact.phoneIn;
 }
 
+/**
+ * Adds event listeners to input fields to clear error messages.
+ * @param {string[]} fields - The input field IDs.
+ * @param {string} [prefix=''] - Prefix for input field IDs.
+ */
 function addInputEventListeners(fields, prefix = '') {
     fields.forEach(field => {
         const input = document.getElementById(`${prefix}${field}`);
@@ -245,10 +376,17 @@ function addInputEventListeners(fields, prefix = '') {
     });
 }
 
+/**
+ * Closes the edit contact dialog.
+ */
 function closeEditContactDialog() {
     closeDialog(editContactRef);
 }
 
+/**
+ * Retrieves updated contact data from the edit form.
+ * @returns {Object|null} The updated contact data or null if validation fails.
+ */
 function getUpdatedContactData() {
     const nameIn = document.getElementById('edit-name').value.trim();
     const emailIn = document.getElementById('edit-email').value.trim();
@@ -262,6 +400,11 @@ function getUpdatedContactData() {
     return { nameIn, emailIn, phoneIn, color, isUser };
 }
 
+/**
+ * Updates the local database with new contact data.
+ * @param {string} contactId - Contact's ID.
+ * @param {Object} updatedData - The updated contact data.
+ */
 function updateLocalDatabase(contactId, updatedData) {
     const contactIndex = db.findIndex(contact => contact.id === contactId);
     if (contactIndex > -1) {
@@ -269,6 +412,10 @@ function updateLocalDatabase(contactId, updatedData) {
     }
 }
 
+/**
+ * Updates the contact detail view with new data.
+ * @param {Object} updatedData - The updated contact data.
+ */
 function updateDetailView(updatedData) {
     const initials = getContactInitials(updatedData.nameIn);
     if (!showDetail.classList.contains('d-none')) {
@@ -294,13 +441,21 @@ function updateDetailView(updatedData) {
     );
 }
 
+/**
+ * Validates input fields.
+ * @param {string} name - Name input.
+ * @param {string} email - Email input.
+ * @param {string} phone - Phone input.
+ * @param {string} [prefix=''] - Prefix for input field IDs.
+ * @returns {boolean} True if all inputs are valid, false otherwise.
+ */
 function validateInput(name, email, phone, prefix = '') {
     resetErrorMessages(prefix);
     let isValid = true;
     const fields = [
-        { name: 'name', value: name, validate: isValidName, emptyMsg: 'Bitte geben Sie einen Namen ein.', invalidMsg: 'Bitte geben Sie einen gültigen Namen ohne Zahlen ein.' },
-        { name: 'email', value: email, validate: isValidEmail, emptyMsg: 'Bitte geben Sie eine E-Mail-Adresse ein.', invalidMsg: 'Bitte geben Sie eine gültige E-Mail-Adresse ein.' },
-        { name: 'phone', value: phone, validate: isValidPhone, emptyMsg: 'Bitte geben Sie eine Telefonnummer ein.', invalidMsg: 'Bitte geben Sie eine gültige Telefonnummer ein.' }
+        { name: 'name', value: name, validate: isValidName, emptyMsg: 'Please enter a name.', invalidMsg: 'Please enter a valid name without numbers.' },
+        { name: 'email', value: email, validate: isValidEmail, emptyMsg: 'Please enter an email address.', invalidMsg: 'Please enter a valid email address.' },
+        { name: 'phone', value: phone, validate: isValidPhone, emptyMsg: 'Please enter a phone number.', invalidMsg: 'Please enter a valid phone number.' }
     ];
     fields.forEach(field => {
         const errorId = `${prefix}${field.name}-error`;
@@ -315,21 +470,41 @@ function validateInput(name, email, phone, prefix = '') {
     return isValid;
 }
 
+/**
+ * Validates a name input.
+ * @param {string} name - The name to validate.
+ * @returns {boolean} True if valid, otherwise false.
+ */
 function isValidName(name) {
     const re = /^[a-zA-ZÀ-ÿ\-\'\s]+$/;
     return re.test(name);
 }
 
+/**
+ * Validates an email input.
+ * @param {string} email - The email to validate.
+ * @returns {boolean} True if valid, otherwise false.
+ */
 function isValidEmail(email) {
     const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return re.test(String(email).toLowerCase());
 }
 
+/**
+ * Validates a phone number input.
+ * @param {string} phone - The phone number to validate.
+ * @returns {boolean} True if valid, otherwise false.
+ */
 function isValidPhone(phone) {
     const re = /^[\d\s+\-()]+$/;
     return re.test(phone);
 }
 
+/**
+ * Displays an error message for a specific input field.
+ * @param {string} elementId - The ID of the error message element.
+ * @param {string} message - The error message to display.
+ */
 function displayErrorMessage(elementId, message) {
     const errorElement = document.getElementById(elementId);
     if (errorElement) {
@@ -338,6 +513,10 @@ function displayErrorMessage(elementId, message) {
     }
 }
 
+/**
+ * Resets all error messages.
+ * @param {string} [prefix=''] - Prefix for error message IDs.
+ */
 function resetErrorMessages(prefix = '') {
     const errorElements = document.querySelectorAll(`.error-message[id^="${prefix}"]`);
     errorElements.forEach(element => {
@@ -346,6 +525,10 @@ function resetErrorMessages(prefix = '') {
     });
 }
 
+/**
+ * Closes a dialog and clears its content.
+ * @param {HTMLElement} dialogRef - The dialog element to close.
+ */
 function closeDialog(dialogRef) {
     dialogRef.classList.add('d-none');
     dialogRef.innerHTML = '';
