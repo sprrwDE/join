@@ -484,7 +484,7 @@ function updateDetailView(updatedData) {
 /**
  * Validates the input data for a contact.
  * Checks if all fields are filled, the email is in correct format,
- * and the phone number is valid.
+ * the phone number is valid, and the name contains no numbers.
  * 
  * @param {string} name - The name of the contact.
  * @param {string} email - The email address of the contact.
@@ -499,6 +499,11 @@ function validateInput(name, email, phone) {
         return false;
     }
 
+    if (!isValidName(name)) {
+        alert('Please enter a valid name without numbers.');
+        return false;
+    }
+
     if (!isValidEmail(email)) {
         alert('Please enter a valid email address.');
         return false;
@@ -510,6 +515,19 @@ function validateInput(name, email, phone) {
     }
 
     return true; // All validations passed
+}
+
+/**
+ * Validates a name string.
+ * Ensures that the name contains only letters, spaces, hyphens, and apostrophes.
+ * Does not allow numbers or other special characters.
+ * 
+ * @param {string} name - The name to validate.
+ * @returns {boolean} - Returns `true` if the name is valid, otherwise `false`.
+ */
+function isValidName(name) {
+    const re = /^[a-zA-ZÀ-ÿ\-\'\s]+$/;
+    return re.test(name);
 }
 
 /**
