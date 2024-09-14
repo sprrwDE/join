@@ -7,6 +7,9 @@ const notAMember = params.get('userId');
 let togglePopUp = false;
 
 
+
+
+
 function init() {
   includeHTML().then(() => {
       loadAccountName();
@@ -37,6 +40,7 @@ function changeNavbarColor(){
   }
     
 }
+
 
 function renderPopUp() {
   let popUpBox = document.getElementById('headline-pop-up-container');
