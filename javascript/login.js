@@ -105,12 +105,16 @@ function changeInputType(inputID,spanID){
 
 async function logInAsGuest(){
   await setNoCurrentUser();
+  
   window.location.href='./documents/summary.html';
   
 }
 
 async function setNoCurrentUser() {
   let userName = 'Guest';
+  if (userName) {
+    document.getElementById('wrong-log-in').classList.add('d-none');
+  }
   try {
     const response = await fetch(currentUserURL, {
       method: "PUT",
