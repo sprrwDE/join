@@ -113,9 +113,9 @@ function openHelpPage() {
 function sendToPrivacyPolicyFromNavbar() {
   if (notAMember) {
     let noMember = true;
-    window.location.href = `../join/documents/Privacy.html?userId=${noMember}&icon=privacy`;
+    window.location.href = `../documents/Privacy.html?userId=${noMember}&icon=privacy`;
   } else {
-    window.location.href = "../join/documents/Privacy.html?icon=privacy";
+    window.location.href = "../documents/Privacy.html?icon=privacy";
   }
 }
 
