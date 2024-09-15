@@ -385,6 +385,13 @@ function updateDetailView(updatedData) {
 }
 
 /**
+ * Closes the edit contact dialog.
+ */
+function closeEditContactDialog() {
+    closeDialog(editContactRef);
+}
+
+/**
  * Closes a dialog and clears its content.
  * @param {HTMLElement} dialogRef - The dialog element to close.
  */
