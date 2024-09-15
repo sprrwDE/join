@@ -61,6 +61,8 @@ textarea {
   bottom: 170px;
   box-sizing: border-box;
   width: 100vw;
+  max-width: 1440px;
+  margin: auto;
 }
 
 .nocontact {
@@ -727,3 +729,4 @@ input[type="search"]::-webkit-search-results-decoration {
   padding: 16px;
   animation: slowup 1s forwards 
 }
+

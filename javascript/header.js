@@ -15,7 +15,7 @@ function loadUserName() {
     .then((result) => {
       renderUserName(result);
     })
-    .catch((error) => console.log('Error fetching data:', error));
+    .catch((error) => console.log('Error fetching datas:', error));
 }
 
 /**
@@ -30,6 +30,8 @@ function renderUserName(result) {
   let name = result.nameIn;
   let firstLetter = name[0];
   if (result) {
-    document.getElementById('header-user-icon').innerHTML = `${firstLetter}`;
+    if (document.getElementById('header-user-icon')) {
+      document.getElementById('header-user-icon').innerHTML = `${firstLetter}`;
+    }
   }
 }
