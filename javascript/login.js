@@ -364,7 +364,7 @@ function renderSignUpHTML(){
       <div id="wrong-password" class="font-color-red"></div>
       <div class="check-box-container check-box">
         <input type="checkbox" required id="accept-box" onchange="checkFormValidity()">
-        <label for="checkbox">I accept the</label><a href="./documents/Privacy.html">Privacy policy</a>
+        <label for="checkbox">I accept the</label><a onclick="sendToPrivacyPolicy()" href="#">Privacy policy</a>
       </div>
       <button disabled class="button log-in-button" id="sign-up-button">Sign up</button>
     </div>
