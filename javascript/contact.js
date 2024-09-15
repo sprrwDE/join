@@ -34,7 +34,6 @@ function groupContactsByInitials() {
     db.forEach(contact => {
         let initials = getContactInitials(contact.nameIn);
         let letter = initials[1];
-
         if (!organizedContacts[letter]) {
             organizedContacts[letter] = [];
         }
@@ -61,7 +60,6 @@ function sortContactGroups() {
 function renderContacts(organizedContacts) {
     let sortedInitials = Object.keys(organizedContacts).sort();
     let globalIndex = 0;
-
     sortedInitials.forEach((initial, index) => {
         renderInitialGroup(initial, index, organizedContacts[initial], globalIndex);
         globalIndex += organizedContacts[initial].length;
@@ -89,16 +87,7 @@ function renderInitialGroup(initial, index, contacts, globalIndex) {
  */
 function renderContactsForInitial(containerRef, contacts, globalIndex) {
     contacts.forEach((contact, i) => {
-        containerRef.innerHTML += getContactsTemplate(
-            contact.nameIn,
-            contact.emailIn,
-            contact.phoneIn,
-            contact.id,
-            contact.initials[0],
-            contact.initials[1],
-            contact.color,
-            globalIndex + i,
-            contact.isUser
+        containerRef.innerHTML += getContactsTemplate(contact.nameIn, contact.emailIn, contact.phoneIn, contact.id, contact.initials[0], contact.initials[1], contact.color, globalIndex + i, contact.isUser
         );
     });
 }
@@ -126,13 +115,10 @@ function closeAddContactDialog() {
  */
 function getInputValues(event) {
     event.preventDefault();
-
     const nameInput = document.getElementById('name').value.trim();
     const emailInput = document.getElementById('email').value.trim();
     const phoneInput = document.getElementById('phone').value.trim();
-
     if (!validateInput(nameInput, emailInput, phoneInput)) return;
-
     const inputData = {
         nameIn: nameInput,
         emailIn: emailInput,
@@ -140,7 +126,6 @@ function getInputValues(event) {
         isUser: false,
         color: getRandomColor()
     };
-
     pushData(inputData);
     closeAddContactDialog();
 }
@@ -281,11 +266,8 @@ function hideEditBox() {
 /**
  * Opens the edit contact dialog.
  * @param {string} id - Contact's ID.
- * @param {string} name - Contact's name.
- * @param {string} email - Contact's email.
- * @param {boolean} user - Whether this contact is the current user.
  */
-function openEditContactDialog(id, name, email, user) {
+function openEditContactDialog(id) {
     const contact = db.find(contact => contact.id === id);
     showEditContactDialog(contact);
     initializeEditDialog(contact);
@@ -360,31 +342,6 @@ function populateEditDialogFields(contact) {
 }
 
 /**
- * Adds event listeners to input fields to clear error messages.
- * @param {string[]} fields - The input field IDs.
- * @param {string} [prefix=''] - Prefix for input field IDs.
- */
-function addInputEventListeners(fields, prefix = '') {
-    fields.forEach(field => {
-        const input = document.getElementById(`${prefix}${field}`);
-        input.addEventListener('input', () => {
-            const errorElement = document.getElementById(`${prefix}${field}-error`);
-            if (errorElement) {
-                errorElement.textContent = '';
-                errorElement.style.display = 'none';
-            }
-        });
-    });
-}
-
-/**
- * Closes the edit contact dialog.
- */
-function closeEditContactDialog() {
-    closeDialog(editContactRef);
-}
-
-/**
  * Retrieves updated contact data from the edit form.
  * @returns {Object|null} The updated contact data or null if validation fails.
  */
@@ -392,12 +349,9 @@ function getUpdatedContactData() {
     const nameIn = document.getElementById('edit-name').value.trim();
     const emailIn = document.getElementById('edit-email').value.trim();
     const phoneIn = document.getElementById('edit-phone').value.trim();
-
     if (!validateInput(nameIn, emailIn, phoneIn, 'edit-')) return null;
-
     const color = getRandomColor();
     const isUser = isCurrentUser;
-
     return { nameIn, emailIn, phoneIn, color, isUser };
 }
 
@@ -421,109 +375,13 @@ function updateDetailView(updatedData) {
     const initials = getContactInitials(updatedData.nameIn);
     if (!showDetail.classList.contains('d-none')) {
         getDetailTemplateMob(
-            updatedData.nameIn,
-            updatedData.emailIn,
-            updatedData.phoneIn,
-            currentId,
-            initials[0],
-            initials[1],
-            updatedData.color
+            updatedData.nameIn, updatedData.emailIn, updatedData.phoneIn, currentId, initials[0], initials[1], updatedData.color
         );
     }
 
     openDetailReferenceDesk(
-        updatedData.nameIn,
-        updatedData.emailIn,
-        updatedData.phoneIn,
-        currentId,
-        initials[0],
-        initials[1],
-        updatedData.color
+        updatedData.nameIn, updatedData.emailIn, updatedData.phoneIn, currentId, initials[0], initials[1], updatedData.color
     );
-}
-
-/**
- * Validates input fields.
- * @param {string} name - Name input.
- * @param {string} email - Email input.
- * @param {string} phone - Phone input.
- * @param {string} [prefix=''] - Prefix for input field IDs.
- * @returns {boolean} True if all inputs are valid, false otherwise.
- */
-function validateInput(name, email, phone, prefix = '') {
-    resetErrorMessages(prefix);
-    let isValid = true;
-    const fields = [
-        { name: 'name', value: name, validate: isValidName, emptyMsg: 'Please enter a name.', invalidMsg: 'Please enter a valid name without numbers.' },
-        { name: 'email', value: email, validate: isValidEmail, emptyMsg: 'Please enter an email address.', invalidMsg: 'Please enter a valid email address.' },
-        { name: 'phone', value: phone, validate: isValidPhone, emptyMsg: 'Please enter a phone number.', invalidMsg: 'Please enter a valid phone number.' }
-    ];
-    fields.forEach(field => {
-        const errorId = `${prefix}${field.name}-error`;
-        if (field.value.trim() === '') {
-            displayErrorMessage(errorId, field.emptyMsg);
-            isValid = false;
-        } else if (!field.validate(field.value)) {
-            displayErrorMessage(errorId, field.invalidMsg);
-            isValid = false;
-        }
-    });
-    return isValid;
-}
-
-/**
- * Validates a name input.
- * @param {string} name - The name to validate.
- * @returns {boolean} True if valid, otherwise false.
- */
-function isValidName(name) {
-    const re = /^[a-zA-ZÀ-ÿ\-\'\s]+$/;
-    return re.test(name);
-}
-
-/**
- * Validates an email input.
- * @param {string} email - The email to validate.
- * @returns {boolean} True if valid, otherwise false.
- */
-function isValidEmail(email) {
-    const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return re.test(String(email).toLowerCase());
-}
-
-/**
- * Validates a phone number input.
- * @param {string} phone - The phone number to validate.
- * @returns {boolean} True if valid, otherwise false.
- */
-function isValidPhone(phone) {
-    const re = /^[\d\s+\-()]+$/;
-    return re.test(phone);
-}
-
-/**
- * Displays an error message for a specific input field.
- * @param {string} elementId - The ID of the error message element.
- * @param {string} message - The error message to display.
- */
-function displayErrorMessage(elementId, message) {
-    const errorElement = document.getElementById(elementId);
-    if (errorElement) {
-        errorElement.textContent = message;
-        errorElement.style.display = 'block';
-    }
-}
-
-/**
- * Resets all error messages.
- * @param {string} [prefix=''] - Prefix for error message IDs.
- */
-function resetErrorMessages(prefix = '') {
-    const errorElements = document.querySelectorAll(`.error-message[id^="${prefix}"]`);
-    errorElements.forEach(element => {
-        element.textContent = '';
-        element.style.display = 'none';
-    });
 }
 
 /**
