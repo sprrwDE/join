@@ -2,8 +2,17 @@ let tasks = window.parent.tasks;
 let clickedCardId = window.parent.clickedCardId;
 let BASE_URL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/";
 
+/**
+ * Initializes the board card.
+ */
 function initBoardCard() { }
 
+/**
+ * Handles the checkbox state change of a subtask in a board card.
+ * Updates the subtask status and synchronizes with the server.
+ *
+ * @param {number} id - The ID of the subtask.
+ */
 function boardCardSubtaskChecked(id) {
   parent.fillProgressBar();
   let checkboxdiv = document.getElementById(`board-card-${clickedCardId}-${id}`);
@@ -40,6 +49,11 @@ function boardCardSubtaskChecked(id) {
   }
 }
 
+/**
+ * Updates the server with the provided subtask status.
+ *
+ * @param {Object} task - The subtask object to update on the server.
+ */
 function updateServer(task) {
   fetch(BASE_URL + "/addTask/" + clickedCardId + "/subtask/" + ".json", {
     method: "PUT",
@@ -48,6 +62,11 @@ function updateServer(task) {
   });
 }
 
+/**
+ * Deletes a task from the local tasks array and updates the parent window.
+ *
+ * @param {number} id - The ID of the task to delete.
+ */
 function deleteTask(id) {
   let index = tasks.findIndex((task) => task.id === id);
   if (index !== -1) {
@@ -57,6 +76,11 @@ function deleteTask(id) {
   window.parent.tasks = tasks;
 }
 
+/**
+ * Deletes a task from the server.
+ *
+ * @param {number} id - The ID of the task to delete from the server.
+ */
 function deleteFromServer(id) {
   fetch(BASE_URL + "/addTask/" + id + ".json", {
     method: "DELETE"
