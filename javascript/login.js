@@ -293,7 +293,7 @@ function comparePasswords(newName, newEmail, newPassword, checkNewPassword) {
  */
 function sendToPrivacyPolicy() {
   let noMember = true;
-  window.open(`../documents/Privacy.html?userId=${noMember}`, '_blank');
+  window.open(`../join/documents/Privacy.html?userId=${noMember}`, '_blank');
 }
 
 /**
@@ -301,7 +301,7 @@ function sendToPrivacyPolicy() {
  */
 function sendTolegalNotice() {
   let noMember = true;
-  window.open(`../documents/legal.html?userId=${noMember}`, '_blank');
+  window.open(`../join/documents/legal.html?userId=${noMember}`, '_blank');
 }
 
 /**
