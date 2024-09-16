@@ -2,8 +2,6 @@
 let BASE_URL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/accounts.json" 
 let contacsFatch = 'https://join-318-default-rtdb.europe-west1.firebasedatabase.app/';
 
-
-
 /**
  * Starts the login animation by calling `startLogInAnimation`.
  */
@@ -174,8 +172,6 @@ function loadSignUp() {
   document.getElementById('sign-up').classList.remove('d-none');
   renderSignUpHTML();
 }
-
-
 
 /**
  * Checks the validity of the sign-up form and enables or disables the sign-up button accordingly.
@@ -374,5 +370,4 @@ function renderSignUpHTML(){
       <a id="legal-link" onclick="sendTolegalNotice()" href="#">Legal notice</a>
     </div>
     <div id="successfully" class="d-none"></div>`;
-
 }

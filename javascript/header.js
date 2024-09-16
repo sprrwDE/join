@@ -1,6 +1,3 @@
-
-
-
 /**
  * Fetches the current user's data from the server and renders the user's name.
  * The function retrieves the current user's information from the specified URL and then

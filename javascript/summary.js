@@ -1,5 +1,4 @@
 let Status = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/Status.json"
-
 let amounts = {};
 
 /**
@@ -42,7 +41,6 @@ function getGreeting() {
   const now = new Date();
   const hour = now.getHours();
   let greeting;
-
   if (hour < 12) {
     greeting = "Good morning";
   } else if (hour < 18) {
@@ -50,7 +48,6 @@ function getGreeting() {
   } else {
     greeting = "Good evening";
   }
-
   showGreeting(greeting);
 }
 

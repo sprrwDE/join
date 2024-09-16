@@ -29,7 +29,6 @@ function includeHTML() {
                 return;
             }
         }
-        resolve(); // Resolve the promise if no elements are left
-  
+        resolve(); // Resolve the promise if no elements are left 
     });
   }

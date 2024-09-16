@@ -1,14 +1,9 @@
 let currentUserURL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/curent-user.json"
-
 const params = new URLSearchParams(window.location.search);
 const currentName = params.get('name');
 const icon = params.get('icon');
 const notAMember = params.get('userId');
 let togglePopUp = false;
-
-
-
-
 
 /**
  * Initializes the page by including HTML components and loading user-related data.
@@ -132,7 +127,6 @@ function sendTolegalNoticeFromNavbar() {
     window.location.href = "../documents/legal.html?icon=legal";
   }
 }
-
 
 /**
  * Generates a random hexadecimal color code.
