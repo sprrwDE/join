@@ -303,6 +303,25 @@ function renderHelper(section) {
     } else {
       document.getElementById(`progress-bar-section${allTasks[i].id}`).classList.add("d-none");
     }
+    limitContactImgs(allTasks[i].id)
+  }
+}
+
+
+function limitContactImgs(id) {
+  let imgSection = document.getElementById(`contacts-section${id}`)
+  let images = imgSection.getElementsByClassName("contact-initals")
+  let over = document.getElementById(`over-amount${id}`)
+
+  for (let i = 0; i < images.length; i++) {
+    if (images.length >= 5) {
+      if (i >= 5) {
+        over.classList.remove("d-none")
+        over.innerHTML = "+" + (i - 4)
+        console.log(i)
+        images[i].classList.add("d-none")
+      }
+    }
   }
 }
 
@@ -487,8 +506,9 @@ function renderToDos(task, subtasklength, i, categoryColor, prio, checked) {
                 <p id="subtasks">${checked}/${subtasklength} Subtasks</p>
             </div>
 
-            <div class="contacts-section">
+            <div class="contacts-section" id="contacts-section${task[i].id}">
                 <div class="contacts" id="contact-images${task[i].id}"></div>
+                <p class="d-none" id="over-amount${task[i].id}"> test </p>
                 <img src="../assets/img/${prio}" alt="" />
             </div>
       </div>`;

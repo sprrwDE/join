@@ -20,6 +20,7 @@ let tasks = {
 function onload() {
   loadContacts();
   dropDown();
+  minimumDate();
 }
 
 let BASE_URL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/";
@@ -536,4 +537,14 @@ function getAllInfos() {
  */
 function clearAllFields() {
   window.location.reload();
+}
+
+function minimumDate() {
+  let dateInput = document.getElementById("input-date")
+  let today = new Date();
+  let year = today.getFullYear();
+  let month = String(today.getMonth() + 1).padStart(2, "0");
+  let day = String(today.getDate()).padStart(2, "0");
+  let todayDate = `${year}-${month}-${day}`;
+  dateInput.attributes.minimumDate = todayDate
 }

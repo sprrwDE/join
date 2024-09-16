@@ -25,22 +25,17 @@ p {
   margin-left: 16px;
   margin-right: 16px;
   box-sizing: border-box;
+  margin-top: 128px;
 }
 
 .top-section-title {
   font-size: 48px;
   font-weight: 700;
-  position: absolute;
-  top: 128px;
   margin: 0;
 }
 
-.add-task-btn {
-  position: absolute;
-  left: 372px;
-  top: 136px;
-  width: 40px;
-  height: 40px;
+.add-task {
+  display: none;
 }
 
 .search-section {
@@ -56,6 +51,7 @@ p {
   top: 224px;
   left: 16px;
   border: 1px solid #a8a8a8;
+  max-width: 320px;
 }
 
 .input-field {
@@ -90,6 +86,8 @@ p {
   overflow-x: hidden;
   display: flex;
   bottom: 87px;
+  box-sizing: border-box;
+  width: 95% !important;
 }
 
 .progress-container {
@@ -234,8 +232,6 @@ h3 {
   font-weight: 700;
 }
 
-
-
 .progress-bar-section {
   display: flex;
   align-items: center;
@@ -266,6 +262,12 @@ h3 {
   padding: 16px 24px 16px 0px;
   position: absolute;
   bottom: 0;
+  align-items: center;
+}
+
+.contacts-section p {
+  font-size: 21px;
+  font-weight: 700;
 }
 
 .contacts {
@@ -390,6 +392,7 @@ h3 {
   .top-section {
     display: flex;
     align-items: center;
+    margin: unset;
   }
 
   .top-section-title {
@@ -436,6 +439,7 @@ h3 {
     font-size: 21px;
     font-weight: 700;
     gap: 4px;
+    display: flex;
   }
 
   .add-task:hover {
@@ -524,7 +528,6 @@ h3 {
   height: 32px;
 }
 
-/* Dropdown Button */
 .dropbtn {
   background-color: #3498db;
   color: white;
@@ -534,19 +537,16 @@ h3 {
   cursor: pointer;
 }
 
-/* Dropdown button on hover & focus */
 .dropbtn:hover,
 .dropbtn:focus {
   background-color: #2980b9;
 }
 
-/* The container <div> - needed to position the dropdown content */
 .dropdown {
   position: relative;
   display: inline-block;
 }
 
-/* Dropdown Content (Hidden by Default) */
 .dropdown-content {
   display: none;
   position: absolute;
@@ -558,7 +558,6 @@ h3 {
   border-radius: 20px;
 }
 
-/* Links inside the dropdown */
 .dropdown-content a {
   color: black;
   padding: 12px 16px;
@@ -566,13 +565,17 @@ h3 {
   display: block;
 }
 
-/* Change color of dropdown links on hover */
 .dropdown-content a:hover {
   background-color: #ddd;
   border-radius: 20px;
 }
 
-/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
 .show {
   display: block;
+}
+
+@media (max-width:340px) {
+  .search-section {
+    max-width: 290px;
+  }
 }
