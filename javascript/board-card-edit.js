@@ -526,8 +526,9 @@ function getAllInfos() {
   getDate();
   if (requiredFieldsCheck() == true) {
     updateServer();
+    successDisplay()
     setTimeout(() => {
-      window.location.reload();
+      parent.closeWindow('edit-card')
     }, 1000);
   }
 }
@@ -547,4 +548,9 @@ function minimumDate() {
   let day = String(today.getDate()).padStart(2, "0");
   let todayDate = `${year}-${month}-${day}`;
   dateInput.attributes.minimumDate = todayDate
+}
+
+function successDisplay() {
+  let container = document.getElementById("success-container");
+  container.classList.remove("d-none");
 }
