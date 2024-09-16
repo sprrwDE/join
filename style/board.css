@@ -335,7 +335,7 @@ h3 {
 
 .card-info {
   width: 90%;
-  height: 931px;
+  height: 100%;
   position: fixed;
   z-index: 999999;
   border-radius: 30px;
@@ -372,6 +372,7 @@ h3 {
     position: absolute;
     height: 100vh;
     max-width: 1800px;
+    bottom: 20px;
   }
 
   .content-container {
