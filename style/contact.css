@@ -427,6 +427,18 @@ input::placeholder {
     }
 }
 
+@media screen and (min-width: 360px) {
+    .contact-card {
+        height: 95%;
+    }
+
+    .create {
+        margin-bottom: 8px; 
+        background-color: #2A3647;
+        transition: transform .2s ease-in-out;
+    }
+}
+
 /* Desktop */
 
 @media screen and (min-width: 1025px) {
