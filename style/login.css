@@ -407,3 +407,12 @@ form {
     width: 270px;
   }
 }
+
+@media (max-height:810px){
+  .log-in-section{
+    height: 100%;
+  }
+  .log-in-link-container{
+    margin-bottom: 16px;
+  }
+}
