@@ -308,18 +308,22 @@ function renderHelper(section) {
 }
 
 
+/**
+ * Limits the display of contact images to a maximum of five and shows the count of hidden contacts.
+ *
+ * @param {string|number} id - The unique ID used to identify the contact section.
+ */
 function limitContactImgs(id) {
-  let imgSection = document.getElementById(`contacts-section${id}`)
-  let images = imgSection.getElementsByClassName("contact-initals")
-  let over = document.getElementById(`over-amount${id}`)
+  let imgSection = document.getElementById(`contacts-section${id}`);
+  let images = imgSection.getElementsByClassName("contact-initals");
+  let over = document.getElementById(`over-amount${id}`);
 
   for (let i = 0; i < images.length; i++) {
     if (images.length >= 5) {
       if (i >= 5) {
-        over.classList.remove("d-none")
-        over.innerHTML = "+" + (i - 4)
-        console.log(i)
-        images[i].classList.add("d-none")
+        over.classList.remove("d-none");
+        over.innerHTML = "+" + (i - 4);
+        images[i].classList.add("d-none");
       }
     }
   }
