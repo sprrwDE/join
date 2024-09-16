@@ -437,6 +437,11 @@ input::placeholder {
         background-color: #2A3647;
         transition: transform .2s ease-in-out;
     }
+
+    .card-rendered-content {
+        overflow-x: hidden;
+        max-width: 200px;
+    }
 }
 
 /* Desktop */

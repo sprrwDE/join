@@ -34,7 +34,7 @@ function getContactsTemplate(name, email, phone, contactId, first, last, color, 
             <div class="card-image list-image" style="background-color: ${color}">
                 <h4>${first}${last}</h4>
             </div>
-            <div>
+            <div class="card-rendered-content">
                 <h4 class="list-name">${name}</h4>
                 <a href="mailto:${email}" class="list-email">${email}</a>
             </div>
