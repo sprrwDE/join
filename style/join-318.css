@@ -190,17 +190,13 @@ h1{
   }
 }
 
-@media (max-width:500px){
-  .to-do-box{
-    height: 95px;
-    width: 115px;
-  }
-}
-
 @media (max-height:835px){
   .background-container{
     margin-bottom: 80px;
     height: 100%;
     width: 100%;
+  }
+  .task-boxes-container{
+    padding-bottom: 16px;
   }
 }
