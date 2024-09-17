@@ -88,7 +88,7 @@ function getContactsByParent(contact, i) {
   tasks.category = category.innerHTML;
   splitedNames.forEach((element) => {
     if (element == contact) {
-      assignedToChecked(i);
+      assignedToChecked(i, true);
     }
   });
 }
@@ -259,7 +259,7 @@ function setPrioDefault(urgent, medium, low, urgentimg, mediumimg, lowimg) {
  *
  * @param {number} id - The ID of the contact.
  */
-function assignedToChecked(id) {
+function assignedToChecked(id, checked) {
   let checkbox = document.getElementById(`cbtest-19-${id}`);
   let grandParent = checkbox.parentElement.parentElement;
   let img = document.getElementById(`contact-initals1${id}`);
@@ -267,20 +267,25 @@ function assignedToChecked(id) {
   let color = contactimg.style.backgroundColor;
   let contactid = document.getElementById(`id=${id}`);
   let contact = contactid.getElementsByTagName("p");
-  toggleCheckbox(id);
 
+  if (checked) {
+    checkbox.checked = false;
+  } else {
+    toggleCheckbox(id);
+  }
   if (checkbox.checked) {
     img.classList.remove("d-none");
     img.style.backgroundColor = color;
     tasks.assignedto.push(contact[0].textContent);
     getSelectedColor(color);
+    grandParent.classList.add("background");
   } else {
+    grandParent.classList.remove("background");
     deleteSelectedColor(color);
     img.classList.add("d-none");
     let remove = tasks.assignedto.indexOf(contact[0].textContent);
     tasks.assignedto.splice(remove, 1);
   }
-  grandParent.classList.toggle("background");
 }
 
 /**
@@ -540,7 +545,7 @@ function checkSubtaskIsOnEdit() {
   if (onedit.length > 0) {
     for (let i = onedit.length - 1; i >= 0; i--) {
       let newid = onedit[i].id;
-      let cleanedid= newid.replace("id-", "");
+      let cleanedid = newid.replace("id-", "");
       edited(cleanedid);
     }
   }
@@ -576,7 +581,7 @@ function limitContactImgs() {
   for (let i = 0; i < images.length; i++) {
     if (images.length >= 5) {
       if (i >= 4) {
-        console.log(images[i])
+        console.log(images[i]);
         over.classList.remove("d-none");
         over.innerHTML = "+" + (i - 4);
         images[i].classList.add("d-none");
