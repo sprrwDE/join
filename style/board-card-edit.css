@@ -216,6 +216,7 @@ textarea {
 
 .contacts {
   width: 87%;
+  gap: 2px;
   padding: 12px 0px 12px 0px;
   background-color: white;
   border-bottom-left-radius: 10px;
