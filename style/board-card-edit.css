@@ -41,6 +41,7 @@ textarea {
 
 .separator {
   width: 1px !important;
+  background-color: rgba(128, 128, 128, 0.418);
 }
 
 .flex {
@@ -496,12 +497,24 @@ textarea {
   width: 100%;
 }
 
+.edit-delete {
+  display: flex;
+  gap: 8px;
+}
+
+
+.border {
+  border: none;
+  outline: none;
+  width: 90%;
+}
+
 .onedit li {
   width: 90%;
 }
 
 .onedit li input {
-  width: 95%;
+  width: 90%;
 }
 
 .contacts-imges {
@@ -567,11 +580,6 @@ textarea {
   border-radius: 10px;
 }
 
-.border {
-  border: none;
-  outline: none;
-  width: 100%;
-}
 
 input:focus,
 textarea:focus {
@@ -736,5 +744,11 @@ input[type="search"]::-webkit-search-results-decoration {
   .all-prios {
     flex-direction: column;
     align-items: center;
+  }
+}
+
+@media (max-width: 400px) {
+  .onedit li input {
+    width: 80%;
   }
 }

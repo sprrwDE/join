@@ -28,7 +28,7 @@ function renderAssignedTo(contact, i, firstinits, secondinits, color) {
       <li id="subtask${id}">${input}</li>
       <div class="edit-delete" id="edit-delete${id}">
         <img src="../assets/img/edit.svg" alt="" onclick="editSubtask(${id})" />
-        <img src="../assets/img/Vector 3.svg" alt="" />
+        <div class="separator"></div>
         <img src="../assets/img/delete.svg" alt="" onclick="deleteSubtask(${id})" />
       </div>
     </div>`;

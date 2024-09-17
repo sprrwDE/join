@@ -520,16 +520,29 @@ function updateServer() {
  * Gathers all task information and updates the server.
  */
 function getAllInfos() {
+  checkSubtaskIsOnEdit();
   getTitle();
   getDescription();
   getSubtasks();
   getDate();
   if (requiredFieldsCheck() == true) {
     updateServer();
-    successDisplay()
+    successDisplay();
     setTimeout(() => {
-      parent.closeWindow('edit-card')
+      parent.closeWindow("edit-card");
     }, 1000);
+  }
+}
+
+function checkSubtaskIsOnEdit() {
+  let list = document.getElementById("subtasklist");
+  let onedit = list.getElementsByClassName("onedit");
+  if (onedit.length > 0) {
+    for (let i = onedit.length - 1; i >= 0; i--) {
+      let newid = onedit[i].id;
+      let cleanedid= newid.replace("id-", "");
+      edited(cleanedid);
+    }
   }
 }
 
@@ -541,13 +554,13 @@ function clearAllFields() {
 }
 
 function minimumDate() {
-  let dateInput = document.getElementById("input-date")
+  let dateInput = document.getElementById("input-date");
   let today = new Date();
   let year = today.getFullYear();
   let month = String(today.getMonth() + 1).padStart(2, "0");
   let day = String(today.getDate()).padStart(2, "0");
   let todayDate = `${year}-${month}-${day}`;
-  dateInput.attributes.minimumDate = todayDate
+  dateInput.attributes.minimumDate = todayDate;
 }
 
 function successDisplay() {
