@@ -269,7 +269,7 @@ function assignedToChecked(id, checked) {
   let contact = contactid.getElementsByTagName("p");
 
   if (checked) {
-    checkbox.checked = false;
+    checkbox.checked = true;
   } else {
     toggleCheckbox(id);
   }
