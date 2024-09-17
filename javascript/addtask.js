@@ -516,7 +516,6 @@ function getDate() {
 function getSubtasks() {
   let subtasklist = document.getElementById("subtasklist");
   let subtask = subtasklist.getElementsByTagName("li");
-
   for (let i = 0; i < subtask.length; i++) {
     tasks.subtask.push("'" + subtask[i].innerHTML + "'");
   }
@@ -562,7 +561,7 @@ function isCategorySelected() {
  * Checks the current status of the task.
  */
 function checkStatus() {
-  let iframe = window.parent.document.getElementById('whole-addtask-card');
+  let iframe = window.parent.document.getElementById("whole-addtask-card");
   if (iframe) {
     let name = iframe.getAttribute("name");
     section = name;
@@ -596,7 +595,7 @@ function getAllInfos() {
     if (checkWindowLocation()) {
       successDisplay();
       setTimeout(() => {
-        parent.closeWindow('whole-addtask-card');
+        parent.closeWindow("whole-addtask-card");
       }, 2000);
     } else {
       successDisplay();

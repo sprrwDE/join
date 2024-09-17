@@ -216,7 +216,7 @@ function checkTask(keys, values) {
  * @returns {Object} An object with subtasks as keys and 'inwork' as values.
  */
 function renderToObject(subtask) {
-  if (subtask) {
+  if (!subtask == "''") {
     let newsubtaskArray = {};
     for (let i = 0; i < subtask.length; i++) {
       newsubtaskArray[subtask[i]] = "inwork";

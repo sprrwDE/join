@@ -28,8 +28,8 @@ let BASE_URL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/
 /**
  * Loads contacts from the server and renders them.
  */
-function loadContacts() {
-  fetch(BASE_URL + "/contacts.json")
+async function loadContacts() {
+  await fetch(BASE_URL + "/contacts.json")
     .then((response) => response.json())
     .then((result) => renderContacts(result))
     .catch((error) => console.log(error));
@@ -566,4 +566,21 @@ function minimumDate() {
 function successDisplay() {
   let container = document.getElementById("success-container");
   container.classList.remove("d-none");
+}
+
+function limitContactImgs() {
+  let imgSection = document.getElementById("contacts-imges");
+  let images = imgSection.getElementsByClassName("contact-initals");
+  let over = document.getElementById("over-amount");
+
+  for (let i = 0; i < images.length; i++) {
+    if (images.length >= 5) {
+      if (i >= 4) {
+        console.log(images[i])
+        over.classList.remove("d-none");
+        over.innerHTML = "+" + (i - 4);
+        images[i].classList.add("d-none");
+      }
+    }
+  }
 }
