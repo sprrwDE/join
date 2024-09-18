@@ -1,6 +1,6 @@
 function renderAssignedTo(contact, i, firstinits, secondinits, color) {
     return `
-      <div class="contact" id="contact${i}" onclick="assignedToChecked(${i})">
+      <div class="contact" id="contact${i}" onclick="assignedToChecked(${i}, false)">
         <div class="flex" id="id=${i}">
           <div class="contact-initals" id="contact-initals${i}" style="background-color: ${color[i]};">
             <span id="inits${i}">${firstinits}${secondinits}</span>
@@ -8,7 +8,7 @@ function renderAssignedTo(contact, i, firstinits, secondinits, color) {
           <p class="contacts-name" id="contacts-name${i}">${contact[i]}</p>
         </div>
         <div class="checkbox-wrapper-19">
-          <input type="checkbox" id="cbtest-19-${i}" onclick="assignedToChecked(${i})" />
+          <input type="checkbox" id="cbtest-19-${i}" onclick="assignedToChecked(${i}, false)" />
           <label for="cbtest-19-${i}" class="check-box"></label>
         </div>
       </div>

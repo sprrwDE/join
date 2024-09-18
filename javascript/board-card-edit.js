@@ -269,10 +269,11 @@ function assignedToChecked(id, checked) {
   let contact = contactid.getElementsByTagName("p");
 
   if (checked) {
-    checkbox.checked = true;
+    checkbox.setAttribute("checked", "checked");
   } else {
-    toggleCheckbox(id);
+    checkbox.checked = !checkbox.checked
   }
+
   if (checkbox.checked) {
     img.classList.remove("d-none");
     img.style.backgroundColor = color;
