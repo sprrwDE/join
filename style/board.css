@@ -316,7 +316,7 @@ h3 {
 }
 
 .shake {
-  animation: shake 0.3s infinite;
+  animation: shake 0.3s infinite !important;
 }
 
 @media (max-width: 1440px) {

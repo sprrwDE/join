@@ -14,7 +14,7 @@ window.tasks = [];
  * Currently dragged element ID.
  * @type {string}
  */
-let currentDraggedElement;
+window.currentDraggedElement;
 
 /**
  * ID of the clicked card.
@@ -23,126 +23,12 @@ let currentDraggedElement;
 window.clickedCardId;
 
 /**
- * Object storing the number of tasks in each section.
- * @type {Object}
- */
-let amounts = {};
-
-/**
  * Initializes the board by including HTML components and loading tasks.
  */
 function initBoard() {
   includeHTML();
   loadTasks();
   init();
-}
-
-/**
- * Allows the drop event on an element.
- * @param {DragEvent} event - The drag event.
- */
-function allowDrop(event) {
-  event.preventDefault();
-}
-
-/**
- * Calculates the number of tasks in each section and updates the amounts object.
- */
-function helpAmount() {
-  let sections = ["todo", "inprogress", "awaitfeedback", "done"];
-  for (let i = 0; i < sections.length; i++) {
-    let section = getAmounthelper(sections[i]);
-    amounts[sections[i]] = section;
-  }
-}
-
-/**
- * Updates the number of tasks in each section and uploads the data to the server.
- */
-function getAmountsOfAllSections() {
-  helpAmount();
-  let urgent = getUrgentNumber();
-  amounts["urgent"] = urgent;
-  uploadAmount();
-}
-
-/**
- * Gets the number of tasks with 'urgent' priority.
- * @returns {number} The count of urgent tasks.
- */
-function getUrgentNumber() {
-  let amount = 0;
-  for (let i = 0; i < tasks.length; i++) {
-    let task = tasks[i];
-    if (task.prio == "urgent") {
-      amount++;
-    }
-  }
-  return amount;
-}
-
-/**
- * Uploads the amounts object to the server.
- */
-function uploadAmount() {
-  fetch(BASE_URL + "/Status.json", {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(amounts),
-  });
-}
-
-/**
- * Helper function to get the number of cards in a section.
- * @param {string} section - The ID of the section.
- * @returns {number} The number of cards in the section.
- */
-function getAmounthelper(section) {
-  let todo = document.getElementById(section);
-  let card = todo.getElementsByClassName("ticket-card");
-  return card.length;
-}
-
-/**
- * Moves the current dragged element to a new status.
- * @param {string} status - The new status to move the task to.
- */
-function moveTo(status) {
-  for (let i = 0; i < tasks.length; i++) {
-    if (tasks[i].id == currentDraggedElement) {
-      tasks[i]["status"] = status;
-      updateServer(currentDraggedElement, tasks[i]);
-    }
-  }
-  removeHighlightDragArea();
-  renderTask();
-  getAmountsOfAllSections();
-}
-
-/**
- * Removes the highlight class from all drag areas.
- */
-function removeHighlightDragArea() {
-  let sections = ["todo", "inprogress", "awaitfeedback", "done"];
-  for (let i = 0; i < sections.length; i++) {
-    document.getElementById(sections[i]).classList.remove("drag-area-highlight");
-  }
-}
-
-/**
- * Adds highlight to a drag area.
- * @param {string} id - The ID of the drag area to highlight.
- */
-function highlight(id) {
-  document.getElementById(`${id}`).classList.add("drag-area-highlight");
-}
-
-/**
- * Removes highlight from a drag area.
- * @param {string} id - The ID of the drag area.
- */
-function removeHighlight(id) {
-  document.getElementById(id).classList.remove("drag-area-highlight");
 }
 
 /**
@@ -231,10 +117,10 @@ function renderToObject(subtask) {
 function renderTask() {
   let sections = ["todo", "inprogress", "awaitfeedback", "done"];
 
-  sections.forEach(sectionId => {
+  sections.forEach((sectionId) => {
     let section = document.getElementById(sectionId);
     let ticketCards = section.getElementsByClassName("ticket-card");
-    
+
     while (ticketCards.length > 0) {
       ticketCards[0].remove();
     }
@@ -275,14 +161,7 @@ function renderHelper(section) {
       allTasks[i].color = "";
     }
 
-    document.getElementById(`${section}-card`).innerHTML += renderToDos(
-      allTasks,
-      subtaskslength.length,
-      i,
-      category,
-      prio,
-      checked
-    );
+    document.getElementById(`${section}-card`).innerHTML += renderToDos(allTasks, subtaskslength.length, i, category, prio, checked);
     let inits = getInitails(i, allTasks);
     for (let j = 0; j < inits.length; j++) {
       let contact = document.getElementById(`contact-images${allTasks[i].id}`);
@@ -294,7 +173,7 @@ function renderHelper(section) {
     } else {
       document.getElementById(`progress-bar-section${allTasks[i].id}`).classList.add("d-none");
     }
-    limitContactImgs(allTasks[i].id)
+    limitContactImgs(allTasks[i].id);
   }
 }
 
@@ -376,15 +255,6 @@ function getCategory(category) {
 }
 
 /**
- * Starts dragging a task.
- * @param {string} id - The ID of the task.
- */
-function startDragging(id) {
-  currentDraggedElement = id;
-  document.getElementById(`ticket-${id}`).classList.add("shake");
-}
-
-/**
  * Gets the colors associated with assigned contacts.
  * @param {number} i - Index of the task.
  * @param {Array<Object>} allTasks - Array of all tasks.
@@ -459,17 +329,6 @@ function subtaskChecked(i, alltask) {
   }
   return checked;
 }
-
-/**
- * Changes the section of a task.
- * @param {string} section - The new section to move the task to.
- * @param {string} id - The ID of the task.
- */
-function changeSections(section, id) {
-  currentDraggedElement = id;
-  moveTo(section);
-}
-
 
 /**
  * Checks if sections are empty and shows/hides the empty message.

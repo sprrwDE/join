@@ -21,6 +21,7 @@ function onload() {
   loadContacts();
   dropDown();
   minimumDate();
+ 
 }
 
 let BASE_URL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/";
@@ -273,30 +274,29 @@ function assignedToChecked(id, checked) {
   } else {
     checkbox.checked = !checkbox.checked
   }
-
   if (checkbox.checked) {
-    img.classList.remove("d-none");
-    img.style.backgroundColor = color;
-    tasks.assignedto.push(contact[0].textContent);
-    getSelectedColor(color);
-    grandParent.classList.add("background");
+    checkedContact(img, color, contact, grandParent)
   } else {
-    grandParent.classList.remove("background");
-    deleteSelectedColor(color);
-    img.classList.add("d-none");
-    let remove = tasks.assignedto.indexOf(contact[0].textContent);
-    tasks.assignedto.splice(remove, 1);
+    notCheckedContact(img, color, contact, grandParent)
   }
 }
 
-/**
- * Toggles the checkbox state.
- *
- * @param {number} i - The index of the checkbox.
- */
-function toggleCheckbox(i) {
-  let checkbox = document.getElementById(`cbtest-19-${i}`);
-  checkbox.checked = !checkbox.checked;
+function checkedContact(img, color, contact, grandParent) {
+  img.classList.remove("d-none");
+  img.style.backgroundColor = color;
+  tasks.assignedto.push(contact[0].textContent);
+  getSelectedColor(color);
+  grandParent.classList.add("background");
+  limitContactImgs()
+}
+
+function notCheckedContact(img, color, contact, grandParent) {
+  grandParent.classList.remove("background");
+  deleteSelectedColor(color);
+  img.classList.add("d-none");
+  let remove = tasks.assignedto.indexOf(contact[0].textContent);
+  tasks.assignedto.splice(remove, 1);
+  limitContactImgs()
 }
 
 let getcolors = [];
@@ -351,6 +351,7 @@ function addSubtask() {
   addimg.classList.add("d-none");
   notok.classList.remove("d-none");
   subtasklist.classList.remove("d-none");
+  
 }
 
 /**
@@ -362,6 +363,7 @@ function subtaskIsEmpty() {
 
   searchbar.classList.add("notfound");
   required.classList.remove("d-none");
+ 
 }
 
 let id = 0;
@@ -488,6 +490,7 @@ function getSubtasks() {
     newsubtask[subtask[i].innerHTML] = "inwork";
   }
   tasks.subtask = newsubtask;
+ 
 }
 
 /**
@@ -581,12 +584,13 @@ function limitContactImgs() {
 
   for (let i = 0; i < images.length; i++) {
     if (images.length >= 5) {
-      if (i >= 4) {
-        console.log(images[i]);
+      if (i >= 5) {
         over.classList.remove("d-none");
         over.innerHTML = "+" + (i - 4);
         images[i].classList.add("d-none");
       }
+    } else {
+      over.classList.add("d-none");
     }
-  }
+  } 
 }
