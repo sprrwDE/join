@@ -69,7 +69,6 @@ function renderContacts(contacts) {
     contactsImages(i);
     getContactsByParent(allcontacts[i], i);
   }
-  limitContactImgs2();
 }
 
 /**
@@ -161,6 +160,7 @@ function setPrioDefault(urgent, medium, low, urgentimg, mediumimg, lowimg) {
  *
  * @param {number} id - The ID of the contact.
  */
+let checkedIds=[]
 function assignedToChecked(id, checked) {
   let checkbox = document.getElementById(`cbtest-19-${id}`);
   let grandParent = checkbox.parentElement.parentElement;
@@ -175,20 +175,24 @@ function assignedToChecked(id, checked) {
     checkbox.checked = !checkbox.checked;
   }
   if (checkbox.checked) {
-    checkedContact(img, color, contact, grandParent);
+    checkedContact(img, color, contact, grandParent,id);
   } else {
     notCheckedContact(img, color, contact, grandParent);
   }
- limitContactImgs2();
+  
+  console.log("die motherfuckign id "+id)
 }
+
 let checkedAmount = 0;
-function checkedContact(img, color, contact, grandParent) {
+function checkedContact(img, color, contact, grandParent, id) {
   img.classList.remove("d-none");
   img.style.backgroundColor = color;
   tasks.assignedto.push(contact[0].textContent);
   getSelectedColor(color);
   grandParent.classList.add("background");
   checkedAmount++;
+  limitContactImgs2(true);
+  checkedIds.push(id)
 }
 
 function notCheckedContact(img, color, contact, grandParent) {
@@ -198,6 +202,10 @@ function notCheckedContact(img, color, contact, grandParent) {
   let remove = tasks.assignedto.indexOf(contact[0].textContent);
   tasks.assignedto.splice(remove, 1);
   checkedAmount--;
+  setTimeout(() => {
+    limitContactImgs2(false, color);
+  }, 5000);
+  
 }
 
 let getcolors = [];
@@ -386,29 +394,50 @@ function successDisplay() {
   container.classList.remove("d-none");
 }
 
-function limitContactImgs2() {
+function hidePlusAmouhnt(over) {
+  if (checkedAmount <= 5) {
+    over.classList.add("d-none");
+  } else {
+    over.classList.remove("d-none");
+  }
+}
+
+
+function limitContactImgs2(checked, color) {
   let imgSection = document.getElementById("contacts-imges");
   let images = imgSection.getElementsByClassName("contact-initals");
   let over = document.getElementById("over-amount");
-  for (let i = 0; i < images.length; i++) {
-    images[i].classList.remove("d-none");
-    if(images[i].style.backgroundColor == "") {
-      images[i].classList.add("d-none")
+
+  if (checked) {
+    for (let i = 0; i < images.length; i++) {
+      images[i].classList.remove("d-none");
+      if (images[i].style.backgroundColor == "") {
+        images[i].classList.add("d-none");
+      }
     }
   }
-
-  console.log(checkedAmount)
+  
+  console.log(checkedIds);
   if (checkedAmount > 5) {
     for (let i = 0; i < checkedAmount - 5; i++) {
       images[i].classList.add("d-none");
     }
-    over.innerHTML = "+" + (checkedAmount - 5)
-  }
-
-
-  if (checkedAmount <= 5) {
-    over.classList.add("d-none")
+    over.innerHTML = "+" + (checkedAmount - 5);
   } else {
-    over.classList.remove("d-none")
+    for (let i = 0; i < images.length; i++) {
+      images[i].classList.add("d-none");
+      
+    }
+    for (let i = 0; i < checkedIds.length; i++) {
+      images[checkedIds[i]].classList.remove("d-none");
+    }
   }
+
+  
+
+  hidePlusAmouhnt(over)
 }
+
+
+
+
