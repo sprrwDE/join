@@ -21,7 +21,6 @@ function onload() {
   loadContacts();
   dropDown();
   minimumDate();
- 
 }
 
 let BASE_URL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/";
@@ -58,7 +57,6 @@ function renderContacts(contacts) {
   let contactcontainer = document.getElementById("all-contacts");
   let allcontacts = [];
   let colors = [];
-
   for (let letter in contacts) {
     allcontacts.push(contacts[letter].nameIn);
     colors.push(contacts[letter].color);
@@ -84,13 +82,10 @@ function getContactsByParent(contact, i) {
   let status = document.getElementById("deliver-status");
   let parentContact = document.getElementById("deliver-names");
   let splitedNames = parentContact.innerHTML.split(",");
-
   tasks.status = status.innerHTML;
   tasks.category = category.innerHTML;
   splitedNames.forEach((element) => {
-    if (element == contact) {
-      assignedToChecked(i, true);
-    }
+    if (element == contact) {assignedToChecked(i, true);}
   });
 }
 
@@ -106,101 +101,6 @@ function contactsImages(i) {
 }
 
 /**
- * Initializes the dropdown functionality for the contacts list.
- */
-function dropDown() {
-  let dropdown = document.getElementById("all-contacts");
-  let dropdownToggle = document.getElementById("contacts-searchfield");
-  let arrow = document.getElementById("arrow-down");
-  let arrowstate = false;
-
-  document.addEventListener("click", (event) => {
-    if (dropdownToggle.contains(event.target) && event.target.tagName === "IMG") {
-      if (arrowstate === false) {
-        openAssignedList();
-      } else {
-        closeAssignedList();
-      }
-      arrowstate = !arrowstate;
-    } else if (!dropdown.contains(event.target) && !dropdownToggle.contains(event.target)) {
-      closeAssignedList();
-    } else if (arrow.contains(event.target)) {
-      openAssignedList();
-    } else {
-      openAssignedList();
-    }
-  });
-}
-
-/**
- * Closes the assigned contacts list dropdown.
- */
-function closeAssignedList() {
-  let palceholder = document.getElementById("assigne-placeholder");
-  let contactimages = document.getElementById("contacts-imges");
-  let search = document.getElementById("search-container");
-  let dropdown = document.getElementById("all-contacts");
-  let dropdownToggle = document.getElementById("contacts-searchfield");
-
-  palceholder.style.display = "";
-  dropdown.classList.add("d-none");
-  search.classList.add("d-none");
-  dropdown.style.animation = "";
-  document.getElementById("arrow-down").style.animation = "";
-  contactimages.classList.remove("d-none");
-  dropdownToggle.classList.remove("focused");
-}
-
-/**
- * Opens the assigned contacts list dropdown.
- */
-function openAssignedList() {
-  let palceholder = document.getElementById("assigne-placeholder");
-  let input = document.getElementById("myInput");
-  let contactimages = document.getElementById("contacts-imges");
-  let search = document.getElementById("search-container");
-  let dropdown = document.getElementById("all-contacts");
-  let dropdownToggle = document.getElementById("contacts-searchfield");
-
-  dropdown.classList.remove("d-none");
-  search.classList.remove("d-none");
-  dropdown.style.animation = "slowdropdown 0.7s forwards";
-  document.getElementById("arrow-down").style.animation = "rotate 0.5s forwards";
-  contactimages.classList.add("d-none");
-  input.focus();
-  palceholder.style.display = "none";
-  dropdownToggle.classList.add("focused");
-}
-
-/**
- * Filters the contacts based on the input search value.
- */
-function filterFunction() {
-  let input = document.getElementById("myInput");
-  let filter = input.value.toUpperCase();
-  let div = document.getElementById("all-contacts");
-  let pElements = div.getElementsByTagName("p");
-  let nocontact = document.getElementById("noContact");
-  let filteredContacts = [];
-
-  nocontact.classList.add("d-none");
-  for (let i = 0; i < pElements.length; i++) {
-    let txtValue = pElements[i].textContent || pElements[i].innerText;
-    let grandParent = pElements[i].parentElement.parentElement;
-
-    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-      grandParent.style.display = "";
-      filteredContacts.push(txtValue);
-    } else {
-      grandParent.style.display = "none";
-    }
-  }
-  if (filteredContacts.length == 0) {
-    nocontact.classList.remove("d-none");
-  }
-}
-
-/**
  * Sets the selected priority and updates the UI accordingly.
  *
  * @param {string} prio - The selected priority ('urgent', 'medium', 'low').
@@ -212,9 +112,7 @@ function selectedPrio(prio) {
   let urgentimg = document.getElementById("urgent-img");
   let mediumimg = document.getElementById("medium-img");
   let lowimg = document.getElementById("low-img");
-
   setPrioDefault(urgent, medium, low, urgentimg, mediumimg, lowimg);
-
   if (prio == "urgent") {
     urgent.style.backgroundColor = "rgb(255, 61, 0)";
     urgent.style.color = "white";
@@ -268,16 +166,15 @@ function assignedToChecked(id, checked) {
   let color = contactimg.style.backgroundColor;
   let contactid = document.getElementById(`id=${id}`);
   let contact = contactid.getElementsByTagName("p");
-
   if (checked) {
     checkbox.setAttribute("checked", "checked");
   } else {
-    checkbox.checked = !checkbox.checked
+    checkbox.checked = !checkbox.checked;
   }
   if (checkbox.checked) {
-    checkedContact(img, color, contact, grandParent)
+    checkedContact(img, color, contact, grandParent);
   } else {
-    notCheckedContact(img, color, contact, grandParent)
+    notCheckedContact(img, color, contact, grandParent);
   }
 }
 
@@ -287,7 +184,7 @@ function checkedContact(img, color, contact, grandParent) {
   tasks.assignedto.push(contact[0].textContent);
   getSelectedColor(color);
   grandParent.classList.add("background");
-  limitContactImgs()
+  limitContactImgs();
 }
 
 function notCheckedContact(img, color, contact, grandParent) {
@@ -296,11 +193,10 @@ function notCheckedContact(img, color, contact, grandParent) {
   img.classList.add("d-none");
   let remove = tasks.assignedto.indexOf(contact[0].textContent);
   tasks.assignedto.splice(remove, 1);
-  limitContactImgs()
+  limitContactImgs();
 }
 
 let getcolors = [];
-
 /**
  * Deletes a selected color from the color array.
  *
@@ -313,18 +209,6 @@ function deleteSelectedColor(color) {
 }
 
 /**
- * Adds a selected color to the color array if not already present.
- *
- * @param {string} color - The color to add.
- */
-function getSelectedColor(color) {
-  if (!getcolors.includes(color)) {
-    getcolors.push(color);
-    tasks.color = getcolors;
-  }
-}
-
-/**
  * Initializes the subtask input and sets up event listeners.
  */
 function addSubtask() {
@@ -334,7 +218,6 @@ function addSubtask() {
   let input = document.getElementById("input-subtask");
   let searchbar = document.getElementById("subtask-search-bar");
   let required = document.getElementById("subtask-required");
-
   input.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
       if (input.value === "") {
@@ -347,27 +230,12 @@ function addSubtask() {
       required.classList.add("d-none");
     }
   });
-
   addimg.classList.add("d-none");
   notok.classList.remove("d-none");
   subtasklist.classList.remove("d-none");
-  
-}
-
-/**
- * Displays an error message when the subtask input is empty.
- */
-function subtaskIsEmpty() {
-  let searchbar = document.getElementById("subtask-search-bar");
-  let required = document.getElementById("subtask-required");
-
-  searchbar.classList.add("notfound");
-  required.classList.remove("d-none");
- 
 }
 
 let id = 0;
-
 /**
  * Cancels the subtask input and resets the UI.
  */
@@ -375,7 +243,6 @@ function cancelSubtaskInput() {
   let input = document.getElementById("input-subtask");
   let addimg = document.getElementById("add-img");
   let notok = document.getElementById("ok-notok-section");
-
   input.value = "";
   addimg.classList.remove("d-none");
   notok.classList.add("d-none");
@@ -393,21 +260,6 @@ function addToSubtask() {
   } else {
     subtaskcontainer.innerHTML += renderAddToSubtaskList(id, input.value);
     input.value = "";
-  }
-}
-
-/**
- * Validates and retrieves the task title.
- */
-function getTitle() {
-  let input = document.getElementById("input-title");
-  let required = document.getElementById("title-required");
-
-  if (input.value == "") {
-    input.style.border = "1px solid rgb(248, 84, 103)";
-    required.classList.remove("d-none");
-  } else {
-    tasks.title = input.value;
   }
 }
 
@@ -430,7 +282,6 @@ function editSubtask(id) {
   let subtask = document.getElementById(`id-${id}`);
   let editdelete = document.getElementById(`edit-delete${id}`);
   let task = document.getElementById(`subtask${id}`);
-
   task.innerHTML = renderInputfieldEdit(id, task.innerHTML);
   editdelete.innerHTML = renderEditOptions(id);
   subtask.classList.replace("task", "onedit");
@@ -447,50 +298,8 @@ function edited(id) {
   let task = document.getElementById(`subtask${id}`);
   let editdelete = document.getElementById(`edit-delete${id}`);
   subtask.classList.replace("onedit", "task");
-
   editdelete.innerHTML = renderEditDoneImages(id);
   task.innerHTML = newtask;
-}
-
-/**
- * Resets the input field styling when typing.
- */
-function inputTyping() {
-  document.getElementById("input-title").style.border = "";
-  document.getElementById("title-required").classList.add("d-none");
-}
-
-/**
- * Retrieves the task description.
- */
-function getDescription() {
-  let description = document.getElementById("text-area").value;
-  tasks.description = description;
-}
-
-/**
- * Retrieves and validates the task date.
- */
-function getDate() {
-  let dateInput = document.getElementById("input-date");
-  tasks.date = dateInput.value;
-  document.getElementById("date-required").classList.add("d-none");
-  dateInput.style.border = "";
-}
-
-/**
- * Collects all subtasks and their statuses.
- */
-function getSubtasks() {
-  let subtasklist = document.getElementById("subtasklist");
-  let subtask = subtasklist.getElementsByTagName("li");
-  let newsubtask = {};
-
-  for (let i = 0; i < subtask.length; i++) {
-    newsubtask[subtask[i].innerHTML] = "inwork";
-  }
-  tasks.subtask = newsubtask;
- 
 }
 
 /**
@@ -500,7 +309,6 @@ function getSubtasks() {
  */
 function requiredFieldsCheck() {
   let date = document.getElementById("input-date");
-
   if (!date.value) {
     date.style.border = "1px solid rgb(255, 129, 144)";
     document.getElementById("date-required").classList.remove("d-none");
@@ -555,9 +363,6 @@ function checkSubtaskIsOnEdit() {
   }
 }
 
-/**
- * Clears all input fields and reloads the page.
- */
 function clearAllFields() {
   window.location.reload();
 }
@@ -581,7 +386,6 @@ function limitContactImgs() {
   let imgSection = document.getElementById("contacts-imges");
   let images = imgSection.getElementsByClassName("contact-initals");
   let over = document.getElementById("over-amount");
-
   for (let i = 0; i < images.length; i++) {
     if (images.length >= 5) {
       if (i >= 5) {
@@ -592,5 +396,5 @@ function limitContactImgs() {
     } else {
       over.classList.add("d-none");
     }
-  } 
+  }
 }
