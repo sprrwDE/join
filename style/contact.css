@@ -735,6 +735,11 @@ input::placeholder {
         width: 120px;
     }
 
+    .list-image {
+        height: 80px;
+        width: 80px;
+    }
+
 }
 
 @keyframes slideInFromRight {
