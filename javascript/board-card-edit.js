@@ -69,7 +69,7 @@ function renderContacts(contacts) {
     contactsImages(i);
     getContactsByParent(allcontacts[i], i);
   }
-  limitContactImgs2()
+  limitContactImgs2();
 }
 
 /**
@@ -86,7 +86,9 @@ function getContactsByParent(contact, i) {
   tasks.status = status.innerHTML;
   tasks.category = category.innerHTML;
   splitedNames.forEach((element) => {
-    if (element == contact) {assignedToChecked(i, true);}
+    if (element == contact) {
+      assignedToChecked(i, true);
+    }
   });
 }
 
@@ -177,15 +179,16 @@ function assignedToChecked(id, checked) {
   } else {
     notCheckedContact(img, color, contact, grandParent);
   }
+ limitContactImgs2();
 }
-
+let checkedAmount = 0;
 function checkedContact(img, color, contact, grandParent) {
   img.classList.remove("d-none");
   img.style.backgroundColor = color;
   tasks.assignedto.push(contact[0].textContent);
   getSelectedColor(color);
   grandParent.classList.add("background");
-
+  checkedAmount++;
 }
 
 function notCheckedContact(img, color, contact, grandParent) {
@@ -194,7 +197,7 @@ function notCheckedContact(img, color, contact, grandParent) {
   img.classList.add("d-none");
   let remove = tasks.assignedto.indexOf(contact[0].textContent);
   tasks.assignedto.splice(remove, 1);
-
+  checkedAmount--;
 }
 
 let getcolors = [];
@@ -385,18 +388,27 @@ function successDisplay() {
 
 function limitContactImgs2() {
   let imgSection = document.getElementById("contacts-imges");
-  let images = imgSection.querySelectorAll(".contact-initals:not(.d-none)");
+  let images = imgSection.getElementsByClassName("contact-initals");
   let over = document.getElementById("over-amount");
-  console.log(images.length)
   for (let i = 0; i < images.length; i++) {
-    if (images.length >= 5) {
-      if (i >= 5) {
-        over.classList.remove("d-none");
-        over.innerHTML = "+" + (i - 4);
-        images[i].classList.add("d-none");
-      }
-    } else {
-      over.classList.add("d-none");
+    images[i].classList.remove("d-none");
+    if(images[i].style.backgroundColor == "") {
+      images[i].classList.add("d-none")
     }
+  }
+
+  console.log(checkedAmount)
+  if (checkedAmount > 5) {
+    for (let i = 0; i < checkedAmount - 5; i++) {
+      images[i].classList.add("d-none");
+    }
+    over.innerHTML = "+" + (checkedAmount - 5)
+  }
+
+
+  if (checkedAmount <= 5) {
+    over.classList.add("d-none")
+  } else {
+    over.classList.remove("d-none")
   }
 }
