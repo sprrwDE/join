@@ -69,6 +69,7 @@ function renderContacts(contacts) {
     contactsImages(i);
     getContactsByParent(allcontacts[i], i);
   }
+  limitContactImgs2()
 }
 
 /**
@@ -184,7 +185,7 @@ function checkedContact(img, color, contact, grandParent) {
   tasks.assignedto.push(contact[0].textContent);
   getSelectedColor(color);
   grandParent.classList.add("background");
-  limitContactImgs();
+
 }
 
 function notCheckedContact(img, color, contact, grandParent) {
@@ -193,7 +194,7 @@ function notCheckedContact(img, color, contact, grandParent) {
   img.classList.add("d-none");
   let remove = tasks.assignedto.indexOf(contact[0].textContent);
   tasks.assignedto.splice(remove, 1);
-  limitContactImgs();
+
 }
 
 let getcolors = [];
@@ -382,10 +383,11 @@ function successDisplay() {
   container.classList.remove("d-none");
 }
 
-function limitContactImgs() {
+function limitContactImgs2() {
   let imgSection = document.getElementById("contacts-imges");
-  let images = imgSection.getElementsByClassName("contact-initals");
+  let images = imgSection.querySelectorAll(".contact-initals:not(.d-none)");
   let over = document.getElementById("over-amount");
+  console.log(images.length)
   for (let i = 0; i < images.length; i++) {
     if (images.length >= 5) {
       if (i >= 5) {
