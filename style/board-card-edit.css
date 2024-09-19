@@ -520,10 +520,10 @@ textarea {
 
 .contacts-imges {
   display: flex;
-  gap: 8px;
   margin-top: 8px;
   align-items: center;
   text-align: center;
+  overflow-x: scroll !important;
 }
 
 .contacts-imges p {
@@ -557,8 +557,8 @@ textarea {
 }
 
 .contact-initals {
-  width: 38px;
-  height: 38px;
+  width: 32px;
+  height: 32px;
   border-radius: 100%;
   display: flex;
   justify-content: center;

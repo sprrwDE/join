@@ -160,7 +160,7 @@ function setPrioDefault(urgent, medium, low, urgentimg, mediumimg, lowimg) {
  *
  * @param {number} id - The ID of the contact.
  */
-let checkedIds=[]
+let checkedIds = [];
 function assignedToChecked(id, checked) {
   let checkbox = document.getElementById(`cbtest-19-${id}`);
   let grandParent = checkbox.parentElement.parentElement;
@@ -175,12 +175,10 @@ function assignedToChecked(id, checked) {
     checkbox.checked = !checkbox.checked;
   }
   if (checkbox.checked) {
-    checkedContact(img, color, contact, grandParent,id);
+    checkedContact(img, color, contact, grandParent, id);
   } else {
     notCheckedContact(img, color, contact, grandParent);
   }
-  
-  console.log("die motherfuckign id "+id)
 }
 
 let checkedAmount = 0;
@@ -191,8 +189,6 @@ function checkedContact(img, color, contact, grandParent, id) {
   getSelectedColor(color);
   grandParent.classList.add("background");
   checkedAmount++;
-  limitContactImgs2(true);
-  checkedIds.push(id)
 }
 
 function notCheckedContact(img, color, contact, grandParent) {
@@ -202,10 +198,6 @@ function notCheckedContact(img, color, contact, grandParent) {
   let remove = tasks.assignedto.indexOf(contact[0].textContent);
   tasks.assignedto.splice(remove, 1);
   checkedAmount--;
-  setTimeout(() => {
-    limitContactImgs2(false, color);
-  }, 5000);
-  
 }
 
 let getcolors = [];
@@ -401,43 +393,3 @@ function hidePlusAmouhnt(over) {
     over.classList.remove("d-none");
   }
 }
-
-
-function limitContactImgs2(checked, color) {
-  let imgSection = document.getElementById("contacts-imges");
-  let images = imgSection.getElementsByClassName("contact-initals");
-  let over = document.getElementById("over-amount");
-
-  if (checked) {
-    for (let i = 0; i < images.length; i++) {
-      images[i].classList.remove("d-none");
-      if (images[i].style.backgroundColor == "") {
-        images[i].classList.add("d-none");
-      }
-    }
-  }
-  
-  console.log(checkedIds);
-  if (checkedAmount > 5) {
-    for (let i = 0; i < checkedAmount - 5; i++) {
-      images[i].classList.add("d-none");
-    }
-    over.innerHTML = "+" + (checkedAmount - 5);
-  } else {
-    for (let i = 0; i < images.length; i++) {
-      images[i].classList.add("d-none");
-      
-    }
-    for (let i = 0; i < checkedIds.length; i++) {
-      images[checkedIds[i]].classList.remove("d-none");
-    }
-  }
-
-  
-
-  hidePlusAmouhnt(over)
-}
-
-
-
-
