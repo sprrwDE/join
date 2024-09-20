@@ -11,16 +11,34 @@ function dropDown() {
     if (dropdownToggle.contains(event.target) && event.target.tagName === "IMG") {
       if (arrowstate === false) {
         openAssignedList();
+        if (typeof limitContactsImgs === 'function') {
+          prepairForLimitContacts()
+        }
+        
       } else {
         closeAssignedList();
       }
       arrowstate = !arrowstate;
     } else if (!dropdown.contains(event.target) && !dropdownToggle.contains(event.target)) {
       closeAssignedList();
+      if (typeof limitContactsImgs === 'function') {
+        limitContactsImgs();
+      }
     } else if (arrow.contains(event.target)) {
       openAssignedList();
+      if (typeof limitContactsImgs === 'function') {
+        prepairForLimitContacts()
+      }
+      
+      if (typeof limitContactsImgs === 'function') {
+        limitContactsImgs();
+      }
     } else {
       openAssignedList();
+      if (typeof limitContactsImgs === 'function') {
+        prepairForLimitContacts()
+      }
+      
     }
   });
 }
