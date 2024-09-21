@@ -68,20 +68,15 @@ async function pushData(inputData) {
             },
             body: JSON.stringify(inputData)
         });
-
         if (!response.ok) {
             throw new Error('Error pushing data');
         }
-
         let responseData = await response.json();
         let newContactId = responseData.name;
-
         closeAddContactDialog();
         await initializeContactList();
         selectElement(newContactId);
-
         const initials = getContactInitials(inputData.nameIn);
-
         if (window.innerWidth >= 1024) {
             openDetailReferenceDesk(
                 inputData.nameIn,
@@ -105,9 +100,7 @@ async function pushData(inputData) {
                 false
             );
         }
-
         showSuccessPopup();
-
     } catch (error) {
         console.error('Error pushing data:', error);
     }
@@ -164,6 +157,33 @@ async function deleteContact(contactId) {
 async function sendUpdateRequest(contactId, updatedData) {
     try {
         let response = await fetch(baseUrl + `contacts/${contactId}.json`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedData)
+        });
+        if (!response.ok) {
+            throw new Error('Error updating contact');
+        }
+        return true;
+    } catch (error) {
+        console.error('Error updating contact:', error);
+        return false;
+    }
+}
+
+/**
+ * Sends an update request to Firebase RealtimeDB for a specific contact.
+ * @async
+ * @function sendUpdateRequest
+ * @param {number} contactId - The ID of the contact to update.
+ * @param {Object} updatedData - The updated contact data.
+ * @returns {Promise<boolean>} True if the request was successful, false otherwise.
+ */
+async function sendUpdateTaskRequest(contactId, updatedData) {
+    try {
+        let response = await fetch(baseUrl + `addTask/${contactId}.json`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
