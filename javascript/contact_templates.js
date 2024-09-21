@@ -78,7 +78,7 @@ function detailTemplate(name, email, phone, id, first, last, color, user) {
                             <img src="../assets/img/edit-small.svg">
                             <p>Edit</p>
                         </div>
-                        <div class="edit-row-desk" onclick="deleteContact('${id}')">
+                        <div class="edit-row-desk" onclick="deleteAssigned('${name}')">
                             <img src="../assets/img/delete-small.svg">
                             <p>Delete</p>
                         </div>
@@ -96,6 +96,8 @@ function detailTemplate(name, email, phone, id, first, last, color, user) {
                                         <!-- Success -->
         <div id="success-popup" class="popup d-none">Contact successfully created</div>`;
 }
+
+// deleteContact('${id}'), 
 
 /**
  * Generates the HTML template for the add contact dialog.

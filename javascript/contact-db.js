@@ -15,9 +15,11 @@ async function initializeContactList() {
     try {
         db = [];
         await getData("contacts");
+        await getTasks("addTask");
     } finally {
         listContentRef.innerHTML = '';
         renderContactGroups();
+        // setCurrentTaskId();
         if (currentId) {
             selectElement(currentId);
         }
