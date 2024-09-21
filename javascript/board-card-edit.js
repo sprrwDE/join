@@ -177,7 +177,7 @@ function assignedToChecked(id, checked) {
   if (checkbox.checked) {
     checkedContact(img, color, contact, grandParent, id);
   } else {
-    notCheckedContact(img, color, contact, grandParent);
+    notCheckedContact(img, color, contact, grandParent, id);
   }
 }
 
@@ -189,6 +189,7 @@ function checkedContact(img, color, contact, grandParent, id) {
   getSelectedColor(color);
   grandParent.classList.add("background");
   checkedAmount++;
+  limitContactsImgs(`plus: ${id}`);
 }
 
 function notCheckedContact(img, color, contact, grandParent) {
@@ -198,6 +199,7 @@ function notCheckedContact(img, color, contact, grandParent) {
   let remove = tasks.assignedto.indexOf(contact[0].textContent);
   tasks.assignedto.splice(remove, 1);
   checkedAmount--;
+  limitContactsImgs(`minus: ${id}`);
 }
 
 let getcolors = [];
@@ -392,4 +394,51 @@ function hidePlusAmouhnt(over) {
   } else {
     over.classList.remove("d-none");
   }
+}
+
+
+let imgIds = [];
+function limitContactsImgs(id) {
+  if (id) {
+    if (id.startsWith("plus: ")) {
+      let newid = id.replace("plus: ", "");
+      addToArray(newid);
+    } else {
+      let newid = id.replace("minus: ", "");
+      let index = imgIds.indexOf(newid);
+      if (index !== -1) {
+        imgIds.splice(index, 1);
+      }
+    }
+  }
+
+  console.log(imgIds);
+  let imgList = document.getElementById("contacts-imges");
+  let imgs = imgList.getElementsByClassName("contact-initals");
+  let over = document.getElementById("over-amount");
+  console.log(imgs.length);
+  if (imgs.length > 5) {
+    for (let i = 0; i < imgs.length - 5; i++) {
+      imgs[imgs.length - 1 - i].classList.add("d-none");
+    }
+    over.classList.remove("d-none");
+    over.innerHTML = "+" + (imgs.length - 5);
+  } else {
+    over.classList.add("d-none");
+  }
+}
+
+function prepairForLimitContacts() {
+  let imgList = document.getElementById("contacts-imges");
+  let imgs = imgList.getElementsByClassName("contact-initals");
+
+  for (let j = 0; j < imgIds.length; j++) {
+    imgs[imgIds[j]].classList.remove("d-none");
+  }
+}
+
+function addToArray(id) {
+  if (!imgIds.includes(id)) {
+    imgIds.push(id);
+  } 
 }

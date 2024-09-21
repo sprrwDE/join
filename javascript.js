@@ -1,6 +1,6 @@
 let currentUserURL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/curent-user.json"
 const params = new URLSearchParams(window.location.search);
-const currentName = params.get('name');
+let currentName = '';
 const icon = params.get('icon');
 const notAMember = params.get('userId');
 let togglePopUp = false;
@@ -14,8 +14,7 @@ let togglePopUp = false;
  * @throws {Error} Throws an error if including HTML components fails.
  */
 function init() {
-  includeHTML().then(() => {
-    loadAccountName();
+    includeHTML().then(() => {
     noMemberLink();
     changeNavbarColor();
     loadUserName();
@@ -30,8 +29,9 @@ function init() {
  * to show the user's name.
  */
 function loadAccountName() {
-  if (currentName) {
-    document.getElementById('greet-name').innerHTML = `${currentName}`;
+  greetId = document.getElementById('greet-name');
+  if (currentName && greetId) {
+    greetId.innerHTML = `${currentName}`;
   }
 }
 
@@ -65,7 +65,6 @@ function changeNavbarColor() {
 function renderPopUp() {
   let popUpBox = document.getElementById('headline-pop-up-container');
   togglePopUp = !togglePopUp;
-
   if (togglePopUp) {
     popUpBox.innerHTML = `
     <div id="headline-pop-up" class="headline-pop-up"> 
