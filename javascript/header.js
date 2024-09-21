@@ -26,6 +26,8 @@ function loadUserName() {
 function renderUserName(result) {
   let name = result.nameIn;
   let firstLetter = name[0];
+  currentName = name;
+  loadAccountName();
   if (result) {
     if (document.getElementById('header-user-icon')) {
       document.getElementById('header-user-icon').innerHTML = `${firstLetter}`;
