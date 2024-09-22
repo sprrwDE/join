@@ -192,7 +192,7 @@ function checkedContact(img, color, contact, grandParent, id) {
   limitContactsImgs(`plus: ${id}`);
 }
 
-function notCheckedContact(img, color, contact, grandParent) {
+function notCheckedContact(img, color, contact, grandParent, id) {
   grandParent.classList.remove("background");
   deleteSelectedColor(color);
   img.classList.add("d-none");
@@ -404,7 +404,9 @@ function limitContactsImgs(id) {
       let newid = id.replace("plus: ", "");
       addToArray(newid);
     } else {
+      console.log("id: " + id)
       let newid = id.replace("minus: ", "");
+      console.log("asdasdas" + newid)
       let index = imgIds.indexOf(newid);
       if (index !== -1) {
         imgIds.splice(index, 1);
@@ -414,24 +416,24 @@ function limitContactsImgs(id) {
 
   console.log(imgIds);
   let imgList = document.getElementById("contacts-imges");
-  let imgs = imgList.getElementsByClassName("contact-initals");
+  let imgs = imgList.querySelectorAll(".contact-initals:not(.d-none)");
   let over = document.getElementById("over-amount");
-  console.log(imgs.length);
-  if (imgs.length > 5) {
-    for (let i = 0; i < imgs.length - 5; i++) {
+  console.log(imgIds.length);
+  if (imgIds.length > 5) {
+    for (let i = 0; i < imgIds.length - 5; i++) {
       imgs[imgs.length - 1 - i].classList.add("d-none");
     }
     over.classList.remove("d-none");
-    over.innerHTML = "+" + (imgs.length - 5);
+    over.innerHTML = "+" + (imgIds.length - 5);
   } else {
     over.classList.add("d-none");
   }
 }
 
 function prepairForLimitContacts() {
+  console.log("AAAAAAAAAAAAAAA")
   let imgList = document.getElementById("contacts-imges");
   let imgs = imgList.getElementsByClassName("contact-initals");
-
   for (let j = 0; j < imgIds.length; j++) {
     imgs[imgIds[j]].classList.remove("d-none");
   }

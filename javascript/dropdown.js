@@ -14,7 +14,6 @@ function dropDown() {
         if (typeof limitContactsImgs === 'function') {
           prepairForLimitContacts()
         }
-        
       } else {
         closeAssignedList();
       }
@@ -30,9 +29,7 @@ function dropDown() {
         prepairForLimitContacts()
       }
       
-      if (typeof limitContactsImgs === 'function') {
-        limitContactsImgs();
-      }
+     
     } else {
       openAssignedList();
       if (typeof limitContactsImgs === 'function') {
