@@ -396,22 +396,9 @@ function hidePlusAmouhnt(over) {
   }
 }
 
-
 let imgIds = [];
 function limitContactsImgs(id) {
-  if (id) {
-    if (id.startsWith("plus: ")) {
-      let newid = id.replace("plus: ", "");
-      addToArray(newid);
-    } else {
-      let newid = id.replace("minus: ", "");
-      let index = imgIds.indexOf(newid);
-      if (index !== -1) {
-        imgIds.splice(index, 1);
-      }
-    }
-  }
-
+  contactIdAmounts(id)
   let imgList = document.getElementById("contacts-imges");
   let imgs = imgList.querySelectorAll(".contact-initals:not(.d-none)");
   let over = document.getElementById("over-amount");
@@ -423,6 +410,21 @@ function limitContactsImgs(id) {
     over.innerHTML = "+" + (imgIds.length - 5);
   } else {
     over.classList.add("d-none");
+  }
+}
+
+function contactIdAmounts(id) {
+   if (id) {
+    if (id.startsWith("plus: ")) {
+      let newid = id.replace("plus: ", "");
+      addToArray(newid);
+    } else {
+      let newid = id.replace("minus: ", "");
+      let index = imgIds.indexOf(newid);
+      if (index !== -1) {
+        imgIds.splice(index, 1);
+      }
+    }
   }
 }
 
