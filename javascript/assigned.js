@@ -53,7 +53,6 @@ function deleteAssigned(contactName) {
     }
 }
 
-
 /**
  * Updates the assigned contact list for a task and sends the updated task data to Firebase.
  * 
@@ -76,8 +75,6 @@ function deleteAssignCard(currentTaskObject, newAssign) {
         color: currentTaskObject.color,
         inits: currentTaskObject.inits,
     };
-    console.log("Updated Data:", updatedData);
-    console.log("Firebase ID:", taskId);
 
     sendUpdateTaskRequest(taskId, updatedData);
 }
@@ -96,6 +93,5 @@ function findAllAssigned(name) {
             results.push(taskDb[i]);
         }
     }
-    console.log("Found Entries:", results);
     return results;
 }
