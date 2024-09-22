@@ -67,17 +67,33 @@ function deleteAssigned(contactName) {
  */
 function assignedIsObject(currentTaskObject, contactName) {
     let assignedtoValue = currentTaskObject.assignedto;
-    let array = Object.values(assignedtoValue);
-    const index = array.indexOf(contactName);
+    let colorValue = currentTaskObject.color;
+
+    let assignedArray = Object.values(assignedtoValue);
+    let colorArray = Array.isArray(colorValue) ? Object.values(colorValue) : [];
+
+    const index = assignedArray.indexOf(contactName);
     if (index > -1) {
-        array.splice(index, 1);
+        assignedArray.splice(index, 1);
+        if (colorArray.length > index) {
+            colorArray.splice(index, 1);
+        }
     }
-    // Reconstruct the object with numeric keys
+
+    // Reconstruct the assignedto object with numeric keys
     const newAssign = {};
-    array.forEach((name, idx) => {
+    assignedArray.forEach((name, idx) => {
         newAssign[idx] = name;
     });
-    deleteAssignCard(currentTaskObject, newAssign);
+
+    // Reconstruct the color object with numeric keys
+    const newColor = {};
+    colorArray.forEach((color, idx) => {
+        newColor[idx] = color;
+    });
+
+    // Update the task with new assignedto and color
+    deleteAssignCard(currentTaskObject, newAssign, newColor);
 }
 
 /**
@@ -89,43 +105,54 @@ function assignedIsObject(currentTaskObject, contactName) {
  */
 function assignedIsString(currentTaskObject, contactName) {
     let assignedtoValue = currentTaskObject.assignedto;
-    let array = assignedtoValue.includes(",")
+    let colorValue = currentTaskObject.color;
+
+    let assignedArray = assignedtoValue.includes(",")
         ? assignedtoValue.split(",").map(item => item.trim())
         : [assignedtoValue.trim()];
 
-    const index = array.indexOf(contactName);
+    let colorArray = typeof colorValue === 'string'
+        ? colorValue.includes(",")
+            ? colorValue.split(",").map(item => item.trim())
+            : [colorValue.trim()]
+        : Array.isArray(colorValue)
+            ? colorValue
+            : [];
+
+    const index = assignedArray.indexOf(contactName);
     if (index > -1) {
-        array.splice(index, 1);
+        assignedArray.splice(index, 1);
+        if (colorArray.length > index) {
+            colorArray.splice(index, 1);
+        }
     }
-    const newAssign = array.join(",");
-    deleteAssignCard(currentTaskObject, newAssign);
+
+    const newAssign = assignedArray.join(",");
+    const newColor = colorArray.join(",");
+
+    // Update the task with new assignedto and color
+    deleteAssignCard(currentTaskObject, newAssign, newColor);
 }
 
 /**
- * Updates the assigned contact list for a task and sends the updated task data to Firebase.
+ * Updates the assigned contact list and color list for a task and sends the updated task data to Firebase.
  * 
  * @function deleteAssignCard
  * @param {Object} currentTaskObject - The task object that needs to be updated.
  * @param {string|Object} newAssign - The updated assigned contacts (string or object).
+ * @param {string|Object} newColor - The updated colors (string or object).
  */
-function deleteAssignCard(currentTaskObject, newAssign) {
+function deleteAssignCard(currentTaskObject, newAssign, newColor) {
     let taskId = currentTaskObject.firebaseid;
     const updatedData = {
-        title: currentTaskObject.title,
-        description: currentTaskObject.description,
+        ...currentTaskObject,
         assignedto: newAssign,
-        date: currentTaskObject.date,
-        prio: currentTaskObject.prio,
-        category: currentTaskObject.category,
-        subtask: currentTaskObject.subtask,
-        status: currentTaskObject.status,
-        id: currentTaskObject.id,
-        color: currentTaskObject.color,
-        inits: currentTaskObject.inits,
+        color: newColor
     };
 
     sendUpdateTaskRequest(taskId, updatedData);
 }
+
 
 /**
  * Finds and returns all tasks that a given contact is assigned to.
