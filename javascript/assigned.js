@@ -37,26 +37,22 @@ async function getTasks(path) {
  * Deletes a contact assignment from all tasks where the contact is assigned.
  * 
  * @function deleteAssigned
- * @param {string} contactName - The name of the contact to be removed from task assignments.
+ * @param {string} contactName 
  */
 function deleteAssigned(contactName) {
     const assignedObjects = findAllAssigned(contactName);
-
     for (let i = 0; i < assignedObjects.length; i++) {
-        let array = assignedObjects[i].assignedto.split(",").map(item => item.trim());
-        console.log("Original Array:", array);
-        
+        let assignedtoString = assignedObjects[i].assignedto;
+        let array = assignedtoString.includes(",") ? assignedtoString.split(",").map(item => item.trim()) : [assignedtoString.trim()];
         const index = array.indexOf(contactName);
         if (index > -1) {
             array.splice(index, 1); 
         }
-        
         const newAssign = array.join(",");
-        console.log("Updated Assignedto String:", newAssign);
-
         deleteAssignCard(assignedObjects[i], newAssign);
     }
 }
+
 
 /**
  * Updates the assigned contact list for a task and sends the updated task data to Firebase.
