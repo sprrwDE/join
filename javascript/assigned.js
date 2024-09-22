@@ -37,21 +37,41 @@ async function getTasks(path) {
  * Deletes a contact assignment from all tasks where the contact is assigned.
  * 
  * @function deleteAssigned
- * @param {string} contactName 
+ * @param {string} contactName - The name of the contact to be removed from task assignments.
  */
 function deleteAssigned(contactName) {
     const assignedObjects = findAllAssigned(contactName);
     for (let i = 0; i < assignedObjects.length; i++) {
-        let assignedtoString = assignedObjects[i].assignedto;
-        let array = assignedtoString.includes(",") ? assignedtoString.split(",").map(item => item.trim()) : [assignedtoString.trim()];
-        const index = array.indexOf(contactName);
-        if (index > -1) {
-            array.splice(index, 1); 
+        let assignedtoValue = assignedObjects[i].assignedto;
+        if (assignedtoValue === undefined || assignedtoValue === null) {
+            continue; 
         }
-        const newAssign = array.join(",");
-        deleteAssignCard(assignedObjects[i], newAssign);
+        if (typeof assignedtoValue === 'object') {
+            let array = Object.values(assignedtoValue);
+            const index = array.indexOf(contactName);
+            if (index > -1) {
+                array.splice(index, 1);
+            }
+            const newAssign = {};
+            array.forEach((name, idx) => {
+                newAssign[idx] = name;
+            });
+            deleteAssignCard(assignedObjects[i], newAssign);
+        } else if (typeof assignedtoValue === 'string') {
+            let array = assignedtoValue.includes(",") 
+                ? assignedtoValue.split(",").map(item => item.trim()) 
+                : [assignedtoValue.trim()];
+
+            const index = array.indexOf(contactName);
+            if (index > -1) {
+                array.splice(index, 1);
+            }
+            const newAssign = array.join(",");
+            deleteAssignCard(assignedObjects[i], newAssign);
+        }
     }
 }
+
 
 /**
  * Updates the assigned contact list for a task and sends the updated task data to Firebase.
@@ -79,7 +99,7 @@ function deleteAssignCard(currentTaskObject, newAssign) {
     sendUpdateTaskRequest(taskId, updatedData);
 }
 
-/**
+/*
  * Finds and returns all tasks that a given contact is assigned to.
  * 
  * @function findAllAssigned
@@ -89,8 +109,30 @@ function deleteAssignCard(currentTaskObject, newAssign) {
 function findAllAssigned(name) {
     let results = [];
     for (let i = 0; i < taskDb.length; i++) {
-        if (taskDb[i].assignedto.includes(name)) {
-            results.push(taskDb[i]);
+        let assignedtoValue = taskDb[i].assignedto;
+        if (assignedtoValue === undefined || assignedtoValue === null) {
+            continue; 
+        }
+        if (typeof assignedtoValue === 'string') {
+            let assignedtoArray = assignedtoValue.includes(",")
+                ? assignedtoValue.split(",").map(item => item.trim())
+                : [assignedtoValue.trim()];
+
+            if (assignedtoArray.includes(name)) {
+                results.push(taskDb[i]);
+            }
+        } else if (Array.isArray(assignedtoValue)) {
+            if (assignedtoValue.includes(name)) {
+                results.push(taskDb[i]);
+            }
+
+        } else if (typeof assignedtoValue === 'object') {
+            let assignedtoArray = Object.values(assignedtoValue);
+            if (assignedtoArray.includes(name)) {
+                results.push(taskDb[i]);
+            }
+        } else {
+            console.warn(`Unexpected type of assignedto: ${typeof assignedtoValue}`);
         }
     }
     return results;
