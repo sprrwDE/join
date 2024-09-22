@@ -404,9 +404,7 @@ function limitContactsImgs(id) {
       let newid = id.replace("plus: ", "");
       addToArray(newid);
     } else {
-      console.log("id: " + id)
       let newid = id.replace("minus: ", "");
-      console.log("asdasdas" + newid)
       let index = imgIds.indexOf(newid);
       if (index !== -1) {
         imgIds.splice(index, 1);
@@ -414,11 +412,9 @@ function limitContactsImgs(id) {
     }
   }
 
-  console.log(imgIds);
   let imgList = document.getElementById("contacts-imges");
   let imgs = imgList.querySelectorAll(".contact-initals:not(.d-none)");
   let over = document.getElementById("over-amount");
-  console.log(imgIds.length);
   if (imgIds.length > 5) {
     for (let i = 0; i < imgIds.length - 5; i++) {
       imgs[imgs.length - 1 - i].classList.add("d-none");
@@ -431,7 +427,6 @@ function limitContactsImgs(id) {
 }
 
 function prepairForLimitContacts() {
-  console.log("AAAAAAAAAAAAAAA")
   let imgList = document.getElementById("contacts-imges");
   let imgs = imgList.getElementsByClassName("contact-initals");
   for (let j = 0; j < imgIds.length; j++) {

@@ -1,3 +1,4 @@
+let isDropdownOpen = false;
 /**
  * Manages the dropdown menu for the contact list.
  */
@@ -5,37 +6,44 @@ function dropDown() {
   let dropdown = document.getElementById("all-contacts");
   let dropdownToggle = document.getElementById("contacts-searchfield");
   let arrow = document.getElementById("arrow-down");
-  arrowstate = false;
+  let isDropdownOpen = false;
 
   document.addEventListener("click", (event) => {
     if (dropdownToggle.contains(event.target) && event.target.tagName === "IMG") {
-      if (arrowstate === false) {
+      if (!isDropdownOpen) {
         openAssignedList();
         if (typeof limitContactsImgs === 'function') {
-          prepairForLimitContacts()
+          prepairForLimitContacts();
+        }
+      } else {
+        closeAssignedList();
+        if (typeof limitContactsImgs === 'function') {
+          limitContactsImgs();
+        }
+      }
+      isDropdownOpen = !isDropdownOpen;
+    } else if (!dropdown.contains(event.target) && !dropdownToggle.contains(event.target)) {
+      if (isDropdownOpen) {
+        closeAssignedList();
+        if (typeof limitContactsImgs === 'function') {
+          limitContactsImgs();
         }
       } else {
         closeAssignedList();
       }
-      arrowstate = !arrowstate;
-    } else if (!dropdown.contains(event.target) && !dropdownToggle.contains(event.target)) {
-      closeAssignedList();
-      if (typeof limitContactsImgs === 'function') {
-        limitContactsImgs();
-      }
+      isDropdownOpen = false;
     } else if (arrow.contains(event.target)) {
       openAssignedList();
       if (typeof limitContactsImgs === 'function') {
-        prepairForLimitContacts()
+        prepairForLimitContacts();
       }
-      
-     
+      isDropdownOpen = true;
     } else {
       openAssignedList();
       if (typeof limitContactsImgs === 'function') {
-        prepairForLimitContacts()
+        prepairForLimitContacts();
       }
-      
+      isDropdownOpen = true;
     }
   });
 }
@@ -78,6 +86,7 @@ function openAssignedList() {
   input.focus();
   placeholder.style.display = "none";
   dropdownToggle.classList.add("focused");
+  isDropdownOpen = true;
 }
 
 /**
@@ -106,4 +115,5 @@ function filterFunction() {
   if (filteredContacts.length == 0) {
     nocontact.classList.remove("d-none");
   }
+  isDropdownOpen = false;
 }
