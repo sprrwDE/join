@@ -1,4 +1,4 @@
-let Status = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/Status.json"
+let Status = "https://join-portfolio-2dadd-default-rtdb.europe-west1.firebasedatabase.app/Status.json"
 let amounts = {};
 
 /**

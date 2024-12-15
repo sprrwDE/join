@@ -1,6 +1,6 @@
 
-let BASE_URL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/accounts.json" 
-let contacsFatch = 'https://join-318-default-rtdb.europe-west1.firebasedatabase.app/';
+let BASE_URL = "https://join-portfolio-2dadd-default-rtdb.europe-west1.firebasedatabase.app/accounts.json" 
+let contacsFatch = 'https://join-portfolio-2dadd-default-rtdb.europe-west1.firebasedatabase.app/';
 
 /**
  * Starts the login animation by calling `startLogInAnimation`.

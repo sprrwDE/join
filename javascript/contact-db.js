@@ -1,7 +1,7 @@
 /**
  * @type {string}
  */
-let baseUrl = 'https://join-318-default-rtdb.europe-west1.firebasedatabase.app/';
+let baseUrl = 'https://join-portfolio-2dadd-default-rtdb.europe-west1.firebasedatabase.app/';
 
 /**
  * Initializes the contact list by fetching data from Firebase.

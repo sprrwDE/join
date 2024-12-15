@@ -1,6 +1,6 @@
 let tasks = window.parent.tasks;
 let clickedCardId = window.parent.clickedCardId;
-let BASE_URL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/";
+let BASE_URL = "https://join-portfolio-2dadd-default-rtdb.europe-west1.firebasedatabase.app/";
 
 /**
  * Initializes the board card.

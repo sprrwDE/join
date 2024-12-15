@@ -2,7 +2,7 @@
  * Base URL for the Firebase Realtime Database.
  * @constant {string}
  */
-let BASE_URL = "https://join-318-default-rtdb.europe-west1.firebasedatabase.app/";
+let BASE_URL = "https://join-portfolio-2dadd-default-rtdb.europe-west1.firebasedatabase.app/";
 
 /**
  * Array of all tasks.
